@@ -1,0 +1,235 @@
+\section{非线性控制系统概述}
+\begin{quote}
+  \textit{Classifying systems as linear and nonlinear is like classifying the universe as bananas and non-bananas.}
+\end{quote}
+
+许多控制系统都具有非线性特性。
+\begin{itemize}[leftmargin=2em]
+  \item 例如，随动系统的齿轮传动具有齿隙和干摩擦等；再如，许多执行机构都不可能无限制地增加其输出功率，因此就存在饱和非线性特性。这些例子中的非线性是由于系统的不完善而产生的，这种不完善实际上是不可避免的。
+  \item 有些非线性是系统动态特性本身所固有的。例如，高速运动的机械手各关节之间有科氏力的耦合，这种耦合是非线性的，如果要研究机械手高速运动的控制就必须考虑非线性耦合；再如，电力系统中传输功率与各发电机之间相角差的正弦成正比，如果要研究电力系统中的大范围运动时，就必须考虑非线性特性的影响。
+  \item 还有一类对象本身虽然是线性的，但为了对它进行高质量的控制，常常在控制系统中有意识地引进非线性的控制规律。例如时间最短控制就要采用bang-bang控制，它是非线性的。
+\end{itemize}
+
+{\bf 严格说来，非线性是普遍存在的，非线性系统才是最一般的系统，线性系统只是其中的特殊例子。}非线性特性千差万别，不可能有统一的普遍适用的处理办法。而线性系统则大为简单，可以用线性常微分方程来描述。解线性常微分方程已有成熟的方法，因此线性控制系统理论取得了很大的成就。对比之下非线性微分方程只有在个别情况下才有解析解。这给非线性控制系统的研究带来极大的困难。
+
+非线性系统和线性系统之间的本质差别可概括为以下两点：
+
+1.对于线性系统叠加定理可以应用，对于非线性系统因为特性不是线性的，因此叠加定理不能应用。叠加定理可以应用的系统很容易分析，小信号和大信号作用的结果应该一致；对于叠加定理不能应用的系统，分析则大为复杂，大信号和小信号作用的结果可以大不相同。
+
+2.一般来说对于非线性系统不能求得完整的解（closed form solution），目前的数学工具还远远不够。因此一般只能对非线性系统的运动情况作一些估计，例如对系统的稳定性、动态品质等作一些估计。
+
+我们知道线性控制系统中的运动只可能有几种情况：如衰减的或发散的振荡或不振荡运动，或临界的振荡等等。而非线性系统中的运动，可以是振荡的或不振荡的过程，这种振荡严格说来不一定能用调和函数来表示；可以是稳定的或不稳定的，这种稳定可以是全局的，也可能是局部的；可以出现振荡的极限环，这种极限环可能有多个；还可能出现混沌（chaos）现象，既非稳定的极限环，又非无限制的发散。总之，非线性系统中的运动要复杂得多。
+
+由于许多控制系统中都有非线性，有些非线性对系统的运行是有害的，应设法克服它的有害影响；有些非线性是有益的，应在设计时予以考虑。因此从事控制工作的工程师和研究人员早就对非线性控制系统的研究予以很大关注，多年来在这方面已经积累了许多成果。但由于非线性系统的复杂性，在这方面的研究工作有相当大的困难，因此研究成果还远不能满足实际需要，在这方面有待研究的问题还很多。近年来由于工程实际的需要以及人们对提高控制系统智能化程度的重视，研究工作者对非线性系统理论给予很大关注，希望能够取得新的重要进展。
+
+前面提到非线性是普遍存在的，线性系统只是一个特例，但这决不能贬低线性系统理论的
+重要性。线性系统理论仍然是系统理论的基础。许多非线性系统的极限或临界情况是线性系
+统，许多非线性系统是由线性系统组合、引伸或改造而来。因此研究非线性系统理应首先要对
+线性系统理论有较深入的了解。事实上许多非线性系统的分析方法要借助于线性系统理论的
+成果。
+
+
+\section{非线性控制系统的数学方程}\label{1Bref}
+% \phantomsection
+% \subsection{非线性系统的数学方程}
+% \addcontentsline{toc}{subsection}{复数}
+
+对于非线性系统，人们常常采用微分方程或非线性算子方程来描述。本节介绍非线性控制系统的微分方程描述方法。
+
+相当广泛的一类非线性控制系统可用$n$阶常微分方程来描述：
+\begin{equation}\label{diffeq}
+  \frac{\diff^n y(t)}{\diff t^n}=h\left[t,y(t),\dot{y}(t),\dots,\frac{\diff^{n-1} y(t)}{\diff t^{n-1}}\right],t\ge 0
+\end{equation}
+其中$u(t)$为输入，$y(t)$为输出。若定义
+\begin{align*}
+  x_1(t)&=y(t),\\
+  x_2(t)&=\dot{y}(t),\\
+  &\vdots\\
+  x_n(t)&=\frac{\diff^{n-1} y(t)}{\diff t^{n-1}},
+\end{align*}
+则 \eqref{diffeq} 式可改写为$n$个一阶微分方程所构成的方程组：
+\begin{equation}\label{diffeqlist}
+  \begin{aligned}
+    \dot{x}_1(t)&=x_2(t),\\
+    \dot{x}_2(t)&=x_3(t),\\
+    &\vdots\\
+    \dot{x}_{n-1}(t)&=x_n(t),\\
+    \dot{x}_n(t)&=h\left[t,x_1(t),x_2(t),\dots,x_n(t),u(t)\right].
+  \end{aligned}
+\end{equation}
+如果定义向量$x(\cdot):\R{}_+\to\R{}^n$，$f:\R{}_+\times\R{}^n\times\R{}\to\R{}^n$如下：
+\[x(t)=[x_1(t),\dots,x_n(t)]^\mathrm{T}\]
+\[f(t,x,u)=[x_2,x_3,\dots,x_n,h(t,x_1,\dots,x_n,u)]^\mathrm{T}\]
+则方程组 \eqref{diffeqlist} 可写成向量微分方程的形式：
+\begin{equation}\label{vecdiff}
+  \dot{x}(t)=f[t,x(t),u(t)],t\ge 0
+\end{equation}
+式中$x$为状态向量，$x_1$至$x_n$为状态变量。在上面的推导中设$u(t)$为单变量，若系统中有多个输入，则式 \eqref{vecdiff} 的形式仍然可用，只是$u(t)$为向量。
+
+今后我们就用式 \eqref{vecdiff} 来描述一般非线性控制系统。在这个一般的系统上附加限制条件，会衍生出一系列概念。
+
+\begin{definition}\label{def:nonlinearconcepts}
+  \begin{itemize}[leftmargin=1em]
+    \item 若$f$与$t$无关，即 \eqref{vecdiff} 可写为$\dot{x}=f[x(t),u(t)],t\ge 0$，则称系统是{\bf 自治（或驻定，autonomous）的}\index{自治（或驻定，autonomous）}，
+    否则系统是{\bf 非自治（或非驻定，nonautonomous）的}\index{非自治（或非驻定，nonautonomous）}。
+    \item 若$u(t)=0$，则\begin{equation}\label{free}
+      \dot{x}(t)=f[t,x(t)],t\ge 0,x(0)=x_0
+    \end{equation}代表系统的{\bf 自由运动}。
+    \item 如果输入量$u(t)$可从函数$f$中分列出来，则系统方程可以写为\[\dot{x}(t)=A(t,x)+B(t,x)u(t)\]称此类系统是{\bf 仿射的}。这样的系统有其自身的特点。
+  \end{itemize}
+\end{definition}
+
+
+\section{非线性常微分方程的解}\label{1Cref}
+
+对于一个用式 \eqref{vecdiff} 来描述的非线性控制系统，我们希望对每个输入$u(t)$，下列情况成立：
+\begin{enumerate}
+  \item 式 \eqref{vecdiff} 至少存在一个解【解的存在性（existence）】；
+  \item 式 \eqref{vecdiff} 只存在一个解【解的唯一性（uniqueness）】；
+  \item 时间半轴$[0,\infty)$上，式 \eqref{vecdiff} 只存在一个解；
+  \item 时间半轴$[0,\infty)$上，式 \eqref{vecdiff} 只存在一个解，且该解与初值$x(0)$存在连续变化的关系。
+\end{enumerate}
+
+以上是我们的期望，这些要求是相当强的，只有对$f$提出相当严格的要求才能实现。我们可以举出以下一些不符合上述要求的例子。
+\begin{example}[不存在解] 
+  考虑如下非线性系统（其中$x$为标量）
+  \begin{equation*}
+    \dot{x}=-\sgn(x)=\begin{cases}
+      -1&x\ge0\\
+      1&x<0
+    \end{cases},t\ge 0,x(0)=0.
+  \end{equation*}
+
+  假设存在一解$x(t)$，其对$t$连续且初始值满足$x(0)=0$。
+  \begin{itemize}[leftmargin=1em]
+    \item 若存在$t_1>0$使得$x(t)<0$，那么对于任意$t\in(0,t_1)$均有$\dot{x}=1$，于是\[x(t)-x(0)=t\implies x(t)=t>0,\]这就推出了矛盾。
+    \item 若存在$t_1>0$使得$x(t)\ge 0$，那么对于任意$t\in(0,t_1)$均有$\dot{x}=-1$，于是\[x(t)-x(0)=-t\implies x(t)=-t<0,\]同样推出了矛盾。
+  \end{itemize}
+
+  因此，满足初始条件和微分方程的解$x(t)$是不存在的，也就是不满足上述第1点。
+\end{example}
+\newpage
+\begin{example}[解存在但不唯一] 
+  \begin{itemize}[leftmargin=1em]
+    \item 考虑如下非线性系统（其中$x$为标量）
+    \begin{equation*}
+      \dot{x}=\frac{1}{2x},t\ge 0,x(0)=0
+    \end{equation*}
+  
+    此方程有两个解：$x_1(t)=t^{1/2}$和$x_2(t)=-t^{1/2}$。
+    \item 考虑如下非线性系统（其中$x$为标量）
+    \begin{equation*}
+      \dot{x}=x^{1/3},t\ge 0,x(0)=0
+    \end{equation*}
+  
+    可自行验证，对于任意$t_0>0$，$x(t)=\begin{cases}
+      \left[\frac{2}{3}(t-t_0)\right]^{3/2}&t\ge t_0\\0&t<t_0
+    \end{cases}$都能满足上式。
+  \end{itemize}
+
+  上面两个例子满足上述第1点但不满足第2点。
+\end{example}
+
+\begin{example}[时间半轴$[0,\infty)$上不存在解] 
+  \begin{itemize}[leftmargin=1em]
+    \item 考虑如下非线性系统（其中$x$为标量）
+    \begin{equation*}
+      \dot{x}=x^2,t\ge 0,x(0)=1
+    \end{equation*}
+
+    移项得到$-x^{-2}\dot{x}=-1$，凑微分可知$\frac{\diff}{\diff t}x^{-1}=-1$，
+    则\[\frac{1}{x(t)}-\frac{1}{x(0)}=-t\implies x(t)=\frac{1}{\frac{1}{x(0)}-t}=\frac{1}{1-t}\]
+    此解在$t\to 1$时趋于无穷大，则在$[0,\infty)$不存在连续可微的解$x(t)$。
+    \item 考虑如下非线性系统（其中$x$为标量）
+    \begin{equation*}
+      \dot{x}=1+x^{2},t\ge 0,x(0)=0
+    \end{equation*}
+  
+    可自行验证，此方程在$[0,\frac{\pi}{2})$区间内有唯一解$x(t)=\tan t$，同样在$t\to \pi/2$时趋于无穷大，即在$[0,\infty)$不存在连续可微的解$x(t)$。
+  \end{itemize}
+
+  上面两个例子满足上述第1、2点但不满足第3点。
+\end{example}
+
+上面的例子和陈述说明解的存在性和唯一性是十分重要的。下面基于方程 \eqref{free} ，不加证明地介绍这方面的一些基本知识。
+分为局部解情况和全局解情况来说明。
+\begin{theorem}{局部唯一解条件}
+如果 \eqref{free} 中的$f$对于$t$和$x$是连续的，则解是存在的；进一步地，若存在有界常数$T,r,h,k$，满足
+\index{Lipschitz条件!局部$\sim$}
+\begin{equation}\label{locallipschitz}
+  \|f(t,x)-f(t,y)\|\le k\|x-y\|,\forall x,y\in B,\forall t\in [0,T]\text{（变化率有限性）}
+\end{equation}
+其中$B=\{x\in\R{}^n:\|x-x_0\|\le r\}$代表$\R{}^n$中的一个球，及
+\begin{equation}
+  \|f(t,x_0)\|\le h,\forall t\in [0,T]\text{（有界性）}
+\end{equation}
+则存在$\delta>0$，使得区间$[0,\delta]$中 \eqref{free} 式有唯一解。
+\end{theorem}
+上述 \eqref{locallipschitz} 称为{\bf Lipschitz条件}，且表明只在局部区间满足，因此所讨论的解也是局部的。
+\begin{corollary}
+  如果在$(0,x_0)$的邻域内$f$对$x$的偏导存在并连续，对$t$的单边偏导存在并连续，则 \eqref{free} 在相当小的区间$[0,\delta]$内存在唯一解。
+\end{corollary}
+
+\begin{example}[局部Lipschitz条件] 
+  $(\cdot)^{1/3}$不满足局部Lipschitz条件，因为其在$x(0)=0$附近具有无穷大的斜率。而$(\cdot)^{3}$则满足局部Lipschitz条件，
+  因为\begin{equation*}
+    x^3-y^3=(x^2+xy+y^2)(x-y)
+  \end{equation*}
+  对于分解中的前者，在$x(0)$的任意邻域内，总可以找到一个数$L$作为其界，也即总有$|x^3-y^3|\le L|x-y|$。
+\end{example}
+
+\begin{theorem}[全局唯一解条件]
+  如果在$T\in[0,\infty)$区间中均存在有界常数$k_T$和$h_T$，使得
+  \index{Lipschitz条件!全局$\sim$}
+  \begin{equation}\label{globallipschitz}
+    \|f(t,x)-f(t,y)\|\le k_T\|x-y\|,\forall x,y\in \R{}^n,\forall t\in [0,T]\text{（变化率有限性）}
+  \end{equation}
+  与
+  \begin{equation}
+    \|f(t,x_0)\|\le h_T,\forall t\in [0,T]\text{（有界性）}
+  \end{equation}
+  则 \eqref{free} 在区间$[0,T],\forall T\in[0,\infty)$中有唯一解。
+\end{theorem}
+上述 \eqref{globallipschitz} 称为{\bf 全局Lipschitz条件}。粗略地说，如果系统在全局范围内满足Lipschitz条件，则在全局范围内，在$[0,\infty)$内系统有唯一解。
+
+\begin{theorem}\label{uniqsol}
+  设对于所有$t\ge t_0$和所有$x\in D\subset \R{}^n$，有$f(t,x)$对$t$分段连续且对$x$局部Lipschitz。令$W$是$D$的一个紧子集（compact subset，即有界闭子集），$x_0\in W$，并已知\[\dot{x}=f(t,x),x(t_0)=x_0\]的每个解都完全处于$W$中。那么$t\ge t_0$区间上，上述方程存在唯一的解。
+\end{theorem}
+
+下面定义一种特殊的解。
+\begin{definition}[平衡点，孤立平衡点]
+  考虑自由运动表达式 \eqref{free} 。
+  \begin{itemize}[leftmargin=1em]
+    \item 称一状态$x^\ast$是{\bf 平衡点（equilibrium point）}，\index{平衡点（equilibrium point）}当且仅当其满足$f(t,x^\ast)\equiv 0,\forall t\ge t_0$。
+    \item 进一步地，称一平衡点是{\bf 孤立的（isolated）}，如果存在某个$\delta>0$，使得在球域$B(x_0,\delta)=\{x:\|x-x^\ast\|\le\delta\}$里，不存在其他平衡点。\index{平衡点（equilibrium point）!孤立$\sim$（isolated）}
+  \end{itemize}
+\end{definition}
+换言之，$x=x^\ast$为平衡点，那么当系统的状态自$x^\ast$起始时，其将一直保持该状态。
+
+\begin{example}[线性系统的平衡点]
+  考虑线性系统$\dot{x}=Ax$。那么其平衡点$x^\ast$满足$Ax^\ast\equiv 0$。则
+  \begin{itemize}[leftmargin=1em]
+    \item 当$A$为非奇异时，上述方程有且仅有平凡解$x^\ast=0$，即平衡点唯一。
+    \item 当$A$为奇异时，上述方程的解构成一向量空间，即平衡点不唯一，或称构成一连续统（continum）。
+  \end{itemize}
+\end{example}
+
+\ref{def:nonlinearconcepts} 中提及了自治系统和非自治系统的定义。下面讨论一下这两类系统平衡点的区别。
+\begin{itemize}[leftmargin=2em]
+  \item 对于自治系统的自由运动\begin{equation}\label{autonomous_eg}
+    \dot{x}=f(x),x(0)=x_0
+  \end{equation}
+  令$y(t)=x(t-t_0)$，我们有$y(t_0)=x(0)=x_0$，并且\begin{equation}\label{autonomous_eg2}
+    \dot{y}=\frac{\diff x(t-t_0)}{\diff t}=f(x(t-t_0))=f(y)
+  \end{equation}
+  可见 \eqref{autonomous_eg} 和 \eqref{autonomous_eg2} 除起始时刻不同外，具有同样的形式，则两者的解$x(t)$和$y(t)$也一定相同，只是起始时刻不同。自治系统的这一特性称为{\bf 时移不变性（shift-invariance）}。
+  \item 对于非自治系统的自由运动\begin{equation}\label{nonautonomous_eg}
+    \dot{x}=f(t,x),x(0)=x_0
+  \end{equation}
+  令$y(t)=x(t-t_0)$，我们有$y(t_0)=x(0)=x_0$，然而\begin{equation}\label{nonautonomous_eg2}
+    \dot{y}=\frac{\diff x(t-t_0)}{\diff t}=f(t-t_0,x(t-t_0))=f(t-t_0,y)
+  \end{equation}
+  可见 \eqref{nonautonomous_eg} 和 \eqref{nonautonomous_eg2} 具有不同的形式，则两者的解$x(t)$和$y(t)$也不同。
+  也就是说，系统的初始时刻是很重要的，时移不变性不再成立。这也就是我们在讨论非自治系统稳定性（第 \ref{cp3} 章）时需要引入{\bf 一致性（uniformity）}
+  概念的原因。
+\end{itemize}

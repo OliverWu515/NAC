@@ -1,0 +1,234 @@
+\documentclass[lang=cn,newtx,zihao=5,chinesefont=founder,twoside,printing]{elegantbook}
+
+\title{非线性与自适应控制}
+\subtitle{Nonlinear and Adaptive Control}
+
+\oriauthor{Oliver Wu}
+\transauthor{ }
+% \institute{Harbin Institute of Technology(Shenzhen)}
+\renewcommand{\today}{\number\year 年 \number\month 月 \number\day 日}
+\date{\today}
+% \version{0.8.2}
+% \bioinfo{自定义}{信息}
+
+% \extrainfo{仅供个人学习使用，切勿用于商业用途！}
+
+\setcounter{tocdepth}{3}
+
+% \logo{done_right.png}
+% \cover{hit1.jpg}
+
+% 本文档命令
+\usepackage{array}
+\usepackage{makecell}
+%\usepackage{setspace}
+% \makeindex{terms}
+\makeindex[
+    columns=2,
+    intoc,
+    title={索引},
+    options=xxx,
+]
+
+% \def\QED{\mbox{\rule[0pt]{1.5ex}{1.5ex}}}
+
+\input{usual_abbr.tex}
+
+% 修改标题页的橙色带
+\definecolor{customcolor}{RGB}{32,178,170}
+\colorlet{coverlinecolor}{customcolor}
+\usepackage{cprotect}
+\usepackage{etoolbox}
+% \usepackage{tikz}
+% \usepackage[printwatermark]{xwatermark}
+% \usepackage{amssymb}
+\elegantnewtheorem{notation}{记号}{defstyle}{nta}
+\elegantnewtheorem{examp}{例}{prostyle}{exa}
+\elegantnewtheorem{special1}{以下假设在本章中总是成立}{defstyle}{special1ref}
+\addbibresource[location=local]{reference.bib} % 参考文献，不要删除
+%\addtolength{\headwidth}{\marginparsep}
+%\addtolength{\headwidth}{\marginparwidth}
+\BeforeBeginEnvironment{wrapfigure}{\setlength{\intextsep}{0pt}}
+% \setlength{\intextsep}{2pt}
+% \renewcommand{\headrulewidth}{20cm}
+% \addtolength{\headrulewidth}{\marginparsep}
+% \fontsize{10.5}{16}
+% \makeatletter
+% \let\oldtagform@\tagform@
+% \renewcommand\tagform@[1]{\maketag@@@{\bfseries\ignorespaces#1\unskip\@@italiccorr}}
+% \renewcommand{\eqref}[1]{\textup{\oldtagform@{\ref{#1}}}}
+% \makeatother
+% \newcommand\currentPageNumber{\inteval{\ReadonlyShipoutCounter+1}}
+\AtBeginDocument{\xdef\currentPageNumber{1}}
+\AddToHook{shipout/after}{\xdef\currentPageNumber{\inteval{\ReadonlyShipoutCounter+1}}}
+% \usepackage{draftwatermark}
+\begin{document}
+% \fontsize{10.5}{\baselineskip}\selectfont
+\maketitle
+\frontmatter
+\AddToHook{shipout/foreground}{%
+    \put(.3\paperwidth,-\paperheight){\raisebox{.2\baselineskip}%
+    {\color{gray}\small\cnormal 《非线性与自适应控制》笔记（\today）}}%
+}
+% \input{preface/preface_trans.tex}
+% \input{preface/about.tex}
+
+\tableofcontents
+
+\input{preface/preface.tex}
+% \input{preface/preface_instructor.tex}
+% \input{preface/acknowledgment.tex}
+
+\mainmatter
+
+\input{Chapter_1/chapter1.tex}
+% \newpage
+\input{Chapter_1/1A.tex}
+% \input{Chapter_1/Exercises_1A.tex}
+\newpage
+% \input{Chapter_1/1B.tex}
+% \input{Chapter_1/Exercises_1B.tex}s
+% \input{Chapter_1/1C.tex}
+% \input{Chapter_1/Exercises_1C.tex}
+
+\input{Chapter_2/chapter2.tex}
+% \newpage
+\input{Chapter_2/2A.tex}
+% \input{Chapter_2/Exercises_2A.tex}
+% \newpage
+\input{Chapter_2/2B.tex}
+% \input{Chapter_2/Exercises_2B.tex}
+% \newpage
+\input{Chapter_2/2C.tex}
+\input{Chapter_2/2D.tex}
+\input{Chapter_2/2E.tex}
+
+\input{Chapter_3/chapter3.tex}
+% \newpage
+\input{Chapter_3/3A.tex}
+% \input{Chapter_3/Exercises_3A.tex}
+% \newpage
+\input{Chapter_3/3B.tex}
+% \input{Chapter_3/Exercises_3B.tex}
+% \newpage
+% \input{Chapter_3/3C.tex}
+% \input{Chapter_3/Exercises_3C.tex}
+% \newpage
+% \input{Chapter_3/3D.tex}
+% \input{Chapter_3/Exercises_3D.tex}
+% \newpage
+% \input{Chapter_3/3E.tex}
+% \input{Chapter_3/Exercises_3E.tex}
+% \newpage
+% \input{Chapter_3/3F.tex}
+% \input{Chapter_3/Exercises_3F.tex}
+
+% \input{Chapter_4/chapter4.tex}
+% \input{Chapter_4/Exercises_4.tex}
+
+% \input{Chapter_5/chapter5.tex}
+% \newpage
+% \input{Chapter_5/5A.tex}
+% \input{Chapter_5/Exercises_5A.tex}
+% \newpage
+% \input{Chapter_5/5B.tex}
+% \input{Chapter_5/Exercises_5B.tex}
+% \newpage
+% \input{Chapter_5/5C.tex}
+% \input{Chapter_5/Exercises_5C.tex}
+% \newpage
+% \input{Chapter_5/5D.tex}
+% \input{Chapter_5/Exercises_5D.tex}
+% \newpage
+% \input{Chapter_5/5E.tex}
+% \input{Chapter_5/Exercises_5E.tex}
+
+% \input{Chapter_6/chapter6.tex}
+% \newpage
+% \input{Chapter_6/6A.tex}
+% \input{Chapter_6/Exercises_6A.tex}
+% \newpage
+% \input{Chapter_6/6B.tex}
+% \input{Chapter_6/Exercises_6B.tex}
+% \newpage
+% \input{Chapter_6/6C.tex}
+% \input{Chapter_6/Exercises_6C.tex}
+
+% \input{Chapter_7/chapter7.tex}
+% \newpage
+% \input{Chapter_7/7A.tex}
+% \input{Chapter_7/Exercises_7A.tex}
+% \newpage
+% \input{Chapter_7/7B.tex}
+% \input{Chapter_7/Exercises_7B.tex}
+% \newpage
+% \input{Chapter_7/7C.tex}
+% \input{Chapter_7/Exercises_7C.tex}
+% \newpage
+% \input{Chapter_7/7D.tex}
+% \input{Chapter_7/Exercises_7D.tex}
+% \newpage
+% \input{Chapter_7/7E.tex}
+% \input{Chapter_7/Exercises_7E.tex}
+% \newpage
+% \input{Chapter_7/7F.tex}
+% \input{Chapter_7/Exercises_7F.tex}
+
+% \input{Chapter_8/chapter8.tex}
+% \newpage
+% \input{Chapter_8/8A.tex}
+% \input{Chapter_8/Exercises_8A.tex}
+% \newpage
+% \input{Chapter_8/8B.tex}
+% \input{Chapter_8/Exercises_8B.tex}
+% \newpage
+% \input{Chapter_8/8C.tex}
+% \input{Chapter_8/Exercises_8C.tex}
+% \newpage
+% \input{Chapter_8/8D.tex}
+% \input{Chapter_8/Exercises_8D.tex}
+
+% \input{Chapter_9/chapter9.tex}
+% \newpage
+% \input{Chapter_9/9A.tex}
+% \input{Chapter_9/Exercises_9A.tex}
+% \newpage
+% \input{Chapter_9/9B.tex}
+% \input{Chapter_9/Exercises_9B.tex}
+% \newpage
+% \input{Chapter_9/9C.tex}
+% \input{Chapter_9/Exercises_9C.tex}
+% \newpage
+% \input{Chapter_9/9D.tex}
+% \input{Chapter_9/Exercises_9D.tex}
+
+% \index{乘法（multiplication）|see{乘积（product）}}
+% \index{SVD|see{奇异值分解（singular value decomposition）}}
+% \index{和（sum）|see{加法（addition）}}
+
+% \newpage
+% \input{photo_credits.tex}
+
+\backmatter
+% \indexprologue{\citshape \textcolor{red}{索引项尚未添加完毕。}}
+% \idxlayout{columns=3}
+% \printindex[symidx]
+% % \cleardoublepage
+% %TODO:原为：各条目按照汉语拼音排序。部分条目下有若干子条目，子条目中用波浪线“$\sim$”指代其所属的条目，所有条目（含子条目）后附注英文原文。
+% %尝试改为：各条目按照汉语拼音排序。部分条目下有若干子条目，子条目中用波浪线“$\sim$”指代其所属的条目。除部分不必或不便翻译的条目可能采用“原文【解释】”形式外，所有条目（含子条目）后附注英文原文。
+% \idxlayout{columns=2}
+% \renewcommand*{\indexfont}{\small}
+\setindexprenote{\citshape 各条目按照汉语拼音排序。部分条目下有若干子条目，子条目中用波浪线“$\sim$”指代其所属的条目。}
+% 除部分不必或不便翻译的条目可能采用“原文【解释】”形式外，所有条目（含子条目）后附注英文原文。
+% 例如，“加法（addition）”条目下的“矩阵的$\sim$（of matrices）”，即表示“矩阵的加法”（addition of matrices）。}
+\printindex
+\input{change_log}
+
+\nocite{*}
+
+% \printbibliography[heading=bibintoc, title=\ebibname]
+
+% \appendix
+
+
+\end{document}

@@ -1,0 +1,149 @@
+\section{不变集原理}\label{2Dref}
+我们总更希望一个系统是渐近稳定而不仅仅是稳定的。然而，如例 \ref{suff_lyapunov} 所示，我们构造的Lyapunov函数之导数常常只能是负半定而非负定的，从而无法得出渐近稳定的结论。下面将给出Lyapunov稳定性定理的一个推广，它有助于解决此问题。首先介绍相关概念。
+\begin{definition}[不变集（invariant set）]\index{不变集（invariant set）}
+	称集合$M$是关于式 \eqref{freeofauto} 的{\bf 正不变集（positively invariant set）}，
+	若\[x(0)\in M\implies x(t)\in M,\forall t\ge0\]
+	换言之，每个自$M$内出发的状态轨线，必整体留在$M$内。
+\end{definition}
+\begin{definition}[趋于集合（approach a set）]
+	称$t\to\infty$时，$x(t)$趋于一集合$M$，若\[\forall \varepsilon>0,\exists T>0:\operatorname{dist}(x(t),M)<\varepsilon,\forall t>T\]
+	其中$\operatorname{dist}(p,M)=\inf\limits_{x\in M}\|p-x\|$。换言之，时间足够长时，$x(t)$与$M$的“距离最小值”将趋于0。
+\end{definition}
+\begin{example}[不变集]\label{invset}
+	\begin{itemize}[leftmargin=1em]
+		\item 平衡点
+		\item $\R{}^n$
+		\item $\Omega_c=\{x\in\R{}^n:V(x)\le c\}$，其中$\dot{V}(x)\le 0$。此不变集之后很常用到。
+		\item 极限环\index{极限环（limit cycle）}：称一状态轨线是封闭的，若其非常值，且存在$t_0>0$，使得$x(t+t_0)=x(t)$（总会复归之前的状态）。称一孤立的封闭状态轨线为极限环。例子可见 \ref{stable_unstable}。其类别有
+		\begin{itemize}[leftmargin=1em]
+			\item 稳定极限环：极限环附近的所有轨迹皆收敛于它（$t\to\infty$）
+			\item 不稳定极限环：极限环附近的所有轨迹皆不收敛于它（$t\to\infty$）
+			\item 半稳定极限环：极限环附近的轨迹，部分收敛于它，另一部分发散（$t\to\infty$）
+		\end{itemize}
+	\end{itemize}
+\end{example}
+有了上面的铺垫，我们不加证明地给出下述定理。
+\begin{theorem}[LaSalle不变集原理]\label{lasalle}\index{LaSalle不变集原理}
+	对于系统 \eqref{freeofauto}，设\begin{itemize}[leftmargin=1em]
+		\item $\Omega\subset D$为紧的正不变集；
+		\item $V:D\to\R{}$是连续可微函数，且在$\Omega$中满足$\dot{V}(x)\le 0$；
+		\item $E=\{x\in\Omega: \dot{V}(x)= 0\}$；
+		\item $M$为$E$中最大的不变集。
+	\end{itemize}
+	那么当$t\to\infty$，每个自$\Omega$中出发的轨线都将趋于$M$。
+\end{theorem}
+\begin{note}
+	不变集可视为平衡点的推广。注意，$V$并不需要是正定函数。
+\end{note}
+\begin{corollary}
+	令$x=0$为 \eqref{freeofauto} 的平衡点。$D\in\R{}^n$是包含原点的域。令$V:D\to\R{}$是$C^1$正定函数，且$\dot{V}\le 0$在$D$上总成立。
+	令$E=\{x\in D:\dot{V}=0\}$，并设除了平凡解$x(t)=0$外，没有解能一直处于$E$中。那么$x=0$是渐近稳定的。
+\end{corollary}
+\begin{corollary}\label{lasallegas}
+	令$x=0$为 \eqref{freeofauto} 的平衡点。令$V:\R{}^n\to\R{}$是径向无界的$C^1$正定函数，且$\dot{V}\le 0$在$\R{}^n$上总成立。
+	令$E=\{x\in \R{}^n:\dot{V}=0\}$，并设除了平凡解$x(t)=0$外，没有解能一直处于$E$中。那么$x=0$是全局渐近稳定的。
+\end{corollary}
+\begin{note}
+	在$\dot{V}$负定时，$E=\{0\}$，上述推论即退化为 \ref{lyapunov}。
+\end{note}
+\begin{example}[利用LaSalle定理判别单摆系统稳定性]
+	考虑例 \ref{suff_lyapunov}。首先考虑无阻尼的情形 \eqref{nodamp}，Lyapunov函数\[V(x)=\frac{1}{2}x_2^2+a(1-\cos x_1)\]
+	可构造不变集$\Omega$类似例 \ref{invset} 第三点（不过需注意定义域）：\[\Omega=\{x:V(x)\le c\},c>0\]
+	例 \ref{suff_lyapunov} 已经计算过$\dot{V}=0$，因此$E=\Omega$。
+	$E$中最大的不变集$M$，显然就是$\Omega$本身。于是利用 \ref{lasalle}，$\Omega$中出发的轨线都将趋于$\Omega$。
+
+	再考虑有阻尼的情形 \eqref{damped}。仍然选择$\Omega$如上。由于$\dot{V}=0\iff x_2=0$，因此\[E=\{x:x_2=0,x\in\Omega\}\]
+	再找$E$中最大的不变集。由于自$x_1\ne 0,x_2=0$起始的状态轨线，一经出发，必然使得$x_2\ne 0$（从物理意义上考虑：在非最低点从静止释放单摆，
+	单摆必定马上具有非零速度）。因此$M=\{(0,0)\}$。此时利用 \ref{lasalle}，可得每个自$\Omega$中出发的轨线都将趋于原点。我们发现，这样也说明了原点的渐近稳定性。
+\end{example}
+\begin{example}[利用LaSalle定理判别自适应控制的收敛性]
+	考虑如下一阶系统
+  \[ \dot{y} = a  y + u \]
+  对其作用自适应控制律
+  \[ u = - k  y, \dot{k} = \gamma y^2, \gamma > 0. \]
+  取$x_1 = y, x_2 = k$，我们可得
+  \[ \left\{\begin{array}{l}
+       \dot{x}_1 = a  x_1 - x_1 x_2\\
+       \dot{x}_2 = \gamma x^2_1
+     \end{array}\right. \]
+  $\{x:x_1 = 0\}$是一个由平衡点构成的集合（将$x_1=0$代入验证即可）。我们想要说明在$t \rightarrow \infty$
+  时状态轨线将收敛到这个集合上，从而说明自适应律可使$y$收敛至$0$。
+  
+  考虑如下函数
+  \begin{equation}\label{adaptive_eg_candidate}
+	V (x) = \frac{1}{2} x^2_1 + \frac{1}{2} (x_2 - k_0)^2
+  \end{equation}
+  其中$k_0$为常数，加入此项的缘由是上述平衡点集并没有保证$x_2=0$。注意，这个函数并不是正定的
+  （因其在原点取值非零），但是这并不违背LaSalle定理的条件。
+  
+  $V$随时间的导数为
+  \begin{align*}
+    \dot{V} & =  x_1 \dot{x}_1 +  (x_2 - k_0) \dot{x}_2\\
+    & =  x_1 (a  x_1 - x_1 x_2) + (x_2 - k_0) \gamma x^2_1\\
+	&= ax_1^2-x_1^2x_2+\gamma(x_2x_1^2-k_0x_1^2)
+  \end{align*}
+  我们发现，如果在 \eqref{adaptive_eg_candidate} 第二项中加入$\frac{1}{\gamma}$，那么上式就有可消去的项。则
+  \[V (x) = \frac{1}{2} x^2_1 + \frac{1}{2\textcolor{structurecolor}{\gamma}} (x_2 - k_0)^2, \dot{V}  =  (a - k_0)  x^2_1\]
+  取 $k_0 > a$，则 $\dot{V} \leq 0$。
+
+  接下来应用LaSalle定理。首先定义不变集$\Omega = \{ x \in \mathbf{R}^2 : V (x) \leq c \},c>0$。
+  则集合$E =\{ x \in \Omega :\dot{V}= 0 \}= \{ x \in \Omega : x_1 = 0 \}$。进而由本例开头的分析知$M = E$。
+  根据 \ref{lasalle}，解会收敛至$x_1=0$上，也即$\lim\limits_{t \rightarrow \infty} x_1 (t) = 0$。
+  又知$V(x)$径向无界，所以由 \ref{lasallegas}，此结论全局成立。
+\end{example}
+定理 \ref{lasalle} 除了可用于判别趋于原点的情形，还可推广用于判别收敛至极限环等。
+\begin{example}[收敛至极限环]
+	考虑下述非线性系统\begin{align*}
+		\dot{x}_1&=x_2+x_1(\beta^2-x_1^2-x_2^2)\\
+		\dot{x}_2&=-x_1+x_2(\beta^2-x_1^2-x_2^2)
+	\end{align*}
+	原点是平衡点（通过验证$x_1=x_2=0$时$\dot{x}_1=\dot{x}_2=0$即可）。
+
+	我们又发现，如果$x_1^2+x_2^2=\beta^2$，那么系统方程改写为\[\left\{\begin{array}{l}
+    \dot{x}_1 = x_2\\
+    \dot{x}_2 = - x_1
+  \end{array}\right.\]
+  上述也表示圆的方程。的确，如果引入参数$t$，并结合$x_1^2+x_2^2=\beta^2$，则上述方程的解是（略去初相位）
+  $x_1 (t) = \beta\cos  t, x_2 (t) = - \beta \sin  t$。
+  这样一来，自$x_1^2+x_2^2=\beta^2$出发的轨线会一直在其上运动，因此形成了一个极限环，同时也是不变集。
+
+  {\it 定性分析极限环性质：设$r = \sqrt{x^2_1 + x^2_2}, \theta = \arctan \frac{x_2}{x_1}$，我们有（注意此时应代入原方程）
+  \begin{align*}
+    \dot{r}& = \frac{1}{2}(x_{1}^{2}+x_{2}^{2})^{-\frac{1}{2}}(2x_{1}\dot{x}_{1}+2x_{2}\dot{x}_{2})= r (\beta^2 - r^2)\\
+    \dot{\theta} & =\frac{1}{1+(\frac{x_{2}}{x_{1}})^{2}}\frac{\dot{x}_{2}x_{1}-\dot{x}_{1}x_{2}}{x_{1}^{2}}= - 1
+  \end{align*}
+  其中用到了
+  \begin{align*}
+    x_1\dot{x}_1+x_2\dot{x}_2& = (x_1^2+x_2^2)(\beta^2-x_1^2-x_2^2)= r^2 (\beta^2 - r^2)\\
+    x_1\dot{x}_2-x_2\dot{x}_1 & = -(x_1^2+x_2^2)=- r^2
+  \end{align*}
+  则 \ $\left\{\begin{array}{l}
+    r < \beta, \dot{r} > 0 \Rightarrow r \rightarrow \beta\\
+    r > \beta, \dot{r} < 0 \Rightarrow r \rightarrow \beta
+  \end{array}\right. \Rightarrow$ 极限环稳定。}
+
+  下面利用LaSalle定理来分析。构造如下候选Lyapunov函数\[ V (x) = \frac{1}{4} (x^2_1 + x^2_2 - \beta^2)^2 \]
+  构造此函数的动机是，它衡量了与极限环的“距离”。显然$V (x) \geq 0$，但要注意同上个例子一样，此函数也不是正定的。求其导数得
+  \begin{align*}
+    \dot{V} (x) & =  \frac{1}{2} (x^2_1 + x^2_2 - \beta^2) (2 x_1 \dot{x}_1 +
+    2 x_2 \dot{x}_2)\\
+    & =  - (x^2_1 + x^2_2 - \beta^2)^2 (x^2_1 + x^2_2)\leq 0
+  \end{align*}
+  构造集合$\Omega_c =
+  \{ x \in \mathbf{R}^2 : V (x) \leq c \},c > 0$。因为$\dot{V} \leq 0$，所以这是不变集。
+  接下来寻求$E = \{ x \in \Omega_c : \dot{V} (x) = 0 \}$。根据导函数形式可得$E = \{
+  (0, 0) \} \cup \{ x : x^2_1 + x^2_2 = \beta^2 \}$。
+  不过，要注意这只在$c \ge \frac{1}{4} \beta^4$时成立——因为$0 < c < \frac{1}{4} \beta^4$时，
+  $\Omega_c $不包含原点，此时$E=\{ x : x^2_1 + x^2_2 = \beta^2 \}$。
+  最后，根据前面所做的分析，$E$中的最大不变集$M = E$。
+  
+  这样，利用 \ref{lasalle}，其中$c \in \left( 0,
+  \frac{1}{4} \beta^4 \right)$，即知每个自$\Omega_c$出发的轨线均收敛至极限环，因此极限环稳定。
+  取$c=\frac{1}{4} \beta^4-\varepsilon$，其中$\varepsilon$可任意小，我们发现，无限接近于原点的状态也都会收敛至极限环，则原点不稳定。
+
+  {\citshape 要判别原点的不稳定性，亦可构造如下候选Lyapunov函数\[V=\frac12(x_1^2+x_2^2)\]
+  求导得\begin{align*}
+	  \dot{V}&=x_1\dot{x}_1+x_2\dot{x}_2=(x_1^2+x_2^2)(\beta^2-x_1^2-x_2^2)
+  \end{align*}
+  其在原点的小邻域内为正定，则运用定理 \ref{unstable} 即可。}
+\end{example}

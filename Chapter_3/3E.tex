@@ -1,0 +1,11 @@
+
+\begin{theorem}[Barbalat引理]
+    若可微函数$f(t)$当$t\to\infty$时具有有限极限，且$\dot{f}(t)$是一致连续的，那么$\lim\limits_{t\to\infty}\dot{f}(t)=0$。
+\end{theorem}
+\begin{theorem}[LaSalle-Yoshizawa定理]
+    令$x=0$是 \eqref{freeofnonauto} 的平衡点，并设$f$对$t$是分段连续，且对$x$是局部Lipschitz的（对于$t$是一致的）。令$V$是以连续可微函数，满足$\forall t\ge 0,x\in\R{}^n$，\[\gamma_1(\|x\|)\le V(x,t)\le \gamma_2(\|x\|)\]
+    \[\begin{aligned}\dot{V}=\frac{\partial V}{\partial t}+\frac{\partial V}{\partial x}f(x,t)\leq-\omega(x)\leq0\end{aligned}\]
+    其中$\gamma_1$和$\gamma_2$都是$\mathcal{K}_\infty$类函数且$\omega$为连续函数。那么  \eqref{freeofnonauto} 的所有解均满足$\lim\limits_{t\to\infty}\omega(x(t))=0$。
+    
+    进一步地，若$\omega(x)$是正定的，那么$x=0$是全局一致渐近稳定的。
+\end{theorem}

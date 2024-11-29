@@ -1,0 +1,120 @@
+\section{线性系统与线性化}\label{2Eref}
+线性系统中，对应于非线性自治系统的是线性定常（线性时不变，Linear Time-Invariant，简写作LTI）系统
+\begin{equation}\label{LTI}
+    \dot{x}=Ax
+\end{equation}
+\begin{note}
+    Lyapunov分析法使我们得以在同一框架下研究线性和非线性系统（将LTI视为非线性系统的一个特例）。
+    接下来，我们将引入在文献中经常出现的一类非常有用的Lyapunov函数，再通过状态方程的线性化反过来研究非线性系统的稳定性，并了解此法有何局限性。
+\end{note}
+  在研究LTI系统 \eqref{LTI} 时，常用下面的二次型作为候选Lyapunov函数
+  \[ V (x) = x^\mathrm{T} P  x \]
+  其中$P \in \mathbf{R}^{n \times n}$ 为正定。求其导数
+  \begin{align*}
+    \dot{V}(x)&= x^\mathrm{T}P\dot{x}+\dot{x}^\mathrm{T}Px\\
+    &=x^\mathrm{T}PAx+(Ax)^\mathrm{T}Px\\
+    &=x^\mathrm{T} (P  A + A^\mathrm{T} P) x \\
+    &\triangleq - x^\mathrm{T} Q  x
+  \end{align*}
+  其中$Q$是定义为
+  \begin{equation}
+    P  A + A^\mathrm{T} P = - Q \label{lyaLTI}
+  \end{equation}
+  的对称矩阵。
+  若$Q$正定，那么系统 \eqref{LTI} 的原点就是渐近稳定的。
+
+  下面给出LTI系统的稳定性判据。此定理的证明可参看《线性系统理论》相关教材。
+  
+  \begin{theorem}[线性定常系统的稳定性判据]\label{linearlya}
+    系统 \eqref{LTI} 中的原点是渐近稳定的，或$A$是Hurwitz的（意即其所有特征值均具有负实部），当且仅当
+    对于任意给定的对称正定矩阵$Q$，都存在唯一的对称正定矩阵$P$使得 \eqref{lyaLTI} 成立。
+  \end{theorem}
+  \begin{note}
+    注意，此判据是充要条件。
+  \end{note}
+  
+  下面利用线性化，将这个结论推广至非线性系统。
+
+  以分析原点的稳定性为例。将系统 \eqref{freeofauto} 在原点附近线性化得\begin{equation}
+    \dot{x}=Ax+g(x)
+  \end{equation}
+  其中
+  \begin{equation}\label{jacobian}
+    A=\frac{\partial f(x)}{\partial x}|_{x=0}=\left.\begin{bmatrix}\frac{\partial f_{1}}{\partial x_{1}}&\cdots&\frac{\partial f_{n}}{\partial x_{1}}\\\vdots&&\vdots\\\frac{\partial f_{n}}{\partial x_{1}}&\cdots&\frac{\partial f_{n}}{\partial x_{n}}\end{bmatrix}\right|_{x=0}
+  \end{equation}
+  称为雅可比矩阵（Jacobian）\index{雅可比矩阵（Jacobian）}，且有（所用范数均为2-范数）
+  \begin{equation}\label{gxto0}
+    \|x\|\to0\ \text{时}\ \cfrac{\|g(x)\|}{\|x\|}\to0
+  \end{equation}
+  考虑候选Lyapunov函数
+  \[ V (x) = x^\mathrm{T} P  x \]
+  其中$P \in \mathbf{R}^{n \times n}$ 为正定。其导数等于
+  \begin{equation}
+    \begin{aligned}
+    \dot{V}&= x^\mathrm{T}P\dot{x}+\dot{x}^\mathrm{T}Px\\
+    &= x^\mathrm{T}P(Ax+g(x))+(Ax+g(x))^\mathrm{T}Px\\
+    &= x^\mathrm{T}(PA+A^\mathrm{T}P)x+x^\mathrm{T}Pg(x)+g^\mathrm{T}(x)Px\\
+    &=-x^\mathrm{T}Qx+2xPg(x)
+    \end{aligned}
+  \end{equation}
+  其中第四个等号，是由于$x^\mathrm{T}Pg(x)$为标量，所以转置与本身相等，
+  而其转置刚好就是最后一项（利用$P$的对称性）。
+  
+  因为$A$是Hurwitz的，根据 \ref{linearlya} 有$x^\mathrm{T}Qx> 0$。至于另一项，由 \eqref{gxto0}，
+  对$\forall \gamma>0$，$\exists r>0$使得\[\frac{\|g(x)\|}{\|x\|}\le \gamma,\quad\forall\|x\|\le r\]
+  因此$\|x\|\le r$时有\begin{align*}
+    \dot{V}&\le -x^\mathrm{T}Qx+2\|x\|\|P\|\|g(x)\|\\
+    &\le -x^\mathrm{T}Qx+2\gamma\|x\|^2\|P\|\\
+    &\le -\lambda_{\min}(Q)\|x\|^2+2\gamma \|P\|\|x\|^2\\
+    &= -(\lambda_{\min}(Q)-2\gamma\|P\|)\|x\|^2
+  \end{align*}
+
+  第一个不等号是由于范数相容性，第三个不等号是由Rayleigh-Ritz不等式 \ref{rayleigh-ritz}。
+  这样，选$\gamma$使得$\lambda_{\min}(Q)>2\gamma \|P\|$，即可使得$\dot{V}$是负定的。此时$x=0$就是渐近稳定的。
+
+  将上述方法归纳为下面定理。
+  \begin{theorem}[通过线性化判别非线性系统稳定性]
+    对于系统 \eqref{freeofauto}，如果对于式 \eqref{jacobian} 所示雅可比矩阵$A$\index{雅可比矩阵（Jacobian）}，有
+    \begin{itemize}[leftmargin=1em]
+    \item $\forall i, \ensuremath{\operatorname{Re}} [\lambda_i (A)] < 0$，则系统 \eqref{freeofauto} 的原点是渐近稳定的；
+    \item $\exists i, \ensuremath{\operatorname{Re}} [\lambda_i (A)] > 0$，则系统 \eqref{freeofauto} 的原点是不稳定的；
+    \item $\forall i, \ensuremath{\operatorname{Re}} [\lambda_i (A)] \le 0$，且
+    $\exists j, \ensuremath{\operatorname{Re}} [\lambda_j (A)] = 0$，无法判断。
+    \end{itemize}
+  \end{theorem}
+  \begin{note}
+    上面定理的直观解释：在平衡点附近线性化，也可看作对所得线性系统施加小扰动。对于所得线性系统特征值严格落在左半平面或右半平面的情形，
+    这种扰动不会使得特征值跨越虚轴从而改变系统性质；然而，若所得线性系统存在虚轴上的特征值，则扰动可能使其进入左半平面，也可能
+    使其进入右半平面，因此我们无法做出判断。
+
+    由于线性化过程依赖于“平衡点附近”的假设，因此只能得出局部渐近稳定的结论，这也就是此法的局限性。
+  \end{note}
+  \newpage
+  \begin{example}[通过平衡点附近的线性化判别单摆系统的稳定性]
+   考虑单摆系统 \eqref{damped}。利用线性化检验$(0, 0)$ 和 $(\pi, 0)$这两个平衡点的稳定性。
+    \[ A_1 = \left. \frac{\partial f}{\partial x} \right|_{x = (0, 0)} = \left.
+       \left[\begin{array}{cc}
+         0 & 1\\
+         -a\ensuremath{\operatorname{cos}}  x_1 & - b
+       \end{array}\right] \right|_{x = (0, 0)} = \left[\begin{array}{cc}
+         0 & 1\\
+         - a & - b
+       \end{array}\right] \]
+    特征方程是 $\lambda^2 + b \lambda + a = 0$，两特征值之和为负、之积为正，则一定都在左半平面。因此该系统在$(0, 0)$附近是稳定的。
+    \[ A_2 = \left. \frac{\partial f}{\partial x} \right|_{x = (\pi, 0)} =
+       \left. \left[\begin{array}{cc}
+         0 & 1\\
+         -a\ensuremath{\operatorname{cos}}  x_1 & - b
+       \end{array}\right] \right|_{x = (\pi, 0)} = \left[\begin{array}{cc}
+         0 & 1\\
+         a & - b
+       \end{array}\right] \]
+       特征方程是 $\lambda^2 + b \lambda - a = 0$，两特征值之积为负，则一定有处于右半平面的特征值。因此该系统在$(\pi, 0)$附近不稳定。
+      从物理上考虑则不难理解：$(\pi, 0)$对应的实为单摆竖立最高点（最低点的对称点）。
+    \begin{note}
+      对于一元二次方程 $a  x^2 + b  x + c = 0$，其解$x_{1},x_{2}$满足韦达定理
+      \[ x_1 + x_2 = \frac{- b}{a}, \quad x_1  x_2 = \frac{c}{a} \]
+      对于$a = 1$情形，若$c > 0$则两根同号；若还有$b>0$，那么两根均具有负实部。
+      同样对于$a = 1$情形，若$c < 0$则两根异号。
+    \end{note}
+  \end{example}
