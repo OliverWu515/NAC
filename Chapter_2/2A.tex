@@ -13,7 +13,7 @@
     \item {\bf 稳定的（stable）}\index{稳定的（stable）}，若对于任意$\varepsilon>0$，均存在$\delta=\delta(\varepsilon)>0$（意即，存在与$\varepsilon$有关的$\delta$），使得
     \[\|x(0)\|<\delta\implies \|x(t)\|<\varepsilon,\forall t\ge 0\]
     \item {\bf 不稳定的（unstable）}\index{不稳定的（unstable）}，若其不是稳定的；意即，对于某个$\varepsilon>0$，不存在$\delta>0$使得第一点中的式子成立。
-    \item {\bf 渐近稳定的（asymptotically stable）}\index{稳定的（stable）!渐近$\sim$（asymptotically）}，若其稳定且存在$h>0$使得\[\|x(0)\|<h\implies \lim_{t\to\infty}x(t)=0\]
+    \item {\bf 渐近稳定的（asymptotically stable）}\index{稳定的（stable）!渐近$\sim$（asymptotically）}，若其稳定且存在$c>0$使得\[\|x(0)\|<c\implies \lim_{t\to\infty}x(t)=0\]
     \item {\bf 指数稳定的（exponentially stable）}\index{稳定的（stable）!指数$\sim$（exponentially）}，若存在两个实数$\alpha,\lambda>0$使得\[\|x(0)\|<\delta\implies \|x(t)\|<\alpha\|x(0)\|\mathrm{e}^{-\lambda t},\forall t\ge 0\]
     \item {\bf 临界稳定的（marginally stable）}\index{稳定的（stable）!临界$\sim$（marginally）}，若$x=0$是稳定的，但不是渐近稳定的。
     \item {\bf 全局渐近稳定/指数稳定的（globally asymptotically/exponentially stable）}，若上述渐近稳定或指数稳定对于任意初始状态都成立。
@@ -23,6 +23,7 @@
 \begin{note}
   指数稳定表明$x(t)$以较一指数函数更快的速率随$t\to\infty$而趋于$0$。一般而言，指数稳定蕴涵渐近稳定。对于线性系统而言，指数稳定和渐近稳定是等价的。
 \end{note}
+下面以图示说明稳定性与不稳定性。前三例来自前言中参考文献2第49-51页，最后一例来自参考文献3第12-13页。
 \newpage
 \begin{example}[稳定与不稳定的图示]\label{stable_unstable}
   \begin{itemize}[leftmargin=1em]
@@ -52,11 +53,13 @@
     \end{cases}\]
     可分三段求出系统的通解为
     \begin{align*}
-      &\begin{aligned}&x=C_{1}(2-\sqrt{3})\mathrm{e}^{(-2+\sqrt{3})t}+C_{2}(2+\sqrt{3})\mathrm{e}^{(-2-\sqrt{3})t}\\&y=C_{1}\mathrm{e}^{(-2+\sqrt{3})t}+C_{2}\mathrm{e}^{(-2-\sqrt{3})t}\end{aligned}&(x>0)\\
-      &\begin{aligned}&x=C_{1}\mathrm{e}^{t}+C_{2}t\mathrm{e}^{t}\\&y=(-C_{1}+C_2)\mathrm{e}^{t}-C_{2}t\mathrm{e}^{t}\end{aligned}&(-1\le x\le 0)\\
-      &\begin{aligned}x&=\frac{1}{2}\mathrm{e}^{-\frac{t}{2}} C_{1}\Big(\cos\frac{\sqrt{3}}{2}t + \sqrt{3} \sin\frac{\sqrt{3}}{2}t\Big)
+      &\begin{cases}x=C_{1}(2-\sqrt{3})\mathrm{e}^{(-2+\sqrt{3})t}+C_{2}(2+\sqrt{3})\mathrm{e}^{(-2-\sqrt{3})t}\\
+        y=C_{1}\mathrm{e}^{(-2+\sqrt{3})t}+C_{2}\mathrm{e}^{(-2-\sqrt{3})t}\end{cases}&(x>0)\\
+      &\begin{cases}x=C_{1}\mathrm{e}^{t}+C_{2}t\mathrm{e}^{t}\\
+        y=(-C_{1}+C_2)\mathrm{e}^{t}-C_{2}t\mathrm{e}^{t}\end{cases}&(-1\le x\le 0)\\
+      &\begin{cases}x=\frac{1}{2}\mathrm{e}^{-\frac{t}{2}} C_{1}\Big(\cos\frac{\sqrt{3}}{2}t + \sqrt{3} \sin\frac{\sqrt{3}}{2}t\Big)
         +\frac12\mathrm{e}^{-\frac t2} C_2\Big(\sin\frac{\sqrt{3}}2t-\sqrt{3}\cos\frac{\sqrt{3}}2t\Big) \\
-        y&=C_{1}\mathrm{e}^{-\frac{t}{2}}\mathrm{cos}\frac{\sqrt{3}}{2}t+C_{2}\mathrm{e}^{-\frac{t}{2}}\mathrm{sin}\frac{\sqrt{3}}{2}t+3 \end{aligned}&(x<-1)
+        y=C_{1}\mathrm{e}^{-\frac{t}{2}}\mathrm{cos}\frac{\sqrt{3}}{2}t+C_{2}\mathrm{e}^{-\frac{t}{2}}\mathrm{sin}\frac{\sqrt{3}}{2}t+3 \end{cases}&(x<-1)
     \end{align*}
     根据上面的解绘制出相轨迹如下，可知此系统不稳定，但所有解均会趋于原点。
     \begin{center}

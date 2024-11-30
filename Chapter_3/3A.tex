@@ -17,58 +17,66 @@
   \begin{itemize}[leftmargin=1em]
     \item $\alpha (r) = \arctan (r)$。由$\alpha' (r) = \frac{1}{r^2 + 1} \geq 0,
     \alpha (0) = 0, \lim\limits_{r \rightarrow \infty} \alpha (r) = \frac{\pi}{2}$，
-    所以$\alpha (r)$ 属于 $\mathcal{K}$类，但不属于 $\mathcal{K}_{\infty}$类。
+    所以$\alpha (r)$ 属于 $\mathcal{K}$类，但不属于 $\mathcal{K}_{\infty}$类函数。
     
     \item $\alpha (r) = r^c$。由$ \alpha' (r) = c r^{c-1} \geq 0, \alpha (0) = 0, \lim\limits_{r
-    \rightarrow \infty} \alpha (r) = \infty$，所以 $\alpha (r)$ 属于 $\mathcal{K}_{\infty}$类。
+    \rightarrow \infty} \alpha (r) = \infty$，所以 $\alpha (r)$ 属于 $\mathcal{K}_{\infty}$类函数。
     
-    \item $\alpha (r) = \min \{ r, r^2 \}$ 属于 $\mathcal{K}_{\infty}$类。
+    \item $\alpha (r) = \min \{ r, r^2 \}$ 属于 $\mathcal{K}_{\infty}$类函数。
     
-    \item $\beta (r, t) = r^2 e^{- t}$ 属于    $\mathcal{K}\mathcal{L}$类。
-    \item $\beta (r, t) = \frac{r}{rt+1}=\frac{1}{t+\frac1\gamma}$ 属于 $\mathcal{K}\mathcal{L}$类。
+    \item $\beta (r, t) = r^2 e^{- t}$ 属于    $\mathcal{K}\mathcal{L}$类函数。
+    \item $\beta (r, t) = \frac{r}{rt+1}=\frac{1}{t+\frac1\gamma}$ 属于 $\mathcal{K}\mathcal{L}$类函数。
   \end{itemize}
 \end{example}
 
-\begin{lemma}[$\mathcal{K}$类、$\mathcal{K}_\infty$类、$\mathcal{K}\mathcal{L}$类函数的性质]
+\begin{lemma}[$\mathcal{K}$类、$\mathcal{K}_\infty$类、$\mathcal{K}\mathcal{L}$类函数的复合]\label{klcomp}
   设定义在$[0,a)$上的函数$\alpha_{1},\alpha_{2}\in\mathcal{K}$，$\alpha_{3},\alpha_{4}\in\mathcal{K}_{\infty}$且有
   $\beta\in\mathcal{KL}$。令$\alpha_{i}^{-1}$表示$\alpha_{i}$的反函数。则
   \begin{itemize}[leftmargin=1em]
-    \item $\alpha_{1}^{-1}$定义在$[0,\alpha_{1}(a))$上，属于$\mathcal{K}$类；
-    \item $\alpha_{3}^{-1}$定义在$[0,\infty)$上，属于$\mathcal{K}_\infty$类；
-    \item $\alpha_{1} \circ\alpha_{2}$属于$\mathcal{K}$类；
-    \item $\alpha_{3} \circ\alpha_{4}$属于$\mathcal{K}_\infty$类；
-    \item $\sigma(r,t)=\alpha_{1}(\beta(\alpha_{2}(r),t)) $属于$\mathcal{K}\mathcal{L}$类。
+    \item $\alpha_{1}^{-1}$定义在$[0,\alpha_{1}(a))$上，属于$\mathcal{K}$类函数；
+    \item $\alpha_{3}^{-1}$定义在$[0,\infty)$上，属于$\mathcal{K}_\infty$类函数；
+    \item $\alpha_{1} \circ\alpha_{2}$属于$\mathcal{K}$类函数；
+    \item $\alpha_{3} \circ\alpha_{4}$属于$\mathcal{K}_\infty$类函数；
+    \item $\sigma(r,t)=\alpha_{1}(\beta(\alpha_{2}(r),t)) $属于$\mathcal{K}\mathcal{L}$类函数。
   \end{itemize}
 \end{lemma}
 
 通过下面的引理，我们将$\mathcal{K}$、$\mathcal{K}_\infty$ 和$\mathcal{K}\mathcal{L}$函数引入Lyapunov分析中。
 
-\begin{lemma}
+\begin{lemma}\label{lyapunov_comp}
   $V : D \rightarrow \mathbf{R}$ 是连续的正定函数，$D\subset\mathbf{R}^n$是包含原点的域。
-  令$B_r\subset D$（$r>0$）。那么存在
+  令$B_r\subset D$（$r>0$）。那么存在定义在$[0,r]$上的
   $\mathcal{K}$ 类函数$\alpha_1,\alpha_2$使得
   \[ \alpha_1 (\| x \|) \leq V (x) \leq \alpha_2 (\| x \|), \forall x \in B_r \]
   若$D =\mathbf{R}^n$，那么$\alpha_1,\alpha_2$应定义在$[0,\infty)$上。
-  进一步，若$V (\cdot)$是径向无界的，那么 $\alpha_1$与 $\alpha_2$应属于 $\mathcal{K}_{\infty}$。
+  进一步，若$V(x)$是径向无界的，那么 $\alpha_1$与 $\alpha_2$可选为 $\mathcal{K}_{\infty}$类函数。
 \end{lemma}
 
 \begin{example}
   设$V (x) = x^\mathrm{T} P  x$，$P$正定。由不等式 \ref{rayleigh-ritz}，可取上述引理中的$\alpha_1=\lambda_{\min} (P)r^2$，$\alpha_2=\lambda_{\max} (P)r^2$。
 \end{example}
+为了看出 \ref{lyapunov_comp} 是如何用于Lyapunov分析的，下面利用它来证明定理 \ref{lyapunov}。
+在证明中，我们尝试选取$\delta$和$\beta$使得$B_\delta\subset\Omega_\beta\subset B_r$。利用上述引理
+我们知道\[\alpha_1 (\| x \|) \leq V (x) \leq \alpha_2 (\| x \|)\]
+可取$\beta\le\alpha_1(r)$和$\delta\le\alpha_2^{-1}(\beta)$（即$\alpha_2(\delta)\le\beta$）。首先可得
+\[V(x)\le\beta\implies\alpha_1(\|x\|)\le\alpha_1(r)\iff \|x\|\le r\]
+其中的等价号是由$\alpha_1$的单调性。这样就得到了$\Omega_\beta\subset B_r$。
+还可得\[\|x\|\le\delta\implies V(x)\le\alpha_2(\delta)\le\beta\]
+这样就得到了$B_\delta\subset\Omega_\beta$。
+关于渐近稳定性的证明，尚需要一些其他的结论，可参考前言中的参考文献1（145-146页）。
 
-% \begin{lemma}
-%   The equilibrium point $x = 0$ of $\dot{x} = f (x)$ is {\textbf{stable}} iff
-%   there exists a class $\mathcal{K}$ function $\alpha (.)$ and a constant
-%   $\delta$ such that
-%   \[ \| x (0) \| \leq \delta \quad \Rightarrow \quad \| x (t) \| \leq \alpha
-%      (\| x (0) \|), \forall t \geq 0. \]
-% \end{lemma}
+下面两个引理也是利用比较函数进行Lyapunov分析的例子，可自行证明之。
+\begin{lemma}
+  系统 (\ref{freeofauto}) 的平衡点 $x = 0$ 是稳定的，当且仅当存在一$\mathcal{K}$类函数 $\alpha (\cdot)$
+  和常数$\delta$ 使得
+  \[ \| x (0) \| \leq \delta \quad \Rightarrow \quad \| x (t) \| \leq \alpha
+     (\| x (0) \|), \forall t \geq 0. \]
+\end{lemma}
 
-% \begin{lemma}
-%   The equilibrium point $x = 0$ of $\dot{x} = f (x)$ is
-%   {\textbf{asymptotically stable}} iff there exists a class
-%   $\mathcal{K}\mathcal{L}$ function $\beta (., .)$ and a constant $\delta$
-%   such that
-%   \[ \| x (0) \| \leq \delta \quad \Rightarrow \quad \| x (t) \| \leq \beta
-%      (\| x (0) \|, t), \forall t \geq 0. \]
-% \end{lemma}
+\begin{lemma}
+  系统 (\ref{freeofauto}) 的平衡点 $x = 0$ 是渐近稳定的，当且仅当存在一
+  $\mathcal{K}\mathcal{L}$类函数 $\beta (\cdot,\cdot)$与常数 $\delta$
+  使得
+  \[ \| x (0) \| \leq \delta \quad \Rightarrow \quad \| x (t) \| \leq \beta
+     (\| x (0) \|, t), \forall t \geq 0. \]
+\end{lemma}

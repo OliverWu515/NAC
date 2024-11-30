@@ -107,7 +107,8 @@
   $x_1 (t) = \beta\cos  t, x_2 (t) = - \beta \sin  t$。
   这样一来，自$x_1^2+x_2^2=\beta^2$出发的轨线会一直在其上运动，因此形成了一个极限环，同时也是不变集。
 
-  {\it 定性分析极限环性质：设$r = \sqrt{x^2_1 + x^2_2}, \theta = \arctan \frac{x_2}{x_1}$，我们有（注意此时应代入原方程）
+  \begin{note}
+    定性分析极限环性质：设$r = \sqrt{x^2_1 + x^2_2}, \theta = \arctan \frac{x_2}{x_1}$，我们有（注意此时应代入原方程）
   \begin{align*}
     \dot{r}& = \frac{1}{2}(x_{1}^{2}+x_{2}^{2})^{-\frac{1}{2}}(2x_{1}\dot{x}_{1}+2x_{2}\dot{x}_{2})= r (\beta^2 - r^2)\\
     \dot{\theta} & =\frac{1}{1+(\frac{x_{2}}{x_{1}})^{2}}\frac{\dot{x}_{2}x_{1}-\dot{x}_{1}x_{2}}{x_{1}^{2}}= - 1
@@ -120,7 +121,8 @@
   则 \ $\left\{\begin{array}{l}
     r < \beta, \dot{r} > 0 \Rightarrow r \rightarrow \beta\\
     r > \beta, \dot{r} < 0 \Rightarrow r \rightarrow \beta
-  \end{array}\right. \Rightarrow$ 极限环稳定。}
+  \end{array}\right. \Rightarrow$ 极限环稳定。
+\end{note}
 
   下面利用LaSalle定理来分析。构造如下候选Lyapunov函数\[ V (x) = \frac{1}{4} (x^2_1 + x^2_2 - \beta^2)^2 \]
   构造此函数的动机是，它衡量了与极限环的“距离”。显然$V (x) \geq 0$，但要注意同上个例子一样，此函数也不是正定的。求其导数得
@@ -141,9 +143,11 @@
   \frac{1}{4} \beta^4 \right)$，即知每个自$\Omega_c$出发的轨线均收敛至极限环，因此极限环稳定。
   取$c=\frac{1}{4} \beta^4-\varepsilon$，其中$\varepsilon$可任意小，我们发现，无限接近于原点的状态也都会收敛至极限环，则原点不稳定。
 
-  {\citshape 要判别原点的不稳定性，亦可构造如下候选Lyapunov函数\[V=\frac12(x_1^2+x_2^2)\]
+  \begin{note}
+    要判别原点的不稳定性，亦可构造如下候选Lyapunov函数\[V=\frac12(x_1^2+x_2^2)\]
   求导得\begin{align*}
 	  \dot{V}&=x_1\dot{x}_1+x_2\dot{x}_2=(x_1^2+x_2^2)(\beta^2-x_1^2-x_2^2)
   \end{align*}
-  其在原点的小邻域内为正定，则运用定理 \ref{unstable} 即可。}
+  其在原点的小邻域内为正定，则运用定理 \ref{unstable} 即可。
+  \end{note} 
 \end{example}

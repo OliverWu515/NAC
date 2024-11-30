@@ -1289,7 +1289,7 @@
   % \hrule
   % \vspace{3pt}
   % \par\noindent\textbf{\color{third}\theequation\quad{\examplename}：#1 }\rmfamily\par}{
-    \par\noindent\textbf{\color{black}\theequation\quad{\examplename}：#1 }\rmfamily\par}{
+    \par\noindent\textbf{\color{black}\theequation\quad{\examplename}\ifblank{#1}{}{：#1}}\rmfamily\par}{
   % \par
   % \nopagebreak
   % \vspace{3pt}
