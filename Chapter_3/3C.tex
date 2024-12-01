@@ -1,0 +1,74 @@
+\section{时变正定函数与非自治系统稳定性定理}\label{3Cref}
+\begin{definition}
+    \begin{itemize}[leftmargin=1em]
+      \item 称$V(t,x)$是正半定函数\index{正半定（positive semidefinite）}，$V(t,x)\ge 0$，$V(t,0)=0$。
+      \item 称$V(t,x)$是正定函数\index{正定（positive definite）}，$V(t,x)\ge W_1(x)$，其中$W_1(x)$是正定函数。
+      \item 称$V(t,x)$是{\bf 渐弱的（decrescent）}\index{渐弱的（decrescent）}，$V(t,x)\le W_2(x)$，其中$W_2(x)$是正定函数。
+      \item 称$V(t,x)$是径向无界的，若$\|x\|\to\infty$，$V(t,x)\to \infty$。
+    \end{itemize}
+\end{definition}
+\begin{example}
+    令$x = [\begin{array}{cc}
+    x_1& x_2
+  \end{array}]^\mathrm{T}$。
+  \begin{itemize}[leftmargin=1em]
+    \item $V (x, t) = (1 + t^2) (x^2_1 + x_2^2)$：可取 $W_1 (x) = x^2_1 +
+    x^2_2$，则其正定；但其并不渐弱。
+    
+    \item $V (x, t) = (1 + \sin^2 t) (x^2_1 + x_2^2)$：可取$W_1 (x) = x^2_1 +
+    x^2_2, W_2 = 2 (x^2_1 + x^2_2)$，则其正定且渐弱。
+    
+    \item $V (x, t) = \frac{1 + t^2}{2 + t^2} (x^2_1 + x_2^2)$：注意到因子取值范围$(\frac12,1)$，可取 $W_1 (x)
+    = \frac{1}{2} (x^2_1 + x^2_2), W_2 = x^2_1 + x^2_2$，则其正定且渐弱。
+  \end{itemize}
+\end{example}
+
+\begin{theorem}[时变系统的Lyapunov稳定性定理]
+  令 $x = 0$ 是系统 \eqref{freeofnonauto} 的平衡点，$D \subset
+  \mathbf{R}^n$ 是包含原点的域。令 $V: D \times [0, \infty) \rightarrow \mathbf{R}$
+  是连续可微函数，如果其满足
+  \begin{itemize}[leftmargin=1em]
+    \item $V (x, t)$ 正定（即存在$W_1 (x) \leq V (x, t)$，其中$W_1$正定）与
+    $\dot{V} (x, t) = \frac{\partial V}{\partial x} f (x, t) + \frac{\partial V}{\partial t} \leq 0$，那么$x=0$是稳定的。
+    
+    \item 进一步地，如果 $V (x, t)$ 也是渐弱的，也即
+    \[ W_1 (x) \leq V (x, t) \leq W_2 (x) \qquad (W_1, W_2 \ \text{是正定的}) \]
+    那么 $x = 0$ 是一致稳定的。
+    
+    \item 如果第一点中的第二个条件加强为
+    \[ \dot{V} (x, t) = \frac{\partial V}{\partial x} f (x, t) + \frac{\partial
+       V}{\partial t} \leq - W_3 (x) \qquad (W_3 \ \text{是正定的}) \]
+    那么 $x = 0$ 是一致渐近稳定的。
+    
+    \item 进一步地，如果$D=\mathbf{R}^n$ 且 $W_1 (x)$ 是径向无界的，那么 $x = 0$ 是全局一致渐近稳定的。
+
+    \item 若前三点中的$W_i,i=1,2,3$都具有$k_i \| x \|^\alpha $的形式（各$k_i$及$\alpha> 0$），那么$x = 0$ 是一致指数稳定的。
+  \end{itemize}
+\end{theorem}
+\begin{note}
+  $V(t,x)\le W_2(x)$对于一致稳定性是必要的。
+\end{note}
+\begin{example}
+  考虑下述系统
+  \begin{align*}
+    \dot{x}_1 & = - x_1 - \mathrm{e}^{- 2 t} x_2\\
+    \dot{x}_2 & = x_1 - x_2
+  \end{align*}
+  考虑下述候选Lyapunov函数
+  \[ V (x, t) = x^2_1 + (1 + \mathrm{e}^{- 2 t}) x^2_2 \]
+  我们可见
+  \[ \| x \|^2 \triangleq W_1 (x) = x^2_1 + x^2_2 \leq V (x, t) \leq x^2_1 + 2
+     x^2_2  \leq 2 \| x \|^2 \triangleq W_2 (x) \]
+  $W_1$和$W_2$均为正定。因此，$V (x, t)$是正定、渐弱、径向无界的。
+  
+  求$V$随时间（沿状态轨线）的导数得
+  \begin{align*}
+    \dot{V} (x, t) & =  2 x_1 \dot{ x}_1 + (1 + \mathrm{e}^{- 2 t}) 2 x_2 \dot{x}_2 -
+    2 \mathrm{e}^{- 2 t} x^2_2\\
+    & =  - (x^2_1 + x^2_2) - (x_1 - x_2)^2 - 4 \mathrm{e}^{- 2 t} x^2_2\\
+    & \leq  - (x^2_1 + x^2_2)\\
+    &  = - \| x \|^2\\
+    &\triangleq  - W_3 (x)
+  \end{align*}
+  因此，原点是全局一致渐近稳定的（由$W_1,W_2,W_3$的形式，可进一步判别指数稳定性）。
+\end{example}
