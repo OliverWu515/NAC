@@ -5,10 +5,10 @@
 下面要介绍的Barbalat引理（\ref{barbalat}）给出了一类本身及导数渐近收敛的函数的刻画。
 先看一个“否定直觉”的例子。
 \begin{example}
-    给定对$t$可微的函数$f$，$f$收敛  $\nLeftrightarrow $ $\dot{f} \rightarrow 0$！
+    给定对$t$可微的函数$f$，$f$收敛  $\nLeftrightarrow $ $\dot{f} \rightarrow 0 (t \rightarrow \infty)$！
   \begin{itemize}[leftmargin=1em]
     \item $\nRightarrow $： $f = \mathrm{e}^{- t} \sin (\mathrm{e}^{2 t}) \rightarrow 0$，但是$ \dot{f} = - \mathrm{e}^{- t} \sin
-    (\mathrm{e}^{2 t}) + e^t \cos (\mathrm{e}^{2 t}) \cdot 2 \mathrm{e}^{2 t} \rightarrow \infty$；
+    (\mathrm{e}^{2 t}) + e^t \cos (\mathrm{e}^{2 t}) \cdot 2 \mathrm{e}^{2 t}$ 无界；
     
     \item $\nLeftarrow $：$f = \ln  t$，有$ \dot{f} = \frac{1}{t} \rightarrow0$，但是$f \rightarrow \infty$。
   \end{itemize}
@@ -32,10 +32,10 @@
     
 \end{proof}
 \begin{theorem}[``Lyapunov-like'']
-    
+  若标量函数 $V(t, x)$ 有下界，且 $\dot{V}(t, x)$ 负半定并一致连续，那么 $\lim_{t \to \infty} \dot{V}(t, x) = 0$。
 \end{theorem}
 \begin{proof}
-    
+    由 $\dot{V}(t, x)$ 负半定，可得 $V (t, x)$ 单调递减，又因为 $V(t, x)$ 有下界，可得 $V (t, x)$ 具有有限极限。此外，$\dot{V}(t, x)$ 一致连续，根据 Barbalat 引理可得 $\lim_{t \to \infty} \dot{V}(t, x) = 0$。
 \end{proof}
 \begin{theorem}[LaSalle-Yoshizawa定理]\index{LaSalle-Yoshizawa定理}\label{LaSalle-Yoshizawa}
     令$x=0$是 \eqref{freeofnonauto} 的平衡点，并设$f$对$t$是分段连续，且对$x$是局部Lipschitz的（对于$t$是一致的）。令$V$是以连续可微函数，满足$\forall t\ge 0,x\in\R{}^n$，\[\gamma_1(\|x\|)\le V(x,t)\le \gamma_2(\|x\|)\]
