@@ -1,0 +1,49 @@
+\section{多输入多输出（MIMO）系统的模型参考自适应控制}
+
+\begin{equation}\label{MIMO}
+  \dot{x}=Ax+B\Lambda u
+\end{equation}
+
+其中$x\in\R{}^n$是系统的状态，
+
+\begin{align}
+  \dot{e}&=\dot{x}-\dot{x}_{ref}\nonumber\\
+  &=A_{ref}e+B\Lambda\tilde{K}_1x+B\Lambda\tilde{K}_2u_c
+\end{align}
+
+类比之前的构造，考虑如下“形式上的”Lyapunov函数
+\begin{align*}
+  V&=\frac12e^2+\frac{1}{2}\tilde{K}_1^2+\frac{1}{2}\tilde{K}_2^2
+\end{align*}
+由于其中的$e,\tilde{K}_1,\tilde{K}_2$都是向量或矩阵，而Lyapunov函数输出是标量，上述式子要做相应的修改。
+首先，将$e^2$换成$e^\mathrm{T}e$；然后，将$\tilde{K}_1^2$换为\[\tr(\tilde{K}_1^\mathrm{T}\tilde{K}_1)\]
+由于$\tilde{K}_1^\mathrm{T}\tilde{K}_1$是实对称矩阵，故其一定可做相似对角化，对角化之后的，而迹是相似不变量，
+
+半正定的，；
+而迹等于矩阵所有特征值之和，故$\tilde{K}_1\ne0$时，上式一定为正；
+
+\begin{equation}\label{MIMOLYA}
+  V=e^\mathrm{T}Pe+\tr(\tilde{K}_1^\mathrm{T}\tilde{K}_1)+\tr(\tilde{K}_2^\mathrm{T}\tilde{K}_2)
+\end{equation}
+
+其中$P$是满足如下Lyapunov方程的正定矩阵。求其对$t$的导数可得
+\begin{align}
+  \dot{V}&=\dot{e}^\mathrm{T}Pe+e^\mathrm{T}P\dot{e}+2\tr(\tilde{K}_1^\mathrm{T}\dot{\tilde{K}}_1)+
+  2\tr(\tilde{K}_2^\mathrm{T}\dot{\tilde{K}}_2)\\
+  &=\dot{e}^\mathrm{T}(A_{ref}^\mathrm{T}P+PA_{ref})e+2{e}^\mathrm{T}PB\Lambda\tilde{K}_1x+2{e}^\mathrm{T}PB\Lambda
+  \tilde{K}_2u_c+2\tr(\tilde{K}_2^\mathrm{T}\dot{\tilde{K}}_2)\\
+  &=-e^\mathrm{T}Qe+2\tr(\tilde{K}_1^\mathrm{T}\Lambda B^\mathrm{T}Pex^\mathrm{T})+2\tr(\tilde{K}_2^\mathrm{T}\Lambda B^\mathrm{T}Peu_c^\mathrm{T})+2{e}^\mathrm{T}PB\Lambda\tilde{K}_2u_c+2\tr(\tilde{K}_2^\mathrm{T}\dot{\hat{K}}_2)
+\end{align}
+其中第三行我们用到了
+\begin{align*}
+  {e}^\mathrm{T}PB\Lambda\tilde{K}_1x&=\tr({e}^\mathrm{T}PB\Lambda\tilde{K}_1x)&\text{（标量）}\\
+  &=\tr(x{e}^\mathrm{T}PB\Lambda\tilde{K}_1)&\text{（}\tr(AB)=\tr(BA)\text{）}\\
+  &=\tr(\tilde{K}_1^\mathrm{T}\Lambda B^\mathrm{T}Pex^\mathrm{T})&\text{（}\tr(A^\mathrm{T})=\tr(A)\text{）}
+\end{align*}
+于是我们可设计
+
+但是该设计是不可行的，
+
+\begin{equation}\label{MODMIMOLYA}
+  V=e^\mathrm{T}Pe+\tr(\tilde{K}_1^\mathrm{T}\textcolor{red}{\Lambda}\tilde{K}_1)+\tr(\tilde{K}_2^\mathrm{T}\textcolor{red}{\Lambda}\tilde{K}_2)
+\end{equation}
