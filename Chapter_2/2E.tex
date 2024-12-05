@@ -35,9 +35,10 @@
   
   下面利用线性化，将这个结论推广至非线性系统。
 
-  以分析原点的稳定性为例。将系统 \eqref{freeofauto} 在原点附近线性化得\begin{equation}
+  以分析原点的稳定性为例。将系统 \eqref{freeofauto} 在原点附近线性化得
+  \begin{equation*}
     \dot{x}=Ax+g(x)
-  \end{equation}
+  \end{equation*}
   其中
   \begin{equation}\label{jacobian}
     A=\frac{\partial f(x)}{\partial x}|_{x=0}=\left.\begin{bmatrix}\frac{\partial f_{1}}{\partial x_{1}}&\cdots&\frac{\partial f_{n}}{\partial x_{1}}\\\vdots&&\vdots\\\frac{\partial f_{n}}{\partial x_{1}}&\cdots&\frac{\partial f_{n}}{\partial x_{n}}\end{bmatrix}\right|_{x=0}
@@ -49,18 +50,18 @@
   考虑候选Lyapunov函数
   \[ V (x) = x^\mathrm{T} P  x \]
   其中$P \in \mathbf{R}^{n \times n}$ 为正定。其导数等于
-  \begin{equation}
+  \begin{equation*}
     \begin{aligned}
     \dot{V}&= x^\mathrm{T}P\dot{x}+\dot{x}^\mathrm{T}Px\\
     &= x^\mathrm{T}P(Ax+g(x))+(Ax+g(x))^\mathrm{T}Px\\
     &= x^\mathrm{T}(PA+A^\mathrm{T}P)x+x^\mathrm{T}Pg(x)+g^\mathrm{T}(x)Px\\
     &=-x^\mathrm{T}Qx+2xPg(x)
     \end{aligned}
-  \end{equation}
+  \end{equation*}
   其中第四个等号，是由于$x^\mathrm{T}Pg(x)$为标量，所以转置与本身相等，
   而其转置刚好就是最后一项（利用$P$的对称性）。
   
-  因为$A$是Hurwitz的，根据 \ref{linearlya} 有$x^\mathrm{T}Qx> 0$。至于另一项，由 \eqref{gxto0}，
+  因为$A$是Hurwitz的，根据 \ref{linearlya} 知$Q$正定；此外，由 \eqref{gxto0}，
   对$\forall \gamma>0$，$\exists r>0$使得\[\frac{\|g(x)\|}{\|x\|}\le \gamma,\quad\forall\|x\|\le r\]
   因此$\|x\|\le r$时有\begin{align*}
     \dot{V}&\le -x^\mathrm{T}Qx+2\|x\|\|P\|\|g(x)\|\\
@@ -68,8 +69,7 @@
     &\le -\lambda_{\min}(Q)\|x\|^2+2\gamma \|P\|\|x\|^2\\
     &= -(\lambda_{\min}(Q)-2\gamma\|P\|)\|x\|^2
   \end{align*}
-
-  第一个不等号是由于范数相容性，第三个不等号是由Rayleigh-Ritz不等式 \ref{rayleigh-ritz}。
+  第一个不等号是由于范数相容性，第三个不等号是由不等式 \ref{rayleigh-ritz}。
   这样，选$\gamma$使得$\lambda_{\min}(Q)>2\gamma \|P\|$，即可使得$\dot{V}$是负定的。此时$x=0$就是渐近稳定的。
 
   将上述方法归纳为下面定理。
@@ -90,7 +90,7 @@
     由于线性化过程依赖于“平衡点附近”的假设，因此只能得出局部渐近稳定的结论，这也就是此法的局限性。
   \end{note}
   \newpage
-  \begin{example}[通过平衡点附近的线性化判别单摆系统的稳定性]
+  \begin{example}[通过平衡点附近的线性化判别单摆系统的稳定性]\label{linearization_exp}
    考虑单摆系统 \eqref{damped}。利用线性化检验$(0, 0)$ 和 $(\pi, 0)$这两个平衡点的稳定性。
     \[ A_1 = \left. \frac{\partial f}{\partial x} \right|_{x = (0, 0)} = \left.
        \left[\begin{array}{cc}

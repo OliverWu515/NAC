@@ -1,5 +1,5 @@
 \section{自治系统的稳定性定理}\label{2Cref}
-\begin{theorem}[Lyapunov稳定性定理]\label{lyapunov}\index{Lyapunov稳定性定理}
+\begin{theorem}[Lyapunov稳定性定理]\label{lyapunov}\index{Lyapunov稳定性定理!自治系统的$\sim$}
   令$x=0$为 \eqref{freeofauto} 的平衡点，$D\subset\R{}^n$为包含$x=0$的域。令$V:D\to\R$为连续可微函数且满足
     \begin{equation}\label{VPD}
       V(0)=0,V(x)>0,\forall x\in D\backslash\{0\}
@@ -145,7 +145,7 @@
     \begin{itemize}[leftmargin=1em]
       \item $V(0)=0,V(x)>0,\forall x\in \R{}^n\backslash\{0\}$（$V$为正定）
       \item $\dot{V}(x)< 0,\forall x\in \R{}^n$（$\dot{V}$为负定）
-      \item $\|x\|\to\infty\implies V(x)\to \infty$（$V$为径向无界，或称为无限大）
+      \item $\|x\|\to\infty\implies V(x)\to \infty$【$V$为径向无界（radially unbounded）\index{径向无界（radial unboundness）}，或称为无限大】
     \end{itemize}
   则系统 \eqref{freeofauto} 的平衡点$x=0$是全局渐近稳定的。
 \end{theorem}

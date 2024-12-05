@@ -35,25 +35,6 @@
   并且经过的时间$T$仅与所要求的状态与原点的距离有关（$T(\eta)$），而与初始时刻无关（一致）；全局一致渐近稳定，则是在此基础上加入了“全局”的要求，也即初始状态任意（$c$能取遍所有的正数）。达到与原点给定距离之内的用时$T$，仍然与初始时刻无关，
   不过增加了对初始状态的相关性（$T(\eta,c)$）——很容易理解：不能要求“很远”的初始状态与“很近”的初始状态有相同的过渡时间。
 \end{note}
-下面的引理利用比较函数，给出了一致稳定和一致渐近稳定的更为简洁明了的定义。
-\begin{lemma}
-  系统 \eqref{freeofnonauto} 的平衡点 $x = 0$是
-  \begin{itemize}[leftmargin=1em]
-  \item 一致稳定的，若存在一$\mathcal{K}$类函数 $\alpha$和常数
-  $c$ 使得
-   \[ \| x (t) \| \leq \alpha (\| x (t_0) \|), \forall t \geq t_0 \geq 0,
-       \forall \| x (t_0) \| \le c. \]
-  \item 一致渐近稳定的，若存在一$\mathcal{K}\mathcal{L}$ 类函数 $\beta$ 和正常数$c$（与$t_0$无关），使得
-  \begin{equation}
-    \| x (t) \| \leq \beta (\| x (t_0) \|, t - t_0), \forall t \geq t_0 \geq
-    0, \forall \| x (t_0) \| \le  c \label{uas:iff:kl} .
-  \end{equation}
-  \item 全局一致渐近稳定的，若不等式 \eqref{uas:iff:kl} 对所有初始状态$x (t_0)$都成立，即$c$可取至$\infty$。
-  \item 一致指数稳定的，若上述$\beta$具有$\beta(r,t)=kr\mathrm{e}^{-\lambda t}$的形式：
-  \[\|x(t)\|\le k\|x(t_0)\|\mathrm{e}^{-\lambda(t-t_0)}, \forall t \geq t_0,\forall \| x (t_0) \| \le  c \]
-  \end{itemize}
-\end{lemma}
-
 \begin{example}[稳定但不一致稳定]
   考虑如下非线性系统
   \[ \dot{x} = (6 t  \sin  t - 2 t) x \]
@@ -93,3 +74,48 @@
   因此，$t_0$离$0$越远，其解的变化就越剧烈，
   则对于任意 $\varepsilon > 0$，不存在与$t_0$ 无关的$\delta (\varepsilon)$，也就不满足一致稳定的定义。
 \end{example}
+\newpage
+下面的引理利用比较函数，给出了一致稳定和一致渐近稳定的更为简洁明了的定义。
+\begin{lemma}\label{comp_uniform}
+  系统 \eqref{freeofnonauto} 的平衡点 $x = 0$是
+  \begin{itemize}[leftmargin=1em]
+  \item 一致稳定的\index{稳定的（stable）!一致$\sim$（uniformly）}，若存在一$\mathcal{K}$类函数 $\alpha$和正常数$c$（与$t_0$无关）\index{K@$\mathcal{K}$ 类函数}使得
+   \[ \| x (t) \| \leq \alpha (\| x (t_0) \|), \forall t \geq t_0 \geq 0,
+       \forall \| x (t_0) \| \le c. \]
+  \item 一致渐近稳定的\index{稳定的（stable）!一致渐近$\sim$（uniformly asymptotically）}，若存在一$\mathcal{K}\mathcal{L}$ 类函数 $\beta$ 和正常数$c$（与$t_0$无关），\index{Kl@$\mathcal{K}\mathcal{L}$ 类函数}使得
+  \begin{equation}
+    \| x (t) \| \leq \beta (\| x (t_0) \|, t - t_0), \forall t \geq t_0 \geq
+    0, \forall \| x (t_0) \| \le  c \label{uas:iff:kl} .
+  \end{equation}
+  \item 全局一致渐近稳定的\index{稳定的（stable）!全局一致渐近$\sim$（globally uniformly asymptotically）}，若不等式 \eqref{uas:iff:kl} 对所有初始状态$x (t_0)$都成立，即$c$可取至$\infty$。
+  \item 一致指数稳定的，若上述$\beta$具有$\beta(r,t)=kr\mathrm{e}^{-\lambda t}$（$k>0,\lambda>0$）的形式：
+  \[\|x(t)\|\le k\|x(t_0)\|\mathrm{e}^{-\lambda(t-t_0)}, \forall t \geq t_0,\forall \| x (t_0) \| \le  c \]
+  \end{itemize}
+\end{lemma}
+\begin{example}[一致稳定且渐近稳定，但非一致渐近稳定]
+  考虑下面系统
+  \[\dot{x}=\frac{-x}{1+t},t>-1\]
+  可求得其解为
+  \begin{align*}
+    x(t)=x(t_0)\mathrm{e}^{\int_{t_0}^t\frac{-1}{1+s}\diff s}=x(t_0)\mathrm{e}^{\ln(1+s)|_t^{t_0}}
+    =x(t_0)\mathrm{e}^{\ln\frac{1+t_0}{1+t}}=x(t_0)\frac{1+t_0}{1+t}
+  \end{align*}
+  可见，$\|x(t)\|\le\|x(t_0)\|$，在 \ref{comp_uniform} 中取$\alpha(r)=r$，即可说明原点是一致稳定的。
+
+  \begin{wrapfigure}{R}{0.36\textwidth}
+    \vspace{-1em}
+  	\includegraphics[width=0.95\linewidth]{./figure/nonlinear/not_uniform.png}
+    \captionof{figure}{随$t_0$增长，收敛越来越慢}
+  \end{wrapfigure}
+
+  \vspace{1em}
+  原点也是渐近稳定的（随时间增长$\|x(t)\|\to0$），但并非一致渐近稳定，因为考虑下式（绘出示意图如右）
+  \[x(t)=x(t_0)\frac{1+t_0}{1+t_0+(t-t_0)}=\frac{x(t_0)}{1+\frac{t-t_0}{1+t_0}}\]
+  即可发现收敛的速率与$t_0$有关。
+  % \begin{center}
+  %   \includegraphics[scale=0.3]{figure/nonlinear/not_uniform.png}
+  %   \captionof{figure}{随$t_0$增长，收敛越来越慢}
+  % \end{center}
+\end{example}
+
+

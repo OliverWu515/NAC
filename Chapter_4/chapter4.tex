@@ -1,11 +1,113 @@
-\chapter{自适应控制}\label{cp5}
-\section{概述}
+\chapter{自适应控制}\label{cp4}
+\section{概述}\label{4Aref}
 
-\subsubsection*{鲁棒控制（略）}
+% \subsubsection*{鲁棒控制（略）}
 
-\subsubsection*{增益调整（Gain Scheduling）}
-\addcontentsline{toc}{subsubsection}{增益调整（Gain Scheduling）}
+% \subsubsection*{增益调整（Gain Scheduling）}
+% \addcontentsline{toc}{subsubsection}{增益调整（Gain Scheduling）}
 
-\subsubsection*{直接与非直接自适应控制}
+% \subsubsection*{直接与非直接自适应控制}
 
-\subsubsection*{模型参考自适应控制（Model Reference Adaptive Control，MRAC）}
+% \subsubsection*{模型参考自适应控制（Model Reference Adaptive Control，MRAC）}
+\begin{definition}
+    \textbf{自适应控制器}是\textbf{结构固定}但具有\textbf{可变参数}的控制器，且带有一套自动调整参数的规则。
+  \end{definition}
+  
+  \begin{description}
+    \item[Why adaptive control?]
+    \begin{enumerate}
+      \item Systems to be controlled have {\textsf{parameter uncertainty}}.
+      
+      \item Systems experience {\textsf{unpredictable parameter variations}}.
+      
+      \item Unknown {\textsf{disturbance characteristics}}.
+    \end{enumerate}
+  \end{description}
+  
+  \begin{description}
+    \item[Adaptive Control]
+    \begin{enumerate}
+      \item Adaptive control is superior to robust control in dealing with
+      uncertainties in constant or slow-varying parameters.
+      
+      \item An adaptive controller improves its performance as adaptation goes
+      on.
+      
+      \item An adaptive controller requires litter or no priori information
+      about the unknown parameters.
+    \end{enumerate}
+  \end{description}
+  
+  \begin{description}
+    \item[Robust Control]
+    \begin{enumerate}
+      \item Robust control has advantages in dealing with disturbance, quickly
+      varying parameters and unmodeled dynamics.
+      
+      \item A robust controller attempts to keep consistent performance.
+      
+      \item A robust controller requires reasonable a prior estimates of the
+      parameter bounds.
+    \end{enumerate}
+  \end{description}
+
+\begin{enumerate}
+    \item Characterize the desired behavior of the closed-loop systems.
+    
+    \item Determine a suitable control law containing adjustable parameters.
+    
+    \item Find a mechanism (an adaptation law) for adjusting those parameters.
+    
+    \item Analyze the convergence properties and implement the control law.
+  \end{enumerate}
+  \begin{description}
+    \item[Gain Scheduling]
+    \begin{enumerate}
+      \item Controller parameters change in a predetermined fashion with the
+      operating conditions.
+      
+      \item AE: the parameters can be changed quickly in response to changes in
+      the dynamics.
+      
+      \item DE: it is an open-loop adaptation scheme, with no real ``learning''.
+    \end{enumerate}
+  \end{description}
+  
+  \begin{description}
+    \item[Self-Tuning]
+    \begin{enumerate}
+      \item Controller parameters change in a predetermined fashion with the
+      operating conditions.
+      
+      \item Performs simultaneous parameter identification and control.
+      
+      \item Uses Certainty Equivalence Principle
+    \end{enumerate}
+  \end{description}
+  
+  \begin{description}
+    \item[Model Reference]
+    \begin{enumerate}
+      \item Plant: containing unknown parameters and having a known structure.
+      
+      \item RM: specifying the desired output of the control system.
+      
+      \item Feedback control law: containing adjustable parameters.
+      
+      \item Adaptation mechanism: updating the adjustable parameters.
+    \end{enumerate}
+  \end{description}
+  
+  \begin{description}
+    \item[Types]
+    \begin{enumerate}
+      \item Indirected: estimate plant parameters $\Rightarrow$ design
+      controller parameters. The process model and possibly the disturbance
+      characteristics are first determined. The controller parameters are
+      designed on the basis of this information.
+      
+      \item Directed: directly design controller parameter. The controller
+      parameters are changed directly without the characteristics of the process
+      and its disturbance first being determined.
+    \end{enumerate}
+  \end{description}

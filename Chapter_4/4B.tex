@@ -1,0 +1,219 @@
+\section{模型参考自适应控制：标量系统的设计}\label{4Bref}
+
+\subsection{引入}
+
+\subsection{标量系统的直接型模型参考自适应控制}
+Consider the following first-order system
+\begin{equation}
+  \dot{x} = - a  x + b  u \label{Sys:MRAC:scalar}
+\end{equation}
+where $a, b$ are unknown parameters but the sign of $b$ is known.
+
+Control objective: design $u$ such that all signals in the closed-loop system
+are bounded, and $x$ tracks the state $x_{\ensuremath{\operatorname{ref}}}$ of
+the following reference model
+\begin{equation}
+  \dot{x}_{\ensuremath{\operatorname{ref}}} = -
+  a_{\ensuremath{\operatorname{ref}}} x_{\ensuremath{\operatorname{ref}}} +
+  b_{\ensuremath{\operatorname{ref}}} u_c \label{Sys:MRAC:scalar:ref}
+\end{equation}
+where $a_{\ensuremath{\operatorname{ref}}} > 0$ and
+$b_{\ensuremath{\operatorname{ref}}}$ are the desired known constants, $u_c
+(t)$ is the input command which is bounded and piecewise continuous.
+
+We propose the control law
+\begin{equation}
+  u = k^{\ast}_1 x + k^{\ast}_2 u_c \label{u*:k1*xk2*uc}
+\end{equation}
+where $k^{\ast}_1, k^{\ast}_2$ are the desired known constants. The
+closed-loop system of \eqref{Sys:MRAC:scalar} and \eqref{u*:k1*xk2*uc} is
+\begin{eqnarray*}
+  \dot{x} & = & - a  x + b  (k^{\ast}_1 x + k^{\ast}_2 u_c)\\
+  & = & - (a - b  k^{\ast}_1)  x + b  k^{\ast}_2 u_c
+\end{eqnarray*}
+Then the perfect model condition is
+\begin{equation}
+  k^{\ast}_1 = \frac{a - a_{\ensuremath{\operatorname{ref}}}}{b}, k^{\ast}_2 =
+  \frac{b_{\ensuremath{\operatorname{ref}}}}{b} \label{k1*k2*}
+\end{equation}
+When $a, b$ are unknown, \eqref{k1*k2*} cannot be implemented. Therefore,
+instead of \eqref{u*:k1*xk2*uc}, we propose the following control law with
+adjustable parameters.
+\begin{equation}
+  u = \hat{k}_1 (t) x + \hat{k}_2 (t) u_c \label{u:k1xk2uc}
+\end{equation}
+where $\hat{k}_1 (t), \hat{k}_2 (t)$ are the estimates of $k^{\ast}_1,
+k^{\ast}_2$, respectively.
+
+We substitute \eqref{u:k1xk2uc} into \eqref{Sys:MRAC:scalar}
+\begin{equation}
+  \dot{x} = - (a - b \hat{k}_1 (t)) x + b \hat{k}_2 (t) u_c
+\end{equation}
+Define the tracking error
+\begin{equation}
+  e \triangleq x - x_{\ensuremath{\operatorname{ref}}}
+\end{equation}
+We can get from \eqref{k1*k2*} that
+\begin{eqnarray}
+  \dot{e} & = & \dot{x} - \dot{x}_{\ensuremath{\operatorname{ref}}}
+  \nonumber\\
+  & = & - (a - b \hat{k}_1 (t)) x + b \hat{k}_2 (t) u_c +
+  a_{\ensuremath{\operatorname{ref}}} x_{\ensuremath{\operatorname{ref}}} -
+  b_{\ensuremath{\operatorname{ref}}} u_c \nonumber\\
+  & = & - (a - a_{\ensuremath{\operatorname{ref}}} - b \hat{k}_1 (t)) x + (b
+  \hat{k}_2 (t) - b_{\ensuremath{\operatorname{ref}}}) u_c -
+  a_{\ensuremath{\operatorname{ref}}} e \nonumber\\
+  & = & - a_{\ensuremath{\operatorname{ref}}} e - b (k^{\ast}_1 - \hat{k}_1
+  (t)) x + b (\hat{k}_2 (t) - k^{\ast}_2) u_c \nonumber\\
+  & = & - a_{\ensuremath{\operatorname{ref}}} e + b \tilde{k}_1 x + b 
+  \tilde{k}_2 u_c  \label{err:MRAC:scalar}
+\end{eqnarray}
+where $\tilde{k}_1 = \hat{k}_1 (t) - k^{\ast}_1$ and $\tilde{k}_2 = \hat{k}_2
+(t) - k^{\ast}_2$.
+
+Consider a Lyapunov function candidate
+\begin{equation}
+  V = \frac{1}{2} e^2 + \frac{1}{2} \tilde{k}^2_1 + \frac{1}{2} \tilde{k}^2_2
+\end{equation}
+Taking the time derivative of $V$, along the trajectories of
+\eqref{err:MRAC:scalar}, gives
+\begin{eqnarray}
+  \dot{V} & = & e  \dot{e} + \tilde{k} _1 \dot{\hat{k}}_1 + \tilde{k} _2
+  \dot{\hat{k}}_2 \nonumber\\
+  & = & - a_{\ensuremath{\operatorname{ref}}} e^2 + b \tilde{k} _1 x  e + b
+  \tilde{k} _2 u_c e + \tilde{k} _1 \dot{\hat{k}}_1 + \tilde{k} _2
+  \dot{\hat{k}}_2 \nonumber\\
+  & = & - a_{\ensuremath{\operatorname{ref}}} e^2 + \tilde{k} _1
+  (\dot{\hat{k}}_1 + b  x  e) + \tilde{k} _2 (\dot{\hat{k}}_2 + b  u_c e) 
+\end{eqnarray}
+If we choose
+\begin{equation}
+  \dot{\hat{k}}_1 = - b  x  e, \dot{\hat{k}}_1 = - b  u_c e
+  \label{k1k2:not:implemented}
+\end{equation}
+We can get that $\dot{V} \leq 0$. However, \eqref{k1k2:not:implemented} cannot
+be implemented since $b$ is unknown.
+
+We consider the following Lyapunov function candidate
+\begin{equation}
+  V = \frac{1}{2} e^2 + \frac{| b |}{2 \gamma_1} \tilde{k}^2_1 + \frac{| b
+  |}{2 \gamma_2} \tilde{k}^2_2 \label{Lyafun:ek1k2}
+\end{equation}
+where $\gamma_1, \gamma_2 > 0$.
+
+Taking the time derivative of $V$, along the trajectories of
+\eqref{err:MRAC:scalar}, gives
+\[ \dot{V} = - a_{\ensuremath{\operatorname{ref}}} e^2 + \frac{| b
+   |}{\gamma_1} \widetilde{ k} _1 (\dot{\hat{k}}_1 + \gamma_1
+   \ensuremath{\operatorname{sgn}} (b) x  e) + \frac{| b |}{\gamma_2}
+   \tilde{k} _2 (\dot{\hat{k}}_2 + \gamma_2 \ensuremath{\operatorname{sgn}}
+   (b)  u_c e) \]
+If we choose
+\begin{equation}
+  \dot{\hat{k}}_1 = -  \gamma_1 \ensuremath{\operatorname{sgn}} (b) x  e,
+  \dot{\hat{k}}_2 = -  \gamma_2 \ensuremath{\operatorname{sgn}} (b)  u_c e
+\end{equation}
+which leads to
+\begin{equation}
+  \dot{V} = - a_{\ensuremath{\operatorname{ref}}} e^2 \leq 0
+\end{equation}
+Thus, $V (t) \leq V (0)$. From \eqref{Lyafun:ek1k2}, $e, \tilde{k} _1,
+\tilde{k} _2$ are bounded and $x$ is bounded.
+
+From \eqref{err:MRAC:scalar}, $\ddot{V} = - 2
+a_{\ensuremath{\operatorname{ref}}} e  \dot{e}$ is also bounded.
+
+We can conclude from Barbalat's lemma that $\lim_{t \rightarrow \infty}
+\dot{V} (t) = 0, i.e.$ $\lim_{t \rightarrow \infty} e (t) = 0.$
+
+\begin{table}[h]
+  \begin{tabular}{p{6.0cm}p{6.0cm}}
+    \hline
+    Open-loop plant & $\dot{x} = - a  x + b  u$; $\{ a, b \}$ are unknown,
+    $\ensuremath{\operatorname{sgn}} (b)$ is known\\
+    Reference model & $\dot{x}_{\ensuremath{\operatorname{ref}}} = -
+    a_{\ensuremath{\operatorname{ref}}} x_{\ensuremath{\operatorname{ref}}} +
+    b_{\ensuremath{\operatorname{ref}}} u_c$\\
+    Tracking error & $e \triangleq x - x_{\ensuremath{\operatorname{ref}}}$\\
+    Control input & $u = \hat{k}_1 (t) x + \hat{k}_2 (t) u_c$\\
+    Direct MRAC laws & $\dot{\hat{k}}_1 = -  \gamma_1
+    \ensuremath{\operatorname{sgn}} (b) x  e, \dot{\hat{k}}_1 = -  \gamma_2
+    \ensuremath{\operatorname{sgn}} (b)  u_c e ; \gamma_1, \gamma_2 > 0$\\
+    \hline
+  \end{tabular}
+  \caption{Direct MRAC design summary for a scalar system}
+\end{table}
+
+Design steps:
+\begin{enumerate}
+  \item Find a controller structure (based on known parameters)
+  
+  \item Derive the error dynamics
+  
+  \item Find a Lyapunov function
+  
+  \item Design parameter updating laws such that $\dot{V} \leq 0$.
+\end{enumerate}
+
+\subsection{标量系统的非直接型模型参考自适应控制}
+
+\[\dot{x}=ax+bu\]
+
+\[\dot{x}_{ref}=-a_{ref}x_{ref}+b_{ref}u_c,a_ref>0\]
+
+\[\dot{\hat{b}}(t)=\begin{cases}
+  \gamma_2ue&\text{若}\ |\hat{b}|>b_{\min}\\
+  &\text{或}\ |\hat{b}|=b_{\min}\ \text{且}\ ue\sgn(b)\ge 0\\
+  0&\text{其他}
+\end{cases}\]
+
+\subsection{多输入多输出（MIMO）系统的直接型模型参考自适应控制}
+
+\begin{equation}\label{MIMO}
+  \dot{x}=Ax+B\Lambda u
+\end{equation}
+
+其中$x\in\R{}^n$是系统的状态，
+
+\begin{align}
+  \dot{e}&=\dot{x}-\dot{x}_{ref}\nonumber\\
+  &=A_{ref}e+B\Lambda\tilde{K}_1x+B\Lambda\tilde{K}_2u_c
+\end{align}
+
+类比之前的构造，考虑如下“形式上的”Lyapunov函数
+\begin{align*}
+  V&=\frac12e^2+\frac{1}{2}\tilde{K}_1^2+\frac{1}{2}\tilde{K}_2^2
+\end{align*}
+由于其中的$e,\tilde{K}_1,\tilde{K}_2$都是向量或矩阵，而Lyapunov函数输出是标量，上述式子要做相应的修改。
+首先，将$e^2$换成$e^\mathrm{T}e$；然后，将$\tilde{K}_1^2$换为\[\tr(\tilde{K}_1^\mathrm{T}\tilde{K}_1)\]
+由于$\tilde{K}_1^\mathrm{T}\tilde{K}_1$是实对称矩阵，故其一定可做相似对角化，对角化之后的，而迹是相似不变量，
+
+半正定的，；
+而迹等于矩阵所有特征值之和，故$\tilde{K}_1\ne0$时，上式一定为正；
+
+\begin{equation}\label{MIMOLYA}
+  V=e^\mathrm{T}Pe+\tr(\tilde{K}_1^\mathrm{T}\tilde{K}_1)+\tr(\tilde{K}_2^\mathrm{T}\tilde{K}_2)
+\end{equation}
+
+其中$P$是满足如下Lyapunov方程的正定矩阵。求其对$t$的导数可得
+\begin{align}
+  \dot{V}&=\dot{e}^\mathrm{T}Pe+e^\mathrm{T}P\dot{e}+2\tr(\tilde{K}_1^\mathrm{T}\dot{\tilde{K}}_1)+
+  2\tr(\tilde{K}_2^\mathrm{T}\dot{\tilde{K}}_2)\\
+  &=\dot{e}^\mathrm{T}(A_{ref}^\mathrm{T}P+PA_{ref})e+2{e}^\mathrm{T}PB\Lambda\tilde{K}_1x+2{e}^\mathrm{T}PB\Lambda
+  \tilde{K}_2u_c+2\tr(\tilde{K}_2^\mathrm{T}\dot{\tilde{K}}_2)\\
+  &=-e^\mathrm{T}Qe+2\tr(\tilde{K}_1^\mathrm{T}\Lambda B^\mathrm{T}Pex^\mathrm{T})+2\tr(\tilde{K}_2^\mathrm{T}\Lambda B^\mathrm{T}Peu_c^\mathrm{T})+2{e}^\mathrm{T}PB\Lambda\tilde{K}_2u_c+2\tr(\tilde{K}_2^\mathrm{T}\dot{\hat{K}}_2)
+\end{align}
+其中第三行我们用到了
+\begin{align*}
+  {e}^\mathrm{T}PB\Lambda\tilde{K}_1x&=\tr({e}^\mathrm{T}PB\Lambda\tilde{K}_1x)&\text{（标量）}\\
+  &=\tr(x{e}^\mathrm{T}PB\Lambda\tilde{K}_1)&\text{（}\tr(AB)=\tr(BA)\text{）}\\
+  &=\tr(\tilde{K}_1^\mathrm{T}\Lambda B^\mathrm{T}Pex^\mathrm{T})&\text{（}\tr(A^\mathrm{T})=\tr(A)\text{）}
+\end{align*}
+于是我们可设计
+
+但是该设计是不可行的，
+
+\begin{equation}\label{MODMIMOLYA}
+  V=e^\mathrm{T}Pe+\tr(\tilde{K}_1^\mathrm{T}\textcolor{red}{\Lambda}\tilde{K}_1)+\tr(\tilde{K}_2^\mathrm{T}\textcolor{red}{\Lambda}\tilde{K}_2)
+\end{equation}
+

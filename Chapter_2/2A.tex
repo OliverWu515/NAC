@@ -5,7 +5,7 @@
 \end{equation}
 其中$f:D\to\R{}^n$是从$D$至$\R{}^n$的局部Lipschitz映射，$D\subset\R{}^n$为包含$x=0$的域，这保证了上式的解存在且唯一。假定$f(0)=0$，意即$x=0$为一平衡点。根据上章末尾的讨论，不妨设初始时刻$t_0=0$。
 \begin{note}
-  对于自治系统而言，假定$x=0$为平衡点并不失去一般性。因为若考虑一非零平衡点$x^\ast$，意即其满足$f(x^\ast)=0$，那么作变换$z=x-x^\ast$，即有\[\dot{z}=\dot{x}=f(x)=f(z+x^\ast)\]令$g(z)=f(z+x^\ast)$，则\[g(z)=0\implies f(z+x^\ast)=0\implies z=0\]因此$x^\ast$的稳定性问题同样可归于讨论$z=0$的稳定性问题。
+  假定$x=0$为平衡点并不失去一般性。因为若考虑一非零平衡点$x^\ast$，意即其满足$f(x^\ast)=0$，那么作变换$z=x-x^\ast$，即有\[\dot{z}=\dot{x}=f(x)=f(z+x^\ast)\]令$g(z)=f(z+x^\ast)$，则\[g(z)=0\implies f(z+x^\ast)=0\implies z=0\]因此$x^\ast$的稳定性问题同样可归于讨论$z=0$的稳定性问题。（对于非自治系统也可类似分析）
 \end{note}
 \begin{definition}[自治系统的稳定性]
   式 \eqref{freeofauto} 的平衡点$x=0$是
@@ -72,7 +72,7 @@
 \begin{example}[稳定与不稳定的计算例]
   以下两例中$x=0$均为平衡点。\begin{itemize}[leftmargin=1em]
     \item 考虑方程$$\dot{x}=-(1+\sin^2x)x$$
-其解为$x(t)=x(0)\mathrm{e}^{-\int_{0}^{t}(1+\sin^{2}\tau)\diff\tau}\Rightarrow\|x(t)\|\leq\|x(0)\|\mathrm{e}^{-t}.$
+其解为$x(t)=x(0)\mathrm{e}^{-\int_{0}^{t}(1+\sin^{2}x(\tau))\diff\tau}\Rightarrow\|x(t)\|\leq\|x(0)\|\mathrm{e}^{-t}.$
 因此，状态$x$指数收敛至$x=0$（其中$\lambda=1$）。
 \item 考虑方程$$\dot{x}=-x^2,x(0)=1$$
 其解为 $x(t)=\frac1{t+1}$，则$x=0$为渐近稳定的，但不是指数稳定的。

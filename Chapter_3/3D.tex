@@ -1,1 +1,83 @@
 \section{线性时变系统}\label{3Dref}
+在进一步研究非自治系统稳定性之前，我们先简短讨论如下线性时变系统。同样地，其可看成非自治的非线性系统的一个特例。
+\begin{equation}
+  \dot{x} = A (t) x(t) \label{Sys:LTVS}
+\end{equation}
+方程 \eqref{Sys:LTVS} 的解具有形式
+\[ x (t) = \Phi (t, t_0) x (t_0) \]
+其中$\Phi (t, t_0)$是状态转移矩阵。
+
+\begin{theorem}
+ 系统 \eqref{Sys:LTVS} 的平衡点$x = 0$ 是一致指数稳定的，当且仅当状态转移矩阵满足下面不等式
+  \[ \| \Phi (t, t_0) \| \leq k  \mathrm{e}^{- \lambda (t - t_0)}, \forall t \geq t_0
+     \geq 0 \]
+  其中 $k$ 和 $\lambda$为正常数。
+\end{theorem}
+\begin{note}
+  对于线性系统而言，（全局）一致渐近稳定 $\iff$ （全局）一致指数稳定。
+\end{note}
+不同于线性定常系统，对于线性时变系统，并不能用$A (t)$特征根的位置来判别稳定性。下面用一个例子来说明。
+\begin{example}[特征根具有负实部，但原点不稳定]
+  考虑具有下述系统矩阵的二阶线性系统
+  \[ A (t) = \left[\begin{array}{cc}
+       - 1 + 1.5 \cos^2 t & 1 - 1.5 \sin  t \cdot \cos  t\\
+       - 1 - 1.5 \sin  t \cdot \cos  t & - 1 + 1.5 \sin^2 t
+     \end{array}\right] \]
+ 特征方程 $| \lambda I - A | = \lambda^2 + 0.5 \lambda + 0.5 = 0$，
+ 由例 \ref{linearization_exp} 的注记可知其两个特征根都具有负实部。
+  
+  然而 $\Phi (t, 0) = \left[\begin{array}{cc}
+    \mathrm{e}^{0.5 t} \cos  t & \mathrm{e}^{- t} \sin  t\\
+    -\mathrm{e}^{0.5 t} \sin  t & \mathrm{e}^{- t} \cos  t
+  \end{array}\right]$，其第一列元素是发散的。
+\end{example}
+
+\begin{corollary}\label{ltvs_lambda}
+  系统 \eqref{Sys:LTVS} 是一致指数稳定的，若 $\exists \lambda > 0$ 使得
+  \[ \lambda_i (A (t) + A^\mathrm{T} (t)) \leq - \lambda, \forall t \geq 0, i = 1,
+     \ldots, n \]
+\end{corollary}
+\begin{proof}
+    设 $V = x^\mathrm{T} x$，显然$V$正定。并且
+  \begin{align*}
+    \dot{V} & =  x^\mathrm{T} (A (t) + A^\mathrm{T} (t)) x\\
+    & \leq  - \lambda x^\mathrm{T} x\\
+    & =  - \lambda V
+  \end{align*}
+  利用 \ref{lyapunov_nonauto} 第三条即可。
+\end{proof}
+
+\begin{corollary}
+  假设存在连续可微且对称的 $P (t) \in \mathbf{R}^{n \times n}$，并存在 $0 < c_1 < c_2 < \infty$
+  使得
+  \begin{equation}\label{pbounded}
+    c_1 I \leq P (t) \leq c_2 I, \forall t \geq 0
+  \end{equation}
+  进一步，假设某个连续可微且对称的 $Q (t) \in \mathbf{R}^{n \times n}$满足
+  \[ Q (t) \geq c_3 I > 0 \]
+  \[ \dot{P} (t) + P (t) A (t) + A^\mathrm{T} (t) P (t) = - Q (t) \]
+  那么 \eqref{Sys:LTVS} 的原点是全局一致渐近稳定（也是全局一致指数稳定）的。
+\end{corollary}
+\begin{proof}
+    令 $V (x, t) = x^\mathrm{T} P (t) x$。利用 \eqref{pbounded} 可得
+  $W_1 (x) \triangleq c_1 x^\mathrm{T} x \leq V (x, t) \leq c_2 x^\mathrm{T} x \triangleq W_2 (x)$，
+  即$V$正定且渐弱。
+  
+  求$V$的导数可得
+  \begin{align*}
+    \dot{V} & =  x^\mathrm{T} P (t) A (t) x + x^\mathrm{T} A^\mathrm{T} (t) P (t) x + x^\mathrm{T} \dot{P} (t) x\\
+    & =  - x^\mathrm{T} Q (t) x\\
+    & \leq  - c_3 x^\mathrm{T} x \triangleq W_3 (x)
+  \end{align*}
+  利用 \ref{lyapunov_nonauto} 第四、五条即可。
+\end{proof}
+
+\begin{corollary}
+  假设对于任意时刻 $t \geq 0$， $A (t)$ 的所有特征值都具有负实部，并且$A (t)$有界且 $\int^{\infty}_0
+  A^\mathrm{T} (t) A (t) \diff  t < \infty$，那么 $x = 0$是全局一致渐近稳定的。
+\end{corollary}
+\begin{theorem}[利用线性化判别非自治系统的稳定性]
+    令 $x = 0$ 是系统 \eqref{freeofnonauto} 的平衡点，此时$f$是$C^1$的，$D=\{x\in \mathbf{R}^n:\|x\|<r\}$。
+    雅可比矩阵$\frac{\partial f}{\partial x}$有界且在$D$上Lipschitz（对$t$一致）。令$A(t)=\left.\frac{\partial f}{\partial x}(t,x)\right|_{x=0}$。
+    那么原点是指数稳定的，当且仅当其对于线性系统 \eqref{Sys:LTVS}（以上述$A(t)$为系统矩阵）是指数稳定的。
+\end{theorem}
