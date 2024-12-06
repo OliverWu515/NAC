@@ -7,7 +7,7 @@
 \begin{itemize}[leftmargin=2em]
   \item 例如，随动系统的齿轮传动具有齿隙和干摩擦等；再如，许多执行机构都不可能无限制地增加其输出功率，因此就存在饱和非线性特性。这些例子中的非线性是由于系统的不完善而产生的，这种不完善实际上是不可避免的。
   \item 有些非线性是系统动态特性本身所固有的，{\it 无法用线性近似描述（Some hardware nonlinearities do not have linear approximations}）。例如，高速运动的机械手各关节之间有科氏力的耦合，这种耦合是非线性的，如果要研究机械手高速运动的控制就必须考虑非线性耦合；再如，电力系统中传输功率与各发电机之间相角差的正弦成正比，如果要研究电力系统中的大范围运动时，就必须考虑非线性特性的影响。
-  \item 还有一类对象本身虽然是线性的，但为了对它进行高质量的控制，常常在控制系统中有意识地引进非线性的控制规律。例如时间最短控制就要采用bang-bang控制，它是非线性的。{\it 分段（局部）线性控制有时能获得更好的效果（Better cost/performance than assembly of local linear controls}）
+  \item 还有一类对象本身虽然是线性的，但为了对它进行高质量的控制，常常在控制系统中有意识地引进非线性的控制规律。例如时间最短控制就要采用bang-bang控制，它是非线性的。{\it 比局部线性化的控制获得更好的效果（Better cost/performance than assembly of local linear controls}）
 \end{itemize}
 
 {\bf 严格说来，非线性是普遍存在的，非线性系统才是最一般的系统，线性系统只是其中的特殊例子。}{\it All systems are nonlinear---nonlinear control extends range of
