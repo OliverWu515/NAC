@@ -1316,7 +1316,7 @@
 \renewcommand{\theprob}{\thechapter.\arabic{prob}}
 \newenvironment{problem}[1][]{
   \refstepcounter{prob}
-  \par\noindent\textbf{\color{main}{\problemname} \theprob #1 }\rmfamily}{
+  \par\noindent\textbf{\color{main}{\problemname} \theprob\quad#1 }\rmfamily}{
   \par\ignorespacesafterend}
 
 \newenvironment{note}{

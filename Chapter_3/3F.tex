@@ -1,0 +1,88 @@
+\section{有界性和最终有界性}\label{3Fref}
+
+我们前面所讨论的 Lyapunov 意义下的稳定性是关于平衡点的。而在实际的系统设计中，由于扰动和其他不确定性，系统未必具有平衡点。而在这种情况下，我们可以用 Lyapunov 分析来证明状态方程解的有界性。
+
+在正式给出各种有界性的定义前，我们先分析一个具体例子。考虑这样一个标量非自治系统：
+\[
+    \dot{x} = x + \delta \sin{t}, \quad x(t_0) = a, \quad a > \delta > 0 \text{。}
+\]
+该系统没有平衡点。它的解是
+\[
+    x (t) = \mathrm{e}^{- (t - t_0)} x (t_0) + \delta \int^t_{t_0} \mathrm{e}^{- (t - \tau)} \text{。}
+\]
+这个解满足下式：
+\begin{align*}
+    \| x (t) \| & \leq  \mathrm{e}^{- (t - t_0)} a + \delta \int^t_{t_0} \mathrm{e}^{- (t - \tau)} d  \tau \\
+    & =  (a - \delta) \mathrm{e}^{- (t - t_0)} + \delta \\
+    & \leq  a, \quad \forall t \geq t_0 \text{。}
+\end{align*}
+也就是说，这个解对于所有 $t > t_0$ 有界，且这一有界性对 $t_0$ 一致（即与 $t_0$ 的选取无关）。进一步，对于任意 $b \in (\delta, a)$，不难得到
+\[
+    \| x (t) \| \leq b, \quad \forall t \geq t_0 + \ln \left( \frac{a - \delta}{b - \delta} \right) \text{。}
+\]
+而 $b$ 这个界，也是与 $t_0$ 的选取无关的。由此我们能更好地估计经过一段暂态时间后的解。这种情况我们就称解是 \textbf{一致最终有界的（uniformly ultimately bounded，简称 UUB）} \index{一致最终有界的（uniformly ultimately bounded}，而 $b$ 就称为最终界。
+
+不用状态方程的显式解，也可以通过 Lyapunov 分析得到上述结果。取 $V (x) = \frac{1}{2} x^2$，其沿系统轨线的导数是
+\begin{align*}
+  \dot{V} & =  - x^2 + \delta x  \sin  t\\
+  & \leq  - x^2 + \delta | x  |\\
+  & =  - | x | (| x | - \delta) \text{。}
+\end{align*}
+$\dot{V}$ 在原点附近并不是负定的，但在集合 $\{ | x | < \delta \}$ 外是负定的。
+
+取 $c > \frac{1}{2} \delta^2$，其中 $| x | > \delta$。对于集合 $\{ V \leq c \}$，由于在边界 $V = c$ 上 $\dot{V}$ 是负的，从该集合出发的解都会一直留在其中。（换言之，这是正不变集。）从而解是一致有界的。
+
+取任意 $\varepsilon$ 使得 $\frac{\delta^2}{2} < \varepsilon < c$，则在集合 $\{ \varepsilon \leq V \leq c \}$ 内有  $\dot{V} < 0$。这就表明，$V$ 会在这个集合内单调递减直到进入集合 $\{ V (x) \leq \varepsilon \}$。此后，解就不再离开集合 $\{ V (x) \leq \varepsilon \}$ 了，因为在边界 $V = \varepsilon$ 上 $\dot{V} < 0$。于是我们可以得到结论：该解是一致最终有界的且最终界为 $| x | \leq \sqrt{2 \varepsilon}$。
+
+下面给出各种有界性的定义。
+
+\begin{definition}[有界性和最终有界性（boundedness and ultimate boundedness）]
+称 \eqref{freeofnonauto} 的解是
+\begin{itemize}[leftmargin=1em]
+    \item \textbf{一致有界的（uniformly bounded）}，如果存在正的且与 $t_0 \geq 0$ 无关的常数 $c$ 使得对于任意 $a \in (0, c)$ 存在与 $t_0$ 无关的 $\beta = \beta(a) > 0$ 使得
+    \begin{equation} \label{eq_ub}
+        \| x (t_0) \| \leq a \Rightarrow \| x (t) \| \leq \beta, \quad \forall t \geq t_0
+    \end{equation}
+    \item \textbf{全局一致有界的（globally uniformly bounded）}，如果 \ref{eq_ub} 对任意大的 $a$ 都成立。
+    \item \textbf{一致最终有界的（uniformly ultimately bounded）} 且最终界为 $b$，如果存在正的且与 $t_0 \geq 0$ 无关的常数 $b, c$ 使得对于任意 $a \in (0, c)$ 存在与 $t_0$ 无关的 $T = T (a, b) > 0$ 使得
+    \begin{equation} \label{eq_uub}
+        \| x (t_0) \| \leq a \Rightarrow \| x (t) \| \leq b, \quad \forall t \geq t_0 + T
+    \end{equation}
+    \item \textbf{全局一致最终有界的（global uniformly ultimately bounded）}，如果 \ref{eq_uub} 对任意大的 $a$ 都成立。
+\end{itemize}
+\end{definition}
+
+\begin{example}% TODO：此处证明待完善
+    对于方程 \eqref{freeofnonauto}，考虑一个连续的正定函数 $V(x)$，若其沿着系统轨线的导数满足
+    \begin{align*}
+        \dot{V} &\leq -\beta V + c, \quad \beta, c > 0 \text{，}
+    \end{align*}
+    那么我们可以证明这个方程的解是一致最终有界的。具体证明过程如下。
+    \begin{align*}
+        \dot{V} &\leq -\beta V + c \\
+        \dot{V} + \beta V &\leq c \\
+        \mathrm{e}^{\beta t} \dot{V} + \beta \mathrm{e}^{\beta t} V &\leq c \mathrm{e}^{\beta t} \\
+        \dfrac{\diff}{\diff t} \left( \mathrm{e}^{\beta t} V \right) &\leq c \mathrm{e}^{\beta t} \\
+        \mathrm{e}^{\beta t} V(x(t)) - \mathrm{e}^{\beta t_0} V(x(t_0)) &\leq c \int_{t_0}^t \mathrm{e}^{\beta \tau} \diff \tau = \dfrac{c}{\beta} \left( \mathrm{e}^{\beta t} - \mathrm{e}^{\beta t_0} \right) \\
+        V(t) &\leq \mathrm{e}^{-\beta (t - t_0)} V(x(t_0)) + \dfrac{c}{\beta} \left(1 - \mathrm{e}^{-\beta (t - t_0)}\right) \text{。}
+    \end{align*}
+    记 $V(x(t_0)) \leq A$。若 $A \leq \frac{c}{\beta}$，则立得 $V(t) \leq \frac{c}{\beta}$。若 $A > \frac{c}{\beta}$，则取任意 $B$ 满足 $\frac{c}{\beta} < B < A$，可得
+    \[
+        V(t) \leq B, \quad \forall t \geq t_0 + \frac{1}{\beta} \ln{\dfrac{A - \frac{c}{\beta}}{B - \frac{c}{\beta}}} \triangleq t_0 + T \text{。}
+    \]
+    其中，$A > 0, B > 0, T = T(A, B) > 0$ 均与 $t_0$ 无关。
+    由引理 \ref{lyapunov_comp}，可得 $\mathcal{K}$ 类函数 $\alpha_1, \alpha_2$ 使得
+    \[
+        \alpha_1 (\| x \|) \leq V(x) \leq \alpha_2 (\| x \|), \quad \forall x \in \left\{x | 0 < \mu < \| x \| < r\right\} \text{，}
+    \]
+    其中 $r$ 充分大以使得 $\alpha_1(r) \geq A$，$\mu$ 充分小以使得 $\alpha_2(\mu) \leq B$。（可以证明这是做得到的。）从而，对于 $t \geq t_0 + T_0$，有：
+    \[
+        \| x(t_0) \| \leq \alpha_2^{-1}(B) \implies V(x(t_0)) \leq B \leq A \implies V(x(t)) \leq A \implies \| x(t) \| \leq \alpha_1^{-1} (A) \text{。}
+    \]
+    记 $a = \alpha_2^{-1}(B)$ 和 $b = \alpha_1^{-1} (A)$，整理上述结果则有：
+    \[
+        \| x(t_0) \| \leq a \implies \| x(t) \| \leq b, \quad \forall t \geq t_0 + T \text{，}
+    \]
+    其中 $a > 0, b > 0, T = T(a, b) > 0$ 均与 $t_0$ 无关，故在本例条件下方程 \eqref{freeofnonauto} 的解是一致最终有界的。
+\end{example}
+

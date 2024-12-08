@@ -1,13 +1,50 @@
-\section{模型参考自适应控制：标量系统的设计}\label{4Bref}
-
+\newpage
+\section{标量系统的模型参考自适应控制}\label{4Bref}
+\index{模型参考自适应控制（Model Reference Adaptive Control, MRAC）}
 \subsection{引入}
-
-\subsection{标量系统的直接型MRAC设计}
+考虑如下一阶标量系统
+  \[ \dot{x} = a  x + u \]
+  其中 $a$ 是{\bf 未知}参数，$x$ 为状态，$u$为控制输入。
+  
+  我们的控制目标是，设计$u$使得闭环系统中的所有信号都是有界的，且 $x$ 能够跟踪下述参考模型的参考状态  $x_{\ensuremath{\operatorname{ref}}}$：
+  \[ \dot{x}_{\ensuremath{\operatorname{ref}}} = -
+     a_{\ensuremath{\operatorname{ref}}} x_{\ensuremath{\operatorname{ref}}} +
+     b_{\ensuremath{\operatorname{ref}}} u_c \]
+  其中 $a_{\ensuremath{\operatorname{ref}}} > 0$ 且
+  $b_{\ensuremath{\operatorname{ref}}}$ 已知，$u_c (t)$ 是（虚拟的）输入指令，其有界且分段连续。
+  
+  我们采用下述控制律
+  \[ u^{\ast} = k^{\ast}_1 x + k^{\ast}_2 u_c \]
+  那么
+  \[\dot{x} = (a +  k^{\ast}_1) x + k^{\ast}_2 {u_c} \]
+  如果能使得
+  $a+  k^{\ast}_1=-a_{\ensuremath{\operatorname{ref}}},k^{\ast}_2=b_{\ensuremath{\operatorname{ref}}}$，
+  即
+  \begin{equation}\label{MRAC:intro}
+      k^{\ast}_1 = - a - a_{\ensuremath{\operatorname{ref}}}, k^{\ast}_2 =  b_{\ensuremath{\operatorname{ref}}}
+  \end{equation}
+  那么\[\dot{x} = -a_{\ensuremath{\operatorname{ref}}} x + b_{\ensuremath{\operatorname{ref}}} {u_c} \]
+  定义状态跟踪误差
+  \[ e = x - x_{\ensuremath{\operatorname{ref}}} \]
+  那么  
+  \[ \dot{e} = \dot{x} - \dot{x}_{\ensuremath{\operatorname{ref}}} = -
+  a_{\ensuremath{\operatorname{ref}}} e \]
+  很明显随时间增长，$e\to 0$。也可通过作Lyapunov函数$V=e^2$来说明。这就实现了跟踪。
+  但是$a$是未知的，因此 \eqref{MRAC:intro} 中的$k_1^\ast$无法直接应用。这时就有两种思路：
+  \begin{itemize}
+      \item 若采用直接型MRAC，我们直接估计控制器的参数，即直接估计$k_1^\ast$，将其记为$\hat{k}_1$，那么控制律就写成
+      \[u=\hat{k}_1 x + b_{\ensuremath{\operatorname{ref}}} u_c\]
+      \item 若采用间接型MRAC，我们则通过估计被控对象的参数转化得到控制器参数，即先估计$a$（记为$ \hat{a} (t)$），进而得到控制律
+      \[u=(- \hat{a} (t) - a_{\ensuremath{\operatorname{ref}}}) x +
+       b_{\ensuremath{\operatorname{ref}}} u_c\]
+  \end{itemize}
+\newpage
+\subsection{标量系统的直接型MRAC设计}\label{sec:MRAC:scalar:direct}
 考虑如下一阶系统
 \begin{equation}
   \dot{x} = a  x + b  u \label{Sys:MRAC:scalar}
 \end{equation}
-其中 $a, b$为{\bf 未知}参数，但$b$的符号$\sgn(b)$已知。
+其中 $a, b$为{\bf 未知}参数，$x$ 为状态，但$b$的符号$\sgn(b)$已知。
 
 我们的控制目标是，设计$u$，使得闭环系统的所有信号都有界，且$x$能够跟踪下述参考模型的参考状态 $x_{\ensuremath{\operatorname{ref}}}$：
 \begin{equation}
@@ -40,7 +77,7 @@ $k^{\ast}_1, k^{\ast}_2$应满足
 \begin{equation}
   u = \hat{k}_1 (t) x + \hat{k}_2 (t) u_c \label{u:k1xk2uc}
 \end{equation}
-其中 $\hat{k}_1 (t), \hat{k}_2 (t)$ 分别是 $k^{\ast}_1,k^{\ast}_2$的估计。
+其中 $\hat{k}_1 (t), \hat{k}_2 (t)$ 分别是 $k^{\ast}_1,k^{\ast}_2$的{\bf 估计}。
 
 将 \eqref{u:k1xk2uc} 代入 \eqref{Sys:MRAC:scalar} 有
 \begin{equation}
@@ -64,7 +101,7 @@ $k^{\ast}_1, k^{\ast}_2$应满足
 结合 \eqref{k1*k2*}，发现上式可写为
 \[\dot{e} = - a_{\ensuremath{\operatorname{ref}}} e + b (\hat{k}_1(t)-k^{\ast}_1) x + b (\hat{k}_2 (t) - k^{\ast}_2) u_c\]
 第二项和第三项中的括号可理解为对$k^{\ast}_1,k^{\ast}_2$的参数估计误差，于是定义
-\[\tilde{k}_1 = \hat{k}_1 (t) - k^{\ast}_1,\tilde{k}_2 = \hat{k}_2
+\[\tilde{k}_1 \triangleq\hat{k}_1 (t) - k^{\ast}_1,\tilde{k}_2 \triangleq \hat{k}_2
 (t) - k^{\ast}_2\]则有
 \begin{equation}
   \dot{e} = - a_{\ensuremath{\operatorname{ref}}} e + b \tilde{k}_1 x + b 
@@ -82,54 +119,59 @@ $k^{\ast}_1, k^{\ast}_2$应满足
   \dot{\hat{k}}_2 \nonumber\\
   & = - a_{\ensuremath{\operatorname{ref}}} e^2 + b \tilde{k} _1 x  e + b
   \tilde{k} _2 u_c e + \tilde{k} _1 \dot{\hat{k}}_1 + \tilde{k} _2
-  \dot{\hat{k}}_2 \nonumber\\
+  \dot{\hat{k}}_2 \label{not_implement_vdot_mid}\\
   & = - a_{\ensuremath{\operatorname{ref}}} e^2 + \tilde{k} _1
   (\dot{\hat{k}}_1 + b  x  e) + \tilde{k} _2 (\dot{\hat{k}}_2 + b  u_c e) \label{not_implement_vdot}
 \end{align}
 如果我们将第二项与第三项消去，即选取
-\begin{equation}
+\begin{equation*}
   \dot{\hat{k}}_1 = - b  x  e, \dot{\hat{k}}_2 = - b  u_c e
-  \label{k1k2:not:implemented}
-\end{equation}
-则可得 $\dot{V} \leq 0$。然而，由于 $b$ 未知，不能直接应用 \eqref{k1k2:not:implemented}。
+  % \label{k1k2:not:implemented}
+\end{equation*}
+则可得 $\dot{V} \leq 0$。然而，由于 $b$ 未知，上式不能直接应用。
+% \eqref{k1k2:not:implemented}。
 
 我们发现，如果在 \eqref{not_implement_candidate} 的第二、三项中乘上$b$，那么 \eqref{not_implement_vdot} 的后两项中
 $b$就可提出，进而设计$\dot{\hat{k}}_1,\dot{\hat{k}}_2$消去的项就不含有$b$。然而，由于$b$可能为负，所以可能使$V$不再正定。
-于是，考虑加入$|b|$，这样会产生$\sgn(b)$，但其已知。进而，考虑下述候选Lyapunov函数：
+于是，考虑加入$|b|$，这样虽会产生$\sgn(b)$，但其已知。进而，考虑下述候选Lyapunov函数：
 \begin{equation}
   V = \frac{1}{2} e^2 + \frac{| b |}{2 \gamma_1} \tilde{k}^2_1 + \frac{| b
   |}{2 \gamma_2} \tilde{k}^2_2 \label{Lyafun:ek1k2}
 \end{equation}
 其中 $\gamma_1, \gamma_2 > 0$。
-
-沿 \eqref{err:MRAC:scalar} 的状态轨线，求其对时间的导数得
-\[ \dot{V} = - a_{\ensuremath{\operatorname{ref}}} e^2 + \frac{| b
+沿 \eqref{err:MRAC:scalar} 的状态轨线，求其对时间的导数得（在 \eqref{not_implement_vdot_mid} 的基础上改写，注意$\sgn(b)|b|=\sgn^2(b)b=b$）
+\begin{align*}
+    \dot{V}   &= - a_{\ensuremath{\operatorname{ref}}} e^2 + \frac{ | b |}{\gamma_1} \sgn(b) \gamma_1 \tilde{k} _1 x  e + \frac{| b |}\sgn(b){\gamma_2} \gamma_2
+  \tilde{k} _2 u_c e + \frac{| b |}{\gamma_1}\tilde{k} _1 \dot{\hat{k}}_1 + \frac{| b |}{\gamma_2}\tilde{k} _2
+  \dot{\hat{k}}_2 \\
+    & = - a_{\ensuremath{\operatorname{ref}}} e^2 + \frac{| b
    |}{\gamma_1} \widetilde{ k} _1 (\dot{\hat{k}}_1 + \gamma_1
    \ensuremath{\operatorname{sgn}} (b) x  e) + \frac{| b |}{\gamma_2}
    \tilde{k} _2 (\dot{\hat{k}}_2 + \gamma_2 \ensuremath{\operatorname{sgn}}
-   (b)  u_c e) \]
+   (b)  u_c e)
+\end{align*}
 此时，如果我们选取
-\begin{equation}
+\begin{equation*}
   \dot{\hat{k}}_1 = -  \gamma_1 \ensuremath{\operatorname{sgn}} (b) x  e,
   \dot{\hat{k}}_2 = -  \gamma_2 \ensuremath{\operatorname{sgn}} (b)  u_c e
-\end{equation}
+\end{equation*}
 则
 \begin{equation*}
   \dot{V} = - a_{\ensuremath{\operatorname{ref}}} e^2 \leq 0
 \end{equation*}
-从而$V (t) \leq V (0)$。由 \eqref{Lyafun:ek1k2}，$e, \tilde{k} _1,
-\tilde{k} _2$ 都有界；又由于$x_\mathrm{ref}$和$u_c$有界，因此 $x$有界。
+从而$V (t) \leq V (0)$。由 \eqref{Lyafun:ek1k2} 的形式得$e, \tilde{k} _1,
+\tilde{k} _2$ 都有界，于是$u$有界；又由于$x_\mathrm{ref}$和$u_c$有界，因此 $x$有界。
 
-根据误差动力学 \eqref{err:MRAC:scalar}，$\ddot{V} = - 2a_{\ensuremath{\operatorname{ref}}} e  \dot{e}$ 也有界。
+再求一次导得$\ddot{V} = - 2a_{\ensuremath{\operatorname{ref}}} e  \dot{e}$，将误差动力学 \eqref{err:MRAC:scalar} 代入，发现其也有界。
 
 因此根据 Barbalat引理（\ref{barbalat}），$\lim\limits_{t \rightarrow \infty}
 \dot{V} (t) = 0$，也即 $\lim\limits_{t \rightarrow \infty} e (t) = 0$。
 
-\begin{table}[h]
+\begin{table}[htbp]
   \centering
   \setcellgapes{4pt}
   \makegapedcells
-  \caption{标量系统的直接型MRAC设计步骤}
+  \caption{标量系统的直接型MRAC设计汇总}
   \begin{tabular}{p{4.0cm}p{10.0cm}}
     \hline
     开环被控对象 & $\dot{x} = - a  x + b  u$; $\{ a, b \}$ 未知，但
@@ -140,31 +182,251 @@ $b$就可提出，进而设计$\dot{\hat{k}}_1,\dot{\hat{k}}_2$消去的项就�
     跟踪误差 & $e \triangleq x - x_{\ensuremath{\operatorname{ref}}}$\\
     控制输入 & $u = \hat{k}_1 (t) x + \hat{k}_2 (t) u_c$\\
     直接型MRAC控制律& $\dot{\hat{k}}_1 = -  \gamma_1
-    \ensuremath{\operatorname{sgn}} (b) x  e, \dot{\hat{k}}_1 = -  \gamma_2
+    \ensuremath{\operatorname{sgn}} (b) x  e, \dot{\hat{k}}_2 = -  \gamma_2
     \ensuremath{\operatorname{sgn}} (b)  u_c e ; \gamma_1, \gamma_2 > 0$\\
     \hline
   \end{tabular}
 \end{table}
 
-设计步骤：
+总结设计步骤：
 \begin{enumerate}
   \item 根据已知参数，寻求一种控制器结构
   
-  \item 导出误差动力学
+  \item 导出误差动力学（包括跟踪误差和参数估计误差）
   
-  \item 找出 Lyapunov函数
+  \item 根据上述误差构造 Lyapunov函数
   
   \item 设计参数更新规则，使得 $\dot{V} \leq 0$
 \end{enumerate}
+\subsection{具有非线性项的标量系统的直接型MRAC设计}
 
-\subsection{标量系统的非直接型模型参考自适应控制}
+考虑如下标量系统
+\begin{equation}
+  \dot{x} = a  x + b  (u + f (x)) \label{Sys:MRAC:nonlinear}
+\end{equation}
+其中 $f (x) = \varphi (x) \theta$， $\varphi$ 有界、连续且已知； $a, b, \theta$ 是未知的参数，$b$的符号$\sgn(b)$已知。
 
-\[\dot{x}=ax+bu\]
+仍定义参考模型如式 \eqref{Sys:MRAC:scalar:ref}。
+我们试图消去$f$，于是在  \eqref{u:k1xk2uc} 基础上提出下述控制律：
+\begin{equation*}
+  u = \hat{k}_1 (t) x + \hat{k}_2 (t) u_c - \varphi (x) \theta
+\end{equation*}
+但是$\theta$是未知的，所以将它换成它的估计$\hat{\theta} (t)$，得到
+\begin{equation}
+  u = \hat{k}_1 (t) x + \hat{k}_2 (t) u_c - \varphi (x) \hat{\theta} (t)
+\end{equation}
+代入 \eqref{Sys:MRAC:nonlinear} 得到闭环系统方程
+\begin{equation}
+    \dot{x} = a  x +  b \hat{k}_1 (t) x + b \hat{k}_2 (t) u_c - b \varphi
+   (x) (\hat{\theta} (t) - \theta) \label{Closed_form_scalar_nonlinear}
+\end{equation}
+类似上一小节对于理想情形的推导，可得与 \eqref{k1*k2*} 一样的$k^{\ast}_1, k^{\ast}_2$。仍定义$e=x-x_{\operatorname{ref}}$，结合 \eqref{Sys:MRAC:scalar:ref} 与 \eqref{Closed_form_scalar_nonlinear}，误差动力学可写为
+\begin{align}
+  \dot{e} & =  a  x +  b \hat{k}_1 (t) x + b \hat{k}_2 (t) u_c - b \varphi
+  (x) (\hat{\theta} (t) - \theta) + a_{\ensuremath{\operatorname{ref}}}
+  x_{\ensuremath{\operatorname{ref}}} - b_{\ensuremath{\operatorname{ref}}}
+  u_c \nonumber\\
+  & = (a_{\ensuremath{\operatorname{ref}}} + a) x +  b \hat{k}_1 (t) x +
+  (b \hat{k}_2 (t) - b_{\ensuremath{\operatorname{ref}}}) u_c - b \varphi (x)
+  (\hat{\theta} (t) - \theta) - a_{\ensuremath{\operatorname{ref}}} (x-x_{\operatorname{ref}})
+  \nonumber\\
+  & =  b (\hat{k}_1 (t) - k^{\ast}_1) x + b (\hat{k}_2 (t) - k^{\ast}_2)
+  u_c - b \varphi (x) (\hat{\theta} (t) - \theta) -
+  a_{\ensuremath{\operatorname{ref}}} e \nonumber\\
+  & =  - a_{\ensuremath{\operatorname{ref}}} e + b \tilde{k}_1 x + b
+  \tilde{k}_2 u_c - b \varphi \tilde{\theta}  \label{err:MRAC:nonlinear}
+\end{align}
+其中定义了三个参数估计误差 $\tilde{k}_1 \triangleq \hat{k}_1 (t) - k^{\ast}_1$， $\tilde{k}_2 \triangleq \hat{k}_2
+(t) - k^{\ast}_2$ 和 $\tilde{\theta} \triangleq\hat{\theta} (t) - \theta$。
 
-\[\dot{x}_{ref}=-a_{ref}x_{ref}+b_{ref}u_c,a_ref>0\]
+类似上一小节（使括号中的$b$可提出）的思路，考察下述候选Lyapunov函数
+\begin{equation}
+  V = \frac{1}{2} e^2 + \frac{| b |}{2 \gamma_1} \tilde{k}^2_1 + \frac{| b
+  |}{2 \gamma_2} \tilde{k}^2_2 + \frac{| b |}{2 \gamma_3} \tilde{\theta}^2 
+  \label{Lyafun:ek1k2j}
+\end{equation}
+其中 $\gamma_1, \gamma_2, \gamma_3 > 0$.
 
-\[\dot{\hat{b}}(t)=\begin{cases}
-  \gamma_2ue&\text{若}\ |\hat{b}|>b_{\min}\\
-  &\text{或}\ |\hat{b}|=b_{\min}\ \text{且}\ ue\sgn(b)\ge 0\\
+沿 \eqref{err:MRAC:nonlinear} 的状态轨线，求其对时间的导数得
+\begin{align*}
+  \dot{V} & =  e  \dot{e} + \frac{| b |}{\gamma_1} \widetilde{ k} _1
+  \dot{\hat{k}} _1 + \frac{| b |}{\gamma_2} \tilde{k} _2 \dot{\hat{k}} _2 +
+  \frac{| b |}{\gamma_3} \tilde{\theta}  \dot{\hat{\theta}}\\
+  & =  - a_{\ensuremath{\operatorname{ref}}} e^2 + \frac{| b |}{\gamma_1}
+  \widetilde{ k} _1 (\dot{\hat{k}}_1 + \gamma_1
+  \ensuremath{\operatorname{sgn}} (b) x  e) + \frac{| b |}{\gamma_2} \tilde{k}
+  _2 (\dot{\hat{k}}_2 + \gamma_2 \ensuremath{\operatorname{sgn}} (b)  u_c e) +
+  \frac{| b |}{\gamma_3} \tilde{\theta} (\dot{\hat{\theta}} - \gamma_3
+  \ensuremath{\operatorname{sgn}} (b)   \varphi e)
+\end{align*}
+我们选取
+\begin{equation*}
+  \dot{\hat{k}}_1 = -  \gamma_1 \ensuremath{\operatorname{sgn}} (b) x  e,
+  \dot{\hat{k}}_2 = -  \gamma_2 \ensuremath{\operatorname{sgn}} (b)  u_c e,
+  \dot{\hat{\theta}} = \gamma_3 \ensuremath{\operatorname{sgn}} (b)   \varphi e
+\end{equation*}
+即得
+\begin{equation*}
+  \dot{V} = - a_{\ensuremath{\operatorname{ref}}} e^2 \leq 0
+\end{equation*}
+因此$V (t) \leq V (0)$。由 \eqref{Lyafun:ek1k2j} 的形式得$e, \tilde{k} _1,
+\tilde{k} _2, \tilde{\theta}$ 都有界，于是$u$有界；又由于$x_\mathrm{ref}$和$u_c$有界，因此 $x$有界。
+
+再求一次导有$ \ddot{V} = - 2 a_{\ensuremath{\operatorname{ref}}} e  \dot{e} $，将误差动力学 \eqref{err:MRAC:nonlinear} 代入，$\ddot{V}$ 有界。
+
+因此根据 Barbalat引理（\ref{barbalat}）， $\lim\limits_{t \rightarrow \infty}
+\dot{V} (t) = 0$，也即 $\lim\limits_{t \rightarrow \infty} e (t) = 0$。
+
+\begin{problem}
+将 \eqref{Sys:MRAC:nonlinear} 改为
+  \[ \dot{x} = a  x + b  u + \varphi(x) \theta \]
+如何设计自适应控制律？
+\end{problem}
+\begin{hint}
+考虑如下自适应律
+\[ u = \hat{k}_1 (t) x + \hat{k}_2 (t) u_c - \varphi (x)
+       \frac{\hat{\theta} (t)}{\hat{b} (t)} \triangleq \hat{k}_1 (t) x +
+       \hat{k}_2 (t) u_c - \varphi (x) \hat{\theta}_1 (t) \]
+\end{hint}
+
+
+\subsection{标量系统的非直接型MRAC设计}
+
+考虑如下一阶标量系统
+\begin{equation}
+  \dot{x} = a x + b  u \label{Sys:Indirect:MRAC:scalar}
+\end{equation}
+其中 $a, b$ 为未知参数。
+
+参考状态和参考模型定义如式 \eqref{Sys:MRAC:scalar:ref}。
+类似上面两节，理想情况下应有
+\begin{equation}
+  k^{\ast}_1 = \frac{-a - a_{\ensuremath{\operatorname{ref}}}}{b}, k^{\ast}_2 =
+  \frac{b_{\ensuremath{\operatorname{ref}}}}{b}
+  \label{Sys:Indirect:MRAC:scalar:perfect}
+\end{equation}
+采用下述控制律
+\begin{equation}
+  u = \hat{k}_1 (t) x + \hat{k}_2 (t) u_c\label{Law:Indirect:MRAC:scalar}
+\end{equation}
+在 \ref{sec:MRAC:scalar:direct} 小节所述的设计过程中，我们设计的自适应律直接更新$\hat{k}_1 (t), \hat{k}_2 (t)$。而在本小节的设计中，我们利用
+\eqref{Sys:Indirect:MRAC:scalar:perfect} 陈述的理想对应关系，并将其中的未知参数$a$和$b$换成其估计，进而得到 $\hat{k}_1 (t), \hat{k}_2 (t)$ 如下
+\[ \hat{k}_1 (t) = \frac{\hat{a} -
+   a_{\ensuremath{\operatorname{ref}}}}{\hat{b}}, \hat{k}_2 (t) =
+   \frac{b_{\ensuremath{\operatorname{ref}}}}{\hat{b}} \]
+将其代入 \eqref{Law:Indirect:MRAC:scalar}，即得
+\begin{equation}
+  u = \frac{1}{\hat{b}} [-(\hat{a} + a_{\ensuremath{\operatorname{ref}}}) x +
+  b_{\ensuremath{\operatorname{ref}}} u_c] \label{u:before:modification}
+\end{equation}
+将 \eqref{u:before:modification} 代入 \eqref{Sys:Indirect:MRAC:scalar} 有
+\begin{align}
+  \dot{x} & = (a - \hat{a} + \hat{a})  x + (b - \hat{b} + \hat{b} ) u
+  \nonumber\\
+  & = -(\hat{a} - a)  x -(\hat{b} -b)  u + \hat{a} x + \hat{b} u \nonumber\\
+  & = -(\hat{a} - a)  x -(\hat{b} -b)  u + \hat{a} x + [-(\hat{a} + a_{\ensuremath{\operatorname{ref}}}) x +
+  b_{\ensuremath{\operatorname{ref}}} u_c]\nonumber \\
+  & = -(\hat{a} - a)  x -(\hat{b} -b)  u -a_{\ensuremath{\operatorname{ref}}} x +
+  b_{\ensuremath{\operatorname{ref}}} u_c \nonumber
+\end{align}
+令参数估计误差 $\tilde{a}  \triangleq \hat{a} - a$ and $\tilde{b}  \triangleq \hat{b} -b$，则上式写为
+\begin{equation*}
+   \dot{x}  = -\tilde{a}  x - \tilde{b}  u - a_{\ensuremath{\operatorname{ref}}} x +
+  b_{\ensuremath{\operatorname{ref}}} u_c
+\end{equation*}
+仍定义$e=x-x_{\operatorname{ref}}$，于是误差动力学可写为
+\begin{equation}
+  \dot{e} =\dot{x}-\dot{x}_{\operatorname{ref}}= - a_{\ensuremath{\operatorname{ref}}} (x-x_{\operatorname{ref}})- \tilde{a}  x - \tilde{b}u= -a_{\ensuremath{\operatorname{ref}}} e - \tilde{a}  x - \tilde{b}u\label{error_dyn_indirect}
+\end{equation}
+
+下面的目标是让各误差$e,\tilde{a},\tilde{b}$收敛至$0$，进而使$x$跟踪$x_\mathrm{ref}$。考虑下述候选 Lyapunov 函数
+\begin{equation*}
+  V = \frac{1}{2} e^2 + \frac{1}{2 \gamma_1} \tilde{a}^2  + \frac{1}{2
+  \gamma_2} \tilde{b}^2 
+\end{equation*}
+其中$\gamma_1,\gamma_2>0$。沿 \eqref{error_dyn_indirect}，求$V$对时间的导数得
+\begin{align*}
+  \dot{V} & = - a_{\ensuremath{\operatorname{ref}}} e^2 + \frac{1}{\gamma_1}
+  \tilde{a} (\dot{\hat{a}} - \gamma_1 e  x) + \frac{1}{\gamma_2} \tilde{b}
+  (\dot{\hat{b}} - \gamma_2  e  u)
+\end{align*}
+如果选取
+\begin{equation}
+  \dot{\hat{a}}  = \gamma_1 e  x, \dot{\hat{b}}  = \gamma_2 e  u
+  \label{a-bar-b-bar:before:modification}
+\end{equation}
+我们可得 \[\dot{V} = - a_{\ensuremath{\operatorname{ref}}} e^2 \leq 0\]
+
+根据$V$的形式得$e, \tilde{a}, \tilde{b} \in \mathbf{L}_{\infty}$。由于
+$x_{\ensuremath{\operatorname{ref}}} \in \mathbf{L}_{\infty}$ 且 $a, b$ 为常数，我们可得$x, \hat{a}, \hat{b} \in \mathbf{L}_{\infty}$。对$V$再求一次导得
+$ \ddot{V} = - 2 a_{\ensuremath{\operatorname{ref}}} e  \dot{e} $，则只要说明$\dot{e}$的有界性，即可用Barbalat引理。这其中只有$u$的有界性还无法保证。
+我们注意到，此时的$u$的形式不同于之前——在分母上出现了$\hat{b}$。
+为了说明$u$的有界性（这也保证自适应律能够物理实现），我们需要对自适应律作出适当修改，避免 $\hat{b} (t)$ 越过$0$。通过一些先验知识，这样的修改是可以完成的。
+
+{\bf 先验假设}：$\ensuremath{\operatorname{sgn}} (b)$ 和 $| b |$的容许下界
+$b_{\min} > 0$ 已知。
+
+据此，我们将 \eqref{a-bar-b-bar:before:modification} 的第二式修改为
+\begin{equation}\dot{\hat{b}}(t)=\begin{cases}
+  \gamma_2ue&\text{若}\ |\hat{b}|>b_{\min}\ \text{或}\ |\hat{b}|=b_{\min}\ \text{且}\ ue\sgn(b)\ge 0\\
   0&\text{其他}
-\end{cases}\]
+\end{cases}\label{b:bar:modification}
+\end{equation}
+作出这种修正的动机，就是使$\hat{b}$在其（绝对值）太小，且还欲继续减小时停止变化。
+
+我们需要说明，形如 \eqref{b:bar:modification}  的修正在确保$\hat{b}$不越过允许边界的同时，还能保证系统稳定。按照 \eqref{a-bar-b-bar:before:modification} 第一式，$\dot{V}$的第二项已消去，第一项已为半负定，则说明最后一项
+\begin{equation}
+    \tilde{b} (\dot{\hat{b}} - \gamma_2 e  u) \leq 0 \label{last_term}
+\end{equation}
+即可。
+
+我们只需检验 $| \hat{b} | = b_{\min}
+$且$u  e  \ensuremath{\operatorname{sgn}} (b) < 0$的情况（另一种情况，上式一定为$0$）。此时
+$\dot{\hat{b}} = 0$，于是上式左侧等于$ - \tilde{b} e  u = - (\hat{b} - b)
+\ensuremath{\operatorname{sgn}} (b) \cdot u  e 
+\ensuremath{\operatorname{sgn}} (b)$。
+下面分情况讨论：
+\begin{itemize}[leftmargin=1em]
+    \item 若$\ensuremath{\operatorname{sgn}} (b) > 0$，则$ue<0$， $\hat{b} = b_{\min}\leq b$，因此$\hat{b} - b \leq 0$，故$- \tilde{b} e  u\le 0$；
+    \item 若$\ensuremath{\operatorname{sgn}} (b) < 0$，则$ue>0$， $\hat{b} = -b_{\min}\geq b$，因此$\hat{b} - b \geq 0$，故$- \tilde{b} e  u\le 0$。
+\end{itemize}
+于是，在修正 \eqref{b:bar:modification} 下，\eqref{last_term} 成立。
+则
+\begin{equation*}
+  \dot{V} \leq - a_{\ensuremath{\operatorname{ref}}} e^2 \leq 0
+  \label{V:under:modification}
+\end{equation*}
+同前可得$e,\tilde{a},\tilde{b},x, \hat{a}, \hat{b} \in \mathbf{L}_{\infty}$；根据修正可得$ u, \dot{e}\in \mathbf{L}_{\infty}$。但此时不能简单利用Barbalat引理——因为$\ddot{V}$的形式变了。解决方法是，对 \eqref{V:under:modification} 两边积分，有
+\[ V (t) - V (0) \leq -a_{\ensuremath{\operatorname{ref}}} \int^t_0 e^2 (\tau)   \diff  \tau \leq 0 \]
+\[ \Rightarrow \int^t_0 e^2 (\tau) \diff  \tau \leq
+   \frac{1}{a_{\ensuremath{\operatorname{ref}}}} (V (0) - V (t)) \leq
+   \frac{1}{a_{\ensuremath{\operatorname{ref}}}} V (0) \]
+则$e (t) \in \mathbf{L}_2$。根据推论 \ref{barbalat_cor_1}，则
+$ \lim\limits_{t \rightarrow  \infty} e (t) = 0$。
+
+\begin{table}[htbp]
+  \centering
+  \setcellgapes{4pt}
+  \makegapedcells
+  \caption{标量系统的非直接型MRAC设计汇总}
+  \begin{tabular}{p{4.0cm}p{10.0cm}}
+  \hline
+   开环被控对象 & $\dot{x} =  a  x + b  u$\\
+    参考模型 & $\dot{x}_{\ensuremath{\operatorname{ref}}} = -
+    a_{\ensuremath{\operatorname{ref}}} x +
+    b_{\ensuremath{\operatorname{ref}}} u_c, a_{\operatorname{ref}}>0$\\
+    跟踪误差 & $e = x - x_{\ensuremath{\operatorname{ref}}}$\\
+    控制输入 & $u = \frac{1}{\hat{b}} [(\hat{a} -
+    a_{\ensuremath{\operatorname{ref}}}) x +
+    b_{\ensuremath{\operatorname{ref}}} u_c]$\\
+    非直接型 MRAC 控制律 & {\hspace{7em}}$\dot{\hat{a}}  =  \gamma_1 e  x$
+    
+    $\dot{\hat{b}}(t)=\begin{cases}
+  \gamma_2ue&\text{若}\ |\hat{b}|>b_{\min}\ \text{或}\ |\hat{b}|=b_{\min}\ \text{且}\ ue\sgn(b)\ge 0\\
+  0&\text{其他}
+\end{cases}$\\
+    \hline
+  \end{tabular}
+\end{table}
+
+

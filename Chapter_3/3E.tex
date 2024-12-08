@@ -119,7 +119,22 @@
   
   综上，由Barbalat引理可知 $\lim\limits_{t \rightarrow \infty} W (x (t)) =  0$。
 \end{proof}
-\begin{corollary}
+\begin{definition}
+设$x(t)$是关于时间的函数。
+\begin{itemize}[leftmargin=1em]
+    \item $L_p$（$p\in[1,\infty]$）范数$\|x\|_p$定义为
+  \begin{align*}
+  \|x\|_p=\left(\int_0^{\infty}|x(\tau)|^p\mbox{d}\tau\right)^{\frac{1}{p}},
+  \end{align*}
+  \item 无穷范数$\|x\|_{\infty}$定义为
+   \begin{align*}
+  \|x\|_{\infty}=\sup_{t\geq 0} |x(t)|.
+  \end{align*}
+  \item 若$\|x\|_p<\infty$，则称 $x\in\mathbf{L}_p$。
+\end{itemize}
+ 注：在本定义中，使用$|x|$来表示$x$的绝对值（若$x$为标量）或$x$的欧几里得范数（若$x$为向量）。
+\end{definition}
+\begin{corollary}\label{barbalat_cor_1}
   若连续可微函数$x(t)\in \mathbf{L}_2\cap \mathbf{L}_\infty$，且$\dot{x}\in \mathbf{L}_\infty$，则$\lim\limits_{t \rightarrow \infty}x(t)=0$。
 \end{corollary}
 证明略。
@@ -133,4 +148,10 @@
     & \int^t_0  x^2 (\tau)\diff \tau\ \text{单调递增有上界}& \frac{\diff x^2}{\diff t}\ \text{有界}&\Leftarrow&\dot{x}\in \mathbf{L}_\infty
   \end{matrix}\]
 \end{note}
-\newpage
+\begin{corollary}
+  若连续可微函数$x(t)\in \mathbf{L}_1\cap \mathbf{L}_\infty$，且$\dot{x}\in \mathbf{L}_\infty$，则$\lim\limits_{t \rightarrow \infty}x(t)=0$。
+\end{corollary}
+\begin{hint}
+    \[\int^t_0  x^2 (\tau)\diff \tau\le \max(|x(t)|)\int^t_0  |x (\tau)|\diff \tau<\infty\]
+    能提出第一项是由于$x(t)$有界。之后遵循证明上个推论的思路即可。
+\end{hint}
