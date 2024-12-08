@@ -1,9 +1,0 @@
-del *.aux
-del *.bcf
-del *.idx
-del *.log
-del *.ind
-del *.ilg
-del *.run.xml
-del *.synctex.gz
-del *.toc

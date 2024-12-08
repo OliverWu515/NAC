@@ -32,21 +32,19 @@ git clone https://github.com/OliverWu515/NAC
 xelatex -synctex=1 -interaction=nonstopmode --shell-escape -file-line-error NAC
 zhmakeindex -s zh.ist NAC-NAC.idx
 xelatex -synctex=1 -interaction=nonstopmode --shell-escape -file-line-error NAC
+xelatex -synctex=1 -interaction=nonstopmode --shell-escape -file-line-error NAC
 ```
-或者直接键入
-```bash
-compile
-```
-
 稍作等待，即可看到编译出的 NAC.pdf。
 
 要清理多余的中间文件，请在命令行中键入 
 
 ```bash
-del *.aux *.bcf *.idx *.ind *.ilg *.run.xml *.synctex.gz *.toc *.log
+del *.aux *.bcf *.idx *.ind *.ilg *.run.xml *.synctex.gz *.toc *.log *.synctex
 ```
 
-或
+上述步骤可以直接通过在命令行中键入
 ```bash
-patch_del
+compile
 ```
+
+或双击 compile.bat 来完成。
