@@ -105,7 +105,7 @@
 \RequirePackage{setspace}
 
 \RequirePackage{csquotes}
-\RequirePackage[nottoc]{tocbibind}
+\RequirePackage[nottoc,notindex]{tocbibind}
 \usepackage[splitindex]{imakeidx}
 \usepackage[totoc,itemlayout=relhang,unbalanced]{idxlayout}
 % \usepackage{makeidx}
