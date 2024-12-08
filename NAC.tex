@@ -25,10 +25,14 @@
 % \makeindex{terms}
 \makeindex[
     columns=2,
-    intoc,
+    % intoc,
     title={索引},
     options=xxx,
 ]
+\indexsetup{        % if unspecified, "level" defaults to \chapter* or \section*
+level=\chapter*     % numbered chapter in book class
+%level=\section     % numbered section in article class
+}
 
 % \def\QED{\mbox{\rule[0pt]{1.5ex}{1.5ex}}}
 
@@ -160,57 +164,7 @@
 % \input{Chapter_6/6C.tex}
 % \input{Chapter_6/Exercises_6C.tex}
 
-% \input{Chapter_7/chapter7.tex}
-% \newpage
-% \input{Chapter_7/7A.tex}
-% \input{Chapter_7/Exercises_7A.tex}
-% \newpage
-% \input{Chapter_7/7B.tex}
-% \input{Chapter_7/Exercises_7B.tex}
-% \newpage
-% \input{Chapter_7/7C.tex}
-% \input{Chapter_7/Exercises_7C.tex}
-% \newpage
-% \input{Chapter_7/7D.tex}
-% \input{Chapter_7/Exercises_7D.tex}
-% \newpage
-% \input{Chapter_7/7E.tex}
-% \input{Chapter_7/Exercises_7E.tex}
-% \newpage
-% \input{Chapter_7/7F.tex}
-% \input{Chapter_7/Exercises_7F.tex}
-
-% \input{Chapter_8/chapter8.tex}
-% \newpage
-% \input{Chapter_8/8A.tex}
-% \input{Chapter_8/Exercises_8A.tex}
-% \newpage
-% \input{Chapter_8/8B.tex}
-% \input{Chapter_8/Exercises_8B.tex}
-% \newpage
-% \input{Chapter_8/8C.tex}
-% \input{Chapter_8/Exercises_8C.tex}
-% \newpage
-% \input{Chapter_8/8D.tex}
-% \input{Chapter_8/Exercises_8D.tex}
-
-% \input{Chapter_9/chapter9.tex}
-% \newpage
-% \input{Chapter_9/9A.tex}
-% \input{Chapter_9/Exercises_9A.tex}
-% \newpage
-% \input{Chapter_9/9B.tex}
-% \input{Chapter_9/Exercises_9B.tex}
-% \newpage
-% \input{Chapter_9/9C.tex}
-% \input{Chapter_9/Exercises_9C.tex}
-% \newpage
-% \input{Chapter_9/9D.tex}
-% \input{Chapter_9/Exercises_9D.tex}
-
 % \index{乘法（multiplication）|see{乘积（product）}}
-% \index{SVD|see{奇异值分解（singular value decomposition）}}
-% \index{和（sum）|see{加法（addition）}}
 
 % \newpage
 % \input{photo_credits.tex}
