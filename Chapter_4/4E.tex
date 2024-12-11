@@ -1,39 +1,56 @@
 \section{鲁棒自适应控制（Robust adaptive control）}\label{4Eref}
 \subsection{参数漂移}
 考虑下述标量系统
-\[\begin{aligned}
-\dot{x} & = u + \varphi(x)\theta + d(t) \\
-\dot{\hat{\theta}} & = \gamma\varphi(x)x \\
-\end{aligned}\]
+\begin{equation}
+    \dot{x} = u + \varphi(x)\theta + d(t)\label{Sys:with_disturbance}
+\end{equation}
 其中$x$为状态，$u$为控制输入，$\varphi$是连续且已知的函数，$\theta$是未知常数，且$d(t)$是有界且时变的扰动，满足$|d(t)|\le d_{\max}$。
 
 我们的控制目标是，设计$u$，使得闭环系统的所有信号都有界，且$x$趋近于原点或原点的一小邻域。
 
-\[E = \{(x,\tilde{\theta}): \parallel x \parallel \leq \frac{d_{\max}}{k} = e_{0}\}\]
+当$d(t)\equiv 0$时，应用 \ref{4Bref} 节的设计方法，采用下述自适应律
+\[ u=-\varphi(x)\hat{\theta}(t)-kx\]
+于是闭环系统动力学
+\[\dot{x}=-kx-\varphi(x)\tilde{\theta}\]
+其中$\tilde{\theta} \triangleq \hat{\theta}-\theta$。
 
-这种现象被称为{\bf 参数漂移（parameter drift）}，这是由干扰而产生的，这表明我们所提出的自适应律不是鲁棒的。
+考虑如下候选Lyapunov函数
+\[V=\frac12 x^2+\frac{1}{2\gamma}\tilde{\theta}^2,\gamma>0\]
+求其导数得
+\begin{align*}
+    \dot{V}&=x\cdot\dot{x}+\frac{1}{\gamma}\tilde{\theta}\dot{\hat{\theta}}\\
+    &=-kx^2+\frac{1}{\gamma}\tilde{\theta}(\dot{\hat{\theta}}-\gamma x\varphi(x))
+\end{align*}
+则设计
+\begin{equation}
+    \dot{\hat{\theta}}=\gamma x\varphi(x)\label{adaptive_nodisturbance}
+\end{equation}
+即可使得$\dot{V}=-kx^2$半负定，之后的分析类似 \ref{4Bref} 各小节。
 
-\begin{example}
-    假设\(\theta = k = \gamma = 1,\varphi(x) = x\)，则有
+然而，当$d(t)\ne 0$时，闭环系统动力学
+\[\dot{x}=-kx-\varphi(x)\tilde{\theta}+d(t)\]
+如果仍采用上述自适应律和候选Lyapunov函数，得到$V$的导数是
+\[\dot{V}=-kx^2+x d(t)\le -kx^2+d_{\max}|x|=-k|x|(|x|-\frac{d_{\max}}{k})\]
+则在下述集合
+\[E = \{(x,\tilde{\theta}): \| x \| \leq \frac{d_{\max}}{k} = e_{0}\}\]
+之外，才有$\dot{V}<0$，而在该集合之内，$\dot{V}$可能为正，因此，参数估计误差$|\tilde{\theta}(t)|$可能自由增长而最终变为无界。这种现象被称为{\bf 参数漂移（parameter drift）}，是由干扰$d(t)$而产生的，这表明我们所提出的自适应律不具有抗干扰能力，即不是鲁棒的。
 
-\[\{\begin{matrix}
+\begin{example}[扰动衰减但参数估计发散]
+    假设\(\theta = k = \gamma = 1,\varphi(x) = x\)。则 \eqref{Sys:with_disturbance} 变为
+\[\begin{cases}
 \dot{x} = - x\hat{\theta} + d(t) \\
 \dot{\hat{\theta}} = x^{2} \\
-\end{matrix}\]
+\end{cases}\]
 
-考虑
+考虑$x = (1 + t)^{- \frac{2}{5}} $的情况。
+此时 \eqref{adaptive_nodisturbance} 成为
+\[\dot{\hat{\theta}} = x^{2} = (1 + t)^{- \frac{4}{5}} \]
+积分得$\hat{\theta}(t) = 5(1 + t)^{\frac{1}{5}},\hat{\theta}(0) = 5$。则\(x\hat{\theta}(t) = 5(1 + t)^{- \frac{1}{5}}\)。
 
-\(x = (1 + t)^{- \frac{2}{5}} \Longrightarrow \dot{x} = - \frac{2}{5}(1 + t)^{- \frac{7}{5}}\)，
-
-因此
-
-\[\dot{\hat{\theta}} = x^{2} = (1 + t)^{- \frac{4}{5}} \Longrightarrow \hat{\theta}(t) = 5(1 + t)^{\frac{1}{5}},\hat{\theta}(0) = 5\]
-
-则\(x\hat{\theta}(t) = 5(1 + t)^{- \frac{1}{5}}\)
-
+对$x$求导得$\dot{x} = - \frac{2}{5}(1 + t)^{- \frac{7}{5}}$，因此
 \[d(t) = \dot{x} + x\hat{\theta} = 5(1 + t)^{- \frac{1}{5}} - \frac{2}{5}(1 + t)^{- \frac{7}{5}}\]
 
-对于\(x(0) = 1,\hat{\theta}(0) = 5\)，对于上述\(d\)，\(d\)收敛（干扰收敛），\(x\)收敛，\(\hat{\theta}\)却发散。
+可见，上述\(d(t)\)收敛（意即扰动收敛），并且\(x\)收敛，然而，\(\hat{\theta}\)是发散的！
 \end{example}
 
 \subsection{死区修正（Dead-Zone Modification）}

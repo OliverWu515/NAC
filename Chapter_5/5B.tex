@@ -1,10 +1,23 @@
 \section{反馈线性化}\label{5Bref}
+\textbf{基本思想：}若能将非线性的动力学转化为线性的，那么便可采用控制线性系统的手段来控制非线性系统。
+\begin{note}
+    这和通过（利用雅可比矩阵的）局部线性化完全不同，因为反馈线性化是通过{\bf 精确的}状态变换和反馈全局完成的，而不是通过取动力学的局部线性{\bf 近似}。
+\end{note}
 
-基本思想：
+{\bf 问题陈述：} 给定$\dot{x} = f (x, u), x \in \mathbf{R}^n, u
+  \in \mathbf{R}^m$，求出函数$g, h$、矩阵$A \in \mathbf{R}^{n \times n}, B \in \mathbf{R}^{n\times m}$，以及新变量$z \in
+  \mathbf{R}^n, v \in \mathbf{R}^m$，使得
+  \begin{align*}
+      u &= g (x, v)&\text{{\small（控制输入，将系统本来的控制输入和给线性化状态的控制输入联系起来）}}\\
+      z &= h (x),&\text{{\small（原状态与新状态的变换，将原状态与线性化后的新状态联系起来）}}\\
+      \dot{z} &= A  z + B  v,&\text{（新状态满足的线性方程）}
+  \end{align*}
+然后利用控制线性系统的方法来设计$v$。
 
-\subsection{可控标准型}
-
-\begin{align*}
+\subsection{输入到状态线性化}
+\begin{example}[可控标准型]
+考虑下述系统
+    \begin{align*}
     \dot{x}_1 & =  x_2\\
      \dot{x}_2 & =  x_3\\
      \vdots &   \\
@@ -13,21 +26,98 @@
 \end{align*}
 假设$b \neq 0$，设计如下控制输入
 \[ u = \frac{1}{b (x)} (v - f (x)) \]
-则$\dot{x}_n = v$
-
-\subsection{输入到状态线性化：例}
-
-\begin{example}
-  考虑如下方程
-  \[ \begin{array}{ccc}
-       \dot{x}_1 & = & - 2 x_1 + a x_2 + \sin x_1\\
-       \dot{x}_2 & = & - x_2 \cos x_1 + u \cos (2 x_2)
-     \end{array} \]
-  我们希望寻求状态变换$z = z (x)$与输入变换$u = u (x, v)$使得非线性系统转为线性的。
+则我们可消去非线性项，而得到
+$ \dot{x}_n = v $，
+这就将系统转化为可控标准型。控制律可选择为
+\[ v = - k_0 x_1 - k_1 x_2 - \cdots - k_{n - 1} x_n \]
+其中各 $k_i$ 应使得多项式（其实就是线性化后系统的特征多项式）
+\[ p^n + k_{n - 1} p^{n - 1} + \cdots + k_0 = 0 \]
+的所有根都具有负实部，这样就可使 $x (t) \rightarrow 0$。
+\end{example}
+\begin{example}[更一般的例子]
+  考虑下述系统
+  \begin{align*}
+    \dot{x}_1 & = - 2 x_1 + a  x_2 + \sin  x_1\\
+    \dot{x}_2 & = - x_2 \cos  x_1 + u  \cos (2 x_2)
+  \end{align*}
+  本例的难点主要在于，第一个方程中的非线性项无法直接被$u$消去。于是，我们寻求状态变换$z = z (x)$与输入变换$u = u (x, v)$使得非线性系统转为线性的。
   
-  选$z_1 = x_1, z_2 = a x_2 {+ \sin x_1} $
+  选取状态变换 $z_1 = x_1, z_2 = a  x_2 + \sin  x_1$，那么 $a  x_2 = z_2 -\sin  z_1$。因此
+  \begin{align*}
+    \dot{z}_1 & = - 2 z_1 + z_2\\
+    \dot{z}_2 & = a  \dot{x}_2 + \cos  x_1 \cdot \dot{x}_1\\
+    & = a  (- x_2 \cos  x_1 + u  \cos (2 x_2)) + \cos  x_1 (- 2 x_1 + a 
+    x_2 + \sin  x_1)\\
+    & = (\sin  x_1 - 2 x_1) \cos  x_1 + u  a   \cos (2 x_2)\\
+    & \triangleq f(x)+g(x)u
+  \end{align*}
+  选取 $u = \frac{1}{g(x)} (v - f(x))$，我们就得到下述线性系统
+  \[ \left\{\begin{array}{l}
+       \dot{z}_1 = - 2 z_1 + z_2\\
+       \dot{z}_2 = v
+     \end{array}\right. \]
+  该系统是能控的。那么，采用控制律$v = - k_1 z_1 - k_2 z_2$，只要增益$k_1$ 和 $k_2$设置得当，我们就能将极点配置在左半平面任意我们需要的位置上，而镇定这个系统。
   
-  则$\dot{z}_1 = \dot{x}_1 = - 2 z_1 + z_2, \dot{z}_2 = a \dot{x}_2 + \cos
-  x_1 \dot{x}_1 = - a x_2$
+  \begin{remark}   
+    \begin{enumerate}[leftmargin=2em]
+      \item 上面获得的结果并非全局的，因为当$g(x)=0$时$u$没有定义。
+      
+      \item 为了实际应用上述控制律，新状态变量$(z_1,z_2)$必定要能获取。也即，系统的全部状态$(x_1, x_2)$都要可测，才能计算出所需的$u$。
+    \end{enumerate}
+  \end{remark}
 \end{example}
 
+\subsection{输入到输出线性化}
+
+在原系统上增加输出 $y$：
+\[ \left\{\begin{array}{l}
+     \dot{x} = f (x, u)\\
+     y = h (x)
+   \end{array}\right. \]
+目标是：设计 $u$ 使得$y \rightarrow 0$。我们希望得出 $y$ 与 $u$之间简单而直接的表达式。
+
+\begin{example}
+    考虑下述三阶系统
+    \begin{align*}
+  \dot{x}_1 & = \sin  x_2 + (x_2 + 1) x_3\\
+  \dot{x}_2 & = x^2_1 + x_3\\
+  \dot{x}_3 & = x^2_2 + u\\
+  y & = x_1
+\end{align*}
+对输出求一阶导数得到
+\[ \dot{y} = \dot{x}_1 = \sin  x_2 + (x_2 + 1) x_3 \]
+上式仍然不直接与$u$相关，尝试再求一阶导数得到
+\begin{align*}
+  \ddot{y} & = \dot{x}_2 \cos  x_2 + \dot{x}_2 x_3 + (x_2 + 1) \dot{x}_3\\
+  & = (x^2_1 + x_3) \cos  x_2 + x_3 (x^2_1 + x_3) + (x_2 + 1) (x^2_2 + u)\\
+  & = (x^2_1 + x_3) (\cos  x_2 + x_3) + (x_2 + 1) x^2_2 + u (x_2 + 1)\\
+  & \triangleq  f(x) + g(x)u
+\end{align*}
+设计 \[u = \frac{1}{g(x)} (v - f (x))\]
+我们就有 $\ddot{y} = v$。此时就可用设计线性系统的方法，设计 $v = - k_1 y - k_2 \dot{y},k_1,k_2>0$，即可使输出$y$稳定（提示：二阶微分方程$\ddot{y}+k_2 \dot{y}+k_1 y=0$的特征根具有负实部）。
+\end{example}
+
+\begin{remark}  
+    这种方法的缺陷：
+  \begin{enumerate}
+    \item 需要得知所有的状态$(x_1, x_2, x_3)$才可计算控制$u$。
+    
+    \item $g(x)=0$，即$x_2 = - 1$时，$u$无法应用，即存在奇异点！
+    
+    \item $y$稳定了，但$x_2, x_3$ 未必稳定？
+    \item 并不对所有非线性系统都适用。
+  \end{enumerate}
+\end{remark}
+
+反馈线性化的基本思想，是将系统中的非线性项消去。然而，我们应该审慎考虑这一思想——{\bf 消去非线性项总是有利的吗}？
+
+\begin{example}
+考虑下述系统
+    \[\dot{x} = a  x - x^3 + u\]
+如果用反馈线性化的思想，那么应设计\[u=-ax+x^3+v\]
+这样$\dot{x}=v$，利用$v=-kx,k>0$可镇定原系统。然而，如果一开始$x$离原点较远，$u$可能很大，即控制代价较大。
+
+如果我们简单设计$u=-ax$，那么$\dot{x}=-x^3$，很容易看出系统已然渐近稳定。
+
+因此，就像 \ref{1Aref} 节所说的那样，有些非线性对系统的运行是有害的，应设法克服它的有害影响；有些非线性是有益的，应在设计时予以考虑。后续章节的一些方法就会充分考虑这些有利因素（如 \ref{5Dref} 节要介绍的反步法）。
+\end{example}

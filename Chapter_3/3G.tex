@@ -8,7 +8,7 @@
 \begin{equation}
     \dot{x} = f (t, x, 0)
 \end{equation}
-具有全局一致渐进稳定的平衡点 $x = 0$。那么，在有界输入 $u(t)$ 下，系统 \eqref{sys:I:ss} 会有怎样的表现？首先我们从简单情形出发，讨论线性时不变系统。
+具有全局一致渐近稳定的平衡点 $x = 0$。那么，在有界输入 $u(t)$ 下，系统 \eqref{sys:I:ss} 会有怎样的表现？首先我们从简单情形出发，讨论线性时不变系统。
 
 \begin{example}
     对于线性时不变系统
@@ -30,63 +30,72 @@
     由此可知，解当中的零输入响应（上式最后一行的第一项）按指数速率衰减至零，而零状态响应（上式最后一行的第二项）对于每个有界的输入都是有界的。也就是说，对于任意有界的输入，系统的状态都有界。
 \end{example}
 
-接下来，我们讨论非线性系统在什么情况下具有这样的性质。对应的无外力系统具有全局一致渐进稳定平衡点即可吗？答案是否定的。
+这样的性质被称为输入-状态稳定性，这里给出其正式定义。
+
+\begin{definition}[输入-状态稳定性（input-to-state stability）] \label{def_iss}
+    系统 \eqref{sys:I:ss} 称为 {\textbf{输入-状态稳定（input-to-state stable，ISS）}}，如果存在一个 $\mathcal{K}\mathcal{L}$ 类函数 $\beta$ 和一个 $\mathcal{K}$ 类函数 $\gamma$，使得对于任意初始状态 $x (t_0)$ 和任意有界输入 $u (t)$，解 $x (t)$ 对所有 $t \geq t_0$ 均存在且满足
+    \[
+        \| x (t) \| \leq \beta (\| x (t_0) \|, t - t_0) + \gamma (\sup_{t_0 \leq \tau \leq t} \|  u (\tau) \|) \text{。}
+    \]
+\end{definition}
+
+\begin{note}
+    输入-状态稳定的系统，有如下性质。
+    \begin{enumerate}
+        \item 对于任意 $u (t)$，$x (t)$ 都会是有界的。
+        \item 随着 $t$ 增加，$x (t)$ 是最终有界的，其界是以 $\sup_{t_0 \leq \tau \leq t} \|  u (\tau) \|$ 为自变量的 $\mathcal{K}$ 类函数。
+        \item 若 $u (t) \equiv 0$, 则 $x = 0$ 全局一致渐近稳定。
+        \item 若 $u (t)$ 随 $t \rightarrow \infty$ 趋于零，则 $x(t)$ 也随 $t \to \infty$ 趋于零。
+    \end{enumerate}
+\end{note}
+
+接下来，我们讨论非线性系统在什么情况下具有这样的性质。对应的无外力系统具有一致渐近稳定平衡点即可吗？答案是否定的。下面看一个例子。
+
+\begin{example}
+    对于系统
+    \[
+        \dot{x} = -3x + (1 + 2 x^2) u \text{，}
+    \]
+    当输入 $u = 0$ 时，平衡点 $x = 0$ 是全局渐近稳定的。然而，当 $x(0) = 2$ 且 $u(t) = 1$ 时，可得解为
+    \[
+        x(t) = \dfrac{3 - \mathrm{e}^t}{3 - 2 \mathrm{e}^t} \text{。}
+    \]
+    而这个解是无界的，甚至有有限逃逸时间（$t = \frac{1}{2} \ln{3}$）。
+\end{example}
+
+下面给出输入-状态稳定性的充分条件。
+
+\begin{theorem}[输入-状态稳定性的充分条件]
+    令 $V : [ 0, \infty ) \times \mathbb{R}^n \to \mathbb{R}$ 是 $C^1$ 函数，且满足
+    \begin{gather*}
+        \alpha_1 (\| x \|) \leq V(t, x) \leq \alpha_2 (\| x \|) \\
+        \dfrac{\partial V}{\partial t} + \dfrac{\partial V}{\partial x} f(t, x, u) \leq -W_3(x), \quad \forall \| x \| \geq \rho (u) > 0,
+    \end{gather*}
+    $\forall (t, x, u) \in [ 0, \infty ) \times \mathbb{R}^n \times \mathbb{R}^n,\, \alpha_1, \alpha_2 \in \mathcal{K}_\infty,\, \rho \in \mathcal{K},\, 0 < W_3(x) \in C^0$。则系统 $\dot{x} = f(t, x, u)$ 是 ISS 的，其中定义 \ref{def_iss} 中的 $\gamma = \alpha_1^{-1} \circ \alpha \circ \rho$。
+\end{theorem}
+
+\begin{proof}
+    讲义上无，待补充。%TODO
+\end{proof}
+
+下一条引理将全局指数稳定性和输入-状态稳定性联系了起来。
+
+\begin{lemma}
+    假设 $f(t, x, u)$ 对 $(x, u)$ 连续可微并且是全局 Lipschitz 的（对 $t$ 一致）。若无外力系统 $\dot{x} = f (t, x, 0)$ 具有全局指数平衡点 $x = 0$，则系统 $\dot{x} = f (t, x, u)$ 是 ISS 的。
+\end{lemma}
+
+\begin{proof}
+    讲义上无，待补充。%TODO
+\end{proof}
+
+% TODO：讲义上的示例
+
+\section*{级联系统}
+
 
 %%%
 
-% \begin{example}
-%   For the linear time-invariant system
-%   \[ \dot{x} = A  x + B  u \]
-%   with a Hurwitz matrix $A$. Its solution is
-%   \[ x (t) = e^{A (t - t_0)} x (t_0) + \int^t_{t_0} e^{A (t - \tau)} B  u
-%      (\tau) d \tau \]
-% \end{example}
-
-% We can use $\| e^{A (t - t_0)} \| \leq k  e^{- \lambda (t - t_0)}$ with $k,
-% \lambda \geq 0$, to estimate the solution
-% \begin{eqnarray*}
-%   \| x (t) \| & \leq & k  e^{- \lambda (t - t_0)} \| x (t_0) \| + k
-%   \int^t_{t_0} e^{- \lambda (t - \tau)} \| B \| \|  u (\tau) \| d \tau\\
-%   & \leq & k  e^{- \lambda (t - t_0)} \| x (t_0) \| + k \| B \| \sup_{t_0
-%   \leq \tau \leq t} \|  u (\tau) \| \int^t_{t_0} e^{- \lambda (t - \tau)} d
-%   \tau\\
-%   & \leq & k  e^{- \lambda (t - t_0)} \| x (t_0) \| + \frac{k \| B
-%   \|}{\lambda} \sup_{t_0 \leq \tau \leq t} \|  u (\tau) \|
-% \end{eqnarray*}
-% The zero-input response decays to zero exponentially fast, while the state is
-% bounded for every bounded input.
-
-% \begin{definition}
-%   The system \eqref{sys:I:ss} is said to be {\textbf{input-to-state stable}}
-%   (ISS) if there exist a class $\mathcal{K}\mathcal{L}$ function $\beta$ and a
-%   class $\mathcal{K} $ function $\gamma$ such that for any initial state $x
-%   (t_0)$ and any bounded input $u (t)$, the solution $x (t)$ exists for all $t
-%   \geq t_0$ and satisfies
-%   \[ \| x (t) \| \leq \beta (\| x (t_0) \|, t - t_0) + \gamma (\sup_{t_0 \leq
-%      \tau \leq t} \|  u (\tau) \|) \]
-% \end{definition}
-
-% \begin{note}
-%   {$\mbox{}$}
-  
-%   \begin{enumerate}
-%     \item For any bounded $u (t)$, $x (t)$ will be bounded.
-    
-%     \item as $t$ increases, $x (t)$ will be \text{{\ttfamily{ultimately
-%     bounded}}} by a class $\mathcal{K}$ function of $\sup_{t_0 \leq \tau \leq
-%     t} \|  u (\tau) \| .$
-    
-%     \item If $u (t) \equiv 0$, then $x = 0$ is asymptotically stable.
-    
-%     \item If $u (t) \rightarrow 0$ as $t \rightarrow \infty$, so does $x (t)$.
-%   \end{enumerate}
-% \end{note}
-
-% \begin{lemma}
-%   If the unforced system $\dot{x} = f (t, x, 0)$ has a globally exponentially
-%   stable equilibrium point at $x = 0$, then the system $\dot{x} = f (t, x, u)$
-%   is ISS.
-% \end{lemma}
+% TODO：级联系统要单开一节吗（）
 
 % \begin{example}
 %   An interesting application. The cascade system

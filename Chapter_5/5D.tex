@@ -1,3 +1,4 @@
+\newpage
 \section{反步法（Backstepping）}\label{5Dref}
 \subsection{基本反步法}
 考虑系统
@@ -86,10 +87,9 @@ $\Phi (0) = 0$，所以$z = 0, y = 0\implies \xi =0$，即原系统的原点$(z 
     \dot{x}_1 & = x^2_1 - x^3_1 + x_2\\
     \dot{x}_2 & = u
   \end{align*}
- 首先考虑第一个方程，这时将 $x_2$ 视为虚拟的控制输入，先设计反馈控制律 $x_2
-  = \Phi (x_1)$ 来镇定 $x_1 = 0$。
+ 首先考虑第一个方程，这时将 $x_2$ 视为虚拟的控制输入，先设计反馈控制律 $\Phi (x_1)$（虚拟的$x_2$） 来镇定 $x_1 = 0$。
   
-  设计 $x_2 = \Phi (x_1) = - x^2_1$，我们有 $\dot{x}_1 = - x^3_1$（将稳定的$- x^3_1$保留）。考虑Lyapunov函数
+  设计 $\Phi (x_1) = - x^2_1$，我们有 $\dot{x}_1 = - x^3_1$（将稳定的$- x^3_1$保留）。考虑Lyapunov函数
   $V (x_1) = \frac{1}{2} x^2_1$，求其导数得
   \[ \dot{V} (x_1) = x_1 \dot{x}_1 = - x^4_1 \]
   其为负定。
@@ -107,8 +107,7 @@ $\Phi (0) = 0$，所以$z = 0, y = 0\implies \xi =0$，即原系统的原点$(z 
   \[ V_c = \frac{1}{2} x^2_1 + \frac{1}{2} y^2 \]
   其导数为
   \begin{align*}
-    \dot{V}_c & = x_1 \dot{x}_1 + y  \dot{y}\\
-    & = - x^4_1 + x_1 y + y  v
+    \dot{V}_c & = x_1 \dot{x}_1 + y  \dot{y} = - x^4_1 + x_1 y + y  v
   \end{align*}
   选取 $v = - x_1 - k  y, k > 0$，那么 $\dot{V}_c = - x^4_1 - k  y^2$ 负定。
   因此， $x_1, y \rightarrow 0$，也就说明$x_1,x_2\rightarrow 0$。
@@ -411,7 +410,7 @@ $z_2$的动力学现表示为
     &=-k_1z_1^2+z_1z_2+\frac{1}{\gamma}\tilde{\theta}(\dot{\hat{\theta}}-\gamma \varphi(z_1)z_1)
 \end{align*}
 
-定义$\tau_1(z_1)=z_1\varphi(z_1)$，称其为{\bf 调节函数（tuning function）}\index{调节函数（tuning function）}。
+定义$\tau_1(z_1)=z_1\varphi(z_1)$，称其为{\bf 调节函数（tuning function）}\index{条@调节函数（tuning function）}。
 
 \noindent{\textbf{步骤 2: }}
 

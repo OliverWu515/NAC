@@ -13,7 +13,7 @@
 
 - Windows 系统；
 - 安装了 TeX Live 或 MikTeX，不一定需要 xindy 和 latexmk；
-- zhmakeindex，用于生成索引，详见 [zhmakeindex 仓库](https://github.com/leo-liu/zhmakeindex)；
+- zhmakeindex，用于生成索引，可在 [zhmakeindex 发行版页面](https://github.com/leo-liu/zhmakeindex/releases/tag/zhmakeindex-1.2) 下载，内附有使用手册；
 - 四款方正字体，具体请参看 [ElegantBook](https://github.com/ElegantLaTeX/ElegantBook) 的说明。
 
 ### 克隆文件
