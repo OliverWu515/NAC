@@ -1,0 +1,47 @@
+\section{反馈控制问题的类别}\label{5Aref}
+考虑下述系统
+\begin{equation}
+    \begin{aligned}
+  \dot{x} = f (t, x, u)\\
+  y = h (t, x, u)
+\end{aligned}\label{sys:1}
+\end{equation}
+
+\textbf{1. 状态反馈镇定问题：}目标是设计一反馈控制律
+\[ u = \gamma (t, x) \]
+使得$x = 0$是下述闭环系统的一致渐近稳定的平衡点
+\[ \dot{x} = f (t, x, \gamma (t, x)) \]
+可分为：
+\begin{itemize}[leftmargin=1em]
+    \item 静态状态反馈：$u = \gamma (t, x)$
+    \item 动态状态反馈：$u = \gamma (t, x, z), \dot{z} = g (t, x, z)$。上一章中的自适应控制即属此类。
+\end{itemize}
+
+\textbf{2. 输出反馈镇定问题：}
+可分为：
+\begin{itemize}[leftmargin=1em]
+\item 静态输出反馈：$u = \gamma (t, y)$
+\item 动态输出反馈：$u = \gamma (t, y, z), \dot{z} = g (t, y, z)$。状态观测器即属此类。
+\end{itemize}
+
+\begin{example}
+  考虑如下线性系统
+  \[ \dot{x} = A x + B u \]
+ \begin{itemize}[leftmargin=1em]
+  \item 状态反馈：$u = - k x$，从而$\dot{x} = A x + B u = (A - B k)
+  x$，目标是使$A - B k$是Hurwitz的；
+  
+  \item 输出反馈：$u = - k \hat{x}$。此时$\hat{y} = C  \hat{x} + D  u,
+  \dot{\hat{x}} = A  \hat{x} + B  u + L(y - \hat{y})$
+  
+  定义$e = x - \hat{x}$，$\dot{e} = A e - L C e = (A - L C) e$，其中$A - L C$是Hurwitz的。
+  
+  $\dot{x} = A x - B K \hat{x}$
+  \end{itemize}
+\end{example}
+
+\textbf{3. 跟踪问题：}
+
+状态跟踪：$x \rightarrow x_d (t)$，目的是使$e = x - x_d$趋于$0$；
+
+输出跟踪：$y \rightarrow y_d (t)$，目的是使$e = y - y_d$趋于$0$。

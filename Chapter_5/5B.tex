@@ -1,0 +1,33 @@
+\section{反馈线性化}\label{5Bref}
+
+基本思想：
+
+\subsection{可控标准型}
+
+\begin{align*}
+    \dot{x}_1 & =  x_2\\
+     \dot{x}_2 & =  x_3\\
+     \vdots &   \\
+     \dot{x}_{n - 1} & = x_n\\
+    \dot{x}_n & = f (x) + b (x) u
+\end{align*}
+假设$b \neq 0$，设计如下控制输入
+\[ u = \frac{1}{b (x)} (v - f (x)) \]
+则$\dot{x}_n = v$
+
+\subsection{输入到状态线性化：例}
+
+\begin{example}
+  考虑如下方程
+  \[ \begin{array}{ccc}
+       \dot{x}_1 & = & - 2 x_1 + a x_2 + \sin x_1\\
+       \dot{x}_2 & = & - x_2 \cos x_1 + u \cos (2 x_2)
+     \end{array} \]
+  我们希望寻求状态变换$z = z (x)$与输入变换$u = u (x, v)$使得非线性系统转为线性的。
+  
+  选$z_1 = x_1, z_2 = a x_2 {+ \sin x_1} $
+  
+  则$\dot{z}_1 = \dot{x}_1 = - 2 z_1 + z_2, \dot{z}_2 = a \dot{x}_2 + \cos
+  x_1 \dot{x}_1 = - a x_2$
+\end{example}
+

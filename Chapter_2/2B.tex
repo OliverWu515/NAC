@@ -59,7 +59,7 @@
 
 最简单也是最为常见的正定函数是{\bf 二次型（quadratic form）}\index{二次型（quadratic form）}，其为自$\R{}^n$至$\R{}$的函数\[V(x)=x^\mathrm{T}Px\]其中$P=P^\mathrm{T}\in\R{}^{n\times n}$。二次型函数$V(x)$的正定/正半定/负定/负半定性，取决于$P$的正定/正半定/负定/负半定性。
 下面定理证明略去，可参看本科线性代数教材。
-\begin{theorem}[实对称矩阵正定、正半定、负定、负半定的判据]
+\begin{theorem}[实对称矩阵正定、正半定、负定、负半定的判据]\label{pd_nd_thm}
   矩阵$P=P^\mathrm{T}\in\R{}^{n\times n}$是\begin{itemize}[leftmargin=1em]
     \item 正定的，当且仅当其全部特征值都为正，或其所有顺序主子式（矩阵的$i$阶顺序主子式，系矩阵的前$i$行前$i$列这一子块的行列式）均为正；
     \item 正半定的，当且仅当其全部特征值都非负，或其所有主子式（矩阵的$i$阶主子式，系选取$i$行，再以这些行的行号作为列号，取出这些行中对应列的元素，再按原方位排列所构成的$i$阶行列式）均为非负；
@@ -73,12 +73,12 @@
     \item 称两矩阵$A,B$合同，若存在可逆阵$S$使得$S^{\mathrm{T}}AS=B$。
   \end{itemize}
 \end{definition}
-\begin{theorem}[实对称矩阵的正交相似对角化]
+\begin{theorem}[实对称矩阵的正交相似对角化]\label{ortho_sim_diag}
   对于任意$P=P^\mathrm{T}\in\R{}^{n\times n}$，均存在一正交矩阵$U$（即$U^\mathrm{T}U=I$）使得$U^{-1}PU=\Lambda$（也即$U^{\mathrm{T}}PU=\Lambda$），
   其中$\Lambda$为对角矩阵，且其对角线上的元素为$P$的所有特征值（均为实数，各特征值出现次数等于代数重数）。
 \end{theorem}
 注意下述定理无需附加实对称的前提，因为$C^\mathrm{T}C$一定是对称的。
-\begin{theorem}[正定、正半定矩阵的分解]
+\begin{theorem}[正定、正半定矩阵的分解]\label{pd_npd_div}
   矩阵$P\in\R{}^{n\times n}$是正半定的，当且仅当存在一矩阵$C\in\R{}^{n\times n}$，使得$P=C^\mathrm{T}C$；
   进一步地，$P$是正定的当且仅当$C$可逆（或称为合同于单位阵）。进而，正定矩阵彼此合同。
 \end{theorem}

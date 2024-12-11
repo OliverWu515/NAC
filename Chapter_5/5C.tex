@@ -1,0 +1,65 @@
+\section{滑模控制（Sliding mode control）}\label{5Cref}
+
+\subsection{镇定问题}
+
+\begin{example}
+  考虑如下二阶系统
+  \begin{align*}
+      \dot{x}_1 & = x_2\\
+       \dot{x_2} & = f (x) + g (x) u
+  \end{align*}
+  其中$f (x)$和$g (x)$都是非线性函数，$g (x) \geq g_0 > 0$，
+  
+  \textbf{控制目标：}设计$u$以镇定原点，也就是使$t
+  \rightarrow \infty $时$ x_1, x_2 \rightarrow 0$
+  
+  基本思想：定义一\textbf{滑模面}，$s = x_2 + \lambda x_1 = 0,
+  \lambda > 0$。在该面上，$x_2 = - \lambda x_1 \Rightarrow \dot{x}_1 = -
+  \lambda x_1$
+  
+  一般的滑模控制过程可分为两阶段:
+  
+  \textbf{接近阶段：}设计$u$，迫使$x_1, x_2$这些状态在有限时间内到达所涉及的滑模面。
+  
+  \textbf{滑模阶段：}$x_1, x_2$在滑模面上到达原点。
+  
+  考虑$s$的动力学
+  \[ \dot{s} = \dot{x}_2 + \lambda \dot{x}_1 \]
+  考虑候选Lyapunov函数$V = \frac{1}{2} s^2$
+  \[ \dot{V} = s \cdot \dot{s} = s (f (x) + g (x) u + \lambda x_2) \]
+  设计$u = \frac{1}{g (x)} (- f (x) - \lambda x_2 - k \sgn (s))$，$k
+  > 0$，
+  
+  $\dot{s} = - k \sgn (s)$，称其为\textbf{等速趋近律}。(若希望$s$较大时减小较快，亦可设计$\dot{s}
+  = - k \sgn (s) - k_1 s$，这称为\textbf{指数趋近律}。)
+  
+  按上述等速趋近律，可得$\dot{V} = - k \sgn (s) = - k | s | =
+  - k \sqrt{2 V}$
+  
+  $\frac{\dot{V}}{\sqrt{V}} = - \sqrt{2} k \Rightarrow$
+  
+  当$t \geq \frac{\sqrt{2 V (0)}}{k}, V (t) \equiv 0 \Rightarrow
+  $在有限时间内，$s (t) \equiv 0$
+\end{example}
+
+\subsection{推广到跟踪问题}
+
+考虑
+\[ \begin{array}{ccc}
+     \dot{x}_1 & = & x_2\\
+     \dot{x}_2 & = & f (x) + g (x) u
+   \end{array} \]
+控制目标：$(x_1, x_2) \rightarrow (x_d, \dot{x}_d)$
+
+$\hat{x}_1 = x_1 - x_d$，$\tilde{x}_2 = x_2 - x_d$，
+
+设计滑模面$s = \tilde{x}_2 + \lambda \tilde{x}_1 = 0$
+
+$\dot{s} = \dot{\widetilde{x_2}} + \dot{\widetilde{x_1}} \lambda = \dot{x}_2 -
+\ddot{x}_d (t) + \lambda \hat{x}_2 = f (x) + g (x) u - \ddot{x}_d (t) +
+\lambda \tilde{x}_2$
+
+设计$u = \frac{1}{g (x)} (- f (x) + \ddot{x}_d (t) - \lambda \tilde{x}_2 - k
+\sgn (s))$，这样$\dot{s} = - k \sgn (s)$
+
+\subsection{推广到有不确定性的跟踪问题}

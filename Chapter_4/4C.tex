@@ -1,49 +1,183 @@
 \section{多输入多输出（MIMO）系统的模型参考自适应控制}\label{4Cref}
-
-\begin{equation}\label{MIMO}
-  \dot{x}=Ax+B\Lambda u
+考虑下述线性系统
+\begin{equation}
+  \dot{x} = A  x + B \Lambda u\label{Sys:MRAC:MIMO}
 \end{equation}
+其中 $x \in \mathbf{R}^n$是系统的状态， $u \in \mathbf{R}^m$ 是控制输入，$B \in \mathbf{R}^{n \times m}$ 是已知的控制矩阵，而 $A \in \mathbf{R}^{n \times n}, \Lambda \in \mathbf{R}^{m \times m}$ 是未知的常值矩阵。又假设  $\Lambda$ 是对角阵，且对角线上均为正数，且$(A, B \Lambda)$ 可控。$\Lambda$是不确定的，这是用于刻画控制失效或建模不准确，意即控制增益可能不确定，或是设计者估计的系统控制效果可能是不准确的。
 
-其中$x\in\R{}^n$是系统的状态，
+{\bf 控制目标是：}设计$u$，使得闭环系统的所有信号都有界，且$x$能够跟踪下述参考模型的参考状态 $x_{\ensuremath{\operatorname{ref}}}$：
+ \begin{equation}
+    \dot{x}_{\ensuremath{\operatorname{ref}}} =
+    A_{\ensuremath{\operatorname{ref}}} x_{\ensuremath{\operatorname{ref}}} +
+    B_{\ensuremath{\operatorname{ref}}} u_c\label{ideal_mimo}
+  \end{equation}
+其中$A_{\ensuremath{\operatorname{ref}}} \in \mathbf{R}^{n \times n}$ 是Hurwitz的，$B_{\ensuremath{\operatorname{ref}}} \in \mathbf{R}^{n \times m}$， $u_c \in \mathbf{R}^m$ 是有界的（虚拟）输入指令。
 
+首先推导理想情形。若$A \in \mathbf{R}^{n \times n}$ and $\Lambda \in \mathbf{R}^{m\times m}$ 已知，我们可选用如下控制律
+\[ u = K^{\ast}_1 x + K^{\ast}_2 u_c \]
+其中 $K^{\ast}_1 \in \mathbf{R}^{m \times n}, K^{\ast}_2 \in \mathbf{R}^{m
+\times m}$，将上式代入 \eqref{Sys:MRAC:MIMO} 可得
+\[ \dot{x} = (A + B \Lambda K^{\ast}_1) x + B \Lambda K^{\ast}_2 u_c \]
+与理想情形对比可知
+\begin{equation}
+  \left\{\begin{array}{l}
+    A + B \Lambda K^{\ast}_1 = A_{\ensuremath{\operatorname{ref}}}\\
+    B \Lambda K^{\ast}_2 = B_{\ensuremath{\operatorname{ref}}}
+  \end{array}\right. \label{matching:condition:GLS}
+\end{equation}
+我们应注意，一般地，无法保证满足 \eqref{matching:condition:GLS} 的理想增益阵$K^{\ast}_1, K^{\ast}_2$存在。不过，在实际应用中，如果$A, B$的结构已知，可以设计 $A_{\ensuremath{\operatorname{ref}}}, B_{\ensuremath{\operatorname{ref}}}$ 以保证 \eqref{matching:condition:GLS} 有解。
+
+下面假设满足 \eqref{matching:condition:GLS} 的$K^{\ast}_1, K^{\ast}_2$存在（there is sufficient structure flexibility to meet the control
+objective）。我们提出以下控制律
+\[ u = \hat{K}_1 (t) x + \hat{K}_2 (t) u_c \]
+代入 \eqref{Sys:MRAC:MIMO} 可得
 \begin{align}
-  \dot{e}&=\dot{x}-\dot{x}_{ref}\nonumber\\
-  &=A_{ref}e+B\Lambda\tilde{K}_1x+B\Lambda\tilde{K}_2u_c
+    \dot{x}&=A  x + B \Lambda (\hat{K}_1 (t) x + \hat{K}_2 (t) u_c)+
+    \underbrace{A_{\ensuremath{\operatorname{ref}}} x +
+    B_{\ensuremath{\operatorname{ref}}} u_c-A_{\ensuremath{\operatorname{ref}}} x +
+    B_{\ensuremath{\operatorname{ref}}} u_c}_{\text{增减期望形式}}\nonumber\\
+    &=A_{\ensuremath{\operatorname{ref}}} x +
+    B_{\ensuremath{\operatorname{ref}}} u_c+(A + B \Lambda \hat{K}_1 (t)-A_{\ensuremath{\operatorname{ref}}}) x+(B\hat{K}_2 (t)-B_{\ensuremath{\operatorname{ref}}}) u_c\nonumber\\
+    &=A_{\ensuremath{\operatorname{ref}}} x +
+    B_{\ensuremath{\operatorname{ref}}} u_c+(B \Lambda \hat{K}_1 (t)-B \Lambda K^{\ast}_1) x+(B\hat{K}_2 (t)-B \Lambda K^{\ast}_2) u_c\label{mimo_dotx}
 \end{align}
+第三行是将 \eqref{matching:condition:GLS} 代入。记 $\tilde{K}_1 \triangleq \hat{K}_1 {- K_1^{\ast}} , \tilde{K}_2
+\triangleq \hat{K}_2 {- K_2^{\ast}} $，则
+\[ \dot{x} = A_{\ensuremath{\operatorname{ref}}}  x +
+   B_{\ensuremath{\operatorname{ref}}} u_c + B \Lambda  \tilde{K}_1 x + B
+   \Lambda  \tilde{K}_2 u_c \]
 
+定义跟踪误差 $e \triangleq x -
+x_{\ensuremath{\operatorname{ref}}}$。根据 \eqref{ideal_mimo} 和 \eqref{mimo_dotx}，写出误差动力学
+\begin{equation}
+  \dot{e} = A_{\ensuremath{\operatorname{ref}}} e + B \Lambda  \tilde{K}_1 x +
+  B \Lambda  \tilde{K}_2 u_c \label{errsys:MRAC:GLS}
+\end{equation}
 类比之前的构造，考虑如下“形式上的”Lyapunov函数
 \begin{align*}
   V&=\frac12e^2+\frac{1}{2}\tilde{K}_1^2+\frac{1}{2}\tilde{K}_2^2
 \end{align*}
-由于其中的$e,\tilde{K}_1,\tilde{K}_2$都是向量或矩阵，而Lyapunov函数输出是标量，上述式子要做相应的修改。
-首先，将$e^2$换成$e^\mathrm{T}e$；然后，将$\tilde{K}_1^2$换为\[\tr(\tilde{K}_1^\mathrm{T}\tilde{K}_1)\]
-由于$\tilde{K}_1^\mathrm{T}\tilde{K}_1$是实对称矩阵，故其一定可做相似对角化，对角化之后的，而迹是相似不变量，
+由于其中的$e,\tilde{K}_1,\tilde{K}_2$都是向量或矩阵，而Lyapunov函数输出是标量，上式要做相应的修改。
 
-半正定的，；
-而迹等于矩阵所有特征值之和，故$\tilde{K}_1\ne0$时，上式一定为正；
+首先，将$\frac12e^2$换成$\frac12e^\mathrm{T}e$。求其导数得\[e\dot{e}=eA_{\ensuremath{\operatorname{ref}}} e+\dots\]
+省略的项待与后面的项合并。仅考察第一项，我们发现由于$A_{\ensuremath{\operatorname{ref}}}$未必负定，则第一项并不保证为负定。后续若要类似之前思路保留该项则不可行。考虑重新设计此项为\[e^\mathrm{T}\textcolor{red}{P}e\]
+则此项导数是
+\[e^\mathrm{T}P\dot{e}+\dot{e}^\mathrm{T}Pe=e^\mathrm{T}(A_{\ensuremath{\operatorname{ref}}}^\mathrm{T} P + P A_{\ensuremath{\operatorname{ref}}}) e+\dots\]
+由于 $A_{\ensuremath{\operatorname{ref}}}$ 是 Hurwitz的，根据定理 \ref{linearlya}，我们可知对任意正定矩阵 $Q \in \mathbf{R}^{n \times
+n}$，都存在唯一正定阵 $P \in \mathbf{R}^{n \times n}$
+使得
+\[ A_{\ensuremath{\operatorname{ref}}}^\mathrm{T} P + P 
+   A_{\ensuremath{\operatorname{ref}}} = - Q < 0 \]
+则第一项必为负定。
 
-\begin{equation}\label{MIMOLYA}
-  V=e^\mathrm{T}Pe+\tr(\tilde{K}_1^\mathrm{T}\tilde{K}_1)+\tr(\tilde{K}_2^\mathrm{T}\tilde{K}_2)
+然后，将$\tilde{K}_1^2$换为\[\tr(\tilde{K}_1^\mathrm{T}\tilde{K}_1)\]
+由 \ref{pd_npd_div}，$\tilde{K}_1^\mathrm{T}\tilde{K}_1$ 是半正定的，进而由 \ref{pd_nd_thm}，其特征值全为非负，则其迹一定非负，则上式是半正定的。
+
+下面说明$\tr(\tilde{K}_1^\mathrm{T}\tilde{K}_1)=0\iff \tilde{K}_1=0$。仅证“$\implies$”情形。由于该矩阵特征值非负，所以迹为$0$就表明所有特征值均为$0$。则由 \ref{ortho_sim_diag}，存在正交矩阵$S$使得$S^{-1}\tilde{K}_1^\mathrm{T}\tilde{K}_1S=0$。则$\tilde{K}_1^\mathrm{T}\tilde{K}_1=0$。因此对于所有$x\in\mathbf{R}^{n\times n}$均有$x^{\mathrm{T}}\tilde{K}_1^\mathrm{T}\tilde{K}_1x=0$，因此$\tilde{K}_1x=0$，则$\tilde{K}_1=0$。因此，$\tr(\tilde{K}_1^\mathrm{T}\tilde{K}_1)$正定。
+
+类似将$\tilde{K}_2^2$换为$\tr(\tilde{K}_2^\mathrm{T}\tilde{K}_2)$。
+于是考虑如下候选Lyapunov函数
+\begin{equation}\label{MODMIMOLYA:modify1}
+V=e^\mathrm{T}Pe+\tr(\tilde{K}_1^\mathrm{T}\tilde{K}_1)+\tr(\tilde{K}_2^\mathrm{T}\tilde{K}_2)
 \end{equation}
 
-其中$P$是满足如下Lyapunov方程的正定矩阵。求其对$t$的导数可得
+求其导数得（注意$\dot{\tilde{K}}_1=\hat{\hat{K}}_1$，$\dot{\tilde{K}}_2=\dot{\hat{K}}_2$）
+\begin{align*}
+  \dot{V} & =e^\mathrm{T}P\dot{e}+\dot{e}^\mathrm{T}Pe + 2\ensuremath{\operatorname{tr}} \{
+  \tilde{K}^\mathrm{T}_1 \dot{\hat{K}} _1 \} + 2\ensuremath{\operatorname{tr}}
+  \{ \tilde{K}^\mathrm{T}_2 \dot{\hat{K}} _2 \}\\
+  & = e^\mathrm{T}P( A_{\ensuremath{\operatorname{ref}}} e + B \Lambda  \tilde{K}_1 x +
+  B \Lambda  \tilde{K}_2 u_c)+(A_{\ensuremath{\operatorname{ref}}} e + B \Lambda  \tilde{K}_1 x +
+  B \Lambda  \tilde{K}_2 u_c)^\mathrm{T}Pe\\
+  &\quad+
+  2\ensuremath{\operatorname{tr}} \{ \tilde{K}^\mathrm{T}_1 \dot{\hat{K}} _1 \}
+  + 2\ensuremath{\operatorname{tr}} \{ \tilde{K}^\mathrm{T}_2 \dot{\hat{K}} _2 \}\\
+  & = e^\mathrm{T}(A_{\ensuremath{\operatorname{ref}}}^\mathrm{T} P + P A_{\ensuremath{\operatorname{ref}}}) e+{e}^\mathrm{T}PB\Lambda\tilde{K}_1x+(B\Lambda \tilde{K}_1x)^\mathrm{T}Pe+{e}^\mathrm{T}PB\Lambda
+  \tilde{K}_2u_c\\
+  &\quad +(B\Lambda \tilde{K}_2u_c)^\mathrm{T}Pe+
+  2\ensuremath{\operatorname{tr}} \{ \tilde{K}^\mathrm{T}_1 \dot{\hat{K}} _1 \}
+  + 2\ensuremath{\operatorname{tr}} \{ \tilde{K}^\mathrm{T}_2 \dot{\hat{K}} _2 \}
+\end{align*}
+利用${e}^\mathrm{T}PB\Lambda\tilde{K}_1x$为标量且$P$为对称，有
+\[{e}^\mathrm{T}PB\Lambda\tilde{K}_1x=({e}^\mathrm{T}PB\Lambda\tilde{K}_1x)^\mathrm{T}=(B\Lambda\tilde{K}_1x)^\mathrm{T}P^\mathrm{T}(e^\mathrm{T})^\mathrm{T}=(B\Lambda\tilde{K}_1x)^\mathrm{T}Pe\]
+类似处理${e}^\mathrm{T}PB\Lambda\tilde{K}_2x$。则
 \begin{align}
-  \dot{V}&=\dot{e}^\mathrm{T}Pe+e^\mathrm{T}P\dot{e}+2\tr(\tilde{K}_1^\mathrm{T}\dot{\tilde{K}}_1)+
-  2\tr(\tilde{K}_2^\mathrm{T}\dot{\tilde{K}}_2)\\
-  &=\dot{e}^\mathrm{T}(A_{ref}^\mathrm{T}P+PA_{ref})e+2{e}^\mathrm{T}PB\Lambda\tilde{K}_1x+2{e}^\mathrm{T}PB\Lambda
-  \tilde{K}_2u_c+2\tr(\tilde{K}_2^\mathrm{T}\dot{\tilde{K}}_2)\\
-  &=-e^\mathrm{T}Qe+2\tr(\tilde{K}_1^\mathrm{T}\Lambda B^\mathrm{T}Pex^\mathrm{T})+2\tr(\tilde{K}_2^\mathrm{T}\Lambda B^\mathrm{T}Peu_c^\mathrm{T})+2{e}^\mathrm{T}PB\Lambda\tilde{K}_2u_c+2\tr(\tilde{K}_2^\mathrm{T}\dot{\hat{K}}_2)
+ \dot{V} & = e^\mathrm{T}(A_{\ensuremath{\operatorname{ref}}}^\mathrm{T} P + P A_{\ensuremath{\operatorname{ref}}}) e+ 2 e^\mathrm{T}  P  B \Lambda 
+  \tilde{K}_1 x + 2 e^\mathrm{T} P  B \Lambda  \tilde{K}_2 u_c +
+  2\ensuremath{\operatorname{tr}} \{ \tilde{K}^\mathrm{T}_1  \dot{\hat{K}} _1 \}
+  + 2\ensuremath{\operatorname{tr}} \{ \tilde{K}^\mathrm{T}_2  \dot{\hat{K}} _2
+  \}\nonumber\\
+  & = -e^\mathrm{T}Q e +
+  2\ensuremath{\operatorname{tr}} \{ \tilde{K}^\mathrm{T}_1 \Lambda B^\mathrm{T}  P  e  x^\mathrm{T} \} +
+  2\ensuremath{\operatorname{tr}} \{ \tilde{K}^\mathrm{T}_2 \Lambda B^\mathrm{T}  P  e  u_c^\mathrm{T} \} +
+  2\ensuremath{\operatorname{tr}} \{ \tilde{K}^\mathrm{T}_1  \dot{\hat{K}} _1 \}
+  + 2\ensuremath{\operatorname{tr}} \{ \tilde{K}^\mathrm{T}_2  \dot{\hat{K}} _2
+  \}\label{dot_V_modify1}
 \end{align}
-其中第三行我们用到了
+其中第二行我们用到了
 \begin{align*}
   {e}^\mathrm{T}PB\Lambda\tilde{K}_1x&=\tr({e}^\mathrm{T}PB\Lambda\tilde{K}_1x)&\text{（标量）}\\
   &=\tr(x{e}^\mathrm{T}PB\Lambda\tilde{K}_1)&\text{（}\tr(AB)=\tr(BA)\text{）}\\
-  &=\tr(\tilde{K}_1^\mathrm{T}\Lambda B^\mathrm{T}Pex^\mathrm{T})&\text{（}\tr(A^\mathrm{T})=\tr(A)\text{）}
+  &=\tr(\tilde{K}_1^\mathrm{T}\Lambda B^\mathrm{T}Pex^\mathrm{T})&\text{（}\tr(A^\mathrm{T})=\tr(A),\Lambda,P\ \text{对称）}
 \end{align*}
-于是我们可设计
+根据上面导数，尝试选取
+\[\dot{\hat{K}} _1 = - \Lambda B^\mathrm{T}  P  e  x^\mathrm{T}, \dot{\hat{K}} _2 = - \Lambda B^\mathrm{T}  P  e  u^\mathrm{T}_c\]
+以消去最后四项。然而，$\Lambda$未知。因此，该设计是不可行的。
 
-但是该设计是不可行的，
-
-\begin{equation}\label{MODMIMOLYA}
+将 \eqref{MODMIMOLYA:modify1} 修改为
+\begin{equation}\label{MODMIMOLYA:modify2}
   V=e^\mathrm{T}Pe+\tr(\tilde{K}_1^\mathrm{T}\textcolor{red}{\Lambda}\tilde{K}_1)+\tr(\tilde{K}_2^\mathrm{T}\textcolor{red}{\Lambda}\tilde{K}_2)
 \end{equation}
+由于$\Lambda$正定，所以上述第二、三项的正定性不变（提示：可拆分为$\tilde{K}_1^\mathrm{T}\Lambda^\frac{1}{2}\Lambda^\frac{1}{2}\tilde{K}_1$）。因此，该修改是可行的。
+
+此时 \eqref{dot_V_modify1} 变为
+\begin{align*}
+  \dot{V} &= -e^\mathrm{T}Q e +
+  2\ensuremath{\operatorname{tr}} \{ \tilde{K}^\mathrm{T}_1 \Lambda B^\mathrm{T}  P  e  x^\mathrm{T} \} +
+  2\ensuremath{\operatorname{tr}} \{ \tilde{K}^\mathrm{T}_2 \Lambda B^\mathrm{T}  P  e  u_c^\mathrm{T} \} +
+  2\ensuremath{\operatorname{tr}} \{ \tilde{K}^\mathrm{T}_1 \textcolor{red}{\Lambda} \dot{\hat{K}} _1 \}
+  + 2\ensuremath{\operatorname{tr}} \{ \tilde{K}^\mathrm{T}_2 \textcolor{red}{\Lambda} \dot{\hat{K}} _2 \}
+\end{align*}
+
+于是我们可选取
+\[\dot{\hat{K}} _1 = - B^\mathrm{T}  P  e  x^\mathrm{T}, \dot{\hat{K}} _2 = - B^\mathrm{T}  P  e  u^\mathrm{T}_c\]
+这样就有
+\[ \dot{V} = - e^\mathrm{T} Q  e \leq 0 \]
+于是$V (t) \leq V (0)$，由 \eqref{MODMIMOLYA:modify2} 的形式可知 $e, \tilde{K}_1, \tilde{K}_2 \in
+\mathbf{L}_{\infty}$。由于$u_c$ 有界且
+$A_{\ensuremath{\operatorname{ref}}}$ 是 Hurwitz的，所以
+$x_{\ensuremath{\operatorname{ref}}} \in \mathbf{L}_{\infty}$。又知 $x = e +x_{\ensuremath{\operatorname{ref}}}$，所以$x \in \mathbf{L}_{\infty}$有界。根据 \eqref{errsys:MRAC:GLS}，$\dot{e} \in \mathbf{L}_{\infty}$。对$V$再求一阶导数，有
+\[ \ddot{V} = - 2 e^\mathrm{T} Q  \dot{e} \in \mathbf{L}_{\infty} \]
+用 Barbalat引理（\ref{barbalat}），有$\lim\limits_{t \rightarrow \infty} \dot{V} = 0$，也即$\lim\limits_{t \rightarrow \infty} e (t) = 0$。
+
+\begin{problem}
+    $\Lambda$ 对角线元素全为负？
+\end{problem}
+\begin{hint}
+\eqref{MODMIMOLYA:modify2} 第二项改为 $\ensuremath{\operatorname{tr}} \{ \tilde{K}^\mathrm{T}_1 (- \Lambda) \tilde{K} _1 \}$，第三项类似。
+\end{hint}
+\begin{problem}
+    $\Lambda$ 对角线上的元素有些为正、有些为负？
+\end{problem}
+\begin{hint}
+    选取\[ V = e^\mathrm{T} P  e +\ensuremath{\operatorname{tr}} \{ \tilde{K}^\mathrm{T}_1 |
+       \Lambda | \tilde{K} _1 \} +\ensuremath{\operatorname{tr}} \{
+       \tilde{K}^\mathrm{T}_2 | \Lambda | \tilde{K} _2 \} \]
+    则可得
+    \[ \dot{\hat{K}} _1 = -\ensuremath{\operatorname{sgn}} (\Lambda) B^\mathrm{T}  P  e
+       x^\mathrm{T}, \dot{\hat{K}} _2 = -\ensuremath{\operatorname{sgn}} (\Lambda) B^\mathrm{T}
+       P  e  u^\mathrm{T}_c \]
+    其中 $| \Lambda | \triangleq \Lambda \ensuremath{\operatorname{sgn}}
+    (\Lambda)$, $\ensuremath{\operatorname{sgn}} (\Lambda) \triangleq
+    \ensuremath{\operatorname{diag}} \{ \ensuremath{\operatorname{sgn}}
+    (\lambda_i) \}$。
+\end{hint}
+
+\begin{problem}
+系统方程变为
+  \[ \dot{x} = A  x + B \Lambda (u + \Phi (t) \cdot \Theta) \]
+  其中 $\Theta \in \mathbf{R}^{p \times 1}, \Phi (t) \in \mathbf{R}^{m \times  p}$，$\Theta$ 未知，$\Phi$ 已知且有界。
+\end{problem}
+\begin{hint}
+    设计控制律\[ u = \hat{K}_1 (t) x + \hat{K}_2 (t) u_c - \Phi (t) \cdot \hat{\Theta} \]
+\end{hint}

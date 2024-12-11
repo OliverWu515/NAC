@@ -1,6 +1,102 @@
 \section{鲁棒自适应控制（Robust adaptive control）}\label{4Eref}
 \subsection{参数漂移}
+考虑下述标量系统
+\[\begin{aligned}
+\dot{x} & = u + \varphi(x)\theta + d(t) \\
+\dot{\hat{\theta}} & = \gamma\varphi(x)x \\
+\end{aligned}\]
+其中$x$为状态，$u$为控制输入，$\varphi$是连续且已知的函数，$\theta$是未知常数，且$d(t)$是有界且时变的扰动，满足$|d(t)|\le d_{\max}$。
+
+我们的控制目标是，设计$u$，使得闭环系统的所有信号都有界，且$x$趋近于原点或原点的一小邻域。
+
+\[E = \{(x,\tilde{\theta}): \parallel x \parallel \leq \frac{d_{\max}}{k} = e_{0}\}\]
+
+这种现象被称为{\bf 参数漂移（parameter drift）}，这是由干扰而产生的，这表明我们所提出的自适应律不是鲁棒的。
+
+\begin{example}
+    假设\(\theta = k = \gamma = 1,\varphi(x) = x\)，则有
+
+\[\{\begin{matrix}
+\dot{x} = - x\hat{\theta} + d(t) \\
+\dot{\hat{\theta}} = x^{2} \\
+\end{matrix}\]
+
+考虑
+
+\(x = (1 + t)^{- \frac{2}{5}} \Longrightarrow \dot{x} = - \frac{2}{5}(1 + t)^{- \frac{7}{5}}\)，
+
+因此
+
+\[\dot{\hat{\theta}} = x^{2} = (1 + t)^{- \frac{4}{5}} \Longrightarrow \hat{\theta}(t) = 5(1 + t)^{\frac{1}{5}},\hat{\theta}(0) = 5\]
+
+则\(x\hat{\theta}(t) = 5(1 + t)^{- \frac{1}{5}}\)
+
+\[d(t) = \dot{x} + x\hat{\theta} = 5(1 + t)^{- \frac{1}{5}} - \frac{2}{5}(1 + t)^{- \frac{7}{5}}\]
+
+对于\(x(0) = 1,\hat{\theta}(0) = 5\)，对于上述\(d\)，\(d\)收敛（干扰收敛），\(x\)收敛，\(\hat{\theta}\)却发散。
+\end{example}
+
 \subsection{死区修正（Dead-Zone Modification）}
+
+为了提升鲁棒性，我们考虑下述死区修正自适应律
+
+\[\dot{\hat{\theta}} = \{\begin{matrix}
+\gamma x\varphi(x), & \text{若} \parallel x \parallel \geq e_{0} + \delta \\
+0, & \text{若} \parallel x \parallel < e_{0} + \delta \\
+\end{matrix}\]
+
+回顾\(V = \frac{1}{2}x^{2} + \frac{1}{2\gamma}{\tilde{\theta}}^{2}\)
+
+定义\(\Omega_{1} = \{ t: \parallel x(t) \parallel < e_{0} + \delta\},\Omega_{2} = \{ t: \parallel x(t) \parallel \geq e_{0} + \delta\}\)，当\(t \in \Omega_{2},\dot{V} \leq - k(e_{0} + \delta)\delta = - c < 0\)
+
+（图示）
+
+若\(t_{0} \in \Omega_{1}\)，并且轨迹在\(t_{1}\)时刻到达边界\(e_{0} + \delta\)，且在\((t_{1},t_{2}) \in \Omega_{2}\)处于\(e_{0} + \delta\)之右侧（越过边界）
+
+\[V(t_{1}) = \frac{1}{2}(e_{0} + \delta)^{2} + \frac{1}{2\gamma}{\tilde{\theta}}^{2}(t_{0})\]
+
+\[V(t_{2}) = \frac{1}{2}(e_{0} + \delta)^{2} + \frac{1}{2\gamma}{\tilde{\theta}}^{2}(t_{2}) < V(t_{1})\]
+
+我们可推断出，\(\parallel \tilde{\theta}(t) \parallel\)在每个到达边界的时刻\(t_{1},t_{2},\ldots\)总会单调递减，因此\(\parallel \tilde{\theta}(t) \parallel\)是有界的，并且随时间增长一定有\(\parallel x \parallel \leq e_{0} + \delta\)。
+
 \subsection{\texorpdfstring{$\sigma$-修正（$\sigma$-Modification）}{σ-修正（σ-Modification）}}
+
+\[\dot{\hat{\theta}} = \gamma(x\varphi(x) - \sigma\hat{\theta})\]
+
+本质上，这种修正是向理想的自适应律上增加了一个阻尼项。动机就是阻碍参数漂移带来的影响。
+
+在这种修正下，\(V(t)\)随时间，沿系统的导数是
+
+\[\begin{matrix}
+\dot{V} & = - kx^{2} - x\varphi(x)\tilde{\theta} + xd(t) + \frac{1}{\gamma}\tilde{\theta}\dot{\hat{\theta}} \\
+ & = - kx^{2} - x\varphi(x)\tilde{\theta} + xd(t) + \tilde{\theta}x\varphi(x) - \sigma\tilde{\theta}\hat{\theta} \\
+ & = - kx^{2} + xd(t) - \sigma\tilde{\theta}\hat{\theta} \\
+\end{matrix}\]
+
+注意到\(xd(t) \leq d_{\max} \parallel x \parallel \leq \frac{k}{2}x^{2} + \frac{1}{2k}d_{\max}^{2}\)（利用不等式\(ab \leq \frac{ka^{2}}{2} + \frac{b^{2}}{2k}\)）
+
+目标形式是\(\dot{V} = - \beta V + C\)
+
+并且\(- \sigma\tilde{\theta}\hat{\theta} = - \sigma\tilde{\theta}(\tilde{\theta} + \theta) \leq - \sigma\tilde{\theta}{\tilde{\theta}}^{2} + \sigma(\frac{{\tilde{\theta}}^{2}}{2} + \frac{\theta^{2}}{2}) = - \sigma\frac{{\tilde{\theta}}^{2}}{2} + \sigma\frac{\theta^{2}}{2}\)
+
+将上面两个式子代入得到
+
+\begin{align*}
+\dot{V} & \leq - kx^{2} + \frac{k}{2}x^{2} + \frac{d_{\max}^{2}}{2k} - \sigma\frac{{\tilde{\theta}}^{2}}{2} + \sigma\frac{\theta^{2}}{2} \\
+ & = - \frac{k}{2}x^{2} + \frac{d_{\max}^{2}}{2k} - \sigma\frac{{\tilde{\theta}}^{2}}{2} + \sigma\frac{\theta^{2}}{2} \\
+ & = - \frac{k}{2}x^{2} - \sigma\gamma\frac{{\tilde{\theta}}^{2}}{2\gamma} + \frac{d_{\max}^{2}}{2k} + \sigma\frac{\theta^{2}}{2} \\
+ & \leq - \min\{ k,\sigma\gamma\} V + \frac{d_{\max}^{2}}{2k} + \sigma\frac{\theta^{2}}{2}
+\end{align*}
+
+\[\dot{V} + \beta V \leq c\]
+
+欲使\(\beta\)较大，那么可取\(k,\sigma\gamma\)都较大；欲使\(c\)较小，使得\(k\)较大且\(\sigma\)较小即可。
+
+综合考虑，应该使\(k\)较大，\(\sigma\)较小，\(\gamma\)大得多。
+
+
 \subsection{\texorpdfstring{$e$-修正（$e$-Modification）}{e-修正（e-Modification）}}
+
+\[\dot{\hat{\theta}} = \gamma(x\varphi(x) - \sigma \parallel x \parallel \hat{\theta})\]
+
 \subsection{\texorpdfstring{自适应$\sigma$-修正（Adaptive $\sigma$-Modification）}{自适应σ-修正（Adaptive σ-Modification）}}
