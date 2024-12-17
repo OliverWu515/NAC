@@ -80,7 +80,7 @@
 
 下一条引理将全局指数稳定性和输入-状态稳定性联系了起来。
 
-\begin{lemma}
+\begin{lemma}\label{ISS_lemma}
     假设 $f(t, x, u)$ 对 $(x, u)$ 连续可微并且是全局 Lipschitz 的（对 $t$ 一致）。若无外力系统 $\dot{x} = f (t, x, 0)$ 具有全局指数平衡点 $x = 0$，则系统 $\dot{x} = f (t, x, u)$ 是 ISS 的。
 \end{lemma}
 
@@ -92,26 +92,14 @@
 
 \section*{级联系统}
 
+考虑级联系统
+\begin{eqnarray}
+    \dot{x}_1 & = & f_1 (t, x_1, x_2)  \label{cascade:state:1}\\
+    \dot{x}_2 & = & f_2 (t, x_2)  \label{cascade:state:2}
+\end{eqnarray}
+其中子系统 $\dot{x}_1 = f_1 (t, x_1, 0)$ 的平衡点 $x_1 = 0$ 是全局一致渐近稳定的（GUAS），$\dot{x}_2 = f_2(t, x_2)$ 的平衡点 $x_2 = 0$ 也是全局一致渐近稳定的（GUAS）。那么在什么条件下，这个级联系统的原点 $x = (x_1, x_2) = 0$ 也是全局一致渐近稳定的（GUAS）？
 
-%%%
-
-% TODO：级联系统要单开一节吗（）
-
-% \begin{example}
-%   An interesting application. The cascade system
-%   \begin{eqnarray}
-%     \dot{x}_1 & = & f_1 (t, x_1, x_2)  \label{cascade:state:1}\\
-%     \dot{x}_2 & = & f_2 (t, x_2)  \label{cascade:state:2}
-%   \end{eqnarray}
-%   Suppose both \eqref{cascade:state:1} and \eqref{cascade:state:2} has
-%   globally asymptotically stable equilibrium points at their respective
-%   origins.
-% \end{example}
-
-% \begin{lemma}
-%   Under the stated assumptions, if the system \eqref{cascade:state:1} with
-%   $x_2$ as input, is ISS and the origin of \eqref{cascade:state:2} is globally
-%   uniformly asymptotically stable, then the origin of the cascade system
-%   \eqref{cascade:state:1} and \eqref{cascade:state:2} is globally uniformly
-%   asymptotically stable.
-% \end{lemma}
+这里我们不加证明地给出一条引理。
+\begin{lemma}
+    在上述假设下，如果将 $x_2$ 作为输入的系统 \eqref{cascade:state:1} 是输入-状态稳定的（ISS），那么该级联系统的原点是全局一致渐近稳定的（GUAS）。
+\end{lemma}

@@ -8,7 +8,7 @@
   \in \mathbf{R}^m$，求出函数$g, h$、矩阵$A \in \mathbf{R}^{n \times n}, B \in \mathbf{R}^{n\times m}$，以及新变量$z \in
   \mathbf{R}^n, v \in \mathbf{R}^m$，使得
   \begin{align*}
-      u &= g (x, v)&\text{{\small（控制输入，将系统本来的控制输入和给线性化状态的控制输入联系起来）}}\\
+      u &= g (x, v)&\text{{\small（控制输入，将系统本来的控制输入和线性化系统的控制输入联系起来）}}\\
       z &= h (x),&\text{{\small（原状态与新状态的变换，将原状态与线性化后的新状态联系起来）}}\\
       \dot{z} &= A  z + B  v,&\text{（新状态满足的线性方程）}
   \end{align*}

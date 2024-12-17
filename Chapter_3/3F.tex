@@ -8,11 +8,11 @@
 \]
 该系统没有平衡点。它的解是
 \[
-    x (t) = \mathrm{e}^{- (t - t_0)} x (t_0) + \delta \int^t_{t_0} \mathrm{e}^{- (t - \tau)} \text{。}
+    x (t) = \mathrm{e}^{- (t - t_0)} x (t_0) + \delta \int^t_{t_0} \mathrm{e}^{- (t - \tau)} \diff  \tau \text{。}
 \]
 这个解满足下式：
 \begin{align*}
-    \| x (t) \| & \leq  \mathrm{e}^{- (t - t_0)} a + \delta \int^t_{t_0} \mathrm{e}^{- (t - \tau)} d  \tau \\
+    \| x (t) \| & \leq  \mathrm{e}^{- (t - t_0)} a + \delta \int^t_{t_0} \mathrm{e}^{- (t - \tau)} \diff  \tau \\
     & =  (a - \delta) \mathrm{e}^{- (t - t_0)} + \delta \\
     & \leq  a, \quad \forall t \geq t_0 \text{。}
 \end{align*}
@@ -43,12 +43,12 @@ $\dot{V}$ 在原点附近并不是负定的，但在集合 $\{ | x | < \delta \}
     \begin{equation} \label{eq_ub}
         \| x (t_0) \| \leq a \Rightarrow \| x (t) \| \leq \beta, \quad \forall t \geq t_0
     \end{equation}
-    \item \textbf{全局一致有界的（globally uniformly bounded）}，如果 \ref{eq_ub} 对任意大的 $a$ 都成立。
+    \item \textbf{全局一致有界的（globally uniformly bounded）}，如果 \eqref{eq_ub} 对任意大的 $a$ 都成立。
     \item \textbf{一致最终有界的（uniformly ultimately bounded）} 且最终界为 $b$，如果存在正的且与 $t_0 \geq 0$ 无关的常数 $b, c$ 使得对于任意 $a \in (0, c)$ 存在与 $t_0$ 无关的 $T = T (a, b) > 0$ 使得
     \begin{equation} \label{eq_uub}
         \| x (t_0) \| \leq a \Rightarrow \| x (t) \| \leq b, \quad \forall t \geq t_0 + T
     \end{equation}
-    \item \textbf{全局一致最终有界的（global uniformly ultimately bounded）}，如果 \ref{eq_uub} 对任意大的 $a$ 都成立。
+    \item \textbf{全局一致最终有界的（global uniformly ultimately bounded）}，如果 \eqref{eq_uub} 对任意大的 $a$ 都成立。
 \end{itemize}
 \end{definition}
 

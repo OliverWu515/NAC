@@ -1,11 +1,12 @@
 \section{时变正定函数与非自治系统稳定性定理}\label{3Cref}
-\begin{definition}[与时间相关的正定、正半定函数；渐弱，径向无界]
+\begin{definition}
+称$V(x,t): D \times [0, \infty) \rightarrow \mathbf{R}$是
     \begin{itemize}[leftmargin=1em]
-      \item 称$V(t,x)$是正半定函数\index{正半定（positive semidefinite）}，若$V(t,x)\ge 0$，$V(t,0)=0$。
-      \item 称$V(t,x)$是正定函数\index{正定（positive definite）}，若$V(t,x)\ge W_1(x)$，其中$W_1(x)$是正定函数。
-      \item 称$V(t,x)$是{\bf 渐弱的（decrescent）}\index{渐弱的（decrescent）}，若$V(t,x)\le W_2(x)$，其中$W_2(x)$是正定函数。
-      \item 称$V(t,x)$是径向无界的（radially unbounded）\index{径向无界（radial unboundness）}，若$\|x\|\to\infty$，$V(t,x)\to \infty$。
-      \item 称$V(t,x)$是负定/负半定函数\index{负定的（negative definite）}\index{负半定的（negative semidefinite）}，若$-V(t,x)$是正定/正半定函数。
+      \item 正半定函数\index{正半定（positive semidefinite）}，若$V(t,x)\ge 0$，$V(t,0)=0$。
+      \item 正定函数\index{正定（positive definite）}，若$V(t,x)\ge W_1(x)$，其中$W_1(x)$是正定函数。
+      \item {\bf 径向无界的（radially unbounded）}\index{径向无界（radial unboundness）}，若$\|x\|\to\infty$，$V(t,x)\to \infty$，或上式中$W_1$径向无界。
+      \item 负定/负半定函数\index{负定的（negative definite）}\index{负半定的（negative semidefinite）}，若$-V(t,x)$是正定/正半定函数。
+      \item {\bf 渐弱的（decrescent）}\index{渐弱的（decrescent）}，若$V(t,x)\le W_2(x)$，其中$W_2(x)$是正定函数。
     \end{itemize}
 \end{definition}
 \newpage

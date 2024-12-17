@@ -208,14 +208,14 @@ $z_2$的动力学写为
   \gamma_1 z_1 \varphi (z_1)} \textcolor{second}{- \theta \frac{\partial \alpha_1}{\partial z_1}  \varphi (z_1)} \right)
 \end{align*}
 为了处理含有未知参数$\theta$的项，我们尝试利用先前对$\theta$作出的估计$v_1$，写出（请注意，与上式的颜色对应之项会被消去）
-\[ u = \textcolor{red}{- z_1} - k_2 \textcolor{structurecolor}{+ \frac{\partial \alpha_1}{\partial z_1} x_2 +
+\[ u = \textcolor{red}{- z_1} - k_2z_2 \textcolor{structurecolor}{+ \frac{\partial \alpha_1}{\partial z_1} x_2 +
    \frac{\partial \alpha_1}{\partial v_1} \gamma_1 z_1 \varphi (z_1)} \textcolor{second}{+ v_1
    \frac{\partial \alpha_1}{\partial z_1} \varphi (z_1)}, k_2 > 0 \]
 于是可得
 \[ \dot{V}_c = - k_1 z^2_1 - k_2 z^2_2 + z_2 (v_1 - \theta) \frac{\partial
    \alpha_1}{\partial z_1} \varphi (z_1) \]
 然而，我们已无消去含 $(v_1 - \theta)$项的余地了。为了解决该问题，对$\theta$引入一新的估计$v_2$，写出
-\[ u = - z_1 - k_2 + \frac{\partial \alpha_1}{\partial z_1} x_2 +
+\[ u = - z_1 - k_2z_2 + \frac{\partial \alpha_1}{\partial z_1} x_2 +
    \frac{\partial \alpha_1}{\partial v_1} \gamma_1 z_1 \varphi (z_1) + v_2
    \frac{\partial \alpha_1}{\partial z_1} \varphi (z_1), k_2 > 0 \]
 新出现的 $v_2$，表明候选Lyapunov函数应改为（最后一项是$v_2$对$\theta$的参数估计误差）

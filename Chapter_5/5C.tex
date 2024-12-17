@@ -1,65 +1,241 @@
+\newpage
 \section{滑模控制（Sliding mode control）}\label{5Cref}
 
-\subsection{镇定问题}
+\subsection{引入：镇定问题}
 
-\begin{example}
-  考虑如下二阶系统
-  \begin{align*}
-      \dot{x}_1 & = x_2\\
+ 考虑如下二阶系统
+ \begin{equation}
+   \begin{aligned}
+    \dot{x}_1 & = x_2\\
        \dot{x_2} & = f (x) + g (x) u
-  \end{align*}
+    \end{aligned}\label{Sys:sliding_mode}
+ \end{equation}
   其中$f (x)$和$g (x)$都是非线性函数，$g (x) \geq g_0 > 0$，
   
-  \textbf{控制目标：}设计$u$以镇定原点，也就是使$t
-  \rightarrow \infty $时$ x_1, x_2 \rightarrow 0$
+  对于镇定问题，我们的\textbf{控制目标：}设计$u$以镇定原点，也就是使$t
+  \rightarrow \infty $时$ x_1, x_2 \rightarrow 0$。
   
-  基本思想：定义一\textbf{滑模面}，$s = x_2 + \lambda x_1 = 0,
-  \lambda > 0$。在该面上，$x_2 = - \lambda x_1 \Rightarrow \dot{x}_1 = -
-  \lambda x_1$
+  基本思想是，定义一\textbf{滑模面（sliding surface）}\[s = x_2 + \lambda x_1 = 0,
+  \lambda > 0\]
+  在该面上， \[ s = 0 \Rightarrow \left\{\begin{array}{l}
+       \dot{x}_1 = - \lambda x_1 \Rightarrow x_1 (t) = x_1 (0) \mathrm{e}^{- \lambda t}\\
+       x_2 = - \lambda x_1 = - \lambda x_1 (0) \mathrm{e}^{- \lambda  t}
+     \end{array}\right. \]
+     也就是说，一旦系统状态能够在有限时间内到达此滑模面，此后系统状态就能以指定速率收敛。
   
-  一般的滑模控制过程可分为两阶段:
+  因此，一般的滑模控制过程可分为两阶段:
   
-  \textbf{接近阶段：}设计$u$，迫使$x_1, x_2$这些状态在有限时间内到达所涉及的滑模面。
+  \textbf{1. 接近阶段：}设计$u$，迫使$x_1, x_2$这些状态在有限时间内到达所设计的滑模面。
   
-  \textbf{滑模阶段：}$x_1, x_2$在滑模面上到达原点。
+  \textbf{2. 滑模阶段：}$x_1, x_2$在滑模面上到达原点。
   
-  考虑$s$的动力学
-  \[ \dot{s} = \dot{x}_2 + \lambda \dot{x}_1 \]
-  考虑候选Lyapunov函数$V = \frac{1}{2} s^2$
-  \[ \dot{V} = s \cdot \dot{s} = s (f (x) + g (x) u + \lambda x_2) \]
-  设计$u = \frac{1}{g (x)} (- f (x) - \lambda x_2 - k \sgn (s))$，$k
-  > 0$，
+  接下来设计接近阶段控制律。要让$s\to 0$，考虑候选Lyapunov函数\[V = \frac{1}{2} s^2\]
+  求其导数得
+  \[ \dot{V} = s \cdot \dot{s}=s(\dot{x}_2 + \lambda \dot{x}_1) = s (f (x) + g (x) u + \lambda x_2) \]
+  设计\[u = \frac{1}{g (x)} (- f (x) - \lambda x_2 - k \sgn (s)),k > 0,\ensuremath{\operatorname{sgn}}(s) = \left\{\begin{array}{ll}
+  1 & s > 0\\
+  0 & s = 0\\
+  - 1 & s < 0
+\end{array}\right.\]
+  则$\dot{s} = - k \sgn (s)$，称其为\textbf{等速趋近律}。
+  若希望$s$较大时减小较快，亦可设计$u$使得$\dot{s}
+  = - k \sgn (s) - k_1 s,k,k_1>0$，这称为\textbf{指数趋近律}。
   
-  $\dot{s} = - k \sgn (s)$，称其为\textbf{等速趋近律}。(若希望$s$较大时减小较快，亦可设计$\dot{s}
-  = - k \sgn (s) - k_1 s$，这称为\textbf{指数趋近律}。)
+  按上述等速趋近律，可得$\dot{V} = - ks \sgn (s) = - k | s | =
+  - k \sqrt{2 V}$，即$\frac{\dot{V}}{\sqrt{V}} = - \sqrt{2} k $。两边积分得到
+  \[ \int^t_0 \frac{\dot{V}}{\sqrt{V}} \diff t = 2 \left. \sqrt{V} \right|^t_0 = 2
+   \sqrt{V (t)} - 2 \sqrt{V (0)}  = - \sqrt{2} k  t \]
   
-  按上述等速趋近律，可得$\dot{V} = - k \sgn (s) = - k | s | =
-  - k \sqrt{2 V}$
-  
-  $\frac{\dot{V}}{\sqrt{V}} = - \sqrt{2} k \Rightarrow$
-  
-  当$t \geq \frac{\sqrt{2 V (0)}}{k}, V (t) \equiv 0 \Rightarrow
-  $在有限时间内，$s (t) \equiv 0$
-\end{example}
+  因此，当$t \geq \frac{\sqrt{2 V (0)}}{k}$时，$V (t) \equiv 0$，即在有限时间内，$s (t) \equiv 0$。
+
+  \begin{note}
+    若将上述的$-k\sgn(s)$换成$-ks$，则$\dot{V} = - ks^2=  - 2k V$，类似上面方法可得同样的结论。注意，在 \ref{5C3ref} 小节中此替换不再成立（可考虑：接近原点时$s$很小，不能克服干扰，但$\sgn(s)$能保持原值）。
+  \end{note}
+
+  进而，将$s = x_2 + \lambda x_1 = \dot{x}_1 + \lambda x_1$写成
+  \[ \dot{x}_1 = - \lambda x_1 + s \]
+  这样$x_1$ 可视为状态，$s$ 可视为控制输入。
+  注意到无外力系统（不含输入）的原点为指数稳定。于是，由输入-状态稳定性（引理 \ref{ISS_lemma}），我们有$s \rightarrow 0 \Rightarrow x_1 \rightarrow 0, x_2 \rightarrow 0$。
 
 \subsection{推广到跟踪问题}
 
-考虑
-\[ \begin{array}{ccc}
-     \dot{x}_1 & = & x_2\\
-     \dot{x}_2 & = & f (x) + g (x) u
-   \end{array} \]
-控制目标：$(x_1, x_2) \rightarrow (x_d, \dot{x}_d)$
+仍考虑系统 \eqref{Sys:sliding_mode}。
+现在，我们的{\bf 控制目标}是：$(x_1, x_2) \rightarrow (x_d, \dot{x}_d)$。
 
-$\hat{x}_1 = x_1 - x_d$，$\tilde{x}_2 = x_2 - x_d$，
+定义跟踪误差$\tilde{x}_1 = x_1 - x_d$，$\tilde{x}_2 = x_2 - \dot{x}_d$，
+设计滑模面\[s = \tilde{x}_2 + \lambda \tilde{x}_1 = 0,\lambda>0\]
+则$s$的动力学
+\begin{align*}
+\dot{s} &= \dot{\tilde{x}}_2 + \dot{\tilde{x}}_1 \lambda \\
+&= \dot{x}_2 -\ddot{x}_d (t) + \lambda \dot{\tilde{x}}_1 \\
+&= f (x) + g (x) u - \ddot{x}_d (t) +\lambda \tilde{x}_2
+\end{align*}
 
-设计滑模面$s = \tilde{x}_2 + \lambda \tilde{x}_1 = 0$
+考虑候选Lyapunov函数$V = \frac{1}{2} s^2$，求其导数得
+\[\dot{V} = s \cdot \dot{s} = s (f (x) + g (x) u -
+\ddot{x}_d (t) + \lambda \tilde{x}_2)\]
 
-$\dot{s} = \dot{\widetilde{x_2}} + \dot{\widetilde{x_1}} \lambda = \dot{x}_2 -
-\ddot{x}_d (t) + \lambda \hat{x}_2 = f (x) + g (x) u - \ddot{x}_d (t) +
-\lambda \tilde{x}_2$
+于是设计\begin{equation}
+    u = \frac{1}{g (x)} (- f (x) + \ddot{x}_d (t) - \lambda \tilde{x}_2 - k
+\sgn (s)),k>0\label{tracking_control}
+\end{equation}这样$\dot{s} = - k \sgn (s)$，$\dot{V}=-k|s|$。后续分析同上小节。
 
-设计$u = \frac{1}{g (x)} (- f (x) + \ddot{x}_d (t) - \lambda \tilde{x}_2 - k
-\sgn (s))$，这样$\dot{s} = - k \sgn (s)$
+\subsection{推广到有不确定性的跟踪问题}\label{5C3ref}
+仍考虑系统 \eqref{Sys:sliding_mode}。现在，函数 $f (x)$ 不再已知，但其可由估计$\hat{f} (x)$ 和误差限 $F (x)$表征：
+\[ | \hat{f} (x) - f (x) | \leq F (x) \]
+函数 $g (x)$ 未知，其界为 $0 < g_{\min} (x) \leq g (x) \leq g_{\max}(x)$。
 
-\subsection{推广到有不确定性的跟踪问题}
+定义 $\hat{g} (x) = \sqrt{g_{\min} (x) g_{\max} (x)}$，我们有
+\[ \frac{1}{\beta} \triangleq \frac{\sqrt{g_{\min} (x) g_{\max}
+   (x)}}{g_{\max} (x)} \leq \frac{\hat{g} (x)}{g (x)} \leq
+   \frac{\sqrt{g_{\min} (x) g_{\max} (x)}}{g_{\min} (x)} =
+   \sqrt{\frac{g_{\max} (x)}{g_{\min} (x)}} \triangleq \beta \geq 1 \]
+类似 \eqref{tracking_control}，设计$u = \frac{1}{\hat{g} (x)} (- \hat{f} (x) + \ddot{x}_d (t) - \lambda
+\tilde{x}_2 - k  \ensuremath{\operatorname{sgn}} (s))$, $k > 0$，仍考虑$V=\frac12 s^2$，求导得到
+\begin{align*}
+  \dot{V} & = s \left\{ f (x) - \ddot{x}_d (t) + \lambda \tilde{x}_2 +
+  \frac{g (x)}{\hat{g} (x)} [- \hat{f} (x) + \ddot{x}_d (t) - \lambda
+  \tilde{x}_2 - k  \ensuremath{\operatorname{sgn}} (s)] \right\}\\
+  & = s \left\{ [f (x) - \hat{f} (x)] + \left( \frac{g (x)}{\hat{g} (x)} -
+  1 \right) (- \hat{f} (x) + \ddot{x}_d (t) - \lambda \tilde{x}_2) - k \frac{g
+  (x)}{\hat{g} (x)}  \ensuremath{\operatorname{sgn}} (s) \right\}\\
+  & \leq | s | \left\{ F (x) + \left| \frac{g (x)}{\hat{g} (x)} - 1 \right|
+  \cdot | - \hat{f} (x) + \ddot{x}_d (t) - \lambda \tilde{x}_2 | - k \frac{g
+  (x)}{\hat{g} (x)} \right\}\\
+  & = - | s | \left\{ k \frac{g (x)}{\hat{g} (x)} - F (x) - \left| \frac{g
+  (x)}{\hat{g} (x)} - 1 \right| \cdot | - \hat{f} (x) + \ddot{x}_d (t) -
+  \lambda \tilde{x}_2 | \right\}
+\end{align*}
+于是可设计 $k$使得
+\[ k \frac{g (x)}{\hat{g} (x)} \geq F (x) + \left| \frac{g (x)}{\hat{g} (x)} -
+   1 \right| \cdot | - \hat{f} (x) + \ddot{x}_d (t) - \lambda \tilde{x}_2 | +
+   \eta, \eta > 0 \]
+\[ k \geq \frac{\hat{g} (x)}{g (x)} [F (x) + \eta] + \left| 1 - \frac{\hat{g}
+   (x)}{g (x)} \right| \cdot | - \hat{f} (x) + \ddot{x}_d (t) - \lambda
+   \tilde{x}_2 | \]
+注意到 $\frac{1}{\beta} \leq \frac{\hat{g} (x)}{g (x)} \leq \beta, \beta >1$，
+可知$ \frac1\beta -1\le \frac{\hat{g}(x)}{g (x)}-1 \le\beta-1 $，则\[\left|  \frac{\hat{g}
+   (x)}{g (x)}-1 \right|=\max\{\beta-1,1-\frac{1}{\beta}\}=\max\{\beta-1,\frac{\beta-1}{\beta}\}=\beta-1\]
+则取 $k = \beta [F (x) + \eta] + (\beta - 1) \cdot | - \hat{f} (x) +\ddot{x}_d (t) - \lambda \tilde{x}_2 |$，就有 $\dot{V} \leq - \eta | s|$。后续分析同前两小节。
+\subsection{有外部干扰的系统设计}
+\noindent\textbf{一、干扰上界已知的情形}
+
+\enlargethispage{1em}
+考虑下述系统
+ \begin{equation}
+      \begin{aligned}
+    \dot{x}_1 & = x_2\\
+    \dot{x}_2 & = u + d (t)
+  \end{aligned}\label{Sys:dis_with_upperbound}
+ \end{equation}
+  其中 $d (t)$ 是外部干扰，有 $| d (t) | \leq d_{\max}$.
+  
+  设计滑模面 $s = x_2 + \lambda x_1=0, \lambda > 0$，$s$的动力学是 $\dot{s} = \dot{x}_2 + \lambda \dot{x}_1 = u + d (t)
+  + \lambda x_2$。
+  
+  仍选取候选 Lyapunov 函数为$V = \frac{1}{2} s^2$，求其导数得 $\dot{V} = s \cdot \dot{s} = s (u + d (t) + \lambda x_2)$。
+  
+  设计 $u = - \lambda x_2 - k  \ensuremath{\operatorname{sgn}} (s)$, $k >
+  0$即得到
+  \begin{align*}
+    \dot{V} & = s (d (t) - k  \ensuremath{\operatorname{sgn}} (s))\\
+    & = - k  | s | + s  d (t)\\
+    & \leq - (k - d_{\max})  | s |
+  \end{align*}
+  选取 $k = d_{\max} + \eta, \eta > 0$，即得 $\dot{V} \leq - \eta | s |$。
+
+\noindent\textbf{二、干扰上界未知的情形（1）}
+
+  仍考虑系统 \eqref{Sys:dis_with_upperbound}。若 $d_{\max}$ 是未知的，则可以设计（其中$\hat{k}$是对$k$真值的估计）
+  \[ u = - \lambda x_2 - \hat{k} \ensuremath{\operatorname{sgn}} (s) \]
+  
+  定义 $\tilde{k} = \hat{k} - d_{\max} - \eta$（与上述第一种情况联系起来：$k$的真值可视作$d_{\max}+\eta$）。
+  
+  考虑如下候选Lyapunov函数
+  \[ V = \frac{1}{2} s^2 + \frac{1}{2 \gamma} \tilde{k}^2, \gamma > 0, \]
+  求其导数得（注意第三行凑出误差$\tilde{k}$的形式）
+  \begin{align*}
+    \dot{V} & = s  \dot{s} + \frac{1}{\gamma} \tilde{k} \dot{\hat{k}}\\
+    & \leq - (\hat{k} - d_{\max}) | s | + \frac{1}{\gamma} \tilde{k}
+    \dot{\hat{k}}\\
+    & = - (\hat{k} - d_{\max} - \eta) | s | - \eta | s | + \frac{1}{\gamma}
+    \tilde{k} \dot{\hat{k}}\\
+    & = \frac{1}{\gamma} \tilde{k} (\dot{\hat{k}} - \gamma | s |) - \eta | s |
+  \end{align*}
+  设计 $\dot{\hat{k}} = \gamma | s |$，即得 $\dot{V} \leq - \eta | s |$。两边积分得到
+  \[ V (t) - V (0) \leq - \eta \int^t_0 | s(\tau) | \diff \tau \]
+  因此 $s \in \mathbf{L}_1$。
+  则$s \in \mathbf{L}_1 \cap \mathbf{L}_{\infty}, \dot{s} \in
+  \mathbf{L}_{\infty}$，根据推论 \ref{barbalat_cor_2}，有 $\lim\limits_{t \rightarrow \infty} s = 0$。
+
+\noindent\textbf{三、干扰上界未知的情形（2）}
+
+仍考虑系统 \eqref{Sys:dis_with_upperbound}。干扰$d(t)$满足
+  \[ \| d (t) \| \leq d_{\max} (1 + \| x_1 \| + \| x_2 \|^2) \]
+并且$d_{\max}$未知。
+
+定义$\Phi(x)=1 + \| x_1 \| + \| x_2 \|^2\ge 1$。
+设计滑模面$s = x_2 + \lambda x_1 = 0,  \lambda > 0$，$s$的动力学是 $\dot{s} = \dot{x}_2 + \lambda \dot{x}_1 = u + d (t)
+  + \lambda x_2$。
+
+可以设计（其中$\hat{k}$是对$k$的估计。注意，只能估计$d_{\max}$（常值），而不能估计含各状态的乘积项；最后一项的作用类似于之前$\tilde{k}$中的$\eta$）
+  \[ u = - \lambda x_2 - \hat{k}\Phi(x) \ensuremath{\operatorname{sgn}} (s) -\eta\sgn(s)\]
+这样，$s$的动力学就变为$\dot{s}=d(t)-\hat{k}\Phi(x) \ensuremath{\operatorname{sgn}} (s)-\eta\sgn(s)$。
+
+定义$\tilde{k}=\hat{k}-d_{\max}-\eta\sgn(s)$。考虑如下候选Lyapunov函数
+  \[ V = \frac{1}{2} s^2 + \frac{1}{2 \gamma} \tilde{k}^2, \gamma > 0, \]
+  求其导数得（注意第三行凑出误差$\tilde{k}$的形式）
+  \begin{align*}
+    \dot{V} & = s  \dot{s} + \frac{1}{\gamma} \tilde{k} \dot{\hat{k}}\\
+    &=s(d(t)-\hat{k}\Phi(x)\sgn(s)-\eta\sgn(s))+\frac{1}{\gamma} \tilde{k} \dot{\hat{k}}\\
+    & \leq d_{\max}\Phi(x)|s|-\hat{k}\Phi(x)|s|-\eta|s|+\frac{1}{\gamma} \tilde{k} \dot{\hat{k}}\\
+    & = -|s|\Phi(x)\tilde{k}+\frac{1}{\gamma} \tilde{k} \dot{\hat{k}}-\eta|s|\\
+    &= \frac{1}{\gamma}\tilde{k} (\dot{\hat{k}}-\gamma |s|\Phi(x))-\eta|s|
+  \end{align*}
+则取$\dot{\hat{k}}=\gamma |s|\Phi(x)$，就有$\dot{V}=-\eta|s|$，之后的分析同上。
+
+\noindent\textbf{四、干扰上界未知且有不确定性的情形：修正设计}
+
+考虑以下标量系统
+\begin{equation}
+    \dot{x} = u + \varphi(x)\theta + d(t)
+\end{equation}
+其中$x$为状态，$u$为控制输入，$\varphi$是连续且已知的函数，$\theta$是未知常数，且$d(t)$是有界且时变的扰动，满足$|d(t)|\le d_{\max}$，$d_{\max}$未知。
+
+类似上述滑模控制的思想（可认为滑模面为$s=x$），考虑设计控制律\[u=-kx-\varphi(x)\hat{\theta}-\hat{k}\sgn(x)\]
+并作候选Lyapunov函数\[V=\frac{1}{2}x^2+\frac{1}{2\gamma_1}(\hat{\theta}-\theta)^2+\frac{1}{2\gamma_2}(\hat{k}-d_{\max}-\eta)^2,\gamma_1>0,\gamma_2>0\]
+定义$\tilde{\theta}=\hat{\theta}-\theta,\tilde{k}=\hat{k}-d_{\max}-\eta$。求导数得
+\begin{align*}
+    \dot{V}&=x(-kx-\varphi\tilde{\theta}-\hat{k}\sgn(x)+d(t))+\frac{1}{\gamma_1}\tilde{\theta}\dot{\hat{\theta}}+\frac{1}{\gamma_2}\tilde{k}\dot{\hat{k}}\\
+    &\leq -kx^2-\varphi\tilde{\theta}x-\hat{k}|x|+d_{\max}|x|+\eta|x|-\eta|x|+\frac{1}{\gamma_1}\tilde{\theta}\dot{\hat{\theta}}+\frac{1}{\gamma_2}\tilde{k}\dot{\hat{k}}\\
+    &=-kx^2+\frac{1}{\gamma_1}\tilde{\theta}(\dot{\hat{\theta}}-\gamma_1\varphi x)+\frac{1}{\gamma_2}\tilde{k}(\dot{\hat{k}}-\gamma_2|x|)-\eta|x|
+\end{align*}
+于是，只需设计$\dot{\hat{\theta}}=\gamma_1\varphi x$和$\dot{\hat{k}}=\gamma_2|x|$，可以使系统状态在有限时间内趋近于$0$。
+
+上述设计固然可行，但是其在$x=0$附近会存在较明显的振荡。
+为了避免$\sgn(x)$的弊端，有学者提出了如下控制律
+\[u=-kx-\varphi(x)\hat{\theta}-\textcolor{red}{\frac{\hat{k}^2}{|x|\hat{k}+\mathrm{e}^{-t}}x}\]
+这样，$x$的动力学就可写为
+\[\dot{x}=-kx-\varphi(x)(\hat{\theta}-\theta)-\frac{\hat{k}^2}{|x|\hat{k}+\mathrm{e}^{-t}}x+d(t)\]
+考虑候选Lyapunov函数
+\[V=\frac{1}{2}x^2+\frac{1}{2\gamma_1}(\hat{\theta}-\theta)^2+\frac{1}{2\gamma_2}(\hat{k}-d_{\max})^2,\gamma_1>0,\gamma_2>0\]
+定义$\tilde{\theta}=\hat{\theta}-\theta,\tilde{k}=\hat{k}-d_{\max}$。求其导数得
+\begin{align*}
+    \dot{V}&=x\left(-kx-\varphi(x)\tilde{\theta}-\frac{\hat{k}^2}{|x|\hat{k}+\mathrm{e}^{-t}}x+d(t)\right)+\frac{1}{\gamma_1}\tilde{\theta}\dot{\hat{\theta}}+\frac{1}{\gamma_2}\tilde{k}\dot{\hat{k}}\\
+    &=-kx^2-x\varphi\tilde{\theta}-\frac{\hat{k}^2}{|x|\hat{k}+\mathrm{e}^{-t}}x^2+d(t)x+\frac{1}{\gamma_1}\tilde{\theta}\dot{\hat{\theta}}+\frac{1}{\gamma_2}\tilde{k}\dot{\hat{k}}\\
+    &=-kx^2-\frac{\hat{k}^2}{|x|\hat{k}+\mathrm{e}^{-t}}x^2+d(t)x+\frac{1}{\gamma_1}\tilde{\theta}(\dot{\hat{\theta}}-\gamma_1\varphi x)+\frac{1}{\gamma_2}\tilde{k}\dot{\hat{k}}
+\end{align*}
+在此步骤，设计$\dot{\hat{\theta}}=\gamma_1\varphi x$以消去其中一项，则（$x^2=|x|^2$）
+\begin{align*}
+    \dot{V}&\leq -kx^2+\frac{1}{\gamma_2}\tilde{k}\dot{\hat{k}}+d_{\max}|x|-\frac{\hat{k}^2}{|x|\hat{k}+\mathrm{e}^{-t}}|x|^2
+\end{align*}
+仍选取$\dot{\hat{k}}=\gamma_2 |x|$，则
+\begin{align*}
+   \dot{V} &=-kx^2+{\hat{k}}|x|-\frac{\hat{k}^2}{|x|\hat{k}+\mathrm{e}^{-t}}|x|^2\\
+    &=-kx^2+\frac{\hat{k}^2|x|^2+\mathrm{e}^{-t}\hat{k}|x|-\hat{k}^2|x|^2}{|x|\hat{k}+\mathrm{e}^{-t}}\\
+    &=-kx^2+\frac{\mathrm{e}^{-t}\hat{k}|x|}{|x|\hat{k}+\mathrm{e}^{-t}}\\
+    &\leq -kx^2+\mathrm{e}^{-t}
+\end{align*}
+对上式两边积分并移项得：
+\[V(t)+k\int_{0}^{t} x^2(\tau)\diff\tau\le V(0)+\int_{0}^{t} \mathrm{e}^{-\tau}\diff\tau=V(0)+(1-\mathrm{e}^{-t})\]
+可知$V\in\mathbf{L}_\infty,x\in\mathbf{L}_2$，进而$x,\tilde{\theta},\tilde{k},\hat{k},\hat{\theta}\in\mathbf{L}_\infty$，从而$\dot{x}\in\mathbf{L}_\infty$。进而由 \ref{barbalat_cor_1}，我们知道$\lim\limits_{t\to\infty}x(t)=0$。

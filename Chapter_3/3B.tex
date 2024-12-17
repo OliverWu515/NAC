@@ -7,26 +7,25 @@
 \begin{definition}[非自治系统的稳定性]
  系统 \eqref{freeofnonauto} 的平衡点 $x = 0$是
   \begin{itemize}[leftmargin=1em]
-    \item {\bf 稳定的（stable）}\index{稳定的（stable）}，若对每个$\varepsilon > 0$，都存在 $\delta =
-    \delta (\varepsilon, t_0)$使得
+    \item {\bf 稳定的（stable）}\index{稳定的（stable）}，若对每个$\varepsilon > 0$，都存在 $\delta =    \delta (\varepsilon, t_0)>0$使得
     \begin{equation}
       \| x (t_0) \| < \delta \quad \Rightarrow \quad \| x (t) \| <
       \varepsilon, \forall t \geq t_0 \geq 0 \label{Nonauto:stable:def} .
     \end{equation}
     \item {\bf 不稳定的（unstable）}\index{不稳定的（unstable）}，若其不是稳定的。
     
-    \item {\bf 一致稳定的（uniformly stable）}\index{稳定的（stable）!一致$\sim$（uniformly）}，若对每个$\varepsilon > 0$，都存在
+    \item {\bf 一致稳定的（uniformly stable，US）}\index{稳定的（stable）!一致$\sim$（uniformly）}，若对每个$\varepsilon > 0$，都存在
     $\delta = \delta (\varepsilon) > 0$（与$t_0$无关），使得 \eqref{Nonauto:stable:def} 成立。
     
-    \item {\bf 渐近稳定的（asymptotically stable）}\index{稳定的（stable）!渐近$\sim$（asymptotically）}，若其是稳定的，且存在一正数
+    \item {\bf 渐近稳定的（asymptotically stable，AS）}\index{稳定的（stable）!渐近$\sim$（asymptotically）}，若其是稳定的，且存在一正数
      $c = c (t_0)$ 使得
     \begin{equation}
       \forall \| x (t_0) \| < c, \lim_{t \rightarrow \infty} x (t) = 0 \label{Nonauto:astable:def} .
     \end{equation}
-    \item {\bf 一致渐近稳定的（uniformly asymptotically stable）}，\index{稳定的（stable）!一致渐近$\sim$（uniformly asymptotically）}若其为一致稳定的，且存在一正常数 $c$（与$t_0$无关）使得 \eqref{Nonauto:astable:def} 成立；换言之，对任意$\eta>0$，都存在$T=T(\eta)>0$使
+    \item {\bf 一致渐近稳定的（uniformly asymptotically stable）}，\index{稳定的（stable）!一致渐近$\sim$（uniformly asymptotically，UAS）}若其为一致稳定的，且存在一正常数 $c$（与$t_0$无关）使得 \eqref{Nonauto:astable:def} 成立；换言之，对任意$\eta>0$，都存在$T=T(\eta)>0$使
     \[\|x(t)\|<\eta,\forall t\ge t_0+T(\eta),\forall\|x(t_0)\|<c\]
     
-    \item {\bf 全局一致渐近稳定的（globally uniformly asymptotically stable）}\index{稳定的（stable）!全局一致渐近$\sim$（globally uniformly asymptotically）}，若其是一致稳定的，$\delta(\varepsilon)$满足$\lim\limits_{\varepsilon\to\infty}\delta(\varepsilon)=\infty$，且对于任意正数$\eta$和$c$，都存在$T=T(\eta,c)>0$使得
+    \item {\bf 全局一致渐近稳定的（globally uniformly asymptotically stable，GUAS）}\index{稳定的（stable）!全局一致渐近$\sim$（globally uniformly asymptotically）}，若其是一致稳定的，\eqref{Nonauto:stable:def} 中的$\delta(\varepsilon)$满足$\lim\limits_{\varepsilon\to\infty}\delta(\varepsilon)=\infty$，且对于任意正数$\eta$和$c$，都存在$T=T(\eta,c)>0$使得
     \[\|x(t)\|<\eta,\forall t\ge t_0+T(\eta,c),\forall\|x(t_0)\|<c\]
   \end{itemize}
 \end{definition}
@@ -100,7 +99,7 @@
     x(t)=x(t_0)\mathrm{e}^{\int_{t_0}^t\frac{-1}{1+s}\diff s}=x(t_0)\mathrm{e}^{\ln(1+s)|_t^{t_0}}
     =x(t_0)\mathrm{e}^{\ln\frac{1+t_0}{1+t}}=x(t_0)\frac{1+t_0}{1+t}
   \end{align*}
-  可见，$\|x(t)\|\le\|x(t_0)\|$，在 \ref{comp_uniform} 中取$\alpha(r)=r$，即可说明原点是一致稳定的。
+  可见，$\|x(t)\|\le\|x(t_0)\|$，在 \ref{comp_uniform} 第一条中取$\alpha(r)=r$，即可说明原点是一致稳定的。
 
   \begin{wrapfigure}{R}{0.36\textwidth}
     \vspace{-1em}
@@ -109,7 +108,7 @@
   \end{wrapfigure}
 
   \vspace{1em}
-  原点也是渐近稳定的（随时间增长$\|x(t)\|\to0$），但并非一致渐近稳定，因为考虑下式（绘出示意图如右）
+  原点也是渐近稳定的（随时间增长$x(t)\to0$），但并非一致渐近稳定，因为考虑下式（绘出示意图如右）
   \[x(t)=x(t_0)\frac{1+t_0}{1+t_0+(t-t_0)}=\frac{x(t_0)}{1+\frac{t-t_0}{1+t_0}}\]
   即可发现收敛的速率与$t_0$有关。
   % \begin{center}

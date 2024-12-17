@@ -28,13 +28,13 @@
 我们应注意，一般地，无法保证满足 \eqref{matching:condition:GLS} 的理想增益阵$K^{\ast}_1, K^{\ast}_2$存在。不过，在实际应用中，如果$A, B$的结构已知，可以设计 $A_{\ensuremath{\operatorname{ref}}}, B_{\ensuremath{\operatorname{ref}}}$ 以保证 \eqref{matching:condition:GLS} 有解。
 
 下面假设满足 \eqref{matching:condition:GLS} 的$K^{\ast}_1, K^{\ast}_2$存在（there is sufficient structure flexibility to meet the control
-objective）。我们提出以下控制律
+objective）。由于$\Lambda$未知，我们提出以下含可变矩阵参数的控制律
 \[ u = \hat{K}_1 (t) x + \hat{K}_2 (t) u_c \]
 代入 \eqref{Sys:MRAC:MIMO} 可得
 \begin{align}
     \dot{x}&=A  x + B \Lambda (\hat{K}_1 (t) x + \hat{K}_2 (t) u_c)+
     \underbrace{A_{\ensuremath{\operatorname{ref}}} x +
-    B_{\ensuremath{\operatorname{ref}}} u_c-A_{\ensuremath{\operatorname{ref}}} x +
+    B_{\ensuremath{\operatorname{ref}}} u_c-A_{\ensuremath{\operatorname{ref}}} x -
     B_{\ensuremath{\operatorname{ref}}} u_c}_{\text{增减期望形式}}\nonumber\\
     &=A_{\ensuremath{\operatorname{ref}}} x +
     B_{\ensuremath{\operatorname{ref}}} u_c+(A + B \Lambda \hat{K}_1 (t)-A_{\ensuremath{\operatorname{ref}}}) x+(B\hat{K}_2 (t)-B_{\ensuremath{\operatorname{ref}}}) u_c\nonumber\\
@@ -73,7 +73,7 @@ n}$，都存在唯一正定阵 $P \in \mathbf{R}^{n \times n}$
 然后，将$\tilde{K}_1^2$换为\[\tr(\tilde{K}_1^\mathrm{T}\tilde{K}_1)\]
 由 \ref{pd_npd_div}，$\tilde{K}_1^\mathrm{T}\tilde{K}_1$ 是半正定的，进而由 \ref{pd_nd_thm}，其特征值全为非负，则其迹一定非负，则上式是半正定的。
 
-下面说明$\tr(\tilde{K}_1^\mathrm{T}\tilde{K}_1)=0\iff \tilde{K}_1=0$。仅证“$\implies$”情形。由于该矩阵特征值非负，所以迹为$0$就表明所有特征值均为$0$。则由 \ref{ortho_sim_diag}，存在正交矩阵$S$使得$S^{-1}\tilde{K}_1^\mathrm{T}\tilde{K}_1S=0$。则$\tilde{K}_1^\mathrm{T}\tilde{K}_1=0$。因此对于所有$x\in\mathbf{R}^{n\times n}$均有$x^{\mathrm{T}}\tilde{K}_1^\mathrm{T}\tilde{K}_1x=0$，因此$\tilde{K}_1x=0$，则$\tilde{K}_1=0$。因此，$\tr(\tilde{K}_1^\mathrm{T}\tilde{K}_1)$正定。
+下面说明$\tr(\tilde{K}_1^\mathrm{T}\tilde{K}_1)=0\iff \tilde{K}_1=0$。仅证“$\implies$”情形。由于该矩阵特征值非负，所以迹为$0$就表明所有特征值均为$0$。则由 \ref{ortho_sim_diag}，存在正交矩阵$S$使得$S^{-1}\tilde{K}_1^\mathrm{T}\tilde{K}_1S=0$。则$\tilde{K}_1^\mathrm{T}\tilde{K}_1=0$。因此对于所有$x\in\mathbf{R}^{n}$均有$x^{\mathrm{T}}\tilde{K}_1^\mathrm{T}\tilde{K}_1x=0$，因此$\tilde{K}_1x=0$，则$\tilde{K}_1=0$。因此，$\tr(\tilde{K}_1^\mathrm{T}\tilde{K}_1)$正定。
 
 类似将$\tilde{K}_2^2$换为$\tr(\tilde{K}_2^\mathrm{T}\tilde{K}_2)$。
 于是考虑如下候选Lyapunov函数
@@ -81,7 +81,7 @@ n}$，都存在唯一正定阵 $P \in \mathbf{R}^{n \times n}$
 V=e^\mathrm{T}Pe+\tr(\tilde{K}_1^\mathrm{T}\tilde{K}_1)+\tr(\tilde{K}_2^\mathrm{T}\tilde{K}_2)
 \end{equation}
 
-求其导数得（注意$\dot{\tilde{K}}_1=\hat{\hat{K}}_1$，$\dot{\tilde{K}}_2=\dot{\hat{K}}_2$）
+求其导数得（注意$\dot{\tilde{K}}_1=\dot{\hat{K}}_1$，$\dot{\tilde{K}}_2=\dot{\hat{K}}_2$）
 \begin{align*}
   \dot{V} & =e^\mathrm{T}P\dot{e}+\dot{e}^\mathrm{T}Pe + 2\ensuremath{\operatorname{tr}} \{
   \tilde{K}^\mathrm{T}_1 \dot{\hat{K}} _1 \} + 2\ensuremath{\operatorname{tr}}
@@ -100,7 +100,7 @@ V=e^\mathrm{T}Pe+\tr(\tilde{K}_1^\mathrm{T}\tilde{K}_1)+\tr(\tilde{K}_2^\mathrm{
 \end{align*}
 利用${e}^\mathrm{T}PB\Lambda\tilde{K}_1x$为标量且$P$为对称，有
 \[{e}^\mathrm{T}PB\Lambda\tilde{K}_1x=({e}^\mathrm{T}PB\Lambda\tilde{K}_1x)^\mathrm{T}=(B\Lambda\tilde{K}_1x)^\mathrm{T}P^\mathrm{T}(e^\mathrm{T})^\mathrm{T}=(B\Lambda\tilde{K}_1x)^\mathrm{T}Pe\]
-类似处理${e}^\mathrm{T}PB\Lambda\tilde{K}_2x$。则
+类似处理${e}^\mathrm{T}PB\Lambda\tilde{K}_2u_c$。则
 \begin{align}
  \dot{V} & = e^\mathrm{T}(A_{\ensuremath{\operatorname{ref}}}^\mathrm{T} P + P A_{\ensuremath{\operatorname{ref}}}) e+ 2 e^\mathrm{T}  P  B \Lambda 
   \tilde{K}_1 x + 2 e^\mathrm{T} P  B \Lambda  \tilde{K}_2 u_c +

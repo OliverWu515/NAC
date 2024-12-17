@@ -1,1 +1,82 @@
 \section{无参考模型的自适应控制设计}\label{4Dref}
+
+考虑一阶标量系统
+\begin{equation}
+    \dot{x} = a x + b u \text{，}
+\end{equation}
+其中 $a$ 和 $b$ 都是未知常数且 $b \neq 0$。
+
+我们的控制目标是，设计 $u$，使得 $\lim\limits_{t \rightarrow \infty} x (t) = 0$。
+
+如果 $a$ 和 $b$ 都已知，那么可以采用控制输入
+\[
+    u = k^{\ast} x
+\]
+（其中 $a + b k^{\ast} = a_0 < 0$）来镇定系统，使得 $\lim\limits_{t \to \infty} x(t) = 0$。由于 $k^{\ast}$ 未知，我们设计带有时变增益的控制输入
+\[
+    u = \widehat{k} (t) x \text{。}
+\]
+则闭环系统为
+\begin{align*}
+  \dot{x} & = a  x + b  \widehat{k } (t) x + a _0 x - (a + b  k^{\ast}) x\\
+  & = a _0 x + b  (\widehat{k } (t) - k^{\ast}) x\\
+  & = a _0 x + b \tilde{k} (t) x \text{，}
+\end{align*}
+其中 $\tilde{k} (t) = \widehat{k} (t) - k^{\ast}$。
+考虑候选 Lyapunov 函数
+\[
+    V = \frac{1}{2} x^2 + \frac{| b |}{2 \gamma} \tilde{k}^2 \text{。}
+\]
+求其沿系统轨线的导数得
+\begin{align*}
+  \dot{V} & = x  \dot{x} + \frac{| b |}{\gamma} \tilde{k}  \dot{\hat{k}} \\
+  & = a_0 x^2 + b \tilde{k} (t) x^2 + \frac{| b |}{\gamma} \tilde{k} 
+  \dot{\hat{k}} \\
+  & = a_0 x^2 + \frac{| b |}{\gamma} \tilde{k}  (\dot{\hat{k}}  + \gamma
+  \ensuremath{\operatorname{sgn}} (b) x^2) \text{。}
+\end{align*}
+则设计 $\dot{\hat{k}} = \gamma \ensuremath{\operatorname{sgn}} (b) x^2$，即可使得 $\dot{V} = -a_0 x^2 \leq 0$。
+
+上述设计假设了 $\ensuremath{\operatorname{sgn}} (b)$ 已知。而如果 $b$ 的符号未知，可以采用由 Nussbaum 提出的控制器结构：
+\begin{align*}
+  u & = \mathcal{N} (k) x\\
+  \mathcal{N} (k) & = k^2 \cos k\\
+  \dot{k} & = x^2 \text{。}
+\end{align*}
+
+\begin{note}
+    其中的 $\mathcal{N} (k) = k^2 \cos k$ 被称为 Nussbaum 增益\index{Nussbaum 增益}。其满足如下性质：
+    \begin{align*}
+        \lim_{s \rightarrow \infty} \sup \frac{1}{s} \int^s_0 \mathcal{N} (\tau) \diff \tau & = + \infty \text{，}\\
+        \lim_{s \rightarrow \infty} \inf \frac{1}{s} \int^s_0 \mathcal{N} (\tau) \diff \tau & = - \infty \text{。}
+    \end{align*}
+    随着 $k \to \infty$，$\mathcal{N} (k)$ 的符号会改变无穷多次。
+    $\mathcal{N} (k)$ 还可取为具有类似性质的 $k^2 \sin k$ 和 $\mathrm{e}^{k^2} \sin k$ 等。
+\end{note}
+
+采用上述控制器结构后，闭环系统变为：
+\begin{align}
+  \dot{x} & = (a + b\mathcal{N} (k)) x \nonumber \\
+  & = (a + b  k ^2 \cos  k) x \label{Nussbaum:dx} \text{。}
+\end{align}
+从而我们可以得到
+\begin{align}
+  \frac{\diff (x^2)}{\diff k} & = \frac{\diff (x^2)}{\diff t} \frac{\diff t}{\diff k}
+  \nonumber\\
+  & = 2 x \cdot \dot{x} \cdot \frac{1}{\dot{k}} \nonumber\\
+  & = 2 x (a + b  k ^2 \cos  k) \cdot x \cdot \frac{1}{x^2} \nonumber\\
+  & = 2 (a + b  k ^2 \cos  k) \label{Nussbaum:dx2dk} 
+\end{align}
+对 \eqref{Nussbaum:dx2dk} 两边从 $k(t_0)$ 到 $k(t)$ 积分得到
+\[
+    x^2 (k (t)) - x^2 \left( k \left( {t_0}  \right) \right) = 2 \int^{k (t)}_{k (t_0)} (a + b \tau^2 \cos \tau) \diff \tau \text{。}
+\]
+整理得到：
+\begin{equation} \label{Nussbaum:xkt}
+    x^2 \bigl( k(t) \bigr) = x^2 (k (t_0)) + 2 \varphi \bigl( k(t) \bigr) - 2 \varphi \bigl( k(t_0) \bigr) \text{，}
+\end{equation}
+其中，
+\begin{equation}
+  \varphi \bigl( k(t) \bigr) = a  k (t) + b \bigl( k^2 (t) \sin k (t) + 2 k (t) \cos k(t) - 2 \sin k (t) \bigr) \text{。}
+\end{equation}
+注意到，$k (t)$ 是单调不减的。那么，$k (t)$ 要么会趋于有限值，要么无界。先假设 $k (t)$ 无界，那么 $\varphi \bigl( k(t) \bigr)$ 将由 $b k^2 (t) \sin k (t)$ 这一项主导，这就会带来很大的负值（无论 $b$ 是正是负），从而导致 \eqref{Nussbaum:xkt} 的右侧是负的——显然，这和该式左侧 $x^2 \bigl( k(t) \bigr) \geq 0$ 是矛盾的。因此，$k(t)$ 必须是有界的。那么，由 \eqref{Nussbaum:xkt} 可得 $x \in \mathbf{L}_{\infty}$，由 \eqref{Nussbaum:dx} 可得 $\dot{x} \in \mathbf{L}_{\infty}$。由 $\dot{k} = x^2$ 得 $\int^t_0 x^2 (\tau) \diff \tau = k (t) - k (0)$，因此可得 $x \in \mathbf{L}_{2}$。根据引理 \ref{barbalat_cor_1}，可得 $\lim\limits_{t \rightarrow \infty} x (t) = 0$。
