@@ -1,5 +1,6 @@
 \chapter{自适应控制}\label{cp4}
 \section{自适应控制概述}\label{4Aref}
+本节图片全部来自前言中参考文献4。
 \subsection{自适应控制的概念与缘由}
 在设计系统时，我们常遇到下面情形：
 \begin{enumerate}
@@ -74,7 +75,7 @@
 \end{description}
 \subsection{自适应控制的类型}
 \begin{enumerate}
-      \item 非直接型（indirect）：估计被控对象（plant）参数 $\Rightarrow$ 设计控制器参数。首先确定过程（process）的模型与扰动特征，然后基于这些信息定出控制器参数。
+      \item 非直接型（间接型，indirect）：估计被控对象（plant）参数 $\Rightarrow$ 设计控制器参数。首先确定过程（process）的模型与扰动特征，然后基于这些信息定出控制器参数。
       
       \item 直接型（direct）：无需先确定过程（process）的模型与扰动特征，直接设计控制器参数。
 \end{enumerate}
@@ -88,7 +89,7 @@
     \includegraphics[width=1\linewidth]{figure/adaptive/direct.png} % width=...
     \caption{}
 \end{subfigure}
-\caption{(a)非直接型。(b)直接型。}
+\caption{(a)非直接型（间接型）。(b)直接型。}
 \label{direct_indirect}
 \end{figure}
 \subsection{自适应控制的常用手段}
@@ -144,5 +145,5 @@
     \includegraphics[width=1\linewidth]{figure/adaptive/direct_MRAC.png} % width=...
     \caption{}
 \end{subfigure}
-\caption{(a)非直接型MRAC。(b)直接型MRAC。}
+\caption{(a)非直接型（间接型）MRAC。(b)直接型MRAC。}
 \end{figure}

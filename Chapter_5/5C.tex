@@ -117,7 +117,7 @@
 可知$ \frac1\beta -1\le \frac{\hat{g}(x)}{g (x)}-1 \le\beta-1 $，则\[\left|  \frac{\hat{g}
    (x)}{g (x)}-1 \right|=\max\{\beta-1,1-\frac{1}{\beta}\}=\max\{\beta-1,\frac{\beta-1}{\beta}\}=\beta-1\]
 则取 $k = \beta [F (x) + \eta] + (\beta - 1) \cdot | - \hat{f} (x) +\ddot{x}_d (t) - \lambda \tilde{x}_2 |$，就有 $\dot{V} \leq - \eta | s|$。后续分析同前两小节。
-\subsection{有外部干扰的系统设计}
+\subsection{有外部干扰的系统设计}\label{5C_disturbance}
 \noindent\textbf{一、干扰上界已知的情形}
 
 \enlargethispage{1em}
@@ -144,7 +144,7 @@
   \end{align*}
   选取 $k = d_{\max} + \eta, \eta > 0$，即得 $\dot{V} \leq - \eta | s |$。
 
-\noindent\textbf{二、干扰上界未知的情形（1）}
+\noindent\textbf{二、干扰上界未知的情形}
 
   仍考虑系统 \eqref{Sys:dis_with_upperbound}。若 $d_{\max}$ 是未知的，则可以设计（其中$\hat{k}$是对$k$真值的估计）
   \[ u = - \lambda x_2 - \hat{k} \ensuremath{\operatorname{sgn}} (s) \]
@@ -167,34 +167,14 @@
   因此 $s \in \mathbf{L}_1$。
   则$s \in \mathbf{L}_1 \cap \mathbf{L}_{\infty}, \dot{s} \in
   \mathbf{L}_{\infty}$，根据推论 \ref{barbalat_cor_2}，有 $\lim\limits_{t \rightarrow \infty} s = 0$。
-
-\noindent\textbf{三、干扰上界未知的情形（2）}
-
-仍考虑系统 \eqref{Sys:dis_with_upperbound}。干扰$d(t)$满足
+\begin{problem}\label{Pro:dis_with_unknown_upperbound}
+    仍考虑系统 \eqref{Sys:dis_with_upperbound}。现设干扰$d(t)$满足
   \[ \| d (t) \| \leq d_{\max} (1 + \| x_1 \| + \| x_2 \|^2) \]
 并且$d_{\max}$未知。
+如何设计滑模控制律？
+\end{problem}
 
-定义$\Phi(x)=1 + \| x_1 \| + \| x_2 \|^2\ge 1$。
-设计滑模面$s = x_2 + \lambda x_1 = 0,  \lambda > 0$，$s$的动力学是 $\dot{s} = \dot{x}_2 + \lambda \dot{x}_1 = u + d (t)
-  + \lambda x_2$。
-
-可以设计（其中$\hat{k}$是对$k$的估计。注意，只能估计$d_{\max}$（常值），而不能估计含各状态的乘积项；最后一项的作用类似于之前$\tilde{k}$中的$\eta$）
-  \[ u = - \lambda x_2 - \hat{k}\Phi(x) \ensuremath{\operatorname{sgn}} (s) -\eta\sgn(s)\]
-这样，$s$的动力学就变为$\dot{s}=d(t)-\hat{k}\Phi(x) \ensuremath{\operatorname{sgn}} (s)-\eta\sgn(s)$。
-
-定义$\tilde{k}=\hat{k}-d_{\max}-\eta\sgn(s)$。考虑如下候选Lyapunov函数
-  \[ V = \frac{1}{2} s^2 + \frac{1}{2 \gamma} \tilde{k}^2, \gamma > 0, \]
-  求其导数得（注意第三行凑出误差$\tilde{k}$的形式）
-  \begin{align*}
-    \dot{V} & = s  \dot{s} + \frac{1}{\gamma} \tilde{k} \dot{\hat{k}}\\
-    &=s(d(t)-\hat{k}\Phi(x)\sgn(s)-\eta\sgn(s))+\frac{1}{\gamma} \tilde{k} \dot{\hat{k}}\\
-    & \leq d_{\max}\Phi(x)|s|-\hat{k}\Phi(x)|s|-\eta|s|+\frac{1}{\gamma} \tilde{k} \dot{\hat{k}}\\
-    & = -|s|\Phi(x)\tilde{k}+\frac{1}{\gamma} \tilde{k} \dot{\hat{k}}-\eta|s|\\
-    &= \frac{1}{\gamma}\tilde{k} (\dot{\hat{k}}-\gamma |s|\Phi(x))-\eta|s|
-  \end{align*}
-则取$\dot{\hat{k}}=\gamma |s|\Phi(x)$，就有$\dot{V}=-\eta|s|$，之后的分析同上。
-
-\noindent\textbf{四、干扰上界未知且有不确定性的情形：修正设计}
+\noindent\textbf{三、干扰上界未知且有不确定性的情形：修正设计}
 
 考虑以下标量系统
 \begin{equation}

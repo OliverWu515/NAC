@@ -1,0 +1,135 @@
+\chapter{部分问题解答} \label{Problems}
+
+\noindent\textcolor{winered}{\textbf{问题 \ref{Pro:scalar_with_uncertainty} 解：}}
+
+仍定义参考模型如式 \eqref{Sys:MRAC:scalar:ref}。
+提出下述控制律：
+\[ u =  \hat{k}_1 (t) x + \hat{k}_2 (t) u_c - \varphi (x) \hat{\theta}_1 (t) \]
+代入 \eqref{Sys:MRAC:nonlinear} 得到闭环系统方程
+\begin{equation*}
+    \dot{x} = a  x +  b \hat{k}_1 (t) x + b \hat{k}_2 (t) u_c -  \varphi  (x) (b\hat{\theta}_1 (t) - \theta) 
+\end{equation*}
+类似上一小节对于理想情形的推导，可得与 \eqref{k1*k2*} 一样的$k^{\ast}_1, k^{\ast}_2$。仍定义$e=x-x_{\operatorname{ref}}$，结合 \eqref{Sys:MRAC:scalar:ref} 与上式，误差动力学可写为
+\begin{align}
+  \dot{e} & =  a  x +  b \hat{k}_1 (t) x + b \hat{k}_2 (t) u_c -\textcolor{second}{  \varphi  (x) (b\hat{\theta}_1 (t) - \theta) }+ a_{\ensuremath{\operatorname{ref}}}
+  x_{\ensuremath{\operatorname{ref}}} - b_{\ensuremath{\operatorname{ref}}}
+  u_c \nonumber\\
+  & = (a_{\ensuremath{\operatorname{ref}}} + a) x +  b \hat{k}_1 (t) x +
+  (b \hat{k}_2 (t) - b_{\ensuremath{\operatorname{ref}}}) u_c -  \textcolor{second}{\varphi (x)
+  (b\hat{\theta}_1 (t) - \theta)} - a_{\ensuremath{\operatorname{ref}}} (x-x_{\operatorname{ref}})
+  \nonumber\\
+  & =  b (\hat{k}_1 (t) - k^{\ast}_1) x + b (\hat{k}_2 (t) - k^{\ast}_2)
+  u_c -  \textcolor{second}{\varphi (x) (b\hat{\theta}_1 (t) - \theta)} -
+  a_{\ensuremath{\operatorname{ref}}} e \nonumber\\
+  & =  - a_{\ensuremath{\operatorname{ref}}} e + b \tilde{k}_1 x + b
+  \tilde{k}_2 u_c - \textcolor{second}{b \varphi \tilde{\theta}} \label{Pro:err:MRAC:nonlinear}
+\end{align}
+其中定义了三个参数估计误差 $\tilde{k}_1 \triangleq \hat{k}_1 (t) - k^{\ast}_1$， $\tilde{k}_2 \triangleq \hat{k}_2
+(t) - k^{\ast}_2$ 和 \textcolor{second}{$\tilde{\theta} \triangleq\hat{\theta}_1 (t) - \frac{\theta}{b}$}。
+
+同样考察下述候选Lyapunov函数
+\begin{equation*}
+  V = \frac{1}{2} e^2 + \frac{| b |}{2 \gamma_1} \tilde{k}^2_1 + \frac{| b
+  |}{2 \gamma_2} \tilde{k}^2_2 + \frac{| b |}{2 \gamma_3} \tilde{\theta}^2 
+\end{equation*}
+其中 $\gamma_1, \gamma_2, \gamma_3 > 0$.
+
+沿 \eqref{Pro:err:MRAC:nonlinear} 的状态轨线，求其对时间的导数得
+\begin{equation*}
+    \begin{aligned}\dot{V}&= e\dot{e}+\frac{|b|}{\gamma_{1}}\tilde{k}_{1}\dot{\hat{k}}_{1}+\frac{|b|}{\gamma_{2}}\tilde{k}_{2}\dot{\hat{k}}_{2}+\frac{|b|}{\gamma_{3}}\tilde{\theta}\dot{\hat{\theta}}_{1}\\
+    &=-a_{\mathrm{ref}}e^{2}+b\tilde{k}_{1}xe+b\tilde{k}_{2}u_{c}e-b\varphi\tilde{\theta}e+\frac{|b|}{\gamma_{1}}\tilde{k}_{1}\dot{\hat{k}}_{1}+\frac{|b|}{\gamma_{2}}\tilde{k}_{2}\dot{\hat{k}}_{2}+\frac{|b|}{\gamma_{3}}\tilde{\theta}\dot{\hat{\theta}}_{1}\\
+    &=-a_{\mathrm{ref}}e^{2}+\frac{|b|}{\gamma_{1}}\tilde{k}_{1}\left(\dot{\hat{k}}_{1}+\gamma_{1}\mathrm{sgn}(b)xe\right)+\frac{|b|}{\gamma_{2}}\tilde{k}_{2}\left(\dot{\hat{k}}_{2}+\gamma_{2}\mathrm{sgn}(b)u_{c}e\right)+\frac{|b|}{\gamma_{3}}\tilde{\theta}\left(\dot{\hat{\theta}}_{1}-\gamma_{3}\mathrm{sgn}(b)\varphi e\right)\end{aligned}
+\end{equation*}
+则选取
+\begin{equation*}
+  \dot{\hat{k}}_1 = -  \gamma_1 \ensuremath{\operatorname{sgn}} (b) x  e,
+  \dot{\hat{k}}_2 = -  \gamma_2 \ensuremath{\operatorname{sgn}} (b)  u_c e,
+  \dot{\hat{\theta}}_1 = \gamma_3 \ensuremath{\operatorname{sgn}} (b)   \varphi e
+\end{equation*}
+即得
+\begin{equation*}
+  \dot{V} = - a_{\ensuremath{\operatorname{ref}}} e^2 \leq 0
+\end{equation*}
+剩余步骤同此问题之前的例子。
+
+\noindent\textcolor{winered}{\textbf{问题 \ref{Pro:uncertainty} 解：}}
+
+假设满足 \eqref{matching:condition:GLS} 的$K^{\ast}_1, K^{\ast}_2$存在。设计控制律\[ u = \hat{K}_1 (t) x + \hat{K}_2 (t) u_c - \hat{\Theta}\Phi (t)  \]
+代入 \eqref{Sys:MRAC:MIMO_with_dis} 可得
+\begin{align}
+    \dot{x}&=A  x + B \Lambda (\hat{K}_1 (t) x + \hat{K}_2 (t) u_c-\textcolor{second}{\hat{\Theta}\Phi})+\textcolor{second}{B\Lambda\Theta\Phi}+
+    \underbrace{A_{\ensuremath{\operatorname{ref}}} x +
+    B_{\ensuremath{\operatorname{ref}}} u_c-A_{\ensuremath{\operatorname{ref}}} x -
+    B_{\ensuremath{\operatorname{ref}}} u_c}\nonumber\\
+    &=A_{\ensuremath{\operatorname{ref}}} x +
+    B_{\ensuremath{\operatorname{ref}}} u_c+(A + B \Lambda \hat{K}_1 (t)-A_{\ensuremath{\operatorname{ref}}}) x+(B\Lambda\hat{K}_2 (t)-B_{\ensuremath{\operatorname{ref}}}) u_c-\textcolor{second}{(B\Lambda\hat{\Theta}\Phi-B\Lambda\Theta\Phi)}\nonumber\\
+    &=A_{\ensuremath{\operatorname{ref}}}  x +
+   B_{\ensuremath{\operatorname{ref}}} u_c + B \Lambda  \tilde{K}_1 x + B
+   \Lambda  \tilde{K}_2 u_c -\textcolor{second}{B\Lambda\tilde{\Theta}\Phi}\label{mimo_with_dis_dotx}
+\end{align}
+其中的参数估计误差 $\tilde{K}_1 \triangleq \hat{K}_1 {- K_1^{\ast}} , \tilde{K}_2 \triangleq \hat{K}_2 {- K_2^{\ast}} ,\tilde{\Theta}\triangleq\hat{\Theta}-\Theta$。
+
+定义跟踪误差 $e \triangleq x -
+x_{\ensuremath{\operatorname{ref}}}$。根据 \eqref{ideal_mimo} 和 \eqref{mimo_with_dis_dotx}，写出误差动力学
+\begin{equation}
+  \dot{e} = A_{\ensuremath{\operatorname{ref}}} e + B \Lambda  \tilde{K}_1 x +
+  B \Lambda  \tilde{K}_2 u_c-\textcolor{second}{B\Lambda \tilde{\Theta}\Phi} \label{errsys_with_dis:MRAC:GLS}
+\end{equation}
+
+考虑如下候选Lyapunov函数
+\begin{equation}
+  V=e^\mathrm{T}Pe+\tr(\tilde{K}_1^\mathrm{T}{\Lambda}\tilde{K}_1)+\tr(\tilde{K}_2^\mathrm{T}{\Lambda}\tilde{K}_2)+\textcolor{second}{\tr (\tilde{\Theta}^\mathrm{T}{\Lambda}\tilde{\Theta})}
+\end{equation}
+
+求其导数得
+\begin{align}
+  \dot{V} & =e^\mathrm{T}P\dot{e}+\dot{e}^\mathrm{T}Pe + 2\tr \{
+  \tilde{K}^\mathrm{T}_1 \dot{\hat{K}} _1 \} + 2\tr
+  \{ \tilde{K}^\mathrm{T}_2 \dot{\hat{K}} _2 \}+\textcolor{second}{2\tr \{ \tilde{\Theta}^\mathrm{T} \Lambda\dot{\hat{\Theta}} \}}\nonumber\\
+  & = e^\mathrm{T}P( A_{\ensuremath{\operatorname{ref}}} e + B \Lambda  \tilde{K}_1 x +
+  B \Lambda  \tilde{K}_2 u_c-\textcolor{second}{B\Lambda \tilde{\Theta}\Phi})+(A_{\ensuremath{\operatorname{ref}}} e + B \Lambda  \tilde{K}_1 x +
+  B \Lambda  \tilde{K}_2 u_c-\textcolor{second}{B\Lambda \tilde{\Theta}\Phi})^\mathrm{T}Pe\nonumber\\
+  &\quad+
+  2\tr \{ \tilde{K}^\mathrm{T}_1 \Lambda\dot{\hat{K}} _1 \}
+  + 2\tr \{ \tilde{K}^\mathrm{T}_2 \Lambda\dot{\hat{K}} _2 \}+\textcolor{second}{2\tr \{ \tilde{\Theta}^\mathrm{T} \Lambda\dot{\hat{\Theta}} \}}\nonumber\\
+  &= e^\mathrm{T}(A_{\ensuremath{\operatorname{ref}}}^\mathrm{T} P + P A_{\ensuremath{\operatorname{ref}}}) e+ 2 e^\mathrm{T}  P  B \Lambda 
+  \tilde{K}_1 x + 2 e^\mathrm{T} P  B \Lambda  \tilde{K}_2 u_c -\textcolor{second}{2 e^\mathrm{T}PB\Lambda \tilde{\Theta}\Phi}\nonumber\\
+  &\quad +  2\tr \{ \tilde{K}^\mathrm{T}_1  \dot{\hat{K}} _1 \}
+  + 2\tr \{ \tilde{K}^\mathrm{T}_2  \dot{\hat{K}} _2
+  \}+\textcolor{second}{2\tr \{ \tilde{\Theta}^\mathrm{T} \Lambda\dot{\hat{\Theta}} \}}\nonumber\\
+  & = -e^\mathrm{T}Q e +
+  2\tr \{ \tilde{K}^\mathrm{T}_1 \Lambda B^\mathrm{T}  P  e  x^\mathrm{T} \} +
+  2\tr \{ \tilde{K}^\mathrm{T}_2 \Lambda B^\mathrm{T}  P  e  u_c^\mathrm{T} \} - \textcolor{second}{2\tr \{ \tilde{\Theta}^\mathrm{T} \Lambda B^\mathrm{T}Pe\Phi^\mathrm{T}
+  \}}\nonumber\\
+  &\quad + 2\tr \{ \tilde{K}^\mathrm{T}_1  \Lambda\dot{\hat{K}} _1 \}
+  + 2\tr \{ \tilde{K}^\mathrm{T}_2  \Lambda \dot{\hat{K}} _2\}+\textcolor{second}{2\tr \{ \tilde{\Theta}^\mathrm{T} \Lambda\dot{\hat{\Theta}} \}}\label{pro_dot_V_modify}
+\end{align}
+其中最后一行的转化参看 \eqref{trace_transform}。
+
+选取
+\[\dot{\hat{K}} _1 = -  B^\mathrm{T}  P  e  x^\mathrm{T}, \dot{\hat{K}} _2 = -  B^\mathrm{T}  P  e  u^\mathrm{T}_c,\dot{\hat{\Theta}}=B^\mathrm{T}Pe\Phi^\mathrm{T}\]
+即可消去 \eqref{pro_dot_V_modify} 最后六项。这样就有
+\[ \dot{V} = - e^\mathrm{T} Q  e \leq 0 \]
+后续分析同 \ref{4Cref} 节。
+
+\noindent\textcolor{winered}{\textbf{问题 \ref{Pro:dis_with_unknown_upperbound} 解：}}
+
+设计滑模面$s = x_2 + \lambda x_1 = 0,  \lambda > 0$，$s$的动力学是 $\dot{s} = \dot{x}_2 + \lambda \dot{x}_1 = u + d (t)
+  + \lambda x_2$。
+
+定义$\Phi(x)=1 + \| x_1 \| + \| x_2 \|^2\ge 1$。可以设计（其中$\hat{k}$是对$k$的估计。注意，只能估计$d_{\max}$（常值），而不能估计含各状态的乘积项；最后一项的作用类似于之前$\tilde{k}$中的$\eta$）
+  \[ u = - \lambda x_2 - \hat{k}\Phi(x) \ensuremath{\operatorname{sgn}} (s) -\eta\sgn(s)\]
+这样，$s$的动力学就变为$\dot{s}=d(t)-\hat{k}\Phi(x) \ensuremath{\operatorname{sgn}} (s)-\eta\sgn(s)$。
+
+定义$\tilde{k}=\hat{k}-d_{\max}-\eta\sgn(s)$。考虑如下候选Lyapunov函数
+  \[ V = \frac{1}{2} s^2 + \frac{1}{2 \gamma} \tilde{k}^2, \gamma > 0, \]
+  求其导数得（注意第三行凑出误差$\tilde{k}$的形式）
+  \begin{align*}
+    \dot{V} & = s  \dot{s} + \frac{1}{\gamma} \tilde{k} \dot{\hat{k}}\\
+    &=s(d(t)-\hat{k}\Phi(x)\sgn(s)-\eta\sgn(s))+\frac{1}{\gamma} \tilde{k} \dot{\hat{k}}\\
+    & \leq d_{\max}\Phi(x)|s|-\hat{k}\Phi(x)|s|-\eta|s|+\frac{1}{\gamma} \tilde{k} \dot{\hat{k}}\\
+    & = -|s|\Phi(x)\tilde{k}+\frac{1}{\gamma} \tilde{k} \dot{\hat{k}}-\eta|s|\\
+    &= \frac{1}{\gamma}\tilde{k} (\dot{\hat{k}}-\gamma |s|\Phi(x))-\eta|s|
+  \end{align*}
+则取$\dot{\hat{k}}=\gamma |s|\Phi(x)$，就有$\dot{V}=-\eta|s|$，之后的分析同 \ref{5C_disturbance} 节其他各例。
+

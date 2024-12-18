@@ -149,7 +149,7 @@
 
 \input{Chapter_6/chapter6.tex}
 % \newpage
-% \input{Chapter_6/6A.tex}
+\input{Chapter_6/6A.tex}
 % \input{Chapter_6/Exercises_6A.tex}
 % \newpage
 % \input{Chapter_6/6B.tex}
@@ -163,26 +163,24 @@
 % \newpage
 % \input{photo_credits.tex}
 
-\backmatter
+% \backmatter
+
 % \indexprologue{\citshape \textcolor{red}{索引项尚未添加完毕。}}
 % \idxlayout{columns=3}
 % \printindex[symidx]
 % % \cleardoublepage
-% %TODO:原为：各条目按照汉语拼音排序。部分条目下有若干子条目，子条目中用波浪线“$\sim$”指代其所属的条目，所有条目（含子条目）后附注英文原文。
-% %尝试改为：各条目按照汉语拼音排序。部分条目下有若干子条目，子条目中用波浪线“$\sim$”指代其所属的条目。除部分不必或不便翻译的条目可能采用“原文【解释】”形式外，所有条目（含子条目）后附注英文原文。
 % \idxlayout{columns=2}
 % \renewcommand*{\indexfont}{\small}
 \setindexprenote{\citshape 各条目按照汉语拼音排序。部分条目下有若干子条目，子条目中用波浪线“$\sim$”指代其所属的条目。}
 % 除部分不必或不便翻译的条目可能采用“原文【解释】”形式外，所有条目（含子条目）后附注英文原文。
 % 例如，“加法（addition）”条目下的“矩阵的$\sim$（of matrices）”，即表示“矩阵的加法”（addition of matrices）。}
 \printindex
-\input{change_log}
-
-\nocite{*}
+% \nocite{*}
 
 % \printbibliography[heading=bibintoc, title=\ebibname]
 
-% \appendix
-
-
+\appendix
+\input{appendix/appendix_a}
+\input{appendix/appendix_b}
+\input{change_log}
 \end{document}

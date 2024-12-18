@@ -13,7 +13,7 @@
   \end{equation}
 其中$A_{\ensuremath{\operatorname{ref}}} \in \mathbf{R}^{n \times n}$ 是Hurwitz的，$B_{\ensuremath{\operatorname{ref}}} \in \mathbf{R}^{n \times m}$， $u_c \in \mathbf{R}^m$ 是有界的（虚拟）输入指令。
 
-首先推导理想情形。若$A \in \mathbf{R}^{n \times n}$ and $\Lambda \in \mathbf{R}^{m\times m}$ 已知，我们可选用如下控制律
+首先推导理想情形。若$A \in \mathbf{R}^{n \times n}$ 与 $\Lambda \in \mathbf{R}^{m\times m}$ 已知，我们可选用如下控制律
 \[ u = K^{\ast}_1 x + K^{\ast}_2 u_c \]
 其中 $K^{\ast}_1 \in \mathbf{R}^{m \times n}, K^{\ast}_2 \in \mathbf{R}^{m
 \times m}$，将上式代入 \eqref{Sys:MRAC:MIMO} 可得
@@ -37,11 +37,11 @@ objective）。由于$\Lambda$未知，我们提出以下含可变矩阵参数�
     B_{\ensuremath{\operatorname{ref}}} u_c-A_{\ensuremath{\operatorname{ref}}} x -
     B_{\ensuremath{\operatorname{ref}}} u_c}_{\text{增减期望形式}}\nonumber\\
     &=A_{\ensuremath{\operatorname{ref}}} x +
-    B_{\ensuremath{\operatorname{ref}}} u_c+(A + B \Lambda \hat{K}_1 (t)-A_{\ensuremath{\operatorname{ref}}}) x+(B\hat{K}_2 (t)-B_{\ensuremath{\operatorname{ref}}}) u_c\nonumber\\
+    B_{\ensuremath{\operatorname{ref}}} u_c+(A + B \Lambda \hat{K}_1 (t)-A_{\ensuremath{\operatorname{ref}}}) x+(B\Lambda\hat{K}_2 (t)-B_{\ensuremath{\operatorname{ref}}}) u_c\nonumber\\
     &=A_{\ensuremath{\operatorname{ref}}} x +
-    B_{\ensuremath{\operatorname{ref}}} u_c+(B \Lambda \hat{K}_1 (t)-B \Lambda K^{\ast}_1) x+(B\hat{K}_2 (t)-B \Lambda K^{\ast}_2) u_c\label{mimo_dotx}
+    B_{\ensuremath{\operatorname{ref}}} u_c+(B \Lambda \hat{K}_1 (t)-B \Lambda K^{\ast}_1) x+(B\Lambda\hat{K}_2 (t)-B \Lambda K^{\ast}_2) u_c\label{mimo_dotx}
 \end{align}
-第三行是将 \eqref{matching:condition:GLS} 代入。记 $\tilde{K}_1 \triangleq \hat{K}_1 {- K_1^{\ast}} , \tilde{K}_2
+第三行是将 \eqref{matching:condition:GLS} 代入。记参数估计误差 $\tilde{K}_1 \triangleq \hat{K}_1 {- K_1^{\ast}} , \tilde{K}_2
 \triangleq \hat{K}_2 {- K_2^{\ast}} $，则
 \[ \dot{x} = A_{\ensuremath{\operatorname{ref}}}  x +
    B_{\ensuremath{\operatorname{ref}}} u_c + B \Lambda  \tilde{K}_1 x + B
@@ -59,9 +59,9 @@ x_{\ensuremath{\operatorname{ref}}}$。根据 \eqref{ideal_mimo} 和 \eqref{mimo
 \end{align*}
 由于其中的$e,\tilde{K}_1,\tilde{K}_2$都是向量或矩阵，而Lyapunov函数输出是标量，上式要做相应的修改。
 
-首先，将$\frac12e^2$换成$\frac12e^\mathrm{T}e$。求其导数得\[e\dot{e}=eA_{\ensuremath{\operatorname{ref}}} e+\dots\]
+首先，将$\frac12e^2$换成$\frac12e^\mathrm{T}e$。求其导数得\[e^\mathrm{T}\dot{e}=e^\mathrm{T}A_{\ensuremath{\operatorname{ref}}} e+\dots\]
 省略的项待与后面的项合并。仅考察第一项，我们发现由于$A_{\ensuremath{\operatorname{ref}}}$未必负定，则第一项并不保证为负定。后续若要类似之前思路保留该项则不可行。考虑重新设计此项为\[e^\mathrm{T}\textcolor{red}{P}e\]
-则此项导数是
+其中$P$为正定阵。则此项导数是
 \[e^\mathrm{T}P\dot{e}+\dot{e}^\mathrm{T}Pe=e^\mathrm{T}(A_{\ensuremath{\operatorname{ref}}}^\mathrm{T} P + P A_{\ensuremath{\operatorname{ref}}}) e+\dots\]
 由于 $A_{\ensuremath{\operatorname{ref}}}$ 是 Hurwitz的，根据定理 \ref{linearlya}，我们可知对任意正定矩阵 $Q \in \mathbf{R}^{n \times
 n}$，都存在唯一正定阵 $P \in \mathbf{R}^{n \times n}$
@@ -73,7 +73,7 @@ n}$，都存在唯一正定阵 $P \in \mathbf{R}^{n \times n}$
 然后，将$\tilde{K}_1^2$换为\[\tr(\tilde{K}_1^\mathrm{T}\tilde{K}_1)\]
 由 \ref{pd_npd_div}，$\tilde{K}_1^\mathrm{T}\tilde{K}_1$ 是半正定的，进而由 \ref{pd_nd_thm}，其特征值全为非负，则其迹一定非负，则上式是半正定的。
 
-下面说明$\tr(\tilde{K}_1^\mathrm{T}\tilde{K}_1)=0\iff \tilde{K}_1=0$。仅证“$\implies$”情形。由于该矩阵特征值非负，所以迹为$0$就表明所有特征值均为$0$。则由 \ref{ortho_sim_diag}，存在正交矩阵$S$使得$S^{-1}\tilde{K}_1^\mathrm{T}\tilde{K}_1S=0$。则$\tilde{K}_1^\mathrm{T}\tilde{K}_1=0$。因此对于所有$x\in\mathbf{R}^{n}$均有$x^{\mathrm{T}}\tilde{K}_1^\mathrm{T}\tilde{K}_1x=0$，因此$\tilde{K}_1x=0$，则$\tilde{K}_1=0$。因此，$\tr(\tilde{K}_1^\mathrm{T}\tilde{K}_1)$正定。
+下面说明$\tr(\tilde{K}_1^\mathrm{T}\tilde{K}_1)=0\iff \tilde{K}_1=0$。仅证“$\implies$”情形。由于$\tilde{K}_1^\mathrm{T}\tilde{K}_1$特征值非负，所以迹为$0$就表明所有特征值均为$0$。则由 \ref{ortho_sim_diag}，存在正交矩阵$S$使得$S^{-1}\tilde{K}_1^\mathrm{T}\tilde{K}_1S=0$。则$\tilde{K}_1^\mathrm{T}\tilde{K}_1=0$。因此对于所有$x\in\mathbf{R}^{n}$均有$x^{\mathrm{T}}\tilde{K}_1^\mathrm{T}\tilde{K}_1x=0$，因此$\tilde{K}_1x=0$，则$\tilde{K}_1=0$。因此，$\tr(\tilde{K}_1^\mathrm{T}\tilde{K}_1)$正定。
 
 类似将$\tilde{K}_2^2$换为$\tr(\tilde{K}_2^\mathrm{T}\tilde{K}_2)$。
 于是考虑如下候选Lyapunov函数
@@ -115,14 +115,16 @@ V=e^\mathrm{T}Pe+\tr(\tilde{K}_1^\mathrm{T}\tilde{K}_1)+\tr(\tilde{K}_2^\mathrm{
   \}\label{dot_V_modify1}
 \end{align}
 其中第二行我们用到了
-\begin{align*}
-  {e}^\mathrm{T}PB\Lambda\tilde{K}_1x&=\tr({e}^\mathrm{T}PB\Lambda\tilde{K}_1x)&\text{（标量）}\\
+\begin{equation}
+    \begin{aligned}
+ {e}^\mathrm{T}PB\Lambda\tilde{K}_1x&=\tr({e}^\mathrm{T}PB\Lambda\tilde{K}_1x)&\text{（标量）}\\
   &=\tr(x{e}^\mathrm{T}PB\Lambda\tilde{K}_1)&\text{（}\tr(AB)=\tr(BA)\text{）}\\
   &=\tr(\tilde{K}_1^\mathrm{T}\Lambda B^\mathrm{T}Pex^\mathrm{T})&\text{（}\tr(A^\mathrm{T})=\tr(A),\Lambda,P\ \text{对称）}
-\end{align*}
-根据上面导数，尝试选取
+    \end{aligned}\label{trace_transform}
+\end{equation}
+对含$x_c$项的处理类似。尝试选取
 \[\dot{\hat{K}} _1 = - \Lambda B^\mathrm{T}  P  e  x^\mathrm{T}, \dot{\hat{K}} _2 = - \Lambda B^\mathrm{T}  P  e  u^\mathrm{T}_c\]
-以消去最后四项。然而，$\Lambda$未知。因此，该设计是不可行的。
+以消去 \eqref{dot_V_modify1} 最后四项。然而，$\Lambda$未知。因此，该设计是不可行的。
 
 将 \eqref{MODMIMOLYA:modify1} 修改为
 \begin{equation}\label{MODMIMOLYA:modify2}
@@ -143,10 +145,10 @@ V=e^\mathrm{T}Pe+\tr(\tilde{K}_1^\mathrm{T}\tilde{K}_1)+\tr(\tilde{K}_2^\mathrm{
 \[\dot{\hat{K}} _1 = - B^\mathrm{T}  P  e  x^\mathrm{T}, \dot{\hat{K}} _2 = - B^\mathrm{T}  P  e  u^\mathrm{T}_c\]
 这样就有
 \[ \dot{V} = - e^\mathrm{T} Q  e \leq 0 \]
-于是$V (t) \leq V (0)$，由 \eqref{MODMIMOLYA:modify2} 的形式可知 $e, \tilde{K}_1, \tilde{K}_2 \in
+于是$V (t) \leq V (0)$，$V$有界，由 \eqref{MODMIMOLYA:modify2} 的形式可知 $e, \tilde{K}_1, \tilde{K}_2 \in
 \mathbf{L}_{\infty}$。由于$u_c$ 有界且
 $A_{\ensuremath{\operatorname{ref}}}$ 是 Hurwitz的，所以
-$x_{\ensuremath{\operatorname{ref}}} \in \mathbf{L}_{\infty}$。又知 $x = e +x_{\ensuremath{\operatorname{ref}}}$，所以$x \in \mathbf{L}_{\infty}$有界。根据 \eqref{errsys:MRAC:GLS}，$\dot{e} \in \mathbf{L}_{\infty}$。对$V$再求一阶导数，有
+$x_{\ensuremath{\operatorname{ref}}} \in \mathbf{L}_{\infty}$。又知 $x = e +x_{\ensuremath{\operatorname{ref}}}$，所以$x \in \mathbf{L}_{\infty}$。根据 \eqref{errsys:MRAC:GLS}，$\dot{e} \in \mathbf{L}_{\infty}$。对$V$再求一阶导数，有
 \[ \ddot{V} = - 2 e^\mathrm{T} Q  \dot{e} \in \mathbf{L}_{\infty} \]
 用 Barbalat引理（\ref{barbalat}），有$\lim\limits_{t \rightarrow \infty} \dot{V} = 0$，也即$\lim\limits_{t \rightarrow \infty} e (t) = 0$。
 
@@ -173,11 +175,13 @@ $x_{\ensuremath{\operatorname{ref}}} \in \mathbf{L}_{\infty}$。又知 $x = e +x
     (\lambda_i) \}$。
 \end{hint}
 
-\begin{problem}
+\begin{problem}\label{Pro:uncertainty}
 系统方程变为
-  \[ \dot{x} = A  x + B \Lambda (u + \Phi (t) \cdot \Theta) \]
-  其中 $\Theta \in \mathbf{R}^{p \times 1}, \Phi (t) \in \mathbf{R}^{m \times  p}$，$\Theta$ 未知，$\Phi$ 已知且有界。
+  \begin{equation}
+      \dot{x} = A  x + B \Lambda (u + \Theta\Phi (t))\label{Sys:MRAC:MIMO_with_dis}
+  \end{equation}
+  其中 $\Theta \in \mathbf{R}^{m \times n}, \Phi (t) \in \mathbf{R}^{n \times 1}$，$\Theta$ 未知，$\Phi$ 已知且有界。
 \end{problem}
 \begin{hint}
-    设计控制律\[ u = \hat{K}_1 (t) x + \hat{K}_2 (t) u_c - \Phi (t) \cdot \hat{\Theta} \]
+    设计控制律\[ u = \hat{K}_1 (t) x + \hat{K}_2 (t) u_c - \hat{\Theta}\Phi (t)  \]
 \end{hint}

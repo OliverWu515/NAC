@@ -259,7 +259,7 @@
     }{\relax}
 
   \ifdefstring{\ELEGANT@chinesefont}{ctexfont}{
-    \RequirePackage[UTF8,scheme=plain,fontset=fandol]{ctex}
+    \RequirePackage[UTF8,scheme=plain]{ctex}
     \xeCJKsetup{AutoFakeBold=true}
     }{\relax}
   
@@ -961,7 +961,7 @@
 \fi
 \def\ifEqString#1#2{\def\testa{#1}\def\testb{#2}%
   \ifx\testa\testb}
-\renewcommand{\thesection}{\arabic{chapter}.\arabic{section}}
+% \renewcommand{\thesection}{\arabic{chapter}.\arabic{section}}
 \ifdefstring{\ELEGANT@mode}{fancy}{
   % \newcounter{ELEGANT@samecnt}
   \tcbset{
@@ -1341,7 +1341,6 @@
 \newenvironment{conclusion}{\par\noindent\textbf{\color{third}\conclusionname} \citshape}{\par}
 \newenvironment{property}{\par\noindent\textbf{\color{third}\propertyname} \citshape}{\par}
 \newenvironment{custom}[1]{\par\noindent\textbf{\color{third} #1} \citshape}{\par}
-\RequirePackage{amssymb}
 \RequirePackage{multicol}
 \tcbset{
   introductionsty/.style={
@@ -1429,7 +1428,7 @@
 \renewcommand{\headrulewidth}{1pt}
 % \renewcommand{\headrule}{}
 \fancypagestyle{plain}{\renewcommand{\headrulewidth}{0pt}\fancyhf{}\fancyfoot[R]{\color{structurecolor}\bf\thepage} \renewcommand{\headrule}{}}
-\renewcommand{\chaptermark}[1]{\markboth{\xchaptertitle\, #1}{\xchaptertitle\, #1}}
+\renewcommand{\chaptermark}[1]{\markboth{\IfAppendix{\appendixname\;\thechapter\,}{\xchaptertitle\,} #1}{\IfAppendix{\appendixname\;\thechapter\,}{\xchaptertitle\,} #1}}
 \renewcommand{\sectionmark}[1]{\markright{\thesection\, #1}}
 
 

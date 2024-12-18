@@ -60,7 +60,7 @@ $b_{\ensuremath{\operatorname{ref}}}$为已知常数（是我们所期望的值�
 \begin{equation}
   u = k^{\ast}_1 x + k^{\ast}_2 u_c \label{u*:k1*xk2*uc}
 \end{equation}
-其中 $k^{\ast}_1, k^{\ast}_2$ 是（我们所期望的）已知常数。这样，闭环系统 \eqref{Sys:MRAC:scalar} 就成为
+其中 $k^{\ast}_1, k^{\ast}_2$ 是（我们所期望的）已知常数。这样，\eqref{Sys:MRAC:scalar} 就成为下述闭环系统 
 \begin{align*}
   \dot{x} & = a  x + b  (k^{\ast}_1 x + k^{\ast}_2 u_c)\\
   & = (a + b  k^{\ast}_1)  x + b  k^{\ast}_2 u_c
@@ -108,7 +108,7 @@ $k^{\ast}_1, k^{\ast}_2$应满足
   \tilde{k}_2 u_c  \label{err:MRAC:scalar}
 \end{equation}
 
-下面的目标是让各误差$e,\tilde{k}_1,\tilde{k}_2$收敛至$0$，进而使$x$跟踪$x_\mathrm{ref}$。
+下面的目标是让误差$e,\tilde{k}_1,\tilde{k}_2$收敛至$0$，进而使$x$跟踪$x_\mathrm{ref}$。
 考虑候选Lyapunov函数
 \begin{equation}
   V = \frac{1}{2} e^2 + \frac{1}{2} \tilde{k}^2_1 + \frac{1}{2} \tilde{k}^2_2\label{not_implement_candidate}
@@ -141,7 +141,7 @@ $b$就可提出，进而设计$\dot{\hat{k}}_1,\dot{\hat{k}}_2$消去的项就�
 其中 $\gamma_1, \gamma_2 > 0$。
 沿 \eqref{err:MRAC:scalar} 的状态轨线，求其对时间的导数得（在 \eqref{not_implement_vdot_mid} 的基础上改写，注意$\sgn(b)|b|=\sgn^2(b)b=b$）
 \begin{align*}
-    \dot{V}   &= - a_{\ensuremath{\operatorname{ref}}} e^2 + \frac{ | b |}{\gamma_1} \sgn(b) \gamma_1 \tilde{k} _1 x  e + \frac{| b |}\sgn(b){\gamma_2} \gamma_2
+    \dot{V}   &= - a_{\ensuremath{\operatorname{ref}}} e^2 + \frac{ | b |}{\gamma_1} \sgn(b) \gamma_1 \tilde{k} _1 x  e + \frac{| b |}{\gamma_2} \sgn(b){\gamma_2} 
   \tilde{k} _2 u_c e + \frac{| b |}{\gamma_1}\tilde{k} _1 \dot{\hat{k}}_1 + \frac{| b |}{\gamma_2}\tilde{k} _2
   \dot{\hat{k}}_2 \\
     & = - a_{\ensuremath{\operatorname{ref}}} e^2 + \frac{| b
@@ -159,10 +159,10 @@ $b$就可提出，进而设计$\dot{\hat{k}}_1,\dot{\hat{k}}_2$消去的项就�
 \begin{equation*}
   \dot{V} = - a_{\ensuremath{\operatorname{ref}}} e^2 \leq 0
 \end{equation*}
-从而$V (t) \leq V (0)$。由 \eqref{Lyafun:ek1k2} 的形式得$e, \tilde{k} _1,
-\tilde{k} _2$ 都有界，于是$u$有界；又由于$x_\mathrm{ref}$和$u_c$有界，因此 $x$有界。
+从而$V (t) \leq V (0)$，$V$有界。由 \eqref{Lyafun:ek1k2} 的形式得$e, \tilde{k} _1,
+\tilde{k} _2$ 都有界，于是$\hat{k}_1,\hat{k}_2$有界；由于$u_c$有界，因此 $u$有界；由于$x_\mathrm{ref}$有界，因此$x$有界。
 
-再求一次导得$\ddot{V} = - 2a_{\ensuremath{\operatorname{ref}}} e  \dot{e}$，将误差动力学 \eqref{err:MRAC:scalar} 代入，发现其也有界。
+再求一次导得$\ddot{V} = - 2a_{\ensuremath{\operatorname{ref}}} e  \dot{e}$，将误差动力学 \eqref{err:MRAC:scalar} 代入，结合上段发现其也有界。
 
 因此根据 Barbalat引理（\ref{barbalat}），$\lim\limits_{t \rightarrow \infty}
 \dot{V} (t) = 0$，也即 $\lim\limits_{t \rightarrow \infty} e (t) = 0$。
@@ -269,15 +269,15 @@ $b$就可提出，进而设计$\dot{\hat{k}}_1,\dot{\hat{k}}_2$消去的项就�
 \begin{equation*}
   \dot{V} = - a_{\ensuremath{\operatorname{ref}}} e^2 \leq 0
 \end{equation*}
-因此$V (t) \leq V (0)$。由 \eqref{Lyafun:ek1k2j} 的形式得$e, \tilde{k} _1,
-\tilde{k} _2, \tilde{\theta}$ 都有界，于是$u$有界；又由于$x_\mathrm{ref}$和$u_c$有界，因此 $x$有界。
+因此$V (t) \leq V (0)$，$V$有界。由 \eqref{Lyafun:ek1k2j} 的形式得$e, \tilde{k} _1,
+\tilde{k} _2, \tilde{\theta}$ 都有界，于是$\hat{k}_1,\hat{k}_2,\hat{\theta}$有界；由于$u_c$有界，因此 $u$有界；由于$x_\mathrm{ref}$有界，因此$x$有界。
 
 再求一次导有$ \ddot{V} = - 2 a_{\ensuremath{\operatorname{ref}}} e  \dot{e} $，将误差动力学 \eqref{err:MRAC:nonlinear} 代入，$\ddot{V}$ 有界。
 
 因此根据 Barbalat引理（\ref{barbalat}）， $\lim\limits_{t \rightarrow \infty}
 \dot{V} (t) = 0$，也即 $\lim\limits_{t \rightarrow \infty} e (t) = 0$。
 
-\begin{problem}
+\begin{problem}\label{Pro:scalar_with_uncertainty}
 将 \eqref{Sys:MRAC:nonlinear} 改为
   \[ \dot{x} = a  x + b  u + \varphi(x) \theta \]
 如何设计自适应控制律？
@@ -329,7 +329,7 @@ $b$就可提出，进而设计$\dot{\hat{k}}_1,\dot{\hat{k}}_2$消去的项就�
   & = -(\hat{a} - a)  x -(\hat{b} -b)  u -a_{\ensuremath{\operatorname{ref}}} x +
   b_{\ensuremath{\operatorname{ref}}} u_c \nonumber
 \end{align}
-令参数估计误差 $\tilde{a}  \triangleq \hat{a} - a$ and $\tilde{b}  \triangleq \hat{b} -b$，则上式写为
+令参数估计误差 $\tilde{a}  \triangleq \hat{a} - a$ 和 $\tilde{b}  \triangleq \hat{b} -b$，则上式写为
 \begin{equation*}
    \dot{x}  = -\tilde{a}  x - \tilde{b}  u - a_{\ensuremath{\operatorname{ref}}} x +
   b_{\ensuremath{\operatorname{ref}}} u_c
@@ -356,8 +356,7 @@ $b$就可提出，进而设计$\dot{\hat{k}}_1,\dot{\hat{k}}_2$消去的项就�
   \label{a-bar-b-bar:before:modification}
 \end{equation}
 我们可得 \[\dot{V} = - a_{\ensuremath{\operatorname{ref}}} e^2 \leq 0\]
-
-根据$V$的形式得$e, \tilde{a}, \tilde{b} \in \mathbf{L}_{\infty}$。由于
+则$V(t)\le V(0)$，$V$有界。根据$V$的形式得$e, \tilde{a}, \tilde{b} \in \mathbf{L}_{\infty}$。由于
 $x_{\ensuremath{\operatorname{ref}}} \in \mathbf{L}_{\infty}$ 且 $a, b$ 为常数，我们可得$x, \hat{a}, \hat{b} \in \mathbf{L}_{\infty}$。对$V$再求一次导得
 $ \ddot{V} = - 2 a_{\ensuremath{\operatorname{ref}}} e  \dot{e} $，则只要说明$\dot{e}$的有界性，即可用Barbalat引理。这其中只有$u$的有界性还无法保证。
 我们注意到，此时的$u$的形式不同于之前——在分母上出现了$\hat{b}$。
@@ -376,15 +375,13 @@ $b_{\min} > 0$ 已知。
 
 我们需要说明，形如 \eqref{b:bar:modification}  的修正在确保$\hat{b}$不越过允许边界的同时，还能保证系统稳定。按照 \eqref{a-bar-b-bar:before:modification} 第一式，$\dot{V}$的第二项已消去，第一项已为半负定，则说明最后一项
 \begin{equation}
-    \tilde{b} (\dot{\hat{b}} - \gamma_2 e  u) \leq 0 \label{last_term}
+    \frac{1}{\gamma_2}\tilde{b} (\dot{\hat{b}} - \gamma_2 e  u) \leq 0 \label{last_term}
 \end{equation}
 即可。
 
 我们只需检验 $| \hat{b} | = b_{\min}
 $且$u  e  \ensuremath{\operatorname{sgn}} (b) < 0$的情况（另一种情况，上式一定为$0$）。此时
-$\dot{\hat{b}} = 0$，于是上式左侧等于$ - \tilde{b} e  u = - (\hat{b} - b)
-\ensuremath{\operatorname{sgn}} (b) \cdot u  e 
-\ensuremath{\operatorname{sgn}} (b)$。
+$\dot{\hat{b}} = 0$，于是上式左侧等于$ - \tilde{b} e  u = - (\hat{b} - b) \cdot u  e $。
 下面分情况讨论：
 \begin{itemize}[leftmargin=1em]
     \item 若$\ensuremath{\operatorname{sgn}} (b) > 0$，则$ue<0$， $\hat{b} = b_{\min}\leq b$，因此$\hat{b} - b \leq 0$，故$- \tilde{b} e  u\le 0$；
@@ -392,11 +389,11 @@ $\dot{\hat{b}} = 0$，于是上式左侧等于$ - \tilde{b} e  u = - (\hat{b} - 
 \end{itemize}
 于是，在修正 \eqref{b:bar:modification} 下，\eqref{last_term} 成立。
 则
-\begin{equation*}
+\begin{equation}
   \dot{V} \leq - a_{\ensuremath{\operatorname{ref}}} e^2 \leq 0
   \label{V:under:modification}
-\end{equation*}
-同前可得$e,\tilde{a},\tilde{b},x, \hat{a}, \hat{b} \in \mathbf{L}_{\infty}$；根据修正可得$ u, \dot{e}\in \mathbf{L}_{\infty}$。但此时不能简单利用Barbalat引理——因为$\ddot{V}$的形式变了。解决方法是，对 \eqref{V:under:modification} 两边积分，有
+\end{equation}
+同前可得$e,\tilde{a},\tilde{b},x, \hat{a}, \hat{b} \in \mathbf{L}_{\infty}$；根据修正可得$ u, \dot{e}\in \mathbf{L}_{\infty}$。但此时不能简单利用Barbalat引理——因为$\dot{V},\ddot{V}$的形式变了。解决方法是，对 \eqref{V:under:modification} 两边积分，有
 \[ V (t) - V (0) \leq -a_{\ensuremath{\operatorname{ref}}} \int^t_0 e^2 (\tau)   \diff  \tau \leq 0 \]
 \[ \Rightarrow \int^t_0 e^2 (\tau) \diff  \tau \leq
    \frac{1}{a_{\ensuremath{\operatorname{ref}}}} (V (0) - V (t)) \leq
@@ -419,7 +416,7 @@ $ \lim\limits_{t \rightarrow  \infty} e (t) = 0$。
     控制输入 & $u = \frac{1}{\hat{b}} [(\hat{a} -
     a_{\ensuremath{\operatorname{ref}}}) x +
     b_{\ensuremath{\operatorname{ref}}} u_c]$\\
-    非直接型 MRAC 控制律 & {\hspace{7em}}$\dot{\hat{a}}  =  \gamma_1 e  x$
+    非直接型 MRAC 控制律 & $\dot{\hat{a}}  =  \gamma_1 e  x$
     
     $\dot{\hat{b}}(t)=\begin{cases}
   \gamma_2ue&\text{若}\ |\hat{b}|>b_{\min}\ \text{或}\ |\hat{b}|=b_{\min}\ \text{且}\ ue\sgn(b)\ge 0\\
