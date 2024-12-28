@@ -18,8 +18,8 @@
 \[V=\frac12 x^2+\frac{1}{2\gamma}\tilde{\theta}^2,\gamma>0\]
 求其导数得
 \begin{align*}
-    \dot{V}&=x\cdot\dot{x}+\frac{1}{\gamma}\tilde{\theta}\dot{\hat{\theta}}\\
-    &=-kx^2+\frac{1}{\gamma}\tilde{\theta}(\dot{\hat{\theta}}-\gamma x\varphi(x))
+    \dot{V}&=x\cdot\dot{x}+\frac{1}{\gamma}\tilde{\theta}\dot{\hat{\theta}}
+    =-kx^2+\frac{1}{\gamma}\tilde{\theta}(\dot{\hat{\theta}}-\gamma x\varphi(x))
 \end{align*}
 则设计
 \begin{equation}
@@ -32,7 +32,7 @@
 如果仍采用上述自适应律和候选Lyapunov函数，得到$V$的导数是
 \[\dot{V}=-kx^2+x d(t)\le -kx^2+d_{\max}|x|=-k|x|(|x|-\frac{d_{\max}}{k})\]
 则在下述集合
-\[E = \{(x,\tilde{\theta}): \| x \| \leq \frac{d_{\max}}{k} = e_{0}\}\]
+\[E = \left\{(x,\tilde{\theta}): \| x \| \leq \frac{d_{\max}}{k} = e_{0}\right\}\]
 之外，才有$\dot{V}<0$，而在该集合之内，$\dot{V}$可能为正，因此，参数估计误差$|\tilde{\theta}(t)|$可能自由增长而最终变为无界。这种现象被称为{\bf 参数漂移（parameter drift）}，是由干扰$d(t)$而产生的，这表明我们所提出的自适应律不具有抗干扰能力，即不是鲁棒的。
 
 \begin{example}[扰动衰减但参数估计发散]
@@ -56,10 +56,10 @@ $d(t) = \dot{x} + x\hat{\theta} = 5(1 + t)^{- \frac{1}{5}} - \frac{2}{5}(1 + t)^
 
 为了提升鲁棒性，我们考虑下述死区修正自适应律
 
-\[\dot{\hat{\theta}} = \{\begin{matrix}
+\[\dot{\hat{\theta}} = \left\{\begin{matrix}
 \gamma x\varphi(x), & \text{若} \| x \| \geq e_{0} + \delta \\
 0, & \text{若} \| x \| < e_{0} + \delta \\
-\end{matrix}\]
+\end{matrix}\right.\]
 
 回顾\(V = \frac{1}{2}x^{2} + \frac{1}{2\gamma}{\tilde{\theta}}^{2}\)
 
@@ -74,6 +74,8 @@ $d(t) = \dot{x} + x\hat{\theta} = 5(1 + t)^{- \frac{1}{5}} - \frac{2}{5}(1 + t)^
 \[V(t_{2}) = \frac{1}{2}(e_{0} + \delta)^{2} + \frac{1}{2\gamma}{\tilde{\theta}}^{2}(t_{2}) < V(t_{1})\]
 
 我们可推断出，\(\| \tilde{\theta}(t) \|\)在每个到达边界的时刻\(t_{1},t_{2},\ldots\)总会单调递减，因此\(\| \tilde{\theta}(t) \|\)是有界的，并且随时间增长一定有\(\| x \| \leq e_{0} + \delta\)。
+
+从上面的内容中，不难看出，死区修正简单且有效，保证了参数的收敛。但是，死区修正还存在两个问题。一是，需要假设扰动的上界是先验已知的。二是，在无扰动的情形下并不能得到跟踪误差的渐近稳定性，换言之，鲁棒性的实现是以破坏自适应律的一些理想特性为代价的。关于后者，具体来说就是，我们只能确保跟踪误差进入死区（$\| x \| \leq e_0 + \delta$），即使在无扰动的情形下也是如此，而不能像在无扰动且无死区（采用 \eqref{adaptive_nodisturbance}）的情形下那样得到渐近稳定性。
 
 \subsection{\texorpdfstring{$\sigma$-修正（$\sigma$-Modification）}{σ-修正（σ-Modification）}}
 

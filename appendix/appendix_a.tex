@@ -54,7 +54,7 @@
 
 \noindent\textcolor{winered}{\textbf{问题 \ref{Pro:uncertainty} 解：}}
 
-假设满足 \eqref{matching:condition:GLS} 的$K^{\ast}_1, K^{\ast}_2$存在。设计控制律\[ u = \hat{K}_1 (t) x + \hat{K}_2 (t) u_c - \hat{\Theta}\Phi (t)  \]
+假设满足 \eqref{matching:condition:GLS} 的$K^{\ast}_1, K^{\ast}_2$存在。设计控制律\[ u = \hat{K}_1 (t) x + \hat{K}_2 (t) u_c - \hat{\Theta}\Phi (x)  \]
 代入 \eqref{Sys:MRAC:MIMO_with_dis} 可得
 \begin{align}
     \dot{x}&=A  x + B \Lambda (\hat{K}_1 (t) x + \hat{K}_2 (t) u_c-\textcolor{second}{\hat{\Theta}\Phi})+\textcolor{second}{B\Lambda\Theta\Phi}+

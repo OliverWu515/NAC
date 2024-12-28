@@ -13,8 +13,8 @@
 
 - Windows 系统；
 - 安装了 TeX Live 或 MikTeX，不一定需要 xindy 和 latexmk；
-- zhmakeindex，用于生成索引，可在 [zhmakeindex 发行版页面](https://github.com/leo-liu/zhmakeindex/releases/tag/zhmakeindex-1.2) 下载，内附有使用手册；
-- 四款方正字体，具体请参看 [ElegantBook](https://github.com/ElegantLaTeX/ElegantBook) 的说明。
+- 四款方正字体，具体请参看 [ElegantBook](https://github.com/ElegantLaTeX/ElegantBook) 的说明；
+- （可选）zhmakeindex，用于生成索引，可在 [zhmakeindex 发行版页面](https://github.com/leo-liu/zhmakeindex/releases/tag/zhmakeindex-1.2) 下载，内附有使用手册。
 
 ### 克隆文件
 电脑上需安装有 Git。在命令行中键入
@@ -35,6 +35,13 @@ xelatex -synctex=1 -interaction=nonstopmode --shell-escape -file-line-error NAC
 xelatex -synctex=1 -interaction=nonstopmode --shell-escape -file-line-error NAC
 ```
 稍作等待，即可看到编译出的 NAC.pdf。
+
+若未安装 zhmakeindex，则只需执行
+
+```bash
+xelatex -synctex=1 -interaction=nonstopmode --shell-escape -file-line-error NAC
+xelatex -synctex=1 -interaction=nonstopmode --shell-escape -file-line-error NAC
+```
 
 要清理多余的中间文件，请在命令行中键入 
 

@@ -174,11 +174,11 @@ $b$就可提出，进而设计$\dot{\hat{k}}_1,\dot{\hat{k}}_2$消去的项就�
   \caption{标量系统的直接型MRAC设计汇总}
   \begin{tabular}{p{4.0cm}p{10.0cm}}
     \hline
-    开环被控对象 & $\dot{x} = - a  x + b  u$; $\{ a, b \}$ 未知，但
+    开环被控对象 & $\dot{x} = a  x + b  u$; $\{ a, b \}$ 未知，但
     $\ensuremath{\operatorname{sgn}} (b)$ 已知\\
     参考模型 & $\dot{x}_{\ensuremath{\operatorname{ref}}} = -
     a_{\ensuremath{\operatorname{ref}}} x_{\ensuremath{\operatorname{ref}}} +
-    b_{\ensuremath{\operatorname{ref}}} u_c$\\
+    b_{\ensuremath{\operatorname{ref}}} u_c,a_{\ensuremath{\operatorname{ref}}}>0$\\
     跟踪误差 & $e \triangleq x - x_{\ensuremath{\operatorname{ref}}}$\\
     控制输入 & $u = \hat{k}_1 (t) x + \hat{k}_2 (t) u_c$\\
     直接型MRAC控制律& $\dot{\hat{k}}_1 = -  \gamma_1
@@ -311,7 +311,7 @@ $b$就可提出，进而设计$\dot{\hat{k}}_1,\dot{\hat{k}}_2$消去的项就�
 \end{equation}
 在 \ref{sec:MRAC:scalar:direct} 小节所述的设计过程中，我们设计的自适应律直接更新$\hat{k}_1 (t), \hat{k}_2 (t)$。而在本小节的设计中，我们利用
 \eqref{Sys:Indirect:MRAC:scalar:perfect} 陈述的理想对应关系，并将其中的未知参数$a$和$b$换成其估计，进而得到 $\hat{k}_1 (t), \hat{k}_2 (t)$ 如下
-\[ \hat{k}_1 (t) = \frac{\hat{a} -
+\[ \hat{k}_1 (t) = \frac{-\hat{a} -
    a_{\ensuremath{\operatorname{ref}}}}{\hat{b}}, \hat{k}_2 (t) =
    \frac{b_{\ensuremath{\operatorname{ref}}}}{\hat{b}} \]
 将其代入 \eqref{Law:Indirect:MRAC:scalar}，即得
@@ -408,12 +408,13 @@ $ \lim\limits_{t \rightarrow  \infty} e (t) = 0$。
   \caption{标量系统的非直接型MRAC设计汇总}
   \begin{tabular}{p{4.0cm}p{10.0cm}}
   \hline
-   开环被控对象 & $\dot{x} =  a  x + b  u$\\
+   开环被控对象 & $\dot{x} =  a  x + b  u$，$\{ a, b \}$ 未知，但
+    $\ensuremath{\operatorname{sgn}} (b)$ 已知\\
     参考模型 & $\dot{x}_{\ensuremath{\operatorname{ref}}} = -
     a_{\ensuremath{\operatorname{ref}}} x +
     b_{\ensuremath{\operatorname{ref}}} u_c, a_{\operatorname{ref}}>0$\\
     跟踪误差 & $e = x - x_{\ensuremath{\operatorname{ref}}}$\\
-    控制输入 & $u = \frac{1}{\hat{b}} [(\hat{a} -
+    控制输入 & $u = \frac{1}{\hat{b}} [(-\hat{a} -
     a_{\ensuremath{\operatorname{ref}}}) x +
     b_{\ensuremath{\operatorname{ref}}} u_c]$\\
     非直接型 MRAC 控制律 & $\dot{\hat{a}}  =  \gamma_1 e  x$

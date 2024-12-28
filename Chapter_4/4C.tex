@@ -25,7 +25,7 @@
     B \Lambda K^{\ast}_2 = B_{\ensuremath{\operatorname{ref}}}
   \end{array}\right. \label{matching:condition:GLS}
 \end{equation}
-我们应注意，一般地，无法保证满足 \eqref{matching:condition:GLS} 的理想增益阵$K^{\ast}_1, K^{\ast}_2$存在。不过，在实际应用中，如果$A, B$的结构已知，可以设计 $A_{\ensuremath{\operatorname{ref}}}, B_{\ensuremath{\operatorname{ref}}}$ 以保证 \eqref{matching:condition:GLS} 有解。
+上式称为匹配条件（matching conditions）。我们应注意，一般地，无法保证满足 \eqref{matching:condition:GLS} 的理想增益阵$K^{\ast}_1, K^{\ast}_2$存在。不过，在实际应用中，如果$A, B$的结构已知，可以设计 $A_{\ensuremath{\operatorname{ref}}}, B_{\ensuremath{\operatorname{ref}}}$ 以保证 \eqref{matching:condition:GLS} 有解。
 
 下面假设满足 \eqref{matching:condition:GLS} 的$K^{\ast}_1, K^{\ast}_2$存在（there is sufficient structure flexibility to meet the control
 objective）。由于$\Lambda$未知，我们提出以下含可变矩阵参数的控制律
@@ -60,7 +60,7 @@ x_{\ensuremath{\operatorname{ref}}}$。根据 \eqref{ideal_mimo} 和 \eqref{mimo
 由于其中的$e,\tilde{K}_1,\tilde{K}_2$都是向量或矩阵，而Lyapunov函数输出是标量，上式要做相应的修改。
 
 首先，将$\frac12e^2$换成$\frac12e^\mathrm{T}e$。求其导数得\[e^\mathrm{T}\dot{e}=e^\mathrm{T}A_{\ensuremath{\operatorname{ref}}} e+\dots\]
-省略的项待与后面的项合并。仅考察第一项，我们发现由于$A_{\ensuremath{\operatorname{ref}}}$未必负定，则第一项并不保证为负定。后续若要类似之前思路保留该项则不可行。考虑重新设计此项为\[e^\mathrm{T}\textcolor{red}{P}e\]
+省略的项待与后面的项合并。仅考察第一项，我们发现由于$A_{\ensuremath{\operatorname{ref}}}$未必负定，则第一项并不保证为负定。后续若要类似之前思路保留该项则不可行。考虑重新设计此项为\[e^\mathrm{T}\textcolor{second}{P}e\]
 其中$P$为正定阵。则此项导数是
 \[e^\mathrm{T}P\dot{e}+\dot{e}^\mathrm{T}Pe=e^\mathrm{T}(A_{\ensuremath{\operatorname{ref}}}^\mathrm{T} P + P A_{\ensuremath{\operatorname{ref}}}) e+\dots\]
 由于 $A_{\ensuremath{\operatorname{ref}}}$ 是 Hurwitz的，根据定理 \ref{linearlya}，我们可知对任意正定矩阵 $Q \in \mathbf{R}^{n \times
@@ -128,17 +128,17 @@ V=e^\mathrm{T}Pe+\tr(\tilde{K}_1^\mathrm{T}\tilde{K}_1)+\tr(\tilde{K}_2^\mathrm{
 
 将 \eqref{MODMIMOLYA:modify1} 修改为
 \begin{equation}\label{MODMIMOLYA:modify2}
-  V=e^\mathrm{T}Pe+\tr(\tilde{K}_1^\mathrm{T}\textcolor{red}{\Lambda}\tilde{K}_1)+\tr(\tilde{K}_2^\mathrm{T}\textcolor{red}{\Lambda}\tilde{K}_2)
+  V=e^\mathrm{T}Pe+\tr(\tilde{K}_1^\mathrm{T}\textcolor{second}{\Lambda}\tilde{K}_1)+\tr(\tilde{K}_2^\mathrm{T}\textcolor{second}{\Lambda}\tilde{K}_2)
 \end{equation}
-由于$\Lambda$正定，所以上述第二、三项的正定性不变（提示：可拆分为$\tilde{K}_1^\mathrm{T}\Lambda^\frac{1}{2}\Lambda^\frac{1}{2}\tilde{K}_1$）。因此，该修改是可行的。
+由于$\Lambda$正定，所以上述第二、三项的正定性不变（提示：如第二项，可拆分为$\tilde{K}_1^\mathrm{T}\Lambda^\frac{1}{2}\Lambda^\frac{1}{2}\tilde{K}_1$）。因此，该修改是可行的。
 
 此时 \eqref{dot_V_modify1} 变为
 \begin{align*}
   \dot{V} &= -e^\mathrm{T}Q e +
   2\ensuremath{\operatorname{tr}} \{ \tilde{K}^\mathrm{T}_1 \Lambda B^\mathrm{T}  P  e  x^\mathrm{T} \} +
   2\ensuremath{\operatorname{tr}} \{ \tilde{K}^\mathrm{T}_2 \Lambda B^\mathrm{T}  P  e  u_c^\mathrm{T} \} +
-  2\ensuremath{\operatorname{tr}} \{ \tilde{K}^\mathrm{T}_1 \textcolor{red}{\Lambda} \dot{\hat{K}} _1 \}
-  + 2\ensuremath{\operatorname{tr}} \{ \tilde{K}^\mathrm{T}_2 \textcolor{red}{\Lambda} \dot{\hat{K}} _2 \}
+  2\ensuremath{\operatorname{tr}} \{ \tilde{K}^\mathrm{T}_1 \textcolor{second}{\Lambda} \dot{\hat{K}} _1 \}
+  + 2\ensuremath{\operatorname{tr}} \{ \tilde{K}^\mathrm{T}_2 \textcolor{second}{\Lambda} \dot{\hat{K}} _2 \}
 \end{align*}
 
 于是我们可选取
@@ -151,6 +151,24 @@ $A_{\ensuremath{\operatorname{ref}}}$ 是 Hurwitz的，所以
 $x_{\ensuremath{\operatorname{ref}}} \in \mathbf{L}_{\infty}$。又知 $x = e +x_{\ensuremath{\operatorname{ref}}}$，所以$x \in \mathbf{L}_{\infty}$。根据 \eqref{errsys:MRAC:GLS}，$\dot{e} \in \mathbf{L}_{\infty}$。对$V$再求一阶导数，有
 \[ \ddot{V} = - 2 e^\mathrm{T} Q  \dot{e} \in \mathbf{L}_{\infty} \]
 用 Barbalat引理（\ref{barbalat}），有$\lim\limits_{t \rightarrow \infty} \dot{V} = 0$，也即$\lim\limits_{t \rightarrow \infty} e (t) = 0$。
+
+\begin{table}[htbp]
+  \centering
+  \setcellgapes{4pt}
+  \makegapedcells
+  \caption{MIMO系统的直接型MRAC设计汇总}
+  \begin{tabular}{p{4.0cm}p{10.0cm}}
+    \hline
+    开环被控对象 & $\dot{x} = A  x + B \Lambda u$。其中$(A,B\Lambda)$能控，$ A, \Lambda $ 未知，$B$已知，$\Lambda$为对角阵且对角线元素全为正\\
+    参考模型 & $\dot{x}_{\ensuremath{\operatorname{ref}}} =
+    A_{\ensuremath{\operatorname{ref}}} x_{\ensuremath{\operatorname{ref}}} +
+    B_{\ensuremath{\operatorname{ref}}} u_c$，其中$ A_{\ensuremath{\operatorname{ref}}}$是Hurwitz的\\
+    跟踪误差 & $e \triangleq x - x_{\ensuremath{\operatorname{ref}}}$\\
+    控制输入 & $u = \hat{K}_1 (t) x + \hat{K}_2 (t) u_c$\\
+    直接型MRAC控制律& $\dot{\hat{K}} _1 = - B^\mathrm{T}  P  e  x^\mathrm{T}, \dot{\hat{K}} _2 = - B^\mathrm{T}  P  e  u^\mathrm{T}_c$，$P$为正定阵\\
+    \hline
+  \end{tabular}
+\end{table}
 
 \begin{problem}
     $\Lambda$ 对角线元素全为负？
@@ -178,10 +196,21 @@ $x_{\ensuremath{\operatorname{ref}}} \in \mathbf{L}_{\infty}$。又知 $x = e +x
 \begin{problem}\label{Pro:uncertainty}
 系统方程变为
   \begin{equation}
-      \dot{x} = A  x + B \Lambda (u + \Theta\Phi (t))\label{Sys:MRAC:MIMO_with_dis}
+      \dot{x} = A  x + B \Lambda (u + \Theta\Phi (x))\label{Sys:MRAC:MIMO_with_dis}
   \end{equation}
-  其中 $\Theta \in \mathbf{R}^{m \times n}, \Phi (t) \in \mathbf{R}^{n \times 1}$，$\Theta$ 未知，$\Phi$ 已知且有界。
+  其中 $\Theta \in \mathbf{R}^{m \times n}, \Phi (x) \in \mathbf{R}^{n \times 1}$，$\Theta$ 未知，$\Phi$ 已知且有界。
 \end{problem}
 \begin{hint}
-    设计控制律\[ u = \hat{K}_1 (t) x + \hat{K}_2 (t) u_c - \hat{\Theta}\Phi (t)  \]
+    设计控制律\[ u = \hat{K}_1 (t) x + \hat{K}_2 (t) u_c - \hat{\Theta}\Phi (x)  \]
+\end{hint}
+\begin{problem}
+系统方程变为
+  \begin{align*}
+      \dot{x}_p &= A_p  x + B_p \Lambda (u + \Theta\Phi (x_p))\\
+      y&=C_px_p
+  \end{align*}
+  新增的$C_p$是已知的。目标是使$y$跟踪时变的$y_{\mathrm{cmd}}(t)$。
+\end{problem}
+\begin{hint}
+    见前言中参考文献5的第10章。
 \end{hint}

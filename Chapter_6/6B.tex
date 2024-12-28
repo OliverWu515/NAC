@@ -1,0 +1,135 @@
+\section{位置控制}\label{6Bref}
+
+考虑系统 \eqref{robotic_model}，我们对其进行位置控制。也就是说我们的控制目标是：
+\begin{align*}
+    q(t) \to q_d, \quad \dot{q}_d = 0 \text{，}
+\end{align*}
+其中 $q_d$ 为常值，表示期望位置（期望速度 $\dot{q}_d = 0$）。
+
+定义位置误差和速度误差：
+\begin{align*}
+    \tilde{q}(t) \triangleq q(t) - q_d, \quad \dot{\tilde{q}}(t) \triangleq \dot{q}(t) - \dot{q}_d = \dot{q}(t) \text{。}
+\end{align*}
+从而 $\ddot{\tilde{q}}(t) = \ddot{q}(t)$。为简化记号，在不引起歧义的前提下，可能省略后续一些函数中的参数。
+
+误差动力学为：
+\begin{equation*}
+    M (q) \ddot{\tilde{q}} + C (q, \dot{q}) \dot{\tilde{q}} + g(q) = \tau \text{，}
+\end{equation*}
+即
+\begin{equation}
+    M (\tilde{q} + q_d) \ddot{\tilde{q}} + C (\tilde{q} + q_d, \dot{\tilde{q}}) \dot{\tilde{q}} + g(\tilde{q} + q_d) = \tau \text{。}
+\end{equation}
+定义状态变量
+\begin{align*}
+    x_1 &= \tilde{q}, \\
+    x_2 &= \dot{\tilde{q}} \text{，}
+\end{align*}
+得到状态空间方程：
+\begin{equation} \label{robotic_state_space}
+    \begin{cases}
+        \dot{x}_1 = x_2\\
+        \dot{x}_2 = M^{- 1} (x_1 + q_d) [u - C (x_1 + q_d, x_2) x_2 - g (x_1 + q_d)] \text{。}
+    \end{cases}
+\end{equation}
+由于 $q_d$ 为常值，等号右侧的表达式中不显含时间 $t$，从而该系统是\textbf{自治系统}。
+
+利用反馈线性化，可以设计得到如下控制输入：
+\begin{equation} \label{robotic_control_1}
+    \tau = C \cdot x_2 + g - M (K_p \tilde{q} + K_d \dot{\tilde{q}})\text{，}
+\end{equation}
+其中 $K_p, K_d$ 均为对称正定阵（回顾一下，这亦记作 $K_p, K_d > 0$）。
+从而闭环系统为：
+\[
+    \begin{cases}
+        \dot{x}_1 = x_2\\
+        \dot{x}_2 = - K_p x_1 - K_d x_2 \text{。}
+    \end{cases}
+\]
+系统稳定，位置误差和速度误差随 $t \to \infty$ 趋于 $0$，位置控制得以实现。
+
+但是，这种设计方法并没有充分利用系统的性质。譬如，考虑到 $M$ 正定，其实 \eqref{robotic_control_1} 中可删去 $M$ 一项，改写为 $\tau = C \cdot x_2 + g - (K_p \tilde{q} + K_d \dot{\tilde{q}})$。而考虑到“$\dot{M} (q) - 2 C (q, \dot{q})$ 是反对称的”这条性质，还可以对控制律进行进一步简化。简化后，我们可采用如下控制输入：
+\begin{equation} \label{robotic_control_2}
+    \tau = g(q) - K_p \tilde{q} - K_d \dot{\tilde{q}}, \quad K_p, K_d > 0 \text{。}
+\end{equation}
+从而闭环系统为：
+\begin{equation} \label{robotic_dynamic}
+    M (\tilde{q} + q_d) \ddot{\tilde{q}} + C (\tilde{q} + q_d, \dot{\tilde{q}})
+   \dot{\tilde{q}} = - K_p \tilde{q} - K_d \dot{\tilde{q}} \text{。}
+\end{equation}
+考虑候选 Lyapunov 函数
+\[
+    V_1 = \frac{1}{2} \dot{\tilde{q}}^\mathrm{T} M \dot{\tilde{q}} \text{。}
+\]
+其沿系统轨线的导数
+\begin{align*}
+    \dot{V}_1 & = \dot{\tilde{q}}^\mathrm{T} M \ddot{\tilde{q}} + \frac{1}{2}
+    \dot{\tilde{q}}^\mathrm{T} \dot{M} \dot{\tilde{q}}\\
+    & = \dot{\tilde{q}}^\mathrm{T} (- K_p \tilde{q} - K_d \dot{\tilde{q}} - C
+    \dot{\tilde{q}}) + \frac{1}{2} \dot{\tilde{q}}^\mathrm{T} \dot{M} \dot{\tilde{q}}\\
+    & = - \dot{\tilde{q}}^\mathrm{T} K_p \tilde{q} - \dot{\tilde{q}}^\mathrm{T} K_d
+    \dot{\tilde{q}} + \frac{1}{2} \dot{\tilde{q}}^\mathrm{T} (\dot{M} - 2 C)
+    \dot{\tilde{q}} \text{。}
+\end{align*}
+由于 $\dot{M} (q) - 2 C (q, \dot{q})$ 是反对称的，有
+\[
+    \dot{V}_1 = - \dot{\tilde{q}}^\mathrm{T} K_p \tilde{q} - \dot{\tilde{q}}^\mathrm{T} K_d \dot{\tilde{q}} \text{。}
+\]
+其中，等号右侧第一项 $- \dot{\tilde{q}}^\mathrm{T} K_p \tilde{q}$ 是恒为负的，但第二项 $- \dot{\tilde{q}}^\mathrm{T} K_d \dot{\tilde{q}}$ 不是。同时，我们选取的 $V_1$ 本身也有问题，它只是正半定的。它的表达式中只包含了状态变量的一部分——$\dot{\tilde{q}}$，即 $x_2$。因此我们需要将 $x_1$，也就是 $\tilde{q}$ 纳入其中，得到这样的一个候选 Lyapunov 函数
+\[
+    V_2 = V_1 + \frac{1}{2} \tilde{q}^\mathrm{T} K_p \tilde{q} \text{。}
+\]
+其沿系统轨线的导数
+\begin{align*}
+    \dot{V} & = \dot{V}_1 + \dot{\tilde{q}}^\mathrm{T} K_p \tilde{q}\\
+    & = - \dot{\tilde{q}}^\mathrm{T} K_d \dot{\tilde{q}} - \dot{\tilde{q}}^\mathrm{T} K_p
+    \tilde{q} + \tilde{q}^\mathrm{T} K_p \dot{\tilde{q}}\\
+    & = - \dot{\tilde{q}}^\mathrm{T} K_d \dot{\tilde{q}} \text{。}
+\end{align*}
+从而，$V_2$ 是正定的，$\dot{V}_2$是负半定的。%从而也可以得到系统稳定的结论，也就实现了位置控制。
+注意到，闭环系统是自治的。我们有
+\[
+    E \triangleq \{ x | \dot{V} = 0  \} = \{ x | x_2 \equiv 0 \} \text{。}
+\]
+令 $x(t)$ 是整体属于 $E$ 的解，那么
+\[
+    x_2 \equiv 0 \implies \dot{x}_2 \equiv 0 \ (\ddot{\tilde{q}} \equiv 0) \implies x_1 \equiv 0 \quad \text{（根据 \eqref{robotic_dynamic}）。}
+\]
+因此，唯一可以整体留在 $E$ 中的解就是原点。所以，根据 LaSalle 不变集原理（\ref{lasalle}），原点是渐近稳定的，即 $\lim_{t \to \infty} q (t) = q_d$ 且 $\lim_{t \to \infty} \dot{q}(t) = 0$。
+
+至此，我们采用控制律 \eqref{robotic_control_2} 实现了位置控制，控制输入中包含了与重力相关的补偿项以及 PD 控制项。我们能否进一步地简化，只采用 PD 控制而不需要重力的补偿项？下面证明，至少在 \eqref{robotic_state_space} 对应的状态空间原点可作为重力势能的零势能点时，可以做到。换而言之，就是在目标位置恰为重力势能最低点时，可以不进行与重力有关的补偿。这也很好理解，因为这种情况下，重力的存在是有利于系统稳定的，自然不需要相应的补偿。其中有一种平凡的情形，那就是机械臂在水平方向上运动，这自然可以满足条件。当然，这种情形下在最初的方程 \eqref{robotic_model} 中就已经有 $g(q) \equiv 0$ 了，所以确实是很平凡的情形。下面是具体的推导。
+
+若采用控制律
+\begin{equation} \label{robotic_control_3}
+    \tau = - K_p \tilde{q} - K_d \dot{\tilde{q}}, \quad K_p, K_d > 0 \text{，}
+\end{equation}
+则闭环系统为
+\[
+    M (\tilde{q} + q_d) \ddot{\tilde{q}} + C (\tilde{q} + q_d, \dot{\tilde{q}})
+   \dot{\tilde{q}} + g(q) = - K_p \tilde{q} - K_d \dot{\tilde{q}} \text{。}
+\]
+可考虑候选 Lyapunov 函数
+\[
+    V_3 \triangleq V_2 + P(q) = \frac{1}{2} \dot{\tilde{q}}^\mathrm{T} M \dot{\tilde{q}} + \frac{1}{2} \tilde{q}^\mathrm{T} K_p \tilde{q} + P(q), \quad P(q) \geq 0 \text{，}
+\]
+其中 $P(q)$ 为势能函数，满足 $g(q) = \frac{\partial P(q)}{\partial q}$ 且 $P(q_d) = 0$。
+则 $V_3$ 沿系统轨线的导数为
+\begin{align*}
+    \dot{V}_3 & = \dot{\tilde{q}}^\mathrm{T} M \ddot{\tilde{q}} + \frac{1}{2}
+    \dot{\tilde{q}}^\mathrm{T} \dot{M} \dot{\tilde{q}} + \dot{P}(q)\\
+    & = \dot{\tilde{q}}^\mathrm{T} (- K_p \tilde{q} - K_d \dot{\tilde{q}} - C
+    \dot{\tilde{q}} - g(q)) + \frac{1}{2} \dot{\tilde{q}}^\mathrm{T} \dot{M} \dot{\tilde{q}} + \dot{P}(q)\\
+    & = - \dot{\tilde{q}}^\mathrm{T} K_p \tilde{q} - \dot{\tilde{q}}^\mathrm{T} K_d
+    \dot{\tilde{q}} + \frac{1}{2} \dot{\tilde{q}}^\mathrm{T} (\dot{M} - 2 C)
+    \dot{\tilde{q}} \textcolor{second}{ - \dot{\tilde{q}}^\mathrm{T} g(q) + \dot{P}(q)} \\
+    & = - \dot{\tilde{q}}^\mathrm{T} K_d \dot{\tilde{q}} \textcolor{second}{ - \dot{\tilde{q}}^\mathrm{T} g(q) + \dot{P}(q)} \text{。}
+\end{align*}
+与 $V_2$ 沿着原先的闭环系统轨线的导数相比，仅有最后一部分（已用橙色标出）不同。而
+\[
+    \dot{P}(q) = {\left( \dfrac{\partial P(q)}{\partial q} \right)}^\mathrm{T} \cdot \dot{q} = g^\mathrm{T}(q) \cdot \dot{q} = \dot{q}^\mathrm{T} g(q) \text{，}
+\]
+因此 $\textcolor{second}{- \dot{\tilde{q}}^\mathrm{T} g(q) + \dot{P}(q)}$ 这一项为零。从而，$\dot{V}_3 = - \dot{\tilde{q}}^\mathrm{T} K_d \dot{\tilde{q}}$，后续推导同之前情形。
+
+\begin{problem}
+    如果系统是 $M (q) \ddot{q} + C (q, \dot{q}) \dot{q} + g (q) + D \dot{q} = u$，其中 $D$ 是正半定的（这对于系统稳定是有帮助的，不应该消去），应该如何设计控制律？
+\end{problem}

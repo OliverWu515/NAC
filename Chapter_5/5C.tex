@@ -166,7 +166,7 @@
   \[ V (t) - V (0) \leq - \eta \int^t_0 | s(\tau) | \diff \tau \]
   因此 $s \in \mathbf{L}_1$。
   则$s \in \mathbf{L}_1 \cap \mathbf{L}_{\infty}, \dot{s} \in
-  \mathbf{L}_{\infty}$，根据推论 \ref{barbalat_cor_2}，有 $\lim\limits_{t \rightarrow \infty} s = 0$。
+  \mathbf{L}_{\infty}$，根据推论 \ref{barbalat_cor_1}，有 $\lim\limits_{t \rightarrow \infty} s = 0$。
 \begin{problem}\label{Pro:dis_with_unknown_upperbound}
     仍考虑系统 \eqref{Sys:dis_with_upperbound}。现设干扰$d(t)$满足
   \[ \| d (t) \| \leq d_{\max} (1 + \| x_1 \| + \| x_2 \|^2) \]
@@ -194,7 +194,7 @@
 
 上述设计固然可行，但是其在$x=0$附近会存在较明显的振荡。
 为了避免$\sgn(x)$的弊端，有学者提出了如下控制律
-\[u=-kx-\varphi(x)\hat{\theta}-\textcolor{red}{\frac{\hat{k}^2}{|x|\hat{k}+\mathrm{e}^{-t}}x}\]
+\[u=-kx-\varphi(x)\hat{\theta}-\textcolor{second}{\frac{\hat{k}^2}{|x|\hat{k}+\mathrm{e}^{-t}}x}\]
 这样，$x$的动力学就可写为
 \[\dot{x}=-kx-\varphi(x)(\hat{\theta}-\theta)-\frac{\hat{k}^2}{|x|\hat{k}+\mathrm{e}^{-t}}x+d(t)\]
 考虑候选Lyapunov函数

@@ -33,7 +33,7 @@
 这样的性质被称为输入-状态稳定性，这里给出其正式定义。
 
 \begin{definition}[输入-状态稳定性（input-to-state stability）] \label{def_iss}
-    系统 \eqref{sys:I:ss} 称为 {\textbf{输入-状态稳定（input-to-state stable，ISS）}}，如果存在一个 $\mathcal{K}\mathcal{L}$ 类函数 $\beta$ 和一个 $\mathcal{K}$ 类函数 $\gamma$，使得对于任意初始状态 $x (t_0)$ 和任意有界输入 $u (t)$，解 $x (t)$ 对所有 $t \geq t_0$ 均存在且满足
+    系统 \eqref{sys:I:ss} 称为 {\textbf{输入-状态稳定（input-to-state stable，ISS）}}\index{输入-状态稳定（input-to-state stable）}，如果存在一个 $\mathcal{K}\mathcal{L}$ 类函数 $\beta$ 和一个 $\mathcal{K}$ 类函数 $\gamma$，使得对于任意初始状态 $x (t_0)$ 和任意有界输入 $u (t)$，解 $x (t)$ 对所有 $t \geq t_0$ 均存在且满足
     \[
         \| x (t) \| \leq \beta (\| x (t_0) \|, t - t_0) + \gamma (\sup_{t_0 \leq \tau \leq t} \|  u (\tau) \|) \text{。}
     \]

@@ -1,0 +1,47 @@
+\section{跟踪控制}\label{6Cref}
+
+考虑系统 \eqref{robotic_model}，我们尝试对其进行跟踪控制。也就是说我们的控制目标是：
+\begin{align*}
+    q(t) \to q_d(t), \quad \dot{q}(t) \to \dot{q}_d \text{，}
+\end{align*}
+其中 $q_d(t), \dot{q}_d(t), \ddot{q}_d(t)$ 均有界。
+
+定义位置误差和速度误差：
+\begin{align*}
+    \tilde{q}(t) \triangleq q(t) - q_d(t), \quad \dot{\tilde{q}}(t) \triangleq \dot{q}(t) - \dot{q}_d(t) \text{。}
+\end{align*}
+从而 $\ddot{\tilde{q}}(t) = \ddot{q}(t) - \ddot{q}_d(t)$。
+
+误差动力学为：
+\[
+    M (q) (\ddot{\tilde{q}} + \ddot{q}_d(t)) + C (q, \dot{q}) (\dot{\tilde{q}} + \dot{q}_d(t)) + g(q) = \tau \text{，}
+\]
+即
+\begin{equation}
+    M (q) \ddot{\tilde{q}} + C (q, \dot{q}) \dot{\tilde{q}} = \tau - M(q) \ddot{q}_d(t) - C (q, \dot{q}) \dot{q}_d(t) - g(q) \text{。}
+\end{equation}
+设计如下控制输入
+\[
+    \tau = M \ddot{q}_d - C \dot{q}_d + g(q) - K_p \tilde{q} - K_d \dot{\tilde{q}} \text{。}
+\]
+从而闭环系统为：
+\begin{equation} \label{EL:TC:CP}
+    M (\tilde{q} + q_d (t)) \ddot{\tilde{q}} + C (\tilde{q} + q_d (t),
+    \dot{\tilde{q}} + \dot{q}_d (t)) \dot{\tilde{q}} = - K_p \tilde{q} - K_d
+    \dot{\tilde{q}} \text{。}
+\end{equation}
+因为有 $q_d(t)$ 和 $\dot{q}_d(t)$，所以该系统是\textbf{非自治系统}。
+考虑候选 Lyapunov 函数
+\[
+    V = \frac{1}{2} \dot{\tilde{q}}^\mathrm{T} M(q) \dot{\tilde{q}} + \frac{1}{2} \tilde{q}^\mathrm{T} K_p \tilde{q} \text{。}
+\]
+与上一小节类似，可得其沿系统轨线的导数为
+\[
+    \dot{V} = - \dot{\tilde{q}}^\mathrm{T} K_d \dot{\tilde{q}} \leq 0 \text{。}
+\]
+
+由于该系统 \eqref{EL:TC:CP} 是非自治系统，所以不能使用 LaSalle 定理。根据上式，$\dot{V}$ 负半定，所以 $V(t) \leq V(0)$，从而有 $\dot{\tilde{q}}, \tilde{q} \in \mathbb{L}_\infty$ 和 $\dot{\tilde{q}} \in \mathbb{L}_2$。
+
+因为 $\| C(q, \dot{q}) \dot{\tilde{q}} \| \leq K_C \| \dot{q} \| \cdot \| \dot{\tilde{q}} \|$ 且 $\dot{q}_d$ 有界，所以我们可以得到 $\ddot{q} \in \mathbb{L}_\infty$。从而，我们有 $\dot{\tilde{q}} \in \mathbb{L}_2 \cap \mathbb{L}_\infty$ 和 $\ddot{q} \in \mathbb{L}_\infty$，根据 Barbalat 引理，$\lim_{t \to \infty} \dot{\tilde{q}} = 0$。
+
+可惜，到目前为止，我们仍无法得到关于位置误差 $\tilde{q}$ 渐进行为的任何直接结论。接下来，我们将用滑模控制、自适应控制、反步法、预设性能控制等方法分析设计，以解决跟踪控制的问题。

@@ -202,12 +202,12 @@ $z_2$的动力学写为
 求其导数得
 \begin{align*}
   \dot{V}_c & = \dot{V}_1 + z_2 \dot{z}_2\\
-  & = - k_1 z^2_1 + \textcolor{red}{z_1 z_2} + z_2 \left( u \textcolor{structurecolor}{- \frac{\partial
+  & = - k_1 z^2_1 + \textcolor{third}{z_1 z_2} + z_2 \left( u \textcolor{structurecolor}{- \frac{\partial
   \alpha_1}{\partial z_1} x_2 - \frac{\partial \alpha_1}{\partial v_1}
   \gamma_1 z_1 \varphi (z_1)} \textcolor{second}{- \theta \frac{\partial \alpha_1}{\partial z_1}  \varphi (z_1)} \right)
 \end{align*}
 为了处理含有未知参数$\theta$的项，我们尝试利用先前对$\theta$作出的估计$v_1$，写出（请注意，与上式的颜色对应之项会被消去）
-\[ u = \textcolor{red}{- z_1} - k_2z_2 \textcolor{structurecolor}{+ \frac{\partial \alpha_1}{\partial z_1} x_2 +
+\[ u = \textcolor{third}{- z_1} - k_2z_2 \textcolor{structurecolor}{+ \frac{\partial \alpha_1}{\partial z_1} x_2 +
    \frac{\partial \alpha_1}{\partial v_1} \gamma_1 z_1 \varphi (z_1)} \textcolor{second}{+ v_1
    \frac{\partial \alpha_1}{\partial z_1} \varphi (z_1)}, k_2 > 0 \]
 于是可得
@@ -431,8 +431,8 @@ $z_2$的动力学现表示为
     &\quad +z_2\left(z_3+\alpha_2(x_1,x_2, \hat{\theta}) - \frac{\partial \alpha_1}{\partial z_1} x_2 - \frac{\partial \alpha_1}{\partial z_1}\varphi(z_1) \theta - \frac{\partial
   \alpha_1}{\partial \hat{\theta} } \dot{\hat{\theta}}\right)
 \end{align*}
-设计\[\alpha_2=-k_2z_2-z_1+\frac{\partial \alpha_1}{\partial z_1} x_2 +\frac{\partial \alpha_1}{\partial z_1}\varphi(z_1) \textcolor{red}{\hat\theta}+\frac{\partial
-  \alpha_1}{\partial \hat{\theta} } \gamma \textcolor{red}{\tau_2}\]
+设计\[\alpha_2=-k_2z_2-z_1+\frac{\partial \alpha_1}{\partial z_1} x_2 +\frac{\partial \alpha_1}{\partial z_1}\varphi(z_1) \textcolor{second}{\hat\theta}+\frac{\partial
+  \alpha_1}{\partial \hat{\theta} } \gamma \textcolor{second}{\tau_2}\]
 注意其中的$\theta$以其估计代之；最后一项新增一个调节函数$\tau_2$。这样上面的$\dot{V}_2$就写为
 \begin{align*}
     \dot{V}_2&=-k_1z_1^2-k_2z_2^2+z_2z_3+\frac{1}{\gamma}\tilde{\theta}(\dot{\hat{\theta}}-\gamma \tau_1(z_1))+z_2\frac{\partial \alpha_1}{\partial z_1}\varphi(z_1) (\hat\theta-\theta)-z_2\frac{\partial
@@ -466,7 +466,7 @@ $z_3$的动力学是
   &\quad +z_3\left(u-\frac{\partial\alpha_2}{\partial x_1}x_2-\frac{\partial\alpha_2}{\partial x_1}\varphi(x_1)\theta-\frac{\partial\alpha_2}{\partial x_2}x_3 - \frac{\partial\alpha_2}{\partial \hat{\theta}}\dot{\hat{\theta}}\right)
 \end{align*}
 设计
-\[u=-k_3z_3-z_2+\frac{\partial\alpha_2}{\partial x_1}x_2+\frac{\partial\alpha_2}{\partial x_2}x_3+\frac{\partial\alpha_2}{\partial x_1}\varphi(x_1)\textcolor{red}{\hat\theta}+u_1\]
+\[u=-k_3z_3-z_2+\frac{\partial\alpha_2}{\partial x_1}x_2+\frac{\partial\alpha_2}{\partial x_2}x_3+\frac{\partial\alpha_2}{\partial x_1}\varphi(x_1)\textcolor{second}{\hat\theta}+u_1\]
 注意新增的$u_1$。于是上面导数变为
 \begin{align*}
     \dot{V}_3&=\dot{V}_2+z_3\dot{z}_3\\

@@ -1,0 +1,66 @@
+\section{跟踪问题的自适应滑模控制}\label{6Eref}
+
+我们接着上一小节的滑模控制展开讨论。如果存在参数不确定性，那么 \eqref{EL:SMC:u} 就无法实现。利用 \ref{6Aref} 中提到的第三条性质——这条我们之前一直没有展开讨论的性质，可以得到：
+\[
+    M (q) \ddot{q}_r + C (q, \dot{q}) \dot{q}_r = Y (q, \dot{q}, \ddot{q}_r, \dot{q}_r) \Theta \text{。}
+\]
+这条性质告诉我们，可以用参数 $\Theta$ 来刻画系统动力学。从而系统的动力学可写作
+\begin{equation} \label{EL:ADA:model}
+    M(q) \dot{s} + C(q, \dot{q}) s = \tau - Y (q, \dot{q}, \ddot{q}_r, \dot{q}_r) \Theta
+\end{equation}
+如果我们能够知道 $\Theta$ 的确切值，也就能确定系统的动力学，从而实现如 \eqref{EL:SMC:u} 这样的控制律。而如果我们不知道 $\Theta$，那么我们可以对其进行估计，利用自适应控制实现跟踪控制。这里我们设计如下控制输入：
+\begin{equation} \label{EL:ADA:u}
+    u = - K s + Y (q, \dot{q}, \ddot{q}_r, \dot{q}_r) \hat{\Theta} \text{，}
+\end{equation}
+其中 $\hat{\Theta}$ 的动力学待设计（见下文的 \eqref{EL:ADA:Theta}）。将 \eqref{EL:ADA:u} 代入 $\eqref{EL:ADA:model}$，得到闭环系统如下：
+\begin{equation} \label{EL:ADA:sys}
+    M \dot{s} + C s = - K s + Y \tilde{\Theta} \text{，}
+\end{equation}
+其中 $\tilde{\Theta} \triangleq \hat{\Theta} - \Theta$。
+考虑候选 Lyapunov 函数
+\[
+    V = \frac{1}{2} s^\mathrm{T} M  s + \frac{1}{2} \tilde{\Theta}^\mathrm{T} \Gamma^{-1} \tilde{\Theta}, \quad \Gamma > 0 \text{。}
+\]
+其沿系统 \ref{EL:ADA:sys} 轨线的导数
+\begin{align*}
+    \dot{V} & = s^\mathrm{T} M \dot{s} + \frac{1}{2} s^\mathrm{T} \dot{M} s + \tilde{\Theta}^\mathrm{T} \Gamma^{-1} \dot{\tilde{\Theta}} \\
+    & = - s^\mathrm{T} K  s + s^\mathrm{T} Y \tilde{\Theta} + \tilde{\Theta}^\mathrm{T} \Gamma^{- 1} \dot{\hat{\Theta}}\\
+    & = - s^\mathrm{T} K  s + \tilde{\Theta}^\mathrm{T}   Y^\mathrm{T} s + \tilde{\Theta}^\mathrm{T} \Gamma^{- 1} \dot{\hat{\Theta}}\\
+    & = - s^\mathrm{T} K  s + \tilde{\Theta}^\mathrm{T} \Gamma^{- 1} \Gamma  Y^\mathrm{T} s + \tilde{\Theta}^T \Gamma^{- 1} \dot{\hat{\Theta}}\\
+    & = - s^\mathrm{T} K  s + \tilde{\Theta}^\mathrm{T} \Gamma^{- 1} (\Gamma  Y^\mathrm{T} s + \dot{\hat{\Theta}} ) \text{。}
+\end{align*}
+故设计自适应律为
+\begin{equation} \label{EL:ADA:Theta}
+    \dot{\hat{\Theta}} = - \Gamma Y^\mathrm{T} s \text{，}
+\end{equation}
+可得 $\dot{V} = - s^\mathrm{T} K s \leq 0$（NSD），这意味着 $V (t) \leq V (0)$ 且 $s, \tilde{\Theta} \in \mathbb{L}_{\infty}$。根据 Barbalat 引理，我们可以得到 $\lim\limits_{t \rightarrow \infty} s (t) = 0$。后续推导与上一小节 \ref{6Dref} 类似。
+
+% TODO：补充推导细节
+% Integrating both sides of \eqref{EL:ADA:Vd},
+% \[ V (t) - V (0) = - \int^t_0 s^T K  s  d \]
+% \[ \Rightarrow \]
+% \[ \int^t_0 s^T K  s  d = V (0) - V (t) \leq V (0) \in \mathbb{L}_{\infty} \]
+% \[ \Rightarrow \]
+% \[ s \in \mathbb{L}_2 \]
+% From $\dot{\tilde{q}} = - \lambda \tilde{q} + s$ and the ISS stability,
+% $\tilde{q}, \dot{\tilde{q}} \in \mathbb{L}_{\infty}$.
+
+% Since $q_d, \dot{q}_d$ and $\ddot{q}_d$ are all bounded, $q, \dot{q} \in
+% \mathbb{L}_{\infty}$.
+
+% We can get from the properties of EL equation that $\dot{s} \in L_{\infty}$.
+
+% So far, we have $s \in \mathbb{L}_2 \cap \mathbb{L}_{\infty}$ and $\dot{s} \in
+% \mathbb{L}_{\infty}$.
+
+% From Barbalat's Lemma, $\lim\limits_{t \rightarrow \infty} s (t) = 0$.
+
+% From the ISS stability, $\lim\limits_{t \rightarrow \infty} \tilde{q} (t) = \lim\limits_{t
+% \rightarrow \infty} \dot{\tilde{q}} (t) = 0$.
+
+\begin{problem}
+    与上一小节的问题类似，如果系统存在扰动，应该如何设计自适应控制律？
+\end{problem}
+\begin{hint}
+    设计鲁棒自适应控制律，如采用死区修正、$\sigma$-修正、$e$-修正、自适应 $\sigma$-修正、基于投影的自适应控制等。
+\end{hint}

@@ -1,0 +1,83 @@
+\section{跟踪问题的反步法滑模控制}\label{6Fref}
+
+考虑如下的机械臂动力学：
+\begin{align*}
+    M(q) \ddot{q} + C(q, \dot{q}) \dot{q} + g(q) + K (q - \theta) & = 0 \\
+    J \ddot{\theta} + K (\theta - q) & = u \text{，}
+\end{align*}
+其中向量 $q \in \mathbf{R}^p$ 和 $\theta \in \mathbf{R}^p$ 分别表示关节位置和电机转角，$K$ 是用以表示关节挠度的正定对角阵，$J$ 是用以表示执行器惯量的正定对角阵。
+
+定义 $x_1 = \theta, x_2 = \dot{\theta}$。上述系统动力学可描述为
+
+
+% Define $x_1 = \theta, x_2 = \dot{\theta}$. The dynamics can be described as
+% \begin{eqnarray}
+%   M \ddot{q} + C \dot{q} + K  q & = & K  x_1  \label{EL:BS:M2}\\
+%   \dot{x}_1 & = & x_2 \nonumber\\
+%   \dot{x}_2 & = & - J^{- 1} K (x_1 - q) + J^{- 1} u \nonumber
+% \end{eqnarray}
+% \begin{description}
+%   \item[Objective:] $q (t) \rightarrow q_d (t), \dot{q} (t) \rightarrow
+%   \dot{q}_d (t) .$ $q_d (t), \dot{q}_d (t), \ddot{q}_d (t)$ are bounded.
+% \end{description}
+
+% Define
+% \[ \tilde{q} (t) = q (t) - q_d (t), \dot{\tilde{q}} (t) = \dot{q} (t) -
+%    \dot{q}_d (t) \]
+% \[ \dot{q}_r = \dot{q}_d - \lambda \tilde{q}, s = \dot{q} - \dot{q}_r =
+%    \dot{\tilde{q}} + \lambda \tilde{q} \]
+% then \eqref{EL:BS:M2} can be written as
+% \[ M \dot{s} + C  s = K  x_1 - K  q - M \ddot{q}_r - C \dot{q}_r \]
+% {\textbf{Step 1: }}
+
+% Design a feedback control $x_1 = \Phi_1$ to stabilize the origin $s = 0$.
+% \[ \Phi_1 = K^{- 1} [M \ddot{q}_r + C \dot{q}_r - K_1 s] + q \]
+% where $K_1$ is positive definite.
+
+% We have
+% \[ M \dot{s} + C  s = - K_1 s \]
+% Take $V_1 = \frac{1}{2} s^T M  s$ $\Rightarrow$ $\dot{V}_1 = - s^T K_1 s$.
+
+% {\textbf{Step 2: }}
+
+% To backstep, define $y_1 = x_1 - \Phi_1$, we have
+% \begin{equation}
+%   M \dot{s} + C  s = - K_1 s + K  y_1 \label{EL:BS:M3}
+% \end{equation}
+% Note that the dynamic of $y_1$ is
+% \[ \dot{y}_1 = \dot{x}_1 - \dot{\Phi}_1 = x_2 - \dot{\Phi}_1 \]
+% Consider a combined Lyapunov function candidate
+% \[ V_2 = V_1 + \frac{1}{2} y^T_1 K  y_1 \]
+% Its derivative along \eqref{EL:BS:M3} is
+% \begin{eqnarray*}
+%   \dot{V}_2 & = & - s^T K_1 s + s^T K  y_1 + y^T_1 K  \dot{y}_1\\
+%   & = & - s^T K_1 s + y^T_1 K ( \dot{y}_1 + s)\\
+%   & = & - s^T K_1 s + y^T_1 K ( x_2 - \dot{\Phi}_1 + s)
+% \end{eqnarray*}
+% Design a feedback control $x_2 = \Phi_2$ to stabilize the origin $(s, y_1) =
+% (0, 0)$
+% \[ \Phi_2 = - y_1 + \dot{\Phi}_1 - s \]
+% Then we have
+% \[ \dot{V}_2 = - s^T K_1 s - y^T_1 K  y_1 \]
+% {\textbf{Step 3: }}
+
+% To backstep, define $y_2 = x_2 - \Phi_2$, we have
+% \[ \dot{y}_2 = \dot{x}_2 - \dot{\Phi}_2 = - J^{- 1} K (x_1 - q) + J^{- 1} u -
+%    \dot{\Phi}_2 \]
+% Consider a combined Lyapunov function candidate
+% \[ V_3 = V_2 + \frac{1}{2} y^T_2 K  y_2 \]
+% The derivative of $V_3$ is
+% \begin{eqnarray*}
+%   \dot{V}_2 & = & - s^T K_1 s - y^T_1 K  y_1 + y^T_1 K  y_2 + y^T_2 K 
+%   \dot{y}_2\\
+%   & = & - s^T K_1 s - y^T_1 K  y_1 + y^T_1 K  y_2 + y^T_2 K (- J^{- 1} K (x_1
+%   - q) + J^{- 1} u - \dot{\Phi}_2 + y_1)
+% \end{eqnarray*}
+% Design the control input as
+% \[ u = J (\dot{\Phi}_2 - y_1 - y_2) + K (x_1 - q) \]
+% Then we have
+% \[ \dot{V}_3 = - s^T K_1 s - y^T_1 K  y_1 - y^T_2 K  y_2,
+%    \ensuremath{\operatorname{ND}} \]
+% Then from Lyapunov Theorem, $\lim_{t \rightarrow \infty} s (t) = \lim_{t
+% \rightarrow \infty} y_1 (t) = \lim_{t \rightarrow \infty} y_2 (t) = 0$.
+
