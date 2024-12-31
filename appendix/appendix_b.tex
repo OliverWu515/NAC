@@ -1,1 +1,98 @@
 \chapter{多输入多输出系统的鲁棒自适应控制} \label{MIMO_robust}
+
+% 基于学长提供的笔记整理得到
+
+考虑系统
+\[
+    \dot{x} = A x + B \Lambda (u + \Theta \Phi(x)) + \xi(t) \text{，}
+\]
+其中状态 $x \in \mathbf{R}^n$，控制输入 $u \in \mathbf{R}^m$，矩阵 $B \in \mathbf{R}^{n \times m}$ 已知，矩阵 $A \in \mathbf{R}^{n \times n}$ 和 $\Lambda \in \mathbf{R}^{m \times m}$ 未知，$\Lambda$ 是对角正定阵，矩阵对 $(A, B \Lambda)$ 能控，$\Phi(x) \in \mathbf{R}^n$ 是连续且已知的函数，未知常值参数矩阵 $\Theta \in \mathbf{R}^{m \times n}$，$\xi(t) \in \mathbf{R}^n$ 是时变而一致有界的扰动（$\| \xi(t) \| \leq d_{\mathrm{max}}$）。% theta 转置
+可采用如下自适应控制律：
+\begin{align*}
+    u &= \hat{K}(t)x - \hat{\Theta}\Phi(x), \\
+    \dot{\hat{K}} &= - \Gamma_1 (B^\mathrm{T} P x x^\mathrm{T} + \Sigma_1\hat{K}), \\
+    \dot{\hat{\Theta}} &= \Gamma_2(B^\mathrm{T} P x \Phi(x)^\mathrm{T} - \Sigma_2 \hat{\Theta}) \text{，}
+\end{align*}
+其中，$\Gamma_1, \Gamma_2, \Sigma_1, \Sigma_2$ 均为对角正定阵。
+
+
+
+consider the ideal control law for ideal system:
+$$u=K^*x-\Theta\Phi(x)$$
+where$K^* \in \mathbb{R}^{m \times n },$ the system can be written as $$\dot{x}=(A  + B \Lambda K^*)x$$
+    stable condition  is $$A  + B \Lambda K^*\triangleq A^*x$$ Since $(A,B\Lambda)$ is contrllable, we choose $K^*$ that makes $A^*$ Hurwitz.
+
+    
+    we propose the control law$$u =\hat K(t)x-\hat \Theta(t)\Phi(x)$$ where $\hat{K},\hat{\Theta}$ are the estimation of $K^*,\Theta^*$.
+    $$\tilde{K}(t)\triangleq\hat{K}(t)-K^*,\tilde{\Theta}(t)\triangleq\hat{\Theta}(t)-\Theta^*$$
+     then system can be written as
+     \begin{align*}
+         \dot{x}=&Ax+B\Lambda (\hat K(t)x-\hat \Theta(t)\Phi(x)+\Theta\Phi(x))+\xi(t)\\
+         =&(A+B\Lambda\hat K(t))x-B\Lambda \tilde \Theta(t)\Phi(x)+\xi(t)\\
+         =&A^*x+B\Lambda\tilde{K}x-B\Lambda \tilde \Theta(t)\Phi(x)+\xi(t)
+     \end{align*}
+
+      consider  Lyapunov function with rates of adaptation: $\Gamma_1=\Gamma_1^{T}>0,\Gamma_2=\Gamma_2^{T}>0$
+    $$V= x^T P x + \text{tr} (  \tilde{K}^T\Lambda \Gamma_1^{-1}  \tilde{K}) + \text{tr} (\tilde{\Theta}^T \Lambda\Gamma_2^{-1} \tilde{\Theta}  )$$
+    where $P=P^{T}>0$ satisfies Lyapunov equation:
+    \[
+P A^* + {A^*}^T P = -Q
+\]for some $Q=Q^{T}>0$.
+consider time derivative of $V$:
+\begin{align*}
+    \dot{V}=&\dot{x}^T P x+ x^T P \dot{x}+ 2\text{tr} (  \tilde{K}^T\Lambda \Gamma_1^{-1}  \dot{\hat{K}})+2\text{tr} (  \tilde{\Theta}^T \Lambda\Gamma_2^{-1}  \dot{\hat{\Theta}})\\
+    =&(A^*x+B\Lambda\tilde{K}x-B\Lambda \tilde \Theta(t)\Phi(x)+\xi(t))^TPx\\
+    &+x^TP(A^*x+B\Lambda\tilde{K}x-B\Lambda \tilde \Theta(t)\Phi(x)+\xi(t))\\
+    &+2\text{tr} (  \tilde{K}^T \Lambda\Gamma_1^{-1}  \dot{\hat{K}})+2\text{tr} (  \tilde{\Theta}^T \Lambda\Gamma_2^{-1}  \dot{\hat{\Theta}})\\
+    =&x^T {A^*}^TPx+x^TPA^*x
+    +x^T\tilde{K}^T\Lambda^TB^TPx+x^TPB\Lambda\tilde{K}x\\
+    &-\Phi(x)^T\tilde\Theta(t)^T\Lambda^TB^TPx-x^TPB\Lambda \tilde \Theta(t)\Phi(x)+\xi(t)^TPx+x^TP\xi(t)\\
+    &+2\text{tr} (  \tilde{K}^T \Lambda\Gamma_1^{-1}  \dot{\hat{K}})+2\text{tr} (  \tilde{\Theta}^T \Lambda\Gamma_2^{-1}  \dot{\hat{\Theta}})\\
+\end{align*}
+we have
+$$x^T {A^*}^TPx+x^TPA^*x=-x^TQx$$
+$$x^T\tilde{K}^T\Lambda^TB^TPx=x^TPB\Lambda\tilde{K}x
+    =\text{tr}(\tilde{K}^T\Lambda B^TPxx^T)$$
+$$\Phi(x)^T\tilde\Theta(t)^T\Lambda^TB^TPx=x^TPB\Lambda \tilde \Theta(t)\Phi(x)
+    =\text{tr}(\tilde{\Theta}^T\Lambda B^TPx\Phi(x)^T)$$
+    so,
+\begin{align*}
+    \dot{V}=&-x^TQx+2\text{tr}(\tilde{K}^T\Lambda B^TPxx^T)-2\text{tr}(\tilde{\Theta}^T\Lambda B^TPx\Phi(x)^T)
+    \\
+    &+2\text{tr} (  \tilde{K}^T \Lambda\Gamma_1^{-1}  \dot{\hat{K}})+2\text{tr} (  \tilde{\Theta}^T \Lambda\Gamma_2^{-1}  \dot{\hat{\Theta}})+2x^TP\xi(t)\\
+    =&-x^TQx+2\text{tr}(\tilde{K}^T\Lambda( B^TPxx^T+\Gamma_1^{-1}  \dot{\hat{K}}))\\&+2\text{tr}(\tilde{\Theta}^T\Lambda(- B^TPx\Phi(x)^T+\Gamma_2^{-1}  \dot{\hat{\Theta}}))+2x^TP\xi(t)\\
+\end{align*}
+here we consider $\sigma-$modification control law:
+$$\dot{\hat{K}}=-\Gamma_1(B^TPxx^T+\Sigma_1\hat{K}),\dot{\hat{\Theta}}=\Gamma_2(B^TPx\Phi(x)^T-\Sigma_2\hat{\Theta})$$where $\Sigma_1,\Sigma_2=\text{diag}(\lambda_{++})$.
+
+we have 
+\begin{align*}
+    \dot{V}&=-x^TQx-2\text{tr}(\tilde{K}^T\Lambda\Sigma_1\hat{K})-2\text{tr}(\tilde{\Theta}^T\Lambda\Sigma_2\hat{\Theta})+2x^TP\xi(t)\\
+    &=-x^TQx-2\text{tr}(\tilde{K}^T\Lambda\Sigma_1\tilde{K})-2\text{tr}(\tilde{K}^T\Lambda\Sigma_1 K)-2\text{tr}(\tilde{\Theta}^T\Lambda\Sigma_2\tilde{\Theta})\\&-2\text{tr}(\tilde{\Theta}^T\Lambda\Sigma_2\Theta)+2x^TP\xi(t)\\
+\end{align*}
+By definition,
+$$\text{tr}(\tilde{K}^T\Lambda\Sigma_1\tilde{K})\geq\|\tilde{K}\|_F^2\Lambda_{min}{\Sigma_1}_{min}$$
+$$\text{tr}(\tilde{\Theta}^T\Lambda\Sigma_2\tilde{\Theta})\geq\|\tilde{\Theta}\|_F^2\Lambda_{min}{\Sigma_2}_{min}$$
+$\Lambda_{min}$ is the minimum diagonal element of $\Lambda$.\\
+use the Schwarz inequality,
+$$|\text{tr}(\tilde{K}^T\Lambda\Sigma_1 K)|\leq\|\tilde{K}\|_F\|K\|_F\|\Lambda\|_F\|\Sigma_1\|_F$$
+$$|\text{tr}(\tilde{\Theta}^T\Lambda\Sigma_2\Theta)|\leq\|\tilde{\Theta}\|_F\|\Theta\|_F\|\Lambda\|_F\|\Sigma_2\|_F$$
+So we can have,
+\begin{align*}
+    \dot{V}\leq&-\lambda_{min}(Q)\|x\|^2-2\|\tilde{K}\|_F^2\Lambda_{min}{\Sigma_1}_{min}+2\|\tilde{K}\|_F\|K\|_F\|\Lambda\|_F\|\Sigma_1\|_F\\
+    &-2\|\tilde{\Theta}\|_F^2\Lambda_{min}{\Sigma_2}_{min}+2\|\tilde{\Theta}\|_F\|\Theta\|_F\|\Lambda\|_F\|\Sigma_2\|_F+2\|x\|\lambda_{max}(P)\xi_{max}
+\end{align*}
+by root mean square-geometric mean inequality:
+        $2ab \leq a^2 + b^2$,
+$$2\|\tilde{K}\|_F\|K\|_F\|\Lambda\|_F\|\Sigma_1\|_F\leq(\|\tilde{K}\|_F^2+\|K\|_F^2)\|\Lambda\|_F\|\Sigma_1\|_F$$
+$$2\|\tilde{\Theta}\|_F\|\Theta\|_F\|\Lambda\|_F\|\Sigma_2\|_F\leq(\|\tilde{\Theta}\|_F^2+\|\Theta\|_F^2)\|\Lambda\|_F\|\Sigma_2\|_F$$
+
+So, 
+\begin{align*}
+    \dot{V}\leq&-\lambda_{min}(Q)\|x\|^2-2\|\tilde{K}\|_F^2\Lambda_{min}{\Sigma_1}_{min}+2(\|\tilde{K}\|_F^2+\|K\|_F^2)\|\Lambda\|_F\|\Sigma_1\|_F\\
+    &-2\|\tilde{\Theta}\|_F^2\Lambda_{min}{\Sigma_2}_{min}+2(\|\tilde{\Theta}\|_F^2+\|\Theta\|_F^2)\|\Lambda\|_F\|\Sigma_2\|_F+2\|x\|\lambda_{max}(P)\xi_{max}\\
+    =&-\lambda_{min}(Q)\|x\|^2+2\lambda_{max}(P)\xi_{max}\|x\|-2(\Lambda_{min}{\Sigma_1}_{min}+\|\Lambda\|_F\|\Sigma_1\|_F)\|\tilde{K}\|_F^2\\
+    &-2(\Lambda_{min}{\Sigma_2}_{min}+\|\Lambda\|_F\|\Sigma_2\|_F)\|\tilde{\Theta}\|_F^2+2\|K\|_F^2\|\Lambda\|_F\|\Sigma_1\|_F\\
+    &+2\|\Theta\|_F^2\|\Lambda\|_F\|\Sigma_2\|_F
+\end{align*}
+

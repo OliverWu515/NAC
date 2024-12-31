@@ -3,7 +3,7 @@
 ## 说明
 此仓库存有《非线性与自适应控制》笔记源码。其中内容均非原创，系结合讲义和参考书整理而成。
 
-感谢 WK.H 学长提供其笔记 _Notebook of NAC_ 的源码。
+感谢 胡维康 学长提供其笔记 _Notebook of NAC_ 的源码。感谢 李昱德 学长提供其对于MIMO系统鲁棒自适应控制方法的笔记。
 
 使用的模板基于 [ElegantBook](https://github.com/ElegantLaTeX/ElegantBook)。
 
@@ -36,13 +36,6 @@ xelatex -synctex=1 -interaction=nonstopmode --shell-escape -file-line-error NAC
 ```
 稍作等待，即可看到编译出的 NAC.pdf。
 
-若未安装 zhmakeindex，则只需执行
-
-```bash
-xelatex -synctex=1 -interaction=nonstopmode --shell-escape -file-line-error NAC
-xelatex -synctex=1 -interaction=nonstopmode --shell-escape -file-line-error NAC
-```
-
 要清理多余的中间文件，请在命令行中键入 
 
 ```bash
@@ -55,3 +48,10 @@ compile
 ```
 
 或双击 compile.bat 来完成。
+
+若未安装 zhmakeindex，则只需执行
+
+```bash
+xelatex -synctex=1 -interaction=nonstopmode --shell-escape -file-line-error NAC
+xelatex -synctex=1 -interaction=nonstopmode --shell-escape -file-line-error NAC
+```

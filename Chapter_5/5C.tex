@@ -25,7 +25,7 @@
   
   因此，一般的滑模控制过程可分为两阶段:
   
-  \textbf{1. 接近阶段：}设计$u$，迫使$x_1, x_2$这些状态在有限时间内到达所设计的滑模面。
+  \textbf{1. 接近阶段：}设计$u$，迫使$s$（与原系统状态有关）在有限时间内到达所设计的滑模面。
   
   \textbf{2. 滑模阶段：}$x_1, x_2$在滑模面上到达原点。
   
@@ -66,7 +66,7 @@
 设计滑模面\[s = \tilde{x}_2 + \lambda \tilde{x}_1 = 0,\lambda>0\]
 则$s$的动力学
 \begin{align*}
-\dot{s} &= \dot{\tilde{x}}_2 + \dot{\tilde{x}}_1 \lambda \\
+\dot{s} &= \dot{\tilde{x}}_2 + \lambda \dot{\tilde{x}}_1 \\
 &= \dot{x}_2 -\ddot{x}_d (t) + \lambda \dot{\tilde{x}}_1 \\
 &= f (x) + g (x) u - \ddot{x}_d (t) +\lambda \tilde{x}_2
 \end{align*}
@@ -114,8 +114,8 @@
    (x)}{g (x)} \right| \cdot | - \hat{f} (x) + \ddot{x}_d (t) - \lambda
    \tilde{x}_2 | \]
 注意到 $\frac{1}{\beta} \leq \frac{\hat{g} (x)}{g (x)} \leq \beta, \beta >1$，
-可知$ \frac1\beta -1\le \frac{\hat{g}(x)}{g (x)}-1 \le\beta-1 $，则\[\left|  \frac{\hat{g}
-   (x)}{g (x)}-1 \right|=\max\{\beta-1,1-\frac{1}{\beta}\}=\max\{\beta-1,\frac{\beta-1}{\beta}\}=\beta-1\]
+可知$ \frac1\beta -1\le \frac{\hat{g}(x)}{g (x)}-1 \le\beta-1 $。注意$\frac1\beta -1<0$，则\[\left|  \frac{\hat{g}
+   (x)}{g (x)}-1 \right|=\max\left\{\beta-1,1-\frac{1}{\beta}\right\}=\max\left\{\beta-1,\frac{\beta-1}{\beta}\right\}=\beta-1\]
 则取 $k = \beta [F (x) + \eta] + (\beta - 1) \cdot | - \hat{f} (x) +\ddot{x}_d (t) - \lambda \tilde{x}_2 |$，就有 $\dot{V} \leq - \eta | s|$。后续分析同前两小节。
 \subsection{有外部干扰的系统设计}\label{5C_disturbance}
 \noindent\textbf{一、干扰上界已知的情形}
@@ -153,7 +153,7 @@
   
   考虑如下候选Lyapunov函数
   \[ V = \frac{1}{2} s^2 + \frac{1}{2 \gamma} \tilde{k}^2, \gamma > 0, \]
-  求其导数得（注意第三行凑出误差$\tilde{k}$的形式）
+  求其导数得（第二行来自上一种情况，第三行凑出误差$\tilde{k}$的形式）
   \begin{align*}
     \dot{V} & = s  \dot{s} + \frac{1}{\gamma} \tilde{k} \dot{\hat{k}}\\
     & \leq - (\hat{k} - d_{\max}) | s | + \frac{1}{\gamma} \tilde{k}

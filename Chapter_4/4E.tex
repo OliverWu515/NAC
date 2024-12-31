@@ -15,12 +15,14 @@
 其中$\tilde{\theta} \triangleq \hat{\theta}-\theta$。
 
 考虑如下候选Lyapunov函数
-\[V=\frac12 x^2+\frac{1}{2\gamma}\tilde{\theta}^2,\gamma>0\]
+\begin{equation}
+    V=\frac12 x^2+\frac{1}{2\gamma}\tilde{\theta}^2,\gamma>0\label{robust_lya}
+\end{equation}
 求其导数得
-\begin{align*}
+\begin{align}
     \dot{V}&=x\cdot\dot{x}+\frac{1}{\gamma}\tilde{\theta}\dot{\hat{\theta}}
-    =-kx^2+\frac{1}{\gamma}\tilde{\theta}(\dot{\hat{\theta}}-\gamma x\varphi(x))
-\end{align*}
+    =-kx^2+\frac{1}{\gamma}\tilde{\theta}(\dot{\hat{\theta}}-\gamma x\varphi(x))\label{robust_lya_dot}
+\end{align}
 则设计
 \begin{equation}
     \dot{\hat{\theta}}=\gamma x\varphi(x)\label{adaptive_nodisturbance}
@@ -32,7 +34,9 @@
 如果仍采用上述自适应律和候选Lyapunov函数，得到$V$的导数是
 \[\dot{V}=-kx^2+x d(t)\le -kx^2+d_{\max}|x|=-k|x|(|x|-\frac{d_{\max}}{k})\]
 则在下述集合
-\[E = \left\{(x,\tilde{\theta}): \| x \| \leq \frac{d_{\max}}{k} = e_{0}\right\}\]
+\begin{equation}
+    E = \left\{(x,\tilde{\theta}): \| x \| \leq \frac{d_{\max}}{k} = e_{0}\right\}\label{dead-zone}
+\end{equation}
 之外，才有$\dot{V}<0$，而在该集合之内，$\dot{V}$可能为正，因此，参数估计误差$|\tilde{\theta}(t)|$可能自由增长而最终变为无界。这种现象被称为{\bf 参数漂移（parameter drift）}，是由干扰$d(t)$而产生的，这表明我们所提出的自适应律不具有抗干扰能力，即不是鲁棒的。
 
 \begin{example}[扰动衰减但参数估计发散]
@@ -61,24 +65,21 @@ $d(t) = \dot{x} + x\hat{\theta} = 5(1 + t)^{- \frac{1}{5}} - \frac{2}{5}(1 + t)^
 0, & \text{若} \| x \| < e_{0} + \delta \\
 \end{matrix}\right.\]
 
-回顾\(V = \frac{1}{2}x^{2} + \frac{1}{2\gamma}{\tilde{\theta}}^{2}\)
+定义\(\Omega_{1} = \{ t: \| x(t) \| < e_{0} + \delta\},\Omega_{2} = \{ t: \| x(t) \| \geq e_{0} + \delta\}\)。考虑\eqref{robust_lya} 和 \eqref{robust_lya_dot}。
 
-定义\(\Omega_{1} = \{ t: \| x(t) \| < e_{0} + \delta\},\Omega_{2} = \{ t: \| x(t) \| \geq e_{0} + \delta\}\)，当\(t \in \Omega_{2},\dot{V} \leq - k(e_{0} + \delta)\delta = - c < 0\)
-
-（图示）
-
-若\(t_{0} \in \Omega_{1}\)，并且轨迹在\(t_{1}\)时刻到达边界\(e_{0} + \delta\)，且在\((t_{1},t_{2}) \in \Omega_{2}\)处于\(e_{0} + \delta\)之右侧（越过边界）
+首先，当\(t \in \Omega_{2}\)，有\(\dot{V} \leq - k(e_{0} + \delta)\delta \triangleq - c < 0\)；
+然后考虑，若轨迹起始时刻\(t_{0} \in \Omega_{1}\)，并且轨迹在\(t_{1}\)时刻到达边界\(e_{0} + \delta\)，且在\((t_{1},t_{2}) \in \Omega_{2}\)处于\(e_{0} + \delta\)之右侧（越过边界），则有（注意，$(t_0,t_1)$这段时间内$\tilde{\theta}$不变；$(t_1,t_2)$这段时间内$V$衰减）
 
 \[V(t_{1}) = \frac{1}{2}(e_{0} + \delta)^{2} + \frac{1}{2\gamma}{\tilde{\theta}}^{2}(t_{0})\]
 
 \[V(t_{2}) = \frac{1}{2}(e_{0} + \delta)^{2} + \frac{1}{2\gamma}{\tilde{\theta}}^{2}(t_{2}) < V(t_{1})\]
 
-我们可推断出，\(\| \tilde{\theta}(t) \|\)在每个到达边界的时刻\(t_{1},t_{2},\ldots\)总会单调递减，因此\(\| \tilde{\theta}(t) \|\)是有界的，并且随时间增长一定有\(\| x \| \leq e_{0} + \delta\)。
+我们可推断出，\(\| \tilde{\theta}(t) \|\)在每个到达边界的时刻\(t_{1},t_{2},\ldots\)总是单调递减的，因此\(\| \tilde{\theta}(t) \|\)是有界的，并且随时间增长一定有\(\| x \| \leq e_{0} + \delta\)。
 
-从上面的内容中，不难看出，死区修正简单且有效，保证了参数的收敛。但是，死区修正还存在两个问题。一是，需要假设扰动的上界是先验已知的。二是，在无扰动的情形下并不能得到跟踪误差的渐近稳定性，换言之，鲁棒性的实现是以破坏自适应律的一些理想特性为代价的。关于后者，具体来说就是，我们只能确保跟踪误差进入死区（$\| x \| \leq e_0 + \delta$），即使在无扰动的情形下也是如此，而不能像在无扰动且无死区（采用 \eqref{adaptive_nodisturbance}）的情形下那样得到渐近稳定性。
+从上面的内容中，不难看出，死区修正简单且有效，保证了参数的收敛。但是，死区修正还存在两个问题。一是，需要假设扰动的上界是先验已知的。二是，在无扰动的情形下并不能得到跟踪误差的渐近稳定性；换言之，鲁棒性的实现是以破坏自适应律的一些理想特性为代价的。关于后者，具体来说就是，我们只能确保跟踪误差进入死区（$\| x \| \leq e_0 + \delta$），即使在无扰动的情形下也是如此，而不能像在无扰动且无死区（不存在形如 \eqref{dead-zone} 的集合，并能采用控制律 \eqref{adaptive_nodisturbance}）的情形下那样得到渐近稳定性。
 
 \subsection{\texorpdfstring{$\sigma$-修正（$\sigma$-Modification）}{σ-修正（σ-Modification）}}
-
+由Ioannou和Kokotovic提出的$\sigma$-修正无需扰动上界的先验信息。其形式如下
 \begin{equation} \label{sigma_modification}
     \dot{\hat{\theta}} = \gamma(x\varphi(x) - \sigma\hat{\theta})
 \end{equation}
@@ -86,39 +87,50 @@ $d(t) = \dot{x} + x\hat{\theta} = 5(1 + t)^{- \frac{1}{5}} - \frac{2}{5}(1 + t)^
 本质上，这种修正是向理想的自适应律上增加了一个阻尼项。动机就是阻碍参数漂移带来的影响。
 
 在这种修正下，\(V(t)\)随时间，沿系统的导数是
-
 \[\begin{aligned}
 \dot{V} & = - kx^{2} - x\varphi(x)\tilde{\theta} + xd(t) + \frac{1}{\gamma}\tilde{\theta}\dot{\hat{\theta}} \\
  & = - kx^{2} - x\varphi(x)\tilde{\theta} + xd(t) + \tilde{\theta}x\varphi(x) - \sigma\tilde{\theta}\hat{\theta} \\
  & = - kx^{2} + xd(t) - \sigma\tilde{\theta}\hat{\theta} 
 \end{aligned}\]
 
-注意到\(xd(t) \leq d_{\max} \| x \| \leq \frac{k}{2}x^{2} + \frac{1}{2k}d_{\max}^{2}\)（利用不等式\(ab \leq \frac{ka^{2}}{2} + \frac{b^{2}}{2k}\)）
+下面我们证明，上述$\dot{V}$具有如下形式（可联想 \ref{3Fref} 节）
+\[\dot{V} \le - \beta V + c\]
 
-目标形式是\(\dot{V} = - \beta V + C\)
+注意到\begin{equation}
+    xd(t) \leq d_{\max} \| x \| \leq \frac{k}{2}\| x \|^{2} + \frac{1}{2k}d_{\max}^{2}\label{temp_neq1}
+\end{equation}
+并且\begin{equation}
+    - \sigma\tilde{\theta}\hat{\theta} = - \sigma\tilde{\theta}(\tilde{\theta} + \theta)
+    \leq - \sigma\tilde{\theta}{\tilde{\theta}}^{2} + \sigma\left(\frac{{\tilde{\theta}}^{2}}{2} + \frac{\theta^{2}}{2}\right)
+    = - \sigma\frac{{\tilde{\theta}}^{2}}{2} + \sigma\frac{\theta^{2}}{2}\label{temp_neq2}
+\end{equation}
+上面两个式子都运用了基本不等式\[ab \leq \frac{ka^{2}}{2} + \frac{b^{2}}{2k}\]
 
-并且\(- \sigma\tilde{\theta}\hat{\theta} = - \sigma\tilde{\theta}(\tilde{\theta} + \theta) \leq - \sigma\tilde{\theta}{\tilde{\theta}}^{2} + \sigma(\frac{{\tilde{\theta}}^{2}}{2} + \frac{\theta^{2}}{2}) = - \sigma\frac{{\tilde{\theta}}^{2}}{2} + \sigma\frac{\theta^{2}}{2}\)
-
-将上面两个式子代入得到
-
+将 \eqref{temp_neq1} 和 \eqref{temp_neq2} 代入$\dot{V}$的表达式得到
 \begin{align*}
 \dot{V} & \leq - kx^{2} + \frac{k}{2}x^{2} + \frac{d_{\max}^{2}}{2k} - \sigma\frac{{\tilde{\theta}}^{2}}{2} + \sigma\frac{\theta^{2}}{2} \\
  & = - \frac{k}{2}x^{2} + \frac{d_{\max}^{2}}{2k} - \sigma\frac{{\tilde{\theta}}^{2}}{2} + \sigma\frac{\theta^{2}}{2} \\
  & = - \frac{k}{2}x^{2} - \sigma\gamma\frac{{\tilde{\theta}}^{2}}{2\gamma} + \frac{d_{\max}^{2}}{2k} + \sigma\frac{\theta^{2}}{2} \\
  & \leq - \min\{ k,\sigma\gamma\} V + \frac{d_{\max}^{2}}{2k} + \sigma\frac{\theta^{2}}{2}
 \end{align*}
+令\[\beta = \min\{ k,\sigma\gamma\}, c= \frac{d_{\max}^{2}}{2k} + \sigma\frac{\theta^{2}}{2}\]
+上式就化成了我们期望的$\dot{V} + \beta V \leq c$。
 
-\[\dot{V} + \beta V \leq c\]
-
-欲使\(\beta\)较大，那么可取\(k,\sigma\gamma\)都较大；欲使\(c\)较小，使得\(k\)较大且\(\sigma\)较小即可。
+又注意到\[\frac{\diff}{\diff t}(\mathrm{e}^{\beta t} V)=\mathrm{e}^{\beta t} \beta V+\mathrm{e}^{\beta t} \dot{V}=\mathrm{e}^{\beta t}(\dot{V}+\beta V)\]
+结合上述形式可知
+\[\frac{\diff}{\diff t}(\mathrm{e}^{\beta t} V)\le c(\mathrm{e}^{\beta t})\]
+两边积分即得
+\[(\mathrm{e}^{\beta \tau} V(\tau))|^t_0\le c\int_0^t \mathrm{e}^{\beta\tau}\diff\tau\]
+故
+\[V(t)\le \mathrm{e}^{-\beta t}V(0)+\frac{c}{\beta}(1-\mathrm{e}^{-\beta t})\]
+可见为了使$V$收敛迅速且接近于$0$，我们欲使\(\beta\)较大且\(c\)较小。对于前者，结合$\beta$的表达式，可取\(k,\sigma\gamma\)都较大；对于后者，结合$c$的表达式，可取\(k\)较大且\(\sigma\)较小。
 
 综合考虑，应该使\(k\)较大，\(\sigma\)较小，\(\gamma\)大得多。
-
 
 \subsection{\texorpdfstring{$e$-修正（$e$-Modification）}{e-修正（e-Modification）}}
 
 应用 $\sigma$-修正会带来性能上的一些缺陷。当跟踪误差变得比较小时，自适应律的动力学 \eqref{sigma_modification} 近似为 $\dot{\hat{\theta}} = -\gamma \sigma\hat{\theta})$。因此，对于较小的跟踪误差，自适应参数 $\hat{\theta}$ 有返回到原点的趋势，也就是说，参数会将原来用以减小跟踪误差的增益值“清除”掉。
-
+\newpage
 为了克服这些不符合期望的影响，Narendra 和 Annaswamy 提出了 $e$-修正。其主要思路是，将 \eqref{sigma_modification} 中恒定的阻尼增益 $\sigma$ 修正为与跟踪误差成比例。具体来说，对于系统 \eqref{Sys:with_disturbance}，可将 \eqref{sigma_modification} 改为
 \[
     \dot{\hat{\theta}} = \gamma \left( x\varphi(x) - \sigma \| x \| \hat{\theta} \right) \text{。}
@@ -153,13 +165,14 @@ $d(t) = \dot{x} + x\hat{\theta} = 5(1 + t)^{- \frac{1}{5}} - \frac{2}{5}(1 + t)^
 % 讲义上是 \Phi(t)
 其中 $x \in \mathbf{R}^n$，控制输入 $u \in \mathbf{R}^m$，$A \in \mathbf{R}^{n \times n}$ 和 $B \in \mathbf{R}^{n \times m}$ 已知，未知的常值矩阵 $\Lambda \in \mathbf{R}^{m \times m}$ 是对角正定阵，$\Phi(x) \in \mathbf{R}^n$ 是连续且已知的函数，未知常值参数 $\Theta \in \mathbf{R}^{n \times m}$，$d(t) \in \mathbf{R}^n$ 是有界且时变的扰动（$\| d(t) \| \leq d_{\mathrm{max}}$）。
 
-下表来自前言中参考文献5的表 11.1（略有修改）。
+下表 \ref{table:MIMO_robust_MRAC} 来自前言中参考文献5的表 11.1（略有修改），具体推导见附录 \ref{MIMO_robust}。
 
 \begin{table}[htbp]
   \centering
   \setcellgapes{4pt}
   \makegapedcells
   \caption{MIMO 系统的鲁棒 MRAC 设计}
+  \label{table:MIMO_robust_MRAC}
   \begin{tabular}{p{4.0cm}p{10.0cm}}
   \hline
    开环被控对象 & $\dot{x} =  A x + B \Lambda \left( u + \Theta^\mathrm{T} \Phi(x) \right) + d(t)$\\
@@ -167,7 +180,7 @@ $d(t) = \dot{x} + x\hat{\theta} = 5(1 + t)^{- \frac{1}{5}} - \frac{2}{5}(1 + t)^
     A_{\ensuremath{\operatorname{ref}}} x +
     B_{\ensuremath{\operatorname{ref}}} u_c$，其中$A_{\ensuremath{\operatorname{ref}}}$ 是 Hurwitz 的。\\
     跟踪误差 & $e = x - x_{\ensuremath{\operatorname{ref}}}$\\
-    Lyapunov 公式 & $A_{\ensuremath{\operatorname{ref}}} + A_{\ensuremath{\operatorname{ref}}}^{\mathrm{T}} P = -Q < 0$\\
+    Lyapunov 公式 & $P A_{\ensuremath{\operatorname{ref}}} + A_{\ensuremath{\operatorname{ref}}}^{\mathrm{T}} P = -Q < 0$\\
     控制输入 & $u = -{\hat{\Theta}}^{\mathrm{T}} \Phi(x)$\\
     死区修正 & $\dot{\hat{\Theta}} = \Gamma_\Theta \Phi(x) \mu\left( \| e \| \right) e^{\mathrm{T}} P B$\\
     $\sigma$-修正 & $\dot{\hat{\Theta}} = \Gamma_\Theta \Phi(x) \left( e^{\mathrm{T}} P B -\sigma \hat{\Theta} \right)$\\
@@ -175,8 +188,6 @@ $d(t) = \dot{x} + x\hat{\theta} = 5(1 + t)^{- \frac{1}{5}} - \frac{2}{5}(1 + t)^
     \hline
   \end{tabular}
 \end{table}
-
-具体推导见附录 \ref{MIMO_robust}。
 
 至此，我们只讨论了常值参数自适应控制。下面我们简单讨论一下时变参数自适应控制。为简化讨论，我们仍以标量系统为例。考虑如下系统：
 \begin{equation}
