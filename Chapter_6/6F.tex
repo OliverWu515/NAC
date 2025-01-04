@@ -1,4 +1,4 @@
-\section{跟踪问题的反步法滑模控制}\label{6Fref}
+\subsection{反步法滑模控制}\label{6Fref}
 
 考虑如下的机械臂动力学：
 \begin{align*}
@@ -8,76 +8,98 @@
 其中向量 $q \in \mathbf{R}^p$ 和 $\theta \in \mathbf{R}^p$ 分别表示关节位置和电机转角，$K$ 是用以表示关节挠度的正定对角阵，$J$ 是用以表示执行器惯量的正定对角阵。
 
 定义 $x_1 = \theta, x_2 = \dot{\theta}$。上述系统动力学可描述为
+\begin{align}
+    M \ddot{q} + C \dot{q} + g(q) + K q & = K x_1 \label{EL:BS:M2} \\
+    \dot{x}_1 & = x_2 \nonumber \\
+    \dot{x}_2 & = - J^{- 1} K (x_1 - q) + J^{- 1} u \nonumber
+\end{align}
 
+我们的控制目标是：
+\[
+    q (t) \rightarrow q_d (t), \dot{q} (t) \rightarrow \dot{q}_d (t) \text{，}
+\]
+其中 $q_d(t), \dot{q}_d(t), \ddot{q}_d(t)$ 有界。
 
-% Define $x_1 = \theta, x_2 = \dot{\theta}$. The dynamics can be described as
-% \begin{eqnarray}
-%   M \ddot{q} + C \dot{q} + K  q & = & K  x_1  \label{EL:BS:M2}\\
-%   \dot{x}_1 & = & x_2 \nonumber\\
-%   \dot{x}_2 & = & - J^{- 1} K (x_1 - q) + J^{- 1} u \nonumber
-% \end{eqnarray}
-% \begin{description}
-%   \item[Objective:] $q (t) \rightarrow q_d (t), \dot{q} (t) \rightarrow
-%   \dot{q}_d (t) .$ $q_d (t), \dot{q}_d (t), \ddot{q}_d (t)$ are bounded.
-% \end{description}
+定义误差和辅助变量：
+\begin{gather*}
+    \tilde{q} (t) = q (t) - q_d (t), \quad \dot{\tilde{q}} (t) = \dot{q} (t) - \dot{q}_d (t) \\
+    \dot{q}_r = \dot{q}_d - \lambda \tilde{q}, \quad s = \dot{\tilde{q}} + \lambda \tilde{q} = \dot{q} - \dot{q}_r
+\end{gather*}
+从而，\eqref{EL:BS:M2} 可改写为：
+\[
+    M \dot{s} + C  s = K  x_1 - K  q - M \ddot{q}_r - C \dot{q}_r - g(q) 
+\]
 
-% Define
-% \[ \tilde{q} (t) = q (t) - q_d (t), \dot{\tilde{q}} (t) = \dot{q} (t) -
-%    \dot{q}_d (t) \]
-% \[ \dot{q}_r = \dot{q}_d - \lambda \tilde{q}, s = \dot{q} - \dot{q}_r =
-%    \dot{\tilde{q}} + \lambda \tilde{q} \]
-% then \eqref{EL:BS:M2} can be written as
-% \[ M \dot{s} + C  s = K  x_1 - K  q - M \ddot{q}_r - C \dot{q}_r \]
-% {\textbf{Step 1: }}
+\noindent {\bf 第一步：}
 
-% Design a feedback control $x_1 = \Phi_1$ to stabilize the origin $s = 0$.
-% \[ \Phi_1 = K^{- 1} [M \ddot{q}_r + C \dot{q}_r - K_1 s] + q \]
-% where $K_1$ is positive definite.
+为  $x_1$ 设计反馈控制输入以使原点 $s=0$ 稳定。取
+\[
+    \phi_1 = K^{- 1} (M \ddot{q}_r + C \dot{q}_r + g(q) - K_1 s) + q, K_1  > 0
+\]
+定义 $y_1 = x_1 - \phi_1$，于是我们有
+\begin{equation}
+    M \dot{s} + C s = - K_1 s + K y_1 \label{EL:BS:M3}
+\end{equation}
+考虑如下候选 Lyapunov 函数：
+\[
+    V_1 = \dfrac{1}{2} s^\mathrm{T} M s
+\]
+其沿系统轨线的导数为
+\[
+    \dot{V}_1 = - s^\mathrm{T} K_1 s + s^\mathrm{T} K y_1
+\]
 
-% We have
-% \[ M \dot{s} + C  s = - K_1 s \]
-% Take $V_1 = \frac{1}{2} s^T M  s$ $\Rightarrow$ $\dot{V}_1 = - s^T K_1 s$.
+\noindent {\bf 第二步：}
 
-% {\textbf{Step 2: }}
+$y_1$ 的动力学为：
+\[
+    \dot{y}_ 1 = \dot{x}_1 - \dot{\phi}_1 = x_2 - \dot{\phi}_1
+\]
+考虑如下候选 Lyapunov 函数：
+\[
+    V_2 = V_1 + \dfrac{1}{2} y_1^\mathrm{T} K y_1
+\]
+其沿系统轨线的导数为
+\begin{align*}
+     \dot{V}_2 &= \dot{V}_1 + y^\mathrm{T}_1  K  \dot{y}_1 \\
+     &= - s^\mathrm{T} K_1 s + s^\mathrm{T} K  y_1 + y^\mathrm{T}_1 K  \dot{y}_1 \\
+     &= - s^\mathrm{T} K_1 s + y^\mathrm{T}_1 K ( \dot{y}_1 + s) \\
+     &= - s^\mathrm{T} K_1 s + y^\mathrm{T}_1 K ( x_2 - \dot{\phi}_1 + s)
+\end{align*}
+为  $x_2$ 设计反馈控制输入以使 $y_1=0$ 稳定。取
+\[
+    \phi_2 = \dot{\phi}_1 - s - y_1
+\]
+定义 $y_2 = x_2 - \phi_2$，于是我们有
+\begin{align*}
+    \dot{V}_2 &= - s^\mathrm{T} K_1 s + y_1^\mathrm{T} K (y_2 - y_1) \\
+    &= - s^\mathrm{T} K_1 s - y_1^\mathrm{T} K y_1 + y_1^\mathrm{T} K y_2
+\end{align*}
 
-% To backstep, define $y_1 = x_1 - \Phi_1$, we have
-% \begin{equation}
-%   M \dot{s} + C  s = - K_1 s + K  y_1 \label{EL:BS:M3}
-% \end{equation}
-% Note that the dynamic of $y_1$ is
-% \[ \dot{y}_1 = \dot{x}_1 - \dot{\Phi}_1 = x_2 - \dot{\Phi}_1 \]
-% Consider a combined Lyapunov function candidate
-% \[ V_2 = V_1 + \frac{1}{2} y^T_1 K  y_1 \]
-% Its derivative along \eqref{EL:BS:M3} is
-% \begin{eqnarray*}
-%   \dot{V}_2 & = & - s^T K_1 s + s^T K  y_1 + y^T_1 K  \dot{y}_1\\
-%   & = & - s^T K_1 s + y^T_1 K ( \dot{y}_1 + s)\\
-%   & = & - s^T K_1 s + y^T_1 K ( x_2 - \dot{\Phi}_1 + s)
-% \end{eqnarray*}
-% Design a feedback control $x_2 = \Phi_2$ to stabilize the origin $(s, y_1) =
-% (0, 0)$
-% \[ \Phi_2 = - y_1 + \dot{\Phi}_1 - s \]
-% Then we have
-% \[ \dot{V}_2 = - s^T K_1 s - y^T_1 K  y_1 \]
-% {\textbf{Step 3: }}
+\noindent {\bf 第三步：}
 
-% To backstep, define $y_2 = x_2 - \Phi_2$, we have
-% \[ \dot{y}_2 = \dot{x}_2 - \dot{\Phi}_2 = - J^{- 1} K (x_1 - q) + J^{- 1} u -
-%    \dot{\Phi}_2 \]
-% Consider a combined Lyapunov function candidate
-% \[ V_3 = V_2 + \frac{1}{2} y^T_2 K  y_2 \]
-% The derivative of $V_3$ is
-% \begin{eqnarray*}
-%   \dot{V}_2 & = & - s^T K_1 s - y^T_1 K  y_1 + y^T_1 K  y_2 + y^T_2 K 
-%   \dot{y}_2\\
-%   & = & - s^T K_1 s - y^T_1 K  y_1 + y^T_1 K  y_2 + y^T_2 K (- J^{- 1} K (x_1
-%   - q) + J^{- 1} u - \dot{\Phi}_2 + y_1)
-% \end{eqnarray*}
-% Design the control input as
-% \[ u = J (\dot{\Phi}_2 - y_1 - y_2) + K (x_1 - q) \]
-% Then we have
-% \[ \dot{V}_3 = - s^T K_1 s - y^T_1 K  y_1 - y^T_2 K  y_2,
-%    \ensuremath{\operatorname{ND}} \]
-% Then from Lyapunov Theorem, $\lim_{t \rightarrow \infty} s (t) = \lim_{t
-% \rightarrow \infty} y_1 (t) = \lim_{t \rightarrow \infty} y_2 (t) = 0$.
-
+$y_2$ 的动力学为：
+\begin{align*}
+     \dot{y}_2 &= \dot{x}_2 - \dot{\phi}_2 \\
+     &= - J^{- 1} K (x_1 - q) + J^{- 1} u - \dot{\phi}_2
+\end{align*}
+考虑如下候选 Lyapunov 函数：
+\[
+    V_3 = V_2 + \dfrac{1}{2} y_2^\mathrm{T} K y_2
+\]
+其沿系统轨线的导数为
+\begin{align*}
+    \dot{V}_3 =& \dot{V}_2 + y_2^\mathrm{T} K \dot{y}_2 \\
+    =&  - s^\mathrm{T} K_1 s - y_1^\mathrm{T} K y_1 + y_2^\mathrm{T} K y_1 \\
+    &+ y_2^\mathrm{T} K (- J^{- 1} K (x_1 - q) + J^{- 1} u - \dot{\phi}_2)
+\end{align*}
+设计控制输入
+\[
+    u = K (x_1 - q) + J (\dot{\phi}_2 - y_1 - y_2)
+\]
+可得
+\[
+    \dot{V}_3 = - s^\mathrm{T} K_1 s - y_1^\mathrm{T} K y_1- y^\mathrm{T}_2 K  y_2 \leq 0 \quad \text{(ND)}
+\]
+根据 Lyapunov 稳定性定理，$\lim\limits_{t \rightarrow \infty} s (t) = \lim\limits_{t
+\rightarrow \infty} y_1 (t) = \lim\limits_{t \rightarrow \infty} y_2 (t) = 0$。系统稳定。

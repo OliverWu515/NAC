@@ -473,6 +473,7 @@
   \newcommand{\transauthorname}{\citshape 译者}
   \newcommand\oriauthor[1]{\gdef\@oriauthor{#1}}
   \newcommand\transauthor[1]{\gdef\@transauthor{#1}}
+  \newcommand\mainversion[1]{\gdef\@mainversion{#1}}
   \newcommand{\institutename}{\citshape 组织：}
   \newcommand{\datename}{\citshape 时间：}
   \newcommand{\versionname}{\citshape 版本：}
@@ -1552,7 +1553,9 @@
   %   \end{tabular*}
   % \end{center}
   \vspace{2cm}
-  {\Large\@date}\\
+  {\Large 主版本：\@mainversion}\\
+  \vspace{1cm}
+  {\Large 编译日期：\@date}\\
   % \vspace{1cm}
   \vspace{1cm}
 	\makeatother

@@ -4,9 +4,9 @@
 \subtitle{Nonlinear and Adaptive Control}
 
 \oriauthor{Oliver Wu, Hye}
-\transauthor{ }
-% \institute{Harbin Institute of Technology(Shenzhen)}
-\renewcommand{\today}{\number\year 年 \number\month 月 \number\day 日}
+\mainversion{V1.0（2025-01-04）}
+\usepackage[iso, english]{isodate}
+% \renewcommand{\today}{\number\year 年 \number\month 月 \number\day 日}
 \date{\today}
 % \version{0.8.2}
 % \bioinfo{自定义}{信息}
@@ -67,10 +67,12 @@
 % \fontsize{10.5}{\baselineskip}\selectfont
 \maketitle
 \frontmatter
+\makeatletter
 \AddToHook{shipout/foreground}{%
-    \put(.3\paperwidth,-\paperheight){\raisebox{.2\baselineskip}%
-    {\color{gray}\small\cnormal 《非线性与自适应控制》笔记（\today）}}%
+    \put(.29\paperwidth,-\paperheight){\raisebox{.2\baselineskip}%
+    {\color{gray}\small\cnormal 《非线性与自适应控制》笔记\quad \@mainversion}}%
 }
+\makeatother
 % \input{preface/preface_trans.tex}
 % \input{preface/about.tex}
 

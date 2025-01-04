@@ -29,7 +29,7 @@
 \begin{equation} \label{robotic_state_space}
     \begin{cases}
         \dot{x}_1 = x_2\\
-        \dot{x}_2 = M^{- 1} (x_1 + q_d) [u - C (x_1 + q_d, x_2) x_2 - g (x_1 + q_d)] \text{。}
+        \dot{x}_2 = M^{- 1} (x_1 + q_d) [\tau - C (x_1 + q_d, x_2) x_2 - g (x_1 + q_d)] \text{。}
     \end{cases}
 \end{equation}
 由于 $q_d$ 为常值，等号右侧的表达式中不显含时间 $t$，从而该系统是\textbf{自治系统}。
@@ -75,7 +75,7 @@
 \[
     \dot{V}_1 = - \dot{\tilde{q}}^\mathrm{T} K_p \tilde{q} - \dot{\tilde{q}}^\mathrm{T} K_d \dot{\tilde{q}} \text{。}
 \]
-其中，等号右侧第一项 $- \dot{\tilde{q}}^\mathrm{T} K_p \tilde{q}$ 是恒为负的，但第二项 $- \dot{\tilde{q}}^\mathrm{T} K_d \dot{\tilde{q}}$ 不是。同时，我们选取的 $V_1$ 本身也有问题，它只是正半定的。它的表达式中只包含了状态变量的一部分——$\dot{\tilde{q}}$，即 $x_2$。因此我们需要将 $x_1$，也就是 $\tilde{q}$ 纳入其中，得到这样的一个候选 Lyapunov 函数
+其中，等号右侧第二项 $- \dot{\tilde{q}}^\mathrm{T} K_d \dot{\tilde{q}}$ 是恒为负的，但第一项 $- \dot{\tilde{q}}^\mathrm{T} K_p \tilde{q}$ 不是。同时，我们选取的 $V_1$ 本身也有问题——它只是正半定的：它的表达式中只包含了状态变量的一部分——$\dot{\tilde{q}}$，即 $x_2$。因此我们需要将 $x_1$，也就是 $\tilde{q}$ 纳入其中，得到这样的一个候选 Lyapunov 函数
 \[
     V_2 = V_1 + \frac{1}{2} \tilde{q}^\mathrm{T} K_p \tilde{q} \text{。}
 \]
@@ -95,7 +95,7 @@
 \[
     x_2 \equiv 0 \implies \dot{x}_2 \equiv 0 \ (\ddot{\tilde{q}} \equiv 0) \implies x_1 \equiv 0 \quad \text{（根据 \eqref{robotic_dynamic}）。}
 \]
-因此，唯一可以整体留在 $E$ 中的解就是原点。所以，根据 LaSalle 不变集原理（\ref{lasalle}），原点是渐近稳定的，即 $\lim_{t \to \infty} q (t) = q_d$ 且 $\lim_{t \to \infty} \dot{q}(t) = 0$。
+因此，唯一可以整体留在 $E$ 中的解就是原点。所以，根据 LaSalle 不变集原理（\ref{lasalle}），原点是渐近稳定的，即 $\lim\limits_{t \to \infty} q (t) = q_d$ 且 $\lim\limits_{t \to \infty} \dot{q}(t) = 0$。
 
 至此，我们采用控制律 \eqref{robotic_control_2} 实现了位置控制，控制输入中包含了与重力相关的补偿项以及 PD 控制项。我们能否进一步地简化，只采用 PD 控制而不需要重力的补偿项？下面证明，至少在 \eqref{robotic_state_space} 对应的状态空间原点可作为重力势能的零势能点时，可以做到。换而言之，就是在目标位置恰为重力势能最低点时，可以不进行与重力有关的补偿。这也很好理解，因为这种情况下，重力的存在是有利于系统稳定的，自然不需要相应的补偿。其中有一种平凡的情形，那就是机械臂在水平方向上运动，这自然可以满足条件。当然，这种情形下在最初的方程 \eqref{robotic_model} 中就已经有 $g(q) \equiv 0$ 了，所以确实是很平凡的情形。下面是具体的推导。
 
@@ -130,6 +130,6 @@
 \]
 因此 $\textcolor{second}{- \dot{\tilde{q}}^\mathrm{T} g(q) + \dot{P}(q)}$ 这一项为零。从而，$\dot{V}_3 = - \dot{\tilde{q}}^\mathrm{T} K_d \dot{\tilde{q}}$，后续推导同之前情形。
 
-\begin{problem}
+\begin{problem}\label{Pro:pos_ctrl_with_Dq}
     如果系统是 $M (q) \ddot{q} + C (q, \dot{q}) \dot{q} + g (q) + D \dot{q} = u$，其中 $D$ 是正半定的（这对于系统稳定是有帮助的，不应该消去），应该如何设计控制律？
 \end{problem}

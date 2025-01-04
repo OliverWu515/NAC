@@ -7,7 +7,7 @@
  \begin{equation}
    \begin{aligned}
     \dot{x}_1 & = x_2\\
-       \dot{x_2} & = f (x) + g (x) u
+    \dot{x}_2 & = f (x) + g (x) u
     \end{aligned}\label{Sys:sliding_mode}
  \end{equation}
   其中$f (x)$和$g (x)$都是非线性函数，$g (x) \geq g_0 > 0$，
@@ -120,7 +120,6 @@
 \subsection{有外部干扰的系统设计}\label{5C_disturbance}
 \noindent\textbf{一、干扰上界已知的情形}
 
-\enlargethispage{1em}
 考虑下述系统
  \begin{equation}
       \begin{aligned}
@@ -147,19 +146,16 @@
 \noindent\textbf{二、干扰上界未知的情形}
 
   仍考虑系统 \eqref{Sys:dis_with_upperbound}。若 $d_{\max}$ 是未知的，则可以设计（其中$\hat{k}$是对$k$真值的估计）
-  \[ u = - \lambda x_2 - \hat{k} \ensuremath{\operatorname{sgn}} (s) \]
+  \[ u = - \lambda x_2 - \hat{k} \ensuremath{\operatorname{sgn}} (s)- \eta\ensuremath{\operatorname{sgn}} (s),\eta>0 \]
   
-  定义 $\tilde{k} = \hat{k} - d_{\max} - \eta$（与上述第一种情况联系起来：$k$的真值可视作$d_{\max}+\eta$）。
-  
+  定义 $\tilde{k} = \hat{k} - d_{\max} $。
   考虑如下候选Lyapunov函数
   \[ V = \frac{1}{2} s^2 + \frac{1}{2 \gamma} \tilde{k}^2, \gamma > 0, \]
-  求其导数得（第二行来自上一种情况，第三行凑出误差$\tilde{k}$的形式）
+  求其导数得
   \begin{align*}
     \dot{V} & = s  \dot{s} + \frac{1}{\gamma} \tilde{k} \dot{\hat{k}}\\
-    & \leq - (\hat{k} - d_{\max}) | s | + \frac{1}{\gamma} \tilde{k}
-    \dot{\hat{k}}\\
-    & = - (\hat{k} - d_{\max} - \eta) | s | - \eta | s | + \frac{1}{\gamma}
-    \tilde{k} \dot{\hat{k}}\\
+    & = (-\hat{k}\ensuremath{\operatorname{sgn}} (s) + d(t)- \eta \ensuremath{\operatorname{sgn}} (s)) s + \frac{1}{\gamma} \tilde{k}  \dot{\hat{k}}\\
+    & \leq - (\hat{k} - d_{\max}) | s | - \eta | s | + \frac{1}{\gamma} \tilde{k}  \dot{\hat{k}}\\
     & = \frac{1}{\gamma} \tilde{k} (\dot{\hat{k}} - \gamma | s |) - \eta | s |
   \end{align*}
   设计 $\dot{\hat{k}} = \gamma | s |$，即得 $\dot{V} \leq - \eta | s |$。两边积分得到

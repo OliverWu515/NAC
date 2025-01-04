@@ -1,4 +1,4 @@
-\section{跟踪问题的滑模控制}\label{6Dref}
+\subsection{滑模控制}\label{6Dref}
 
 定义滑模面
 \[
@@ -17,7 +17,7 @@
 
 设计如下控制输入：
 \begin{equation} \label{EL:SMC:u}
-    u = - K s + M(q)  \ddot{q}_r + C(q, \dot{q}) \dot{q}_r \text{，}
+    \tau =g(q) - K s + M(q)  \ddot{q}_r + C(q, \dot{q}) \dot{q}_r \text{，}
 \end{equation}
 其中 $K$ 是正定的。那么采用了 \eqref{EL:SMC:u} 的 \eqref{EL:SMC:sys} 所得的闭环系统如下：
 \begin{equation}
@@ -35,8 +35,8 @@
     & = - s^\mathrm{T}  K  s \text{，}
 \end{align*}
 从而 $\dot{V}$ 是负定的。
-因此，原点 $s = 0$ 是全局一致指数稳定的，$\lim_{t \to \infty} s (t) = 0$。
-回顾一下，系统 $\dot{\tilde{q}} = - \lambda \tilde{q} + s \ (\lambda > 0)$ 是输入-状态稳定的（将 $s$ 视为输入）。在系统状态趋于滑模面 $s = 0$ 时，系统状态也趋于 $0$。因此，$\lim_{t \to \infty} \tilde{q} (t) = \lim_{t \to \infty} \dot{\tilde{q}} (t) = 0$。系统稳定，位置误差与速度误差随 $t \to \infty$ 趋于 $0$，跟踪控制得以实现。
+因此，原点 $s = 0$ 是全局一致指数稳定的，$\lim\limits_{t \to \infty} s (t) = 0$。
+回顾一下，系统 $\dot{\tilde{q}} = - \lambda \tilde{q} + s \ (\lambda > 0)$ 是输入-状态稳定的（将 $s$ 视为输入）。在系统状态趋于滑模面 $s = 0$ 时，系统状态也趋于 $0$。因此，$\lim\limits_{t \to \infty} \tilde{q} (t) = \lim\limits_{t \to \infty} \dot{\tilde{q}} (t) = 0$。系统稳定，位置误差与速度误差随 $t \to \infty$ 趋于 $0$，跟踪控制得以实现。
 
 \begin{problem}
     若系统中存在扰动，例如，系统为
@@ -60,5 +60,5 @@
     那么应该采用怎样的控制输入？
 \end{problem}
 \begin{hint}
-    将 $k$ 改为 $\hat{k}(t)$，采用自适应控制。
+    将 $K$ 改为 $\hat{K}(t)$，采用自适应控制。
 \end{hint}

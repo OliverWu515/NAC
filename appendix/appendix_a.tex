@@ -1,6 +1,6 @@
 \chapter{部分问题解答} \label{Problems}
 
-\noindent\textcolor{winered}{\textbf{问题 \ref{Pro:scalar_with_uncertainty} 解：}}
+\noindent\textbf{问题} \ref{Pro:scalar_with_uncertainty} \textbf{解：}
 
 仍定义参考模型如式 \eqref{Sys:MRAC:scalar:ref}。
 提出下述控制律：
@@ -52,15 +52,15 @@
 \end{equation*}
 剩余步骤同此问题之前的例子。
 
-\noindent\textcolor{winered}{\textbf{问题 \ref{Pro:uncertainty} 解：}}
+\noindent\textbf{问题} \ref{Pro:uncertainty} \textbf{解：}
 
 假设满足 \eqref{matching:condition:GLS} 的$K^{\ast}_1, K^{\ast}_2$存在。设计控制律\[ u = \hat{K}_1 (t) x + \hat{K}_2 (t) u_c - \hat{\Theta}\Phi (x)  \]
 代入 \eqref{Sys:MRAC:MIMO_with_dis} 可得
 \begin{align}
     \dot{x}&=A  x + B \Lambda (\hat{K}_1 (t) x + \hat{K}_2 (t) u_c-\textcolor{second}{\hat{\Theta}\Phi})+\textcolor{second}{B\Lambda\Theta\Phi}+
-    \underbrace{A_{\ensuremath{\operatorname{ref}}} x +
+    A_{\ensuremath{\operatorname{ref}}} x +
     B_{\ensuremath{\operatorname{ref}}} u_c-A_{\ensuremath{\operatorname{ref}}} x -
-    B_{\ensuremath{\operatorname{ref}}} u_c}\nonumber\\
+    B_{\ensuremath{\operatorname{ref}}} u_c\nonumber\\
     &=A_{\ensuremath{\operatorname{ref}}} x +
     B_{\ensuremath{\operatorname{ref}}} u_c+(A + B \Lambda \hat{K}_1 (t)-A_{\ensuremath{\operatorname{ref}}}) x+(B\Lambda\hat{K}_2 (t)-B_{\ensuremath{\operatorname{ref}}}) u_c-\textcolor{second}{(B\Lambda\hat{\Theta}\Phi-B\Lambda\Theta\Phi)}\nonumber\\
     &=A_{\ensuremath{\operatorname{ref}}}  x +
@@ -112,7 +112,7 @@ x_{\ensuremath{\operatorname{ref}}}$。根据 \eqref{ideal_mimo} 和 \eqref{mimo
 \[ \dot{V} = - e^\mathrm{T} Q  e \leq 0 \]
 后续分析同 \ref{4Cref} 节。
 
-\noindent\textcolor{winered}{\textbf{问题 \ref{Pro:dis_with_unknown_upperbound} 解：}}
+\noindent\textbf{问题} \ref{Pro:dis_with_unknown_upperbound} \textbf{解：}
 
 设计滑模面$s = x_2 + \lambda x_1 = 0,  \lambda > 0$，$s$的动力学是 $\dot{s} = \dot{x}_2 + \lambda \dot{x}_1 = u + d (t)
   + \lambda x_2$。
@@ -121,7 +121,7 @@ x_{\ensuremath{\operatorname{ref}}}$。根据 \eqref{ideal_mimo} 和 \eqref{mimo
   \[ u = - \lambda x_2 - \hat{k}\Phi(x) \ensuremath{\operatorname{sgn}} (s) -\eta\sgn(s)\]
 这样，$s$的动力学就变为$\dot{s}=d(t)-\hat{k}\Phi(x) \ensuremath{\operatorname{sgn}} (s)-\eta\sgn(s)$。
 
-定义$\tilde{k}=\hat{k}-d_{\max}-\eta\sgn(s)$。考虑如下候选Lyapunov函数
+定义$\tilde{k}=\hat{k}-d_{\max}$。考虑如下候选Lyapunov函数
   \[ V = \frac{1}{2} s^2 + \frac{1}{2 \gamma} \tilde{k}^2, \gamma > 0, \]
   求其导数得（注意第三行凑出误差$\tilde{k}$的形式）
   \begin{align*}
@@ -133,3 +133,116 @@ x_{\ensuremath{\operatorname{ref}}}$。根据 \eqref{ideal_mimo} 和 \eqref{mimo
   \end{align*}
 则取$\dot{\hat{k}}=\gamma |s|\Phi(x)$，就有$\dot{V}=-\eta|s|$，之后的分析同 \ref{5C_disturbance} 节其他各例。
 
+\noindent\textbf{问题} \ref{Pro:backstep-complex} \textbf{解：}
+
+考虑下述系统 \begin{align*}
+    \dot{x}_1 & = -x_1^3+ x_2+\sin x_1\\
+    \dot{x}_2 & = \cos x_2-x_2^2 + x_3 \\
+    \dot{x}_3 & = u +\cos x_1 +x_2^2
+  \end{align*}
+
+\noindent{\textbf{步骤 1: }}
+
+定义 $z_1 = x_1$，将$x_2$看作控制输入。设计“理想的”$x_2$
+\begin{align*}
+  \Phi_1 (x_1) & = -\sin x_1
+\end{align*}
+并定义状态变换（“真实的”$x_2$减去“理想的”$x_2$）
+\[ z_2 \triangleq x_2 - \Phi_1 (x_1)= x_2 +\sin x_1\]
+于是$z_1$的动力学写为
+\begin{align*}
+  \dot{z}_1 & = \dot{x}_1\\
+  & = -x_1^3+ x_2+\sin x_1\\
+  & =  -z_1^3+z_2
+\end{align*}
+考虑如下候选 Lyapunov 函数
+\[ V_1 (z_1) = \frac{1}{2} z^2_1 \]
+求其导数得到
+\begin{align*}
+  \dot{V}_1 & = z_1 \dot{z}_1 = -z_1^4+z_1z_2
+\end{align*}
+
+\noindent{\textbf{步骤 2: }}
+
+$z_2$的动力学写为
+  \begin{align*}
+  \dot{z}_2 & = \dot{x}_2 +\dot{x}_1\cos x_1 \\
+  & = \cos x_2-x_2^2 + x_3 + (-x_1^3+ x_2+\sin x_1)\cos x_1
+\end{align*}
+
+考察下列候选合并Lyapunov函数
+\[ V_2 (z_1, z_2) = V_1 (z_1) + \frac{1}{2} z^2_2 \]
+求其导数得
+\begin{align*}
+  \dot{V}_2 & = \dot{V}_1 + z_2 \dot{z}_2\\
+  & = -z_1^4+z_1z_2+z_2(\cos x_2-x_2^2 + x_3 + (-x_1^3+ x_2+\sin x_1)\cos x_1)
+\end{align*}
+则可设计“理想的”$x_3$
+\begin{align*}
+    \Phi_2(x_1,x_2) &= -z_1-z_2-\cos x_2+x_2^2- (-x_1^3+ x_2+\sin x_1)\cos x_1 \\&= -x_1-x_2-\sin x_1 -\cos x_2+x_2^2-(-x_1^3+ x_2+\sin x_1)\cos x_1 
+\end{align*}
+
+定义状态变换
+\[z_3 = x_3 - \Phi_2(x_1,x_2) \]
+于是可得
+\[ \dot{V}_2 = -z_1^4+z_1z_2+z_2(z_3-z_1-z_2) = - z_1^4 - z^2_2+z_2z_3 \]
+
+\noindent{\textbf{步骤 3: }}
+
+$z_3$的动力学写为
+  \begin{align*}
+  \dot{z}_3 & = \dot{x}_3 - \frac{\partial \Phi_2(x_1,x_2)}{\partial x_1}\dot{x}_1 - \frac{\partial \Phi_2(x_1,x_2)}{\partial x_2}\dot{x}_2
+\end{align*}
+考虑合并Lyapunov函数
+\begin{align*}
+  V_c & = V_2  + \frac{1}{2} z^2_3 
+\end{align*}
+根据上述控制律，其导数为
+\begin{align*}
+    \dot{V}_c &= - z_1^4 - z^2_2+z_2z_3 +z_3\left(\dot{x}_3 - \frac{\partial \Phi_2(x_1,x_2)}{\partial x_1}\dot{x}_1 - \frac{\partial \Phi_2(x_1,x_2)}{\partial x_2}\dot{x}_2\right)\\
+    &=- z_1^4 - z^2_2+z_2z_3 +z_3\left(u+\cos x_1+x_2^2 - \frac{\partial \Phi_2(x_1,x_2)}{\partial x_1}\dot{x}_1 - \frac{\partial \Phi_2(x_1,x_2)}{\partial x_2}\dot{x}_2\right)
+\end{align*}
+这样，选取\begin{align*}
+    u&=-z_2-z_3-\cos x_1-x_2^2+\frac{\partial \Phi_2(x_1,x_2)}{\partial x_1}\dot{x}_1 + \frac{\partial \Phi_2(x_1,x_2)}{\partial x_2}\dot{x}_2\\
+    &=-z_2-z_3-\cos x_1-x_2^2+\frac{\partial \Phi_2(x_1,x_2)}{\partial x_1}(-x_1^3+ x_2+\sin x_1) + \frac{\partial \Phi_2(x_1,x_2)}{\partial x_2}(\cos x_2-x_2^2 + x_3)
+\end{align*}
+即可得到$\dot{V}_c = - z_1^4 - z^2_2-z_3^2$，其为负定。接下来类似该问题之前的推导即可。
+
+\noindent\textbf{问题} \ref{Pro:pos_ctrl_with_Dq} \textbf{解：}
+
+定义位置误差和速度误差：
+\begin{align*}
+    \tilde{q}(t) \triangleq q(t) - q_d, \quad \dot{\tilde{q}}(t) \triangleq \dot{q}(t) - \dot{q}_d = \dot{q}(t) \text{。}
+\end{align*}
+从而 $\ddot{\tilde{q}}(t) = \ddot{q}(t)$。为简化记号，在不引起歧义的前提下，可能省略后续一些函数中的参数。
+
+误差动力学为：
+\begin{equation*}
+    M (q) \ddot{\tilde{q}} + C (q, \dot{q}) \dot{\tilde{q}} + \textcolor{second}{D\dot{\tilde{q}}} + g(q) = \tau \text{，}
+\end{equation*}
+
+可采用如下控制输入：
+\begin{equation}
+    \tau = g(q) - K_p \tilde{q} - K_d \dot{\tilde{q}}, \quad K_p, K_d > 0 \text{，}
+\end{equation}
+从而闭环系统为：
+\begin{equation}
+   M (q) \ddot{\tilde{q}} + C (q, \dot{q}) \dot{\tilde{q}} + \textcolor{second}{D\dot{\tilde{q}}} = - K_p \tilde{q} - K_d \dot{\tilde{q}} \text{。}
+\end{equation}
+考虑候选 Lyapunov 函数
+\[
+    V = \frac{1}{2} \dot{\tilde{q}}^\mathrm{T} M \dot{\tilde{q}}+\frac{1}{2} \tilde{q}^\mathrm{T} K_p \tilde{q}  \text{，}
+\]
+其沿系统轨线的导数
+\begin{align*}
+    \dot{V} & = \dot{\tilde{q}}^\mathrm{T} M \ddot{\tilde{q}} + \frac{1}{2}
+    \dot{\tilde{q}}^\mathrm{T} \dot{M} \dot{\tilde{q}} + \dot{\tilde{q}}^\mathrm{T} K_p \dot{\tilde{q}}\\
+    & = \dot{\tilde{q}}^\mathrm{T} (- K_p \tilde{q} - K_d \dot{\tilde{q}} - C
+    \dot{\tilde{q}}-\textcolor{second}{D\dot{\tilde{q}}}) + \frac{1}{2} \dot{\tilde{q}}^\mathrm{T} \dot{M} \dot{\tilde{q}}+ \dot{\tilde{q}}^\mathrm{T} K_p \dot{\tilde{q}}\\
+    & =  - \dot{\tilde{q}}^\mathrm{T} K_d
+    \dot{\tilde{q}} + \frac{1}{2} \dot{\tilde{q}}^\mathrm{T} (\dot{M} - 2 C)
+    \dot{\tilde{q}}- \textcolor{second}{\dot{\tilde{q}}^\mathrm{T}D\dot{\tilde{q}}}\\
+    & =  - \dot{\tilde{q}}^\mathrm{T} K_d
+    \dot{\tilde{q}} - \textcolor{second}{\dot{\tilde{q}}^\mathrm{T}D\dot{\tilde{q}}}
+\end{align*}
+从而，$V$ 是正定的，$\dot{V}$是负半定的。接下来类似 \ref{6Bref} 节利用 LaSalle 不变集原理（\ref{lasalle}），即可说明原点是渐近稳定的，即 $\lim\limits_{t \to \infty} q (t) = q_d$ 且 $\lim\limits_{t \to \infty} \dot{q}(t) = 0$。

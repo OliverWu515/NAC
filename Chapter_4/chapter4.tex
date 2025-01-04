@@ -59,7 +59,7 @@
       \hline
       随着自适应过程的进行，自适应控制器能不断提高系统性能 & 鲁棒控制器试图使系统维持恒定的性能 \\
       \hline
-      自适应控制器几乎不需要对于位置参数的先验（{\it a priori}）信息 & 鲁棒控制器需要对于参数的界有合理的先验估计\\
+      自适应控制器几乎不需要对于未知参数的先验（{\it a priori}）信息 & 鲁棒控制器需要对于参数的界有合理的先验估计\\
       \hline
     \end{tabular}
   \end{table}
@@ -112,19 +112,20 @@
   \begin{description}
     \item[自调节控制器（Self-Tuning Controller，STC）]\index{自调节控制器（Self-Tuning Controller，STC）}
     \begin{enumerate}
-      \item 控制器参数，是根据被控对象参数估计器所作出的参数估计实时计算的。
+      \item 控制器参数，是根据被控对象的参数估计实时计算的。
       
       \item 参数辨识和控制是同时进行的。
       
-      \item 利用确定性等价原理（Certainty Equivalence Principle）：将辨识所得的控制器参数当作真值，由此计算控制器参数。
+      \item 利用确定性等价原理（Certainty Equivalence Principle）：将辨识所得的被控对象参数当作真值，由此计算控制器参数。
     \end{enumerate}
   \end{description}
   \begin{center}
   \includegraphics[scale=0.5]{figure/adaptive/stc.png}
+  \captionsetup{hypcap=false}
   \captionof{figure}{自调节控制器}
 \end{center}
   \begin{description}
-    \item[模型参考自适应控制（Model Reference Adaptive Control, MRAC）]\index{模型参考自适应控制（Model Reference Adaptive Control, MRAC）}
+    \item[模型参考自适应控制（Model Reference Adaptive Control，MRAC）]\index{模型参考自适应控制（Model Reference Adaptive Control，MRAC）}
     \begin{enumerate}
       \item 被控对象（plant）：具有未知参数和确定的结构。
       

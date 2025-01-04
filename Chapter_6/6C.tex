@@ -22,7 +22,7 @@
 \end{equation}
 设计如下控制输入
 \[
-    \tau = M \ddot{q}_d - C \dot{q}_d + g(q) - K_p \tilde{q} - K_d \dot{\tilde{q}} \text{。}
+    \tau = M \ddot{q}_d + C \dot{q}_d + g(q) - K_p \tilde{q} - K_d \dot{\tilde{q}} \text{。}
 \]
 从而闭环系统为：
 \begin{equation} \label{EL:TC:CP}
@@ -42,6 +42,6 @@
 
 由于该系统 \eqref{EL:TC:CP} 是非自治系统，所以不能使用 LaSalle 定理。根据上式，$\dot{V}$ 负半定，所以 $V(t) \leq V(0)$，从而有 $\dot{\tilde{q}}, \tilde{q} \in \mathbb{L}_\infty$ 和 $\dot{\tilde{q}} \in \mathbb{L}_2$。
 
-因为 $\| C(q, \dot{q}) \dot{\tilde{q}} \| \leq K_C \| \dot{q} \| \cdot \| \dot{\tilde{q}} \|$ 且 $\dot{q}_d$ 有界，所以我们可以得到 $\ddot{q} \in \mathbb{L}_\infty$。从而，我们有 $\dot{\tilde{q}} \in \mathbb{L}_2 \cap \mathbb{L}_\infty$ 和 $\ddot{q} \in \mathbb{L}_\infty$，根据 Barbalat 引理，$\lim_{t \to \infty} \dot{\tilde{q}} = 0$。
+因为 $\| C(q, \dot{q}) \dot{\tilde{q}} \| \leq K_C \| \dot{q} \| \cdot \| \dot{\tilde{q}} \|$ 且 $\dot{q}_d$ 有界，所以我们可以得到 $\ddot{q} \in \mathbb{L}_\infty$。从而，我们有 $\dot{\tilde{q}} \in \mathbb{L}_2 \cap \mathbb{L}_\infty$ 和 $\ddot{q} \in \mathbb{L}_\infty$，根据 Barbalat 引理，$\lim\limits_{t \to \infty} \dot{\tilde{q}} = 0$。
 
-可惜，到目前为止，我们仍无法得到关于位置误差 $\tilde{q}$ 渐进行为的任何直接结论。接下来，我们将用滑模控制、自适应控制、反步法、预设性能控制等方法分析设计，以解决跟踪控制的问题。
+可惜，到目前为止，我们仍无法得到关于位置误差 $\tilde{q}$ 渐近行为的任何直接结论。接下来，我们将用滑模控制、自适应控制、反步法、预设性能控制等方法分析设计，以解决上述跟踪控制的问题。

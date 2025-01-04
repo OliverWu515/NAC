@@ -32,10 +32,10 @@
 然而，当$d(t)\ne 0$时，闭环系统动力学
 \[\dot{x}=-kx-\varphi(x)\tilde{\theta}+d(t)\]
 如果仍采用上述自适应律和候选Lyapunov函数，得到$V$的导数是
-\[\dot{V}=-kx^2+x d(t)\le -kx^2+d_{\max}|x|=-k|x|(|x|-\frac{d_{\max}}{k})\]
+\[\dot{V}=-kx^2+x d(t)\le -kx^2+d_{\max}|x|=-k|x|\left(|x|-\frac{d_{\max}}{k}\right)\]
 则在下述集合
 \begin{equation}
-    E = \left\{(x,\tilde{\theta}): \| x \| \leq \frac{d_{\max}}{k} = e_{0}\right\}\label{dead-zone}
+    E = \left\{(x,\tilde{\theta}): \| x \| \leq \frac{d_{\max}}{k} \triangleq e_{0}\right\}\label{dead-zone}
 \end{equation}
 之外，才有$\dot{V}<0$，而在该集合之内，$\dot{V}$可能为正，因此，参数估计误差$|\tilde{\theta}(t)|$可能自由增长而最终变为无界。这种现象被称为{\bf 参数漂移（parameter drift）}，是由干扰$d(t)$而产生的，这表明我们所提出的自适应律不具有抗干扰能力，即不是鲁棒的。
 
@@ -101,7 +101,7 @@ $d(t) = \dot{x} + x\hat{\theta} = 5(1 + t)^{- \frac{1}{5}} - \frac{2}{5}(1 + t)^
 \end{equation}
 并且\begin{equation}
     - \sigma\tilde{\theta}\hat{\theta} = - \sigma\tilde{\theta}(\tilde{\theta} + \theta)
-    \leq - \sigma\tilde{\theta}{\tilde{\theta}}^{2} + \sigma\left(\frac{{\tilde{\theta}}^{2}}{2} + \frac{\theta^{2}}{2}\right)
+    \leq - \sigma{\tilde{\theta}}^{2} + \sigma\left(\frac{{\tilde{\theta}}^{2}}{2} + \frac{\theta^{2}}{2}\right)
     = - \sigma\frac{{\tilde{\theta}}^{2}}{2} + \sigma\frac{\theta^{2}}{2}\label{temp_neq2}
 \end{equation}
 上面两个式子都运用了基本不等式\[ab \leq \frac{ka^{2}}{2} + \frac{b^{2}}{2k}\]
@@ -123,7 +123,8 @@ $d(t) = \dot{x} + x\hat{\theta} = 5(1 + t)^{- \frac{1}{5}} - \frac{2}{5}(1 + t)^
 \[(\mathrm{e}^{\beta \tau} V(\tau))|^t_0\le c\int_0^t \mathrm{e}^{\beta\tau}\diff\tau\]
 故
 \[V(t)\le \mathrm{e}^{-\beta t}V(0)+\frac{c}{\beta}(1-\mathrm{e}^{-\beta t})\]
-可见为了使$V$收敛迅速且接近于$0$，我们欲使\(\beta\)较大且\(c\)较小。对于前者，结合$\beta$的表达式，可取\(k,\sigma\gamma\)都较大；对于后者，结合$c$的表达式，可取\(k\)较大且\(\sigma\)较小。
+系统一致最终有界（UUB）。
+由上式可见，为了使$V$收敛迅速且接近于$0$，我们欲使\(\beta\)较大且\(c\)较小。对于前者，结合$\beta$的表达式，可取\(k,\sigma\gamma\)都较大；对于后者，结合$c$的表达式，可取\(k\)较大且\(\sigma\)较小。
 
 综合考虑，应该使\(k\)较大，\(\sigma\)较小，\(\gamma\)大得多。
 
@@ -180,9 +181,12 @@ $d(t) = \dot{x} + x\hat{\theta} = 5(1 + t)^{- \frac{1}{5}} - \frac{2}{5}(1 + t)^
     A_{\ensuremath{\operatorname{ref}}} x +
     B_{\ensuremath{\operatorname{ref}}} u_c$，其中$A_{\ensuremath{\operatorname{ref}}}$ 是 Hurwitz 的。\\
     跟踪误差 & $e = x - x_{\ensuremath{\operatorname{ref}}}$\\
-    Lyapunov 公式 & $P A_{\ensuremath{\operatorname{ref}}} + A_{\ensuremath{\operatorname{ref}}}^{\mathrm{T}} P = -Q < 0$\\
+    Lyapunov 方程 & $P A_{\ensuremath{\operatorname{ref}}} + A_{\ensuremath{\operatorname{ref}}}^{\mathrm{T}} P = -Q < 0$\\
     控制输入 & $u = -{\hat{\Theta}}^{\mathrm{T}} \Phi(x)$\\
-    死区修正 & $\dot{\hat{\Theta}} = \Gamma_\Theta \Phi(x) \mu\left( \| e \| \right) e^{\mathrm{T}} P B$\\
+    死区修正 & $\dot{\hat{\Theta}} = \Gamma_\Theta \Phi(x) \mu\left( \| e \| \right) e^{\mathrm{T}} P B,\mu\left( \| e \| \right)=\max\left(0,\min\left(1,\frac{\|e\|-\delta e_0}{(1-\delta)e_0}\right)\right)$或$\dot{\hat{\Theta}} = \left\{\begin{matrix}
+\Gamma_\Theta \Phi(x) e^{\mathrm{T}} P B, & \text{若} \| e \| \geq e_{0} + \delta \\
+0, & \text{若} \| e \| < e_{0} + \delta \\
+\end{matrix}\right.$\\
     $\sigma$-修正 & $\dot{\hat{\Theta}} = \Gamma_\Theta \Phi(x) \left( e^{\mathrm{T}} P B -\sigma \hat{\Theta} \right)$\\
     $e$-修正 & $\dot{\hat{\Theta}} = \Gamma_\Theta \Phi(x) \left( e^{\mathrm{T}} P B -\sigma \| e^{\mathrm{T}} P B \| \hat{\Theta} \right)$\\
     \hline
