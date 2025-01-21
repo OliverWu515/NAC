@@ -32,7 +32,7 @@
   接下来设计接近阶段控制律。要让$s\to 0$，考虑候选Lyapunov函数\[V = \frac{1}{2} s^2\]
   求其导数得
   \[ \dot{V} = s \cdot \dot{s}=s(\dot{x}_2 + \lambda \dot{x}_1) = s (f (x) + g (x) u + \lambda x_2) \]
-  设计\[u = \frac{1}{g (x)} (- f (x) - \lambda x_2 - k \sgn (s)),k > 0,\ensuremath{\operatorname{sgn}}(s) = \left\{\begin{array}{ll}
+  设计\[u = \frac{1}{g (x)} (- f (x) - \lambda x_2 - k \sgn (s)),k > 0,\sgn(s) = \left\{\begin{array}{ll}
   1 & s > 0\\
   0 & s = 0\\
   - 1 & s < 0
@@ -91,14 +91,14 @@
    \frac{\sqrt{g_{\min} (x) g_{\max} (x)}}{g_{\min} (x)} =
    \sqrt{\frac{g_{\max} (x)}{g_{\min} (x)}} \triangleq \beta \geq 1 \]
 类似 \eqref{tracking_control}，设计$u = \frac{1}{\hat{g} (x)} (- \hat{f} (x) + \ddot{x}_d (t) - \lambda
-\tilde{x}_2 - k  \ensuremath{\operatorname{sgn}} (s))$, $k > 0$，仍考虑$V=\frac12 s^2$，求导得到
+\tilde{x}_2 - k  \sgn (s))$, $k > 0$，仍考虑$V=\frac12 s^2$，求导得到
 \begin{align*}
   \dot{V} & = s \left\{ f (x) - \ddot{x}_d (t) + \lambda \tilde{x}_2 +
   \frac{g (x)}{\hat{g} (x)} [- \hat{f} (x) + \ddot{x}_d (t) - \lambda
-  \tilde{x}_2 - k  \ensuremath{\operatorname{sgn}} (s)] \right\}\\
+  \tilde{x}_2 - k  \sgn (s)] \right\}\\
   & = s \left\{ [f (x) - \hat{f} (x)] + \left( \frac{g (x)}{\hat{g} (x)} -
   1 \right) (- \hat{f} (x) + \ddot{x}_d (t) - \lambda \tilde{x}_2) - k \frac{g
-  (x)}{\hat{g} (x)}  \ensuremath{\operatorname{sgn}} (s) \right\}\\
+  (x)}{\hat{g} (x)}  \sgn (s) \right\}\\
   & \leq | s | \left\{ F (x) + \left| \frac{g (x)}{\hat{g} (x)} - 1 \right|
   \cdot | - \hat{f} (x) + \ddot{x}_d (t) - \lambda \tilde{x}_2 | - k \frac{g
   (x)}{\hat{g} (x)} \right\}\\
@@ -134,10 +134,10 @@
   
   仍选取候选 Lyapunov 函数为$V = \frac{1}{2} s^2$，求其导数得 $\dot{V} = s \cdot \dot{s} = s (u + d (t) + \lambda x_2)$。
   
-  设计 $u = - \lambda x_2 - k  \ensuremath{\operatorname{sgn}} (s)$, $k >
+  设计 $u = - \lambda x_2 - k  \sgn (s)$, $k >
   0$即得到
   \begin{align*}
-    \dot{V} & = s (d (t) - k  \ensuremath{\operatorname{sgn}} (s))\\
+    \dot{V} & = s (d (t) - k  \sgn (s))\\
     & = - k  | s | + s  d (t)\\
     & \leq - (k - d_{\max})  | s |
   \end{align*}
@@ -146,7 +146,7 @@
 \noindent\textbf{二、干扰上界未知的情形}
 
   仍考虑系统 \eqref{Sys:dis_with_upperbound}。若 $d_{\max}$ 是未知的，则可以设计（其中$\hat{k}$是对$k$真值的估计）
-  \[ u = - \lambda x_2 - \hat{k} \ensuremath{\operatorname{sgn}} (s)- \eta\ensuremath{\operatorname{sgn}} (s),\eta>0 \]
+  \[ u = - \lambda x_2 - \hat{k} \sgn (s)- \eta\sgn (s),\eta>0 \]
   
   定义 $\tilde{k} = \hat{k} - d_{\max} $。
   考虑如下候选Lyapunov函数
@@ -154,7 +154,7 @@
   求其导数得
   \begin{align*}
     \dot{V} & = s  \dot{s} + \frac{1}{\gamma} \tilde{k} \dot{\hat{k}}\\
-    & = (-\hat{k}\ensuremath{\operatorname{sgn}} (s) + d(t)- \eta \ensuremath{\operatorname{sgn}} (s)) s + \frac{1}{\gamma} \tilde{k}  \dot{\hat{k}}\\
+    & = (-\hat{k}\sgn (s) + d(t)- \eta \sgn (s)) s + \frac{1}{\gamma} \tilde{k}  \dot{\hat{k}}\\
     & \leq - (\hat{k} - d_{\max}) | s | - \eta | s | + \frac{1}{\gamma} \tilde{k}  \dot{\hat{k}}\\
     & = \frac{1}{\gamma} \tilde{k} (\dot{\hat{k}} - \gamma | s |) - \eta | s |
   \end{align*}

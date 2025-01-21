@@ -11,17 +11,17 @@
 \end{equation*}
 类似上一小节对于理想情形的推导，可得与 \eqref{k1*k2*} 一样的$k^{\ast}_1, k^{\ast}_2$。仍定义$e=x-x_{\operatorname{ref}}$，结合 \eqref{Sys:MRAC:scalar:ref} 与上式，误差动力学可写为
 \begin{align}
-  \dot{e} & =  a  x +  b \hat{k}_1 (t) x + b \hat{k}_2 (t) u_c -\textcolor{second}{  \varphi  (x) (b\hat{\theta}_1 (t) - \theta) }+ a_{\ensuremath{\operatorname{ref}}}
-  x_{\ensuremath{\operatorname{ref}}} - b_{\ensuremath{\operatorname{ref}}}
+  \dot{e} & =  a  x +  b \hat{k}_1 (t) x + b \hat{k}_2 (t) u_c -\textcolor{second}{  \varphi  (x) (b\hat{\theta}_1 (t) - \theta) }+ a_{\refval}
+  x_{\refval} - b_{\refval}
   u_c \nonumber\\
-  & = (a_{\ensuremath{\operatorname{ref}}} + a) x +  b \hat{k}_1 (t) x +
-  (b \hat{k}_2 (t) - b_{\ensuremath{\operatorname{ref}}}) u_c -  \textcolor{second}{\varphi (x)
-  (b\hat{\theta}_1 (t) - \theta)} - a_{\ensuremath{\operatorname{ref}}} (x-x_{\operatorname{ref}})
+  & = (a_{\refval} + a) x +  b \hat{k}_1 (t) x +
+  (b \hat{k}_2 (t) - b_{\refval}) u_c -  \textcolor{second}{\varphi (x)
+  (b\hat{\theta}_1 (t) - \theta)} - a_{\refval} (x-x_{\operatorname{ref}})
   \nonumber\\
   & =  b (\hat{k}_1 (t) - k^{\ast}_1) x + b (\hat{k}_2 (t) - k^{\ast}_2)
   u_c -  \textcolor{second}{\varphi (x) (b\hat{\theta}_1 (t) - \theta)} -
-  a_{\ensuremath{\operatorname{ref}}} e \nonumber\\
-  & =  - a_{\ensuremath{\operatorname{ref}}} e + b \tilde{k}_1 x + b
+  a_{\refval} e \nonumber\\
+  & =  - a_{\refval} e + b \tilde{k}_1 x + b
   \tilde{k}_2 u_c - \textcolor{second}{b \varphi \tilde{\theta}} \label{Pro:err:MRAC:nonlinear}
 \end{align}
 其中定义了三个参数估计误差 $\tilde{k}_1 \triangleq \hat{k}_1 (t) - k^{\ast}_1$， $\tilde{k}_2 \triangleq \hat{k}_2
@@ -42,13 +42,13 @@
 \end{equation*}
 则选取
 \begin{equation*}
-  \dot{\hat{k}}_1 = -  \gamma_1 \ensuremath{\operatorname{sgn}} (b) x  e,
-  \dot{\hat{k}}_2 = -  \gamma_2 \ensuremath{\operatorname{sgn}} (b)  u_c e,
-  \dot{\hat{\theta}}_1 = \gamma_3 \ensuremath{\operatorname{sgn}} (b)   \varphi e
+  \dot{\hat{k}}_1 = -  \gamma_1 \sgn (b) x  e,
+  \dot{\hat{k}}_2 = -  \gamma_2 \sgn (b)  u_c e,
+  \dot{\hat{\theta}}_1 = \gamma_3 \sgn (b)   \varphi e
 \end{equation*}
 即得
 \begin{equation*}
-  \dot{V} = - a_{\ensuremath{\operatorname{ref}}} e^2 \leq 0
+  \dot{V} = - a_{\refval} e^2 \leq 0
 \end{equation*}
 剩余步骤同此问题之前的例子。
 
@@ -58,21 +58,20 @@
 代入 \eqref{Sys:MRAC:MIMO_with_dis} 可得
 \begin{align}
     \dot{x}&=A  x + B \Lambda (\hat{K}_1 (t) x + \hat{K}_2 (t) u_c-\textcolor{second}{\hat{\Theta}\Phi})+\textcolor{second}{B\Lambda\Theta\Phi}+
-    A_{\ensuremath{\operatorname{ref}}} x +
-    B_{\ensuremath{\operatorname{ref}}} u_c-A_{\ensuremath{\operatorname{ref}}} x -
-    B_{\ensuremath{\operatorname{ref}}} u_c\nonumber\\
-    &=A_{\ensuremath{\operatorname{ref}}} x +
-    B_{\ensuremath{\operatorname{ref}}} u_c+(A + B \Lambda \hat{K}_1 (t)-A_{\ensuremath{\operatorname{ref}}}) x+(B\Lambda\hat{K}_2 (t)-B_{\ensuremath{\operatorname{ref}}}) u_c-\textcolor{second}{(B\Lambda\hat{\Theta}\Phi-B\Lambda\Theta\Phi)}\nonumber\\
-    &=A_{\ensuremath{\operatorname{ref}}}  x +
-   B_{\ensuremath{\operatorname{ref}}} u_c + B \Lambda  \tilde{K}_1 x + B
+    A_{\refval} x +
+    B_{\refval} u_c-A_{\refval} x -
+    B_{\refval} u_c\nonumber\\
+    &=A_{\refval} x +
+    B_{\refval} u_c+(A + B \Lambda \hat{K}_1 (t)-A_{\refval}) x+(B\Lambda\hat{K}_2 (t)-B_{\refval}) u_c-\textcolor{second}{(B\Lambda\hat{\Theta}\Phi-B\Lambda\Theta\Phi)}\nonumber\\
+    &=A_{\refval}  x +
+   B_{\refval} u_c + B \Lambda  \tilde{K}_1 x + B
    \Lambda  \tilde{K}_2 u_c -\textcolor{second}{B\Lambda\tilde{\Theta}\Phi}\label{mimo_with_dis_dotx}
 \end{align}
 其中的参数估计误差 $\tilde{K}_1 \triangleq \hat{K}_1 {- K_1^{\ast}} , \tilde{K}_2 \triangleq \hat{K}_2 {- K_2^{\ast}} ,\tilde{\Theta}\triangleq\hat{\Theta}-\Theta$。
 
-定义跟踪误差 $e \triangleq x -
-x_{\ensuremath{\operatorname{ref}}}$。根据 \eqref{ideal_mimo} 和 \eqref{mimo_with_dis_dotx}，写出误差动力学
+定义跟踪误差 $e \triangleq x - x_{\refval}$。根据 \eqref{ideal_mimo} 和 \eqref{mimo_with_dis_dotx}，写出误差动力学
 \begin{equation}
-  \dot{e} = A_{\ensuremath{\operatorname{ref}}} e + B \Lambda  \tilde{K}_1 x +
+  \dot{e} = A_{\refval} e + B \Lambda  \tilde{K}_1 x +
   B \Lambda  \tilde{K}_2 u_c-\textcolor{second}{B\Lambda \tilde{\Theta}\Phi} \label{errsys_with_dis:MRAC:GLS}
 \end{equation}
 
@@ -86,13 +85,13 @@ x_{\ensuremath{\operatorname{ref}}}$。根据 \eqref{ideal_mimo} 和 \eqref{mimo
   \dot{V} & =e^\mathrm{T}P\dot{e}+\dot{e}^\mathrm{T}Pe + 2\tr \{
   \tilde{K}^\mathrm{T}_1 \dot{\hat{K}} _1 \} + 2\tr
   \{ \tilde{K}^\mathrm{T}_2 \dot{\hat{K}} _2 \}+\textcolor{second}{2\tr \{ \tilde{\Theta}^\mathrm{T} \Lambda\dot{\hat{\Theta}} \}}\nonumber\\
-  & = e^\mathrm{T}P( A_{\ensuremath{\operatorname{ref}}} e + B \Lambda  \tilde{K}_1 x +
-  B \Lambda  \tilde{K}_2 u_c-\textcolor{second}{B\Lambda \tilde{\Theta}\Phi})+(A_{\ensuremath{\operatorname{ref}}} e + B \Lambda  \tilde{K}_1 x +
+  & = e^\mathrm{T}P( A_{\refval} e + B \Lambda  \tilde{K}_1 x +
+  B \Lambda  \tilde{K}_2 u_c-\textcolor{second}{B\Lambda \tilde{\Theta}\Phi})+(A_{\refval} e + B \Lambda  \tilde{K}_1 x +
   B \Lambda  \tilde{K}_2 u_c-\textcolor{second}{B\Lambda \tilde{\Theta}\Phi})^\mathrm{T}Pe\nonumber\\
   &\quad+
   2\tr \{ \tilde{K}^\mathrm{T}_1 \Lambda\dot{\hat{K}} _1 \}
   + 2\tr \{ \tilde{K}^\mathrm{T}_2 \Lambda\dot{\hat{K}} _2 \}+\textcolor{second}{2\tr \{ \tilde{\Theta}^\mathrm{T} \Lambda\dot{\hat{\Theta}} \}}\nonumber\\
-  &= e^\mathrm{T}(A_{\ensuremath{\operatorname{ref}}}^\mathrm{T} P + P A_{\ensuremath{\operatorname{ref}}}) e+ 2 e^\mathrm{T}  P  B \Lambda 
+  &= e^\mathrm{T}(A_{\refval}^\mathrm{T} P + P A_{\refval}) e+ 2 e^\mathrm{T}  P  B \Lambda 
   \tilde{K}_1 x + 2 e^\mathrm{T} P  B \Lambda  \tilde{K}_2 u_c -\textcolor{second}{2 e^\mathrm{T}PB\Lambda \tilde{\Theta}\Phi}\nonumber\\
   &\quad +  2\tr \{ \tilde{K}^\mathrm{T}_1  \dot{\hat{K}} _1 \}
   + 2\tr \{ \tilde{K}^\mathrm{T}_2  \dot{\hat{K}} _2
@@ -118,8 +117,8 @@ x_{\ensuremath{\operatorname{ref}}}$。根据 \eqref{ideal_mimo} 和 \eqref{mimo
   + \lambda x_2$。
 
 定义$\Phi(x)=1 + \| x_1 \| + \| x_2 \|^2\ge 1$。可以设计（其中$\hat{k}$是对$k$的估计。注意，只能估计$d_{\max}$（常值），而不能估计含各状态的乘积项；最后一项的作用类似于之前$\tilde{k}$中的$\eta$）
-  \[ u = - \lambda x_2 - \hat{k}\Phi(x) \ensuremath{\operatorname{sgn}} (s) -\eta\sgn(s)\]
-这样，$s$的动力学就变为$\dot{s}=d(t)-\hat{k}\Phi(x) \ensuremath{\operatorname{sgn}} (s)-\eta\sgn(s)$。
+  \[ u = - \lambda x_2 - \hat{k}\Phi(x) \sgn (s) -\eta\sgn(s)\]
+这样，$s$的动力学就变为$\dot{s}=d(t)-\hat{k}\Phi(x) \sgn (s)-\eta\sgn(s)$。
 
 定义$\tilde{k}=\hat{k}-d_{\max}$。考虑如下候选Lyapunov函数
   \[ V = \frac{1}{2} s^2 + \frac{1}{2 \gamma} \tilde{k}^2, \gamma > 0, \]

@@ -3,7 +3,9 @@
 ## 说明
 此仓库存有《非线性与自适应控制》笔记源码。其中内容均非原创，系结合讲义和参考书整理而成。
 
-感谢 胡维康 学长提供其笔记 _Notebook of NAC_ 的源码。感谢 李昱德 学长提供其对于 MIMO 系统鲁棒自适应控制方法的笔记。
+感谢 胡维康 学长提供其笔记 _Notebook of NAC_ 的源码。由于原笔记系用 TeXmacs 制作，导出的代码可读性不佳，目前正在修正中。
+
+感谢 李昱德 学长提供其对于 MIMO 系统鲁棒自适应控制方法的笔记。
 
 使用的模板基于 [ElegantBook](https://github.com/ElegantLaTeX/ElegantBook)。
 

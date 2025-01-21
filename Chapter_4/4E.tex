@@ -177,11 +177,11 @@ $d(t) = \dot{x} + x\hat{\theta} = 5(1 + t)^{- \frac{1}{5}} - \frac{2}{5}(1 + t)^
   \begin{tabular}{p{4.0cm}p{10.0cm}}
   \hline
    开环被控对象 & $\dot{x} =  A x + B \Lambda \left( u + \Theta^\mathrm{T} \Phi(x) \right) + d(t)$\\
-    参考模型 & $\dot{x}_{\ensuremath{\operatorname{ref}}} = 
-    A_{\ensuremath{\operatorname{ref}}} x +
-    B_{\ensuremath{\operatorname{ref}}} u_c$，其中$A_{\ensuremath{\operatorname{ref}}}$ 是 Hurwitz 的。\\
-    跟踪误差 & $e = x - x_{\ensuremath{\operatorname{ref}}}$\\
-    Lyapunov 方程 & $P A_{\ensuremath{\operatorname{ref}}} + A_{\ensuremath{\operatorname{ref}}}^{\mathrm{T}} P = -Q < 0$\\
+    参考模型 & $\dot{x}_{\refval} = 
+    A_{\refval} x +
+    B_{\refval} u_c$，其中$A_{\refval}$ 是 Hurwitz 的。\\
+    跟踪误差 & $e = x - x_{\refval}$\\
+    Lyapunov 方程 & $P A_{\refval} + A_{\refval}^{\mathrm{T}} P = -Q < 0$\\
     控制输入 & $u = -{\hat{\Theta}}^{\mathrm{T}} \Phi(x)$\\
     死区修正 & $\dot{\hat{\Theta}} = \Gamma_\Theta \Phi(x) \mu\left( \| e \| \right) e^{\mathrm{T}} P B,\mu\left( \| e \| \right)=\max\left(0,\min\left(1,\frac{\|e\|-\delta e_0}{(1-\delta)e_0}\right)\right)$或$\dot{\hat{\Theta}} = \left\{\begin{matrix}
 \Gamma_\Theta \Phi(x) e^{\mathrm{T}} P B, & \text{若} \| e \| \geq e_{0} + \delta \\

@@ -4,7 +4,7 @@
 \subtitle{Nonlinear and Adaptive Control}
 
 \oriauthor{Oliver Wu, Hye}
-\mainversion{V1.0（2025-01-04）}
+\mainversion{V0.9（2025-01-04）}
 \usepackage[iso, english]{isodate}
 % \renewcommand{\today}{\number\year 年 \number\month 月 \number\day 日}
 \date{\today}
@@ -70,7 +70,7 @@
 \makeatletter
 \AddToHook{shipout/foreground}{%
     \put(.29\paperwidth,-\paperheight){\raisebox{.2\baselineskip}%
-    {\color{gray}\small\cnormal 《非线性与自适应控制》笔记\quad \@mainversion}}%
+        {\color{gray}\small\cnormal 《非线性与自适应控制》笔记\quad \@mainversion}}%
 }
 \makeatother
 % \input{preface/preface_trans.tex}
@@ -85,48 +85,23 @@
 \mainmatter
 
 \input{Chapter_1/chapter1.tex}
-% \newpage
 \input{Chapter_1/1A.tex}
-% \input{Chapter_1/Exercises_1A.tex}
-\newpage
-% \input{Chapter_1/1B.tex}
-% \input{Chapter_1/Exercises_1B.tex}s
-% \input{Chapter_1/1C.tex}
-% \input{Chapter_1/Exercises_1C.tex}
 
 \input{Chapter_2/chapter2.tex}
-% \newpage
 \input{Chapter_2/2A.tex}
-% \input{Chapter_2/Exercises_2A.tex}
-% \newpage
 \input{Chapter_2/2B.tex}
-% \input{Chapter_2/Exercises_2B.tex}
-% \newpage
 \input{Chapter_2/2C.tex}
 \input{Chapter_2/2D.tex}
 \input{Chapter_2/2E.tex}
 
 \input{Chapter_3/chapter3.tex}
-% \newpage
 \input{Chapter_3/3A.tex}
-% \input{Chapter_3/Exercises_3A.tex}
-% \newpage
 \input{Chapter_3/3B.tex}
-% \input{Chapter_3/Exercises_3B.tex}
-% \newpage
 \input{Chapter_3/3C.tex}
-% \input{Chapter_3/Exercises_3C.tex}
-% \newpage
 \input{Chapter_3/3D.tex}
-% \input{Chapter_3/Exercises_3D.tex}
-% \newpage
 \input{Chapter_3/3E.tex}
-% \input{Chapter_3/Exercises_3E.tex}
-% \newpage
 \input{Chapter_3/3F.tex}
 \input{Chapter_3/3G.tex}
-% \input{Chapter_3/3H.tex}
-% \input{Chapter_3/Exercises_3F.tex}
 
 \input{Chapter_4/chapter4.tex}
 \input{Chapter_4/4B.tex}
@@ -136,29 +111,15 @@
 \input{Chapter_4/4F.tex}
 
 \input{Chapter_5/chapter5.tex}
-% \newpage
 \input{Chapter_5/5A.tex}
-% \input{Chapter_5/Exercises_5A.tex}
-% \newpage
 \input{Chapter_5/5B.tex}
-% \input{Chapter_5/Exercises_5B.tex}
-% \newpage
 \input{Chapter_5/5C.tex}
-% \input{Chapter_5/Exercises_5C.tex}
-% \newpage
 \input{Chapter_5/5D.tex}
-% \input{Chapter_5/Exercises_5D.tex}
 
 \input{Chapter_6/chapter6.tex}
-% \newpage
 \input{Chapter_6/6A.tex}
-% \input{Chapter_6/Exercises_6A.tex}
-% \newpage
 \input{Chapter_6/6B.tex}
-% \input{Chapter_6/Exercises_6B.tex}
-% \newpage
 \input{Chapter_6/6C.tex}
-% \input{Chapter_6/Exercises_6C.tex}
 \input{Chapter_6/6D.tex}
 \input{Chapter_6/6E.tex}
 \input{Chapter_6/6F.tex}
@@ -167,20 +128,16 @@
 
 % \index{乘法（multiplication）|see{乘积（product）}}
 
-% \newpage
-% \input{photo_credits.tex}
-
 % \backmatter
 
-% \indexprologue{\citshape \textcolor{red}{索引项尚未添加完毕。}}
 % \idxlayout{columns=3}
 % \printindex[symidx]
 % % \cleardoublepage
 % \idxlayout{columns=2}
 % \renewcommand*{\indexfont}{\small}
-\setindexprenote{\citshape 各条目按照汉语拼音排序。部分条目下有若干子条目，子条目中用波浪线“$\sim$”指代其所属的条目。}
+\setindexprenote{\citshape 各条目按照汉语拼音排序。部分条目下有若干子条目，子条目中用波浪线“$\sim$”指代其所属的条目。
+    例如，“平衡点（equilibrium point）”条目下的“孤立 ∼（isolated）”，即表示“孤立平衡点”（isolated equilibrium point）。}
 % 除部分不必或不便翻译的条目可能采用“原文【解释】”形式外，所有条目（含子条目）后附注英文原文。
-% 例如，“加法（addition）”条目下的“矩阵的$\sim$（of matrices）”，即表示“矩阵的加法”（addition of matrices）。}
 \printindex
 % \nocite{*}
 

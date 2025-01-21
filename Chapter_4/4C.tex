@@ -5,13 +5,13 @@
 \end{equation}
 其中 $x \in \mathbf{R}^n$是系统的状态， $u \in \mathbf{R}^m$ 是控制输入，$B \in \mathbf{R}^{n \times m}$ 是已知的控制矩阵，而 $A \in \mathbf{R}^{n \times n}, \Lambda \in \mathbf{R}^{m \times m}$ 是未知的常值矩阵。又假设  $\Lambda$ 是对角阵，且对角线上均为正数，且$(A, B \Lambda)$ 可控。$\Lambda$是不确定的，这是用于刻画控制失效或建模不准确，意即控制增益可能不确定，或是设计者估计的系统控制效果可能是不准确的。
 
-{\bf 控制目标是：}设计$u$，使得闭环系统的所有信号都有界，且$x$能够跟踪下述参考模型的参考状态 $x_{\ensuremath{\operatorname{ref}}}$：
+{\bf 控制目标是：}设计$u$，使得闭环系统的所有信号都有界，且$x$能够跟踪下述参考模型的参考状态 $x_{\refval}$：
  \begin{equation}
-    \dot{x}_{\ensuremath{\operatorname{ref}}} =
-    A_{\ensuremath{\operatorname{ref}}} x_{\ensuremath{\operatorname{ref}}} +
-    B_{\ensuremath{\operatorname{ref}}} u_c\label{ideal_mimo}
+    \dot{x}_{\refval} =
+    A_{\refval} x_{\refval} +
+    B_{\refval} u_c\label{ideal_mimo}
   \end{equation}
-其中$A_{\ensuremath{\operatorname{ref}}} \in \mathbf{R}^{n \times n}$ 是Hurwitz的，$B_{\ensuremath{\operatorname{ref}}} \in \mathbf{R}^{n \times m}$， $u_c \in \mathbf{R}^m$ 是有界的（虚拟）输入指令。
+其中$A_{\refval} \in \mathbf{R}^{n \times n}$ 是Hurwitz的，$B_{\refval} \in \mathbf{R}^{n \times m}$， $u_c \in \mathbf{R}^m$ 是有界的（虚拟）输入指令。
 
 首先推导理想情形。若$A \in \mathbf{R}^{n \times n}$ 与 $\Lambda \in \mathbf{R}^{m\times m}$ 已知，我们可选用如下控制律
 \[ u = K^{\ast}_1 x + K^{\ast}_2 u_c \]
@@ -21,11 +21,11 @@
 与理想情形对比可知
 \begin{equation}
   \left\{\begin{array}{l}
-    A + B \Lambda K^{\ast}_1 = A_{\ensuremath{\operatorname{ref}}}\\
-    B \Lambda K^{\ast}_2 = B_{\ensuremath{\operatorname{ref}}}
+    A + B \Lambda K^{\ast}_1 = A_{\refval}\\
+    B \Lambda K^{\ast}_2 = B_{\refval}
   \end{array}\right. \label{matching:condition:GLS}
 \end{equation}
-上式称为匹配条件（matching conditions）。我们应注意，一般地，无法保证满足 \eqref{matching:condition:GLS} 的理想增益阵$K^{\ast}_1, K^{\ast}_2$存在。不过，在实际应用中，如果$A, B$的结构已知，可以设计 $A_{\ensuremath{\operatorname{ref}}}, B_{\ensuremath{\operatorname{ref}}}$ 以保证 \eqref{matching:condition:GLS} 有解。
+上式称为匹配条件（matching conditions）。我们应注意，一般地，无法保证满足 \eqref{matching:condition:GLS} 的理想增益阵$K^{\ast}_1, K^{\ast}_2$存在。不过，在实际应用中，如果$A, B$的结构已知，可以设计 $A_{\refval}, B_{\refval}$ 以保证 \eqref{matching:condition:GLS} 有解。
 
 下面假设满足 \eqref{matching:condition:GLS} 的$K^{\ast}_1, K^{\ast}_2$存在（there is sufficient structure flexibility to meet the control
 objective）。由于$\Lambda$未知，我们提出以下含可变矩阵参数的控制律
@@ -33,24 +33,24 @@ objective）。由于$\Lambda$未知，我们提出以下含可变矩阵参数�
 代入 \eqref{Sys:MRAC:MIMO} 可得
 \begin{align}
     \dot{x}&=A  x + B \Lambda (\hat{K}_1 (t) x + \hat{K}_2 (t) u_c)+
-    \underbrace{A_{\ensuremath{\operatorname{ref}}} x +
-    B_{\ensuremath{\operatorname{ref}}} u_c-A_{\ensuremath{\operatorname{ref}}} x -
-    B_{\ensuremath{\operatorname{ref}}} u_c}_{\text{增减期望形式}}\nonumber\\
-    &=A_{\ensuremath{\operatorname{ref}}} x +
-    B_{\ensuremath{\operatorname{ref}}} u_c+(A + B \Lambda \hat{K}_1 (t)-A_{\ensuremath{\operatorname{ref}}}) x+(B\Lambda\hat{K}_2 (t)-B_{\ensuremath{\operatorname{ref}}}) u_c\nonumber\\
-    &=A_{\ensuremath{\operatorname{ref}}} x +
-    B_{\ensuremath{\operatorname{ref}}} u_c+(B \Lambda \hat{K}_1 (t)-B \Lambda K^{\ast}_1) x+(B\Lambda\hat{K}_2 (t)-B \Lambda K^{\ast}_2) u_c\label{mimo_dotx}
+    \underbrace{A_{\refval} x +
+    B_{\refval} u_c-A_{\refval} x -
+    B_{\refval} u_c}_{\text{增减期望形式}}\nonumber\\
+    &=A_{\refval} x +
+    B_{\refval} u_c+(A + B \Lambda \hat{K}_1 (t)-A_{\refval}) x+(B\Lambda\hat{K}_2 (t)-B_{\refval}) u_c\nonumber\\
+    &=A_{\refval} x +
+    B_{\refval} u_c+(B \Lambda \hat{K}_1 (t)-B \Lambda K^{\ast}_1) x+(B\Lambda\hat{K}_2 (t)-B \Lambda K^{\ast}_2) u_c\label{mimo_dotx}
 \end{align}
 第三行是将 \eqref{matching:condition:GLS} 代入。记参数估计误差 $\tilde{K}_1 \triangleq \hat{K}_1 {- K_1^{\ast}} , \tilde{K}_2
 \triangleq \hat{K}_2 {- K_2^{\ast}} $，则
-\[ \dot{x} = A_{\ensuremath{\operatorname{ref}}}  x +
-   B_{\ensuremath{\operatorname{ref}}} u_c + B \Lambda  \tilde{K}_1 x + B
+\[ \dot{x} = A_{\refval}  x +
+   B_{\refval} u_c + B \Lambda  \tilde{K}_1 x + B
    \Lambda  \tilde{K}_2 u_c \]
 
 定义跟踪误差 $e \triangleq x -
-x_{\ensuremath{\operatorname{ref}}}$。根据 \eqref{ideal_mimo} 和 \eqref{mimo_dotx}，写出误差动力学
+x_{\refval}$。根据 \eqref{ideal_mimo} 和 \eqref{mimo_dotx}，写出误差动力学
 \begin{equation}
-  \dot{e} = A_{\ensuremath{\operatorname{ref}}} e + B \Lambda  \tilde{K}_1 x +
+  \dot{e} = A_{\refval} e + B \Lambda  \tilde{K}_1 x +
   B \Lambda  \tilde{K}_2 u_c \label{errsys:MRAC:GLS}
 \end{equation}
 类比之前的构造，考虑如下“形式上的”Lyapunov函数
@@ -59,15 +59,15 @@ x_{\ensuremath{\operatorname{ref}}}$。根据 \eqref{ideal_mimo} 和 \eqref{mimo
 \end{align*}
 由于其中的$e,\tilde{K}_1,\tilde{K}_2$都是向量或矩阵，而Lyapunov函数输出是标量，上式要做相应的修改。
 
-首先，将$\frac12e^2$换成$\frac12e^\mathrm{T}e$。求其导数得\[e^\mathrm{T}\dot{e}=e^\mathrm{T}A_{\ensuremath{\operatorname{ref}}} e+\dots\]
-省略的项待与后面的项合并。仅考察第一项，我们发现由于$A_{\ensuremath{\operatorname{ref}}}$未必负定，则第一项并不保证为负定。后续若要类似之前思路保留该项则不可行。考虑重新设计此项为\[e^\mathrm{T}\textcolor{second}{P}e\]
+首先，将$\frac12e^2$换成$\frac12e^\mathrm{T}e$。求其导数得\[e^\mathrm{T}\dot{e}=e^\mathrm{T}A_{\refval} e+\dots\]
+省略的项待与后面的项合并。仅考察第一项，我们发现由于$A_{\refval}$未必负定，则第一项并不保证为负定。后续若要类似之前思路保留该项则不可行。考虑重新设计此项为\[e^\mathrm{T}\textcolor{second}{P}e\]
 其中$P$为正定阵。则此项导数是
-\[e^\mathrm{T}P\dot{e}+\dot{e}^\mathrm{T}Pe=e^\mathrm{T}(A_{\ensuremath{\operatorname{ref}}}^\mathrm{T} P + P A_{\ensuremath{\operatorname{ref}}}) e+\dots\]
-由于 $A_{\ensuremath{\operatorname{ref}}}$ 是 Hurwitz的，根据定理 \ref{linearlya}，我们可知对任意正定矩阵 $Q \in \mathbf{R}^{n \times
+\[e^\mathrm{T}P\dot{e}+\dot{e}^\mathrm{T}Pe=e^\mathrm{T}(A_{\refval}^\mathrm{T} P + P A_{\refval}) e+\dots\]
+由于 $A_{\refval}$ 是 Hurwitz的，根据定理 \ref{linearlya}，我们可知对任意正定矩阵 $Q \in \mathbf{R}^{n \times
 n}$，都存在唯一正定阵 $P \in \mathbf{R}^{n \times n}$
 使得
-\[ A_{\ensuremath{\operatorname{ref}}}^\mathrm{T} P + P 
-   A_{\ensuremath{\operatorname{ref}}} = - Q < 0 \]
+\[ A_{\refval}^\mathrm{T} P + P 
+   A_{\refval} = - Q < 0 \]
 则第一项必为负定。
 
 然后，将$\tilde{K}_1^2$换为\[\tr(\tilde{K}_1^\mathrm{T}\tilde{K}_1)\]
@@ -86,13 +86,13 @@ V=e^\mathrm{T}Pe+\tr(\tilde{K}_1^\mathrm{T}\tilde{K}_1)+\tr(\tilde{K}_2^\mathrm{
   \dot{V} & =e^\mathrm{T}P\dot{e}+\dot{e}^\mathrm{T}Pe + 2\ensuremath{\operatorname{tr}} \{
   \tilde{K}^\mathrm{T}_1 \dot{\hat{K}} _1 \} + 2\ensuremath{\operatorname{tr}}
   \{ \tilde{K}^\mathrm{T}_2 \dot{\hat{K}} _2 \}\\
-  & = e^\mathrm{T}P( A_{\ensuremath{\operatorname{ref}}} e + B \Lambda  \tilde{K}_1 x +
-  B \Lambda  \tilde{K}_2 u_c)+(A_{\ensuremath{\operatorname{ref}}} e + B \Lambda  \tilde{K}_1 x +
+  & = e^\mathrm{T}P( A_{\refval} e + B \Lambda  \tilde{K}_1 x +
+  B \Lambda  \tilde{K}_2 u_c)+(A_{\refval} e + B \Lambda  \tilde{K}_1 x +
   B \Lambda  \tilde{K}_2 u_c)^\mathrm{T}Pe\\
   &\quad+
   2\ensuremath{\operatorname{tr}} \{ \tilde{K}^\mathrm{T}_1 \dot{\hat{K}} _1 \}
   + 2\ensuremath{\operatorname{tr}} \{ \tilde{K}^\mathrm{T}_2 \dot{\hat{K}} _2 \}\\
-  & = e^\mathrm{T}(A_{\ensuremath{\operatorname{ref}}}^\mathrm{T} P + P A_{\ensuremath{\operatorname{ref}}}) e+{e}^\mathrm{T}PB\Lambda\tilde{K}_1x+(B\Lambda \tilde{K}_1x)^\mathrm{T}Pe+{e}^\mathrm{T}PB\Lambda
+  & = e^\mathrm{T}(A_{\refval}^\mathrm{T} P + P A_{\refval}) e+{e}^\mathrm{T}PB\Lambda\tilde{K}_1x+(B\Lambda \tilde{K}_1x)^\mathrm{T}Pe+{e}^\mathrm{T}PB\Lambda
   \tilde{K}_2u_c\\
   &\quad +(B\Lambda \tilde{K}_2u_c)^\mathrm{T}Pe+
   2\ensuremath{\operatorname{tr}} \{ \tilde{K}^\mathrm{T}_1 \dot{\hat{K}} _1 \}
@@ -102,7 +102,7 @@ V=e^\mathrm{T}Pe+\tr(\tilde{K}_1^\mathrm{T}\tilde{K}_1)+\tr(\tilde{K}_2^\mathrm{
 \[{e}^\mathrm{T}PB\Lambda\tilde{K}_1x=({e}^\mathrm{T}PB\Lambda\tilde{K}_1x)^\mathrm{T}=(B\Lambda\tilde{K}_1x)^\mathrm{T}P^\mathrm{T}(e^\mathrm{T})^\mathrm{T}=(B\Lambda\tilde{K}_1x)^\mathrm{T}Pe\]
 类似处理${e}^\mathrm{T}PB\Lambda\tilde{K}_2u_c$。则
 \begin{align}
- \dot{V} & = e^\mathrm{T}(A_{\ensuremath{\operatorname{ref}}}^\mathrm{T} P + P A_{\ensuremath{\operatorname{ref}}}) e+ 2 e^\mathrm{T}  P  B \Lambda 
+ \dot{V} & = e^\mathrm{T}(A_{\refval}^\mathrm{T} P + P A_{\refval}) e+ 2 e^\mathrm{T}  P  B \Lambda 
   \tilde{K}_1 x + 2 e^\mathrm{T} P  B \Lambda  \tilde{K}_2 u_c +
   2\ensuremath{\operatorname{tr}} \{ \tilde{K}^\mathrm{T}_1  \dot{\hat{K}} _1 \}
   + 2\ensuremath{\operatorname{tr}} \{ \tilde{K}^\mathrm{T}_2  \dot{\hat{K}} _2
@@ -147,8 +147,8 @@ V=e^\mathrm{T}Pe+\tr(\tilde{K}_1^\mathrm{T}\tilde{K}_1)+\tr(\tilde{K}_2^\mathrm{
 \[ \dot{V} = - e^\mathrm{T} Q  e \leq 0 \]
 于是$V (t) \leq V (0)$，$V$有界，由 \eqref{MODMIMOLYA:modify2} 的形式可知 $e, \tilde{K}_1, \tilde{K}_2 \in
 \mathbf{L}_{\infty}$。由于$u_c$ 有界且
-$A_{\ensuremath{\operatorname{ref}}}$ 是 Hurwitz的，所以
-$x_{\ensuremath{\operatorname{ref}}} \in \mathbf{L}_{\infty}$。又知 $x = e +x_{\ensuremath{\operatorname{ref}}}$，所以$x \in \mathbf{L}_{\infty}$。根据 \eqref{errsys:MRAC:GLS}，$\dot{e} \in \mathbf{L}_{\infty}$。对$V$再求一阶导数，有
+$A_{\refval}$ 是 Hurwitz的，所以
+$x_{\refval} \in \mathbf{L}_{\infty}$。又知 $x = e +x_{\refval}$，所以$x \in \mathbf{L}_{\infty}$。根据 \eqref{errsys:MRAC:GLS}，$\dot{e} \in \mathbf{L}_{\infty}$。对$V$再求一阶导数，有
 \[ \ddot{V} = - 2 e^\mathrm{T} Q  \dot{e} \in \mathbf{L}_{\infty} \]
 用 Barbalat引理（\ref{barbalat}），有$\lim\limits_{t \rightarrow \infty} \dot{V} = 0$，也即$\lim\limits_{t \rightarrow \infty} e (t) = 0$。
 
@@ -160,10 +160,10 @@ $x_{\ensuremath{\operatorname{ref}}} \in \mathbf{L}_{\infty}$。又知 $x = e +x
   \begin{tabular}{p{4.0cm}p{10.0cm}}
     \hline
     开环被控对象 & $\dot{x} = A  x + B \Lambda u$。其中$(A,B\Lambda)$能控，$ A, \Lambda $ 未知，$B$已知，$\Lambda$为对角阵且对角线元素全为正\\
-    参考模型 & $\dot{x}_{\ensuremath{\operatorname{ref}}} =
-    A_{\ensuremath{\operatorname{ref}}} x_{\ensuremath{\operatorname{ref}}} +
-    B_{\ensuremath{\operatorname{ref}}} u_c$，其中$ A_{\ensuremath{\operatorname{ref}}}$是Hurwitz的\\
-    跟踪误差 & $e \triangleq x - x_{\ensuremath{\operatorname{ref}}}$\\
+    参考模型 & $\dot{x}_{\refval} =
+    A_{\refval} x_{\refval} +
+    B_{\refval} u_c$，其中$ A_{\refval}$是Hurwitz的\\
+    跟踪误差 & $e \triangleq x - x_{\refval}$\\
     控制输入 & $u = \hat{K}_1 (t) x + \hat{K}_2 (t) u_c$\\
     直接型MRAC控制律& $\dot{\hat{K}} _1 = - B^\mathrm{T}  P  e  x^\mathrm{T}, \dot{\hat{K}} _2 = - B^\mathrm{T}  P  e  u^\mathrm{T}_c$，$P$为正定阵\\
     \hline
@@ -184,12 +184,12 @@ $x_{\ensuremath{\operatorname{ref}}} \in \mathbf{L}_{\infty}$。又知 $x = e +x
        \Lambda | \tilde{K} _1 \} +\ensuremath{\operatorname{tr}} \{
        \tilde{K}^\mathrm{T}_2 | \Lambda | \tilde{K} _2 \} \]
     则可得
-    \[ \dot{\hat{K}} _1 = -\ensuremath{\operatorname{sgn}} (\Lambda) B^\mathrm{T}  P  e
-       x^\mathrm{T}, \dot{\hat{K}} _2 = -\ensuremath{\operatorname{sgn}} (\Lambda) B^\mathrm{T}
+    \[ \dot{\hat{K}} _1 = -\sgn (\Lambda) B^\mathrm{T}  P  e
+       x^\mathrm{T}, \dot{\hat{K}} _2 = -\sgn (\Lambda) B^\mathrm{T}
        P  e  u^\mathrm{T}_c \]
-    其中 $| \Lambda | \triangleq \Lambda \ensuremath{\operatorname{sgn}}
-    (\Lambda)$, $\ensuremath{\operatorname{sgn}} (\Lambda) \triangleq
-    \ensuremath{\operatorname{diag}} \{ \ensuremath{\operatorname{sgn}}
+    其中 $| \Lambda | \triangleq \Lambda \sgn
+    (\Lambda)$, $\sgn (\Lambda) \triangleq
+    \ensuremath{\operatorname{diag}} \{ \sgn
     (\lambda_i) \}$。
 \end{hint}
 
