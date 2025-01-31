@@ -133,10 +133,6 @@
   pdfstartview=FitH,
   pdfborder={0 0 0},
   linktocpage
-  % pdfauthor = {(作者)Sheldon Axler; (译者)吴俊达, 何阳},
-	% pdftitle = {Linear Algebra Done Right},
-	% pdfkeywords = {linear algebra, ElegantBook},
-  % pdfsubject = {linear algebra}
 }
 \usepackage{bookmark}
 \newif\ifELEGANT@Hy@later
@@ -1505,17 +1501,9 @@
 % \restoregeometry
 % \thispagestyle{empty}}
 
-\RequirePackage{pdfpages}
 \renewcommand*{\maketitle}{%
 \hypersetup{pageanchor=false}
 \pagenumbering{Alph}
-% color
-% \includepdf[pages=1,picturecommand*={%
-% \put(89,227){\Huge $F_n=\frac{1}{\sqrt{5}}\left[\left(\frac{1+\sqrt5}{2}\right)^n-\left(\frac{1-\sqrt5}{2}\right)^n\right]$}%
-% }]{titlepage1.pdf}
-% \thispagestyle{empty}
-% \newpage
-% black and white
 \begin{titlepage}
   \newgeometry{margin = 1in}
   \parindent=0pt
@@ -1525,33 +1513,11 @@
   % \vfill
 	\makeatletter
 	\HRule \\[0.4cm]
-	{ \Huge \bfseries \@title}\\[0.4cm]
+	{\Huge \bfseries \@title}\\[0.4cm]
   {\Huge\bfseries\ifcsname @subtitle\endcsname\@subtitle}\\[0.4cm]
 	\HRule \\[1.5cm]
-  % \begin{minipage}{0.3\textwidth}
-		% 	\begin{flushleft} \large
-			% 		{\bf \oriauthorname}\\
-			% 		\textup{\@oriauthor}
-		% 	\end{flushleft}
-	% \end{minipage}
-  % \begin{minipage}{0.3\textwidth}
-		% 	\begin{center} \large
-			% 		{\@date}
-			% 		% {\versionname\@version}
-		% 	\end{center}
-	% \end{minipage}
-	% \begin{minipage}{0.3\textwidth}
-		% 	\begin{flushright} \large
-			% 		{\bf \transauthorname} \\
-			% 		\textup{\@transauthor}
-		% 	\end{flushright}
-	% \end{minipage}\\[1.5cm]
-  % \begin{center}
-  %   \begin{tabular*}{\textwidth}{p{0.36\textwidth}<{\raggedleft} p{0.5\textwidth}<{\raggedright}}
-      {\bf \Large \oriauthorname} \quad {\Large\@oriauthor}\\
-  %     {\bf \Large \transauthorname} &	{\Large\@transauthor}
-  %   \end{tabular*}
-  % \end{center}
+  {\bf \Large \oriauthorname} \quad {\Large\@oriauthor}\\
+  % {\bf \Large \transauthorname} \quad {\Large\@transauthor}\\
   \vspace{2cm}
   {\Large 主版本：\@mainversion}\\
   \vspace{1cm}
@@ -1559,52 +1525,8 @@
   % \vspace{1cm}
   \vspace{1cm}
 	\makeatother
-	% {\hspace{4em}}\\[1cm] 
-  % {\Huge $F_n=\frac{1}{\sqrt{5}}\left[\left(\frac{1+\sqrt5}{2}\right)^n-\left(\frac{1-\sqrt5}{2}\right)^n\right]$}
-  % \vfill
-  % \begin{center}
-  %   \begin{tabular*}{\textwidth}{cc}
-  %   \includegraphics[width=0.32\textwidth]{image/artworkT/by-nc.pdf}
-  %   & \begin{minipage}[b]{0.6\textwidth}
-  %     \small\bf
-  %     本作品采用知识共享 署名-非商业性使用 4.0 国际 许可协议进行许可。访问 \url{https://creativecommons.org/licenses/by-nc/4.0/} 查看该许可协议。
-  %   \end{minipage}
-  % \end{tabular*}
-  % \end{center}
   \vspace{1cm}
 \end{titlepage}
-% \thispagestyle{empty}
-% \newpage
-% \begin{titlepage}
-%   \newgeometry{margin = 1in}
-%   \parindent=0pt
-% 	\quad\\[1cm]
-%   \begin{center}
-%   {\Large\bf 修订日期：\@date}
-%   \end{center}
-%   \vfill
-%   \begin{tabular*}{\textwidth}{p{0.2\textwidth}<{\raggedright} p{0.8\textwidth}<{\raggedright}}
-%     {\bf 封面上的等式：} & \parbox[t]{0.7\textwidth}{第$n$个斐波那契数的公式。\\%
-%                           \ref{5Dref} 节习题的第 \ref{item:ex_5d_21} 题用线性代数导出了这个公式。}
-%   \end{tabular*}
-%   \begin{center}
-%     \begin{tabular*}{\textwidth}{p{0.5\textwidth}<{\raggedright} p{0.4\textwidth}<{\raggedright}}
-%       \parbox{0.5\textwidth}{\bf 原书发布网址：\\ \url{\ifcsname @urlauthor\endcsname\@urlauthor\fi}} & \parbox{0.4\textwidth}{\bf 原书反馈邮箱：\\ \mailto{\ifcsname @mailauthor\endcsname\@mailauthor\fi}}\\[0.7cm]
-%       \parbox{0.5\textwidth}{\bf 翻译版发布网址：\\ \url{\ifcsname @urltrans\endcsname\@urltrans\fi} \\ \url{\ifcsname @urltranstwo\endcsname\@urltranstwo\fi}} &	\parbox{0.4\textwidth}{\bf 翻译版反馈邮箱：\\ \mailto{\ifcsname @mailtrans\endcsname\@mailtrans\fi}}
-%     \end{tabular*}
-%   \end{center}
-%   % \vspace{0.5cm}
-%   \begin{center}
-%     \begin{tabular*}{\textwidth}{cc}
-%     \includegraphics[width=0.32\textwidth]{image/artworkT/by-nc.pdf}
-%     & \begin{minipage}[b]{0.6\textwidth}
-%       \small\bf
-%       本作品采用知识共享 署名-非商业性使用 4.0 国际 许可协议进行许可。访问 \url{https://creativecommons.org/licenses/by-nc/4.0/} 查看该许可协议。
-%     \end{minipage}
-%   \end{tabular*}
-%   \end{center}
-%   \vspace{1cm}
-% \end{titlepage}
 \thispagestyle{empty}
 \restoregeometry
 \hypersetup{pageanchor=true}
