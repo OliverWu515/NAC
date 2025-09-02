@@ -15,17 +15,17 @@
 
 前两点目标是我们一直探讨的话题。特殊的是第三点目标。我们采取下面这样一类函数来描述这个目标。
 \begin{definition}[性能函数（performance function）]\label{performance_func}
-   称光滑的函数$\rho(t):\mathbf{R}_+\to\mathbf{R}_+$
+   称光滑的函数$\rho(t):\mathbb{R}_+\to\mathbb{R}_+$
    为{\bf 性能函数}，若其满足
    \begin{itemize}[leftmargin=1em]
-    \item $\rho(t):\mathbf{R}_+\to\mathbf{R}_+$为正且递减；
+    \item $\rho(t):\mathbb{R}_+\to\mathbb{R}_+$为正且递减；
     \item $\lim\limits_{t\to\infty}\rho(t)=\rho_\infty>0$。
 \end{itemize}
 \end{definition}
 \begin{example}[性能函数]
    $\rho(t)=(\rho_0-\rho_{\infty})\mathrm{e}^{-\lambda t}+\rho_\infty$（$\lambda,\rho_0,\rho_{\infty}>0$）是一个性能函数。其图形如下：
    \begin{center}
-       \includegraphics[scale=0.5]{figure/adaptive/p.pdf}
+       \includegraphics[scale=0.6]{figure/adaptive/p.pdf}
        \captionsetup{hypcap=false}
        \captionof{figure}{上述性能函数的图形（$\lambda=1,\rho_0=2,\rho_{\infty}=0.1$）}
    \end{center}

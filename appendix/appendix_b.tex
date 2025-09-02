@@ -6,7 +6,7 @@
 \begin{equation} \label{MIMO_sys_disturbance}
     \dot{x} = A x + B \Lambda (u + \Theta \Phi(x)) + \xi(t) \text{，}
 \end{equation}
-其中状态 $x \in \mathbf{R}^n$，控制输入 $u \in \mathbf{R}^m$，矩阵 $B \in \mathbf{R}^{n \times m}$ 已知，矩阵 $A \in \mathbf{R}^{n \times n}$ 和 $\Lambda \in \mathbf{R}^{m \times m}$ 未知，$\Lambda$ 是对角正定阵，矩阵对 $(A, B \Lambda)$ 能控，$\Phi(x) \in \mathbf{R}^n$ 是连续且已知的函数，未知常值参数矩阵 $\Theta \in \mathbf{R}^{n \times m}$，$\xi(t) \in \mathbf{R}^n$ 是时变而一致有界的扰动（$\| \xi(t) \| \leq d_{\mathrm{max}}$）。% theta 转置
+其中状态 $x \in \mathbb{R}^n$，控制输入 $u \in \mathbb{R}^m$，矩阵 $B \in \mathbb{R}^{n \times m}$ 已知，矩阵 $A \in \mathbb{R}^{n \times n}$ 和 $\Lambda \in \mathbb{R}^{m \times m}$ 未知，$\Lambda$ 是对角正定阵，矩阵对 $(A, B \Lambda)$ 能控，$\Phi(x) \in \mathbb{R}^n$ 是连续且已知的函数，未知常值参数矩阵 $\Theta \in \mathbb{R}^{n \times m}$，$\xi(t) \in \mathbb{R}^n$ 是时变而一致有界的扰动（$\| \xi(t) \| \leq d_{\mathrm{max}}$）。% theta 转置
 可采用如下自适应控制律：
 \begin{align*}
     u &= \hat{K}(t)x - \hat{\Theta}\Phi(x), \\

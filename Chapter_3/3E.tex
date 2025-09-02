@@ -14,7 +14,7 @@
 \end{example}
 这个例子启示我们，从收敛性不可直接推断导数趋于$0$，需要附加条件。
 \begin{definition}[一致连续（uniform continuity）]
-    称函数$f(t) : [0,\infty) \rightarrow \mathbf{R}$ 是{\bf 一致连续的（uniformly continuous）}\index{一致连续的（uniformly continuous）}，若
+    称函数$f(t) : [0,\infty) \rightarrow \mathbb{R}$ 是{\bf 一致连续的（uniformly continuous）}\index{一致连续的（uniformly continuous）}，若
      \[\forall \varepsilon > 0, \exists \delta
   = \delta (\varepsilon) > 0, \forall | t_2 - t_1 | \leq \delta \Rightarrow |
   f (t_2) - f (t_1) | \leq \varepsilon\]
@@ -145,12 +145,12 @@
    \begin{align*}
   \|x\|_{\infty}=\sup_{t\geq 0} |x(t)|.
   \end{align*}
-  \item 若$\|x\|_p$存在（有界），则称 $x\in\mathbf{L}_p$。
+  \item 若$\|x\|_p$存在（有界），则称 $x\in\mathbb{L}_p$。
 \end{itemize}
  注：在本定义中，使用$|x|$来表示$x$的绝对值（若$x$为标量）或$x$的欧几里得范数（若$x$为向量）。
 \end{definition}
 \begin{corollary}\label{barbalat_cor_1}
-  若连续可微函数$x(t)\in \mathbf{L}_p\cap \mathbf{L}_\infty$（$p\in[1,\infty)$），且$\dot{x}\in \mathbf{L}_\infty$，则$\lim\limits_{t \rightarrow \infty}x(t)=0$。
+  若连续可微函数$x(t)\in \mathbb{L}_p\cap \mathbb{L}_\infty$（$p\in[1,\infty)$），且$\dot{x}\in \mathbb{L}_\infty$，则$\lim\limits_{t \rightarrow \infty}x(t)=0$。
 \end{corollary}
 证明略。
 \begin{note}
@@ -160,11 +160,11 @@
     &\Updownarrow & \Updownarrow & &\\
     \text{待证结论}&\int^t_0  x^p (\tau) \diff \tau\ \text{具有有限极限} & x^p\ \text{对}\ t\ \text{一致连续} & \implies & x^p\to 0 \implies x\to 0\\
     &\Uparrow &\Uparrow && \\
-    & x\in\mathbf{L}_p\ \text{的定义}& \frac{\diff x^p}{\diff t}\ \text{有界}&\Leftarrow&x,\dot{x}\in \mathbf{L}_\infty
+    & x\in\mathbb{L}_p\ \text{的定义}& \frac{\diff x^p}{\diff t}\ \text{有界}&\Leftarrow&x,\dot{x}\in \mathbb{L}_\infty
   \end{matrix}\]
 \end{note}
 % \begin{corollary}\label{barbalat_cor_2}
-%   若连续可微函数$x(t)\in \mathbf{L}_1\cap \mathbf{L}_\infty$，且$\dot{x}\in \mathbf{L}_\infty$，则$\lim\limits_{t \rightarrow \infty}x(t)=0$。
+%   若连续可微函数$x(t)\in \mathbb{L}_1\cap \mathbb{L}_\infty$，且$\dot{x}\in \mathbb{L}_\infty$，则$\lim\limits_{t \rightarrow \infty}x(t)=0$。
 % \end{corollary}
 % \begin{hint}
 %     \[\int^t_0  x^2 (\tau)\diff \tau\le \max(|x(t)|)\int^t_0  |x (\tau)|\diff \tau<\infty\]

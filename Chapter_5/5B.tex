@@ -4,9 +4,9 @@
     这和通过（利用雅可比矩阵的）局部线性化完全不同，因为反馈线性化是通过{\bf 精确的}状态变换和反馈全局完成的，而不是通过取动力学的局部线性{\bf 近似}。
 \end{note}
 
-{\bf 问题陈述：} 给定$\dot{x} = f (x, u), x \in \mathbf{R}^n, u
-  \in \mathbf{R}^m$，求出函数$g, h$、矩阵$A \in \mathbf{R}^{n \times n}, B \in \mathbf{R}^{n\times m}$，以及新变量$z \in
-  \mathbf{R}^n, v \in \mathbf{R}^m$，使得
+{\bf 问题陈述：} 给定$\dot{x} = f (x, u), x \in \mathbb{R}^n, u
+  \in \mathbb{R}^m$，求出函数$g, h$、矩阵$A \in \mathbb{R}^{n \times n}, B \in \mathbb{R}^{n\times m}$，以及新变量$z \in
+  \mathbb{R}^n, v \in \mathbb{R}^m$，使得
   \begin{align*}
       u &= g (x, v)&\text{{\small（控制输入，将系统本来的控制输入和线性化系统的控制输入联系起来）}}\\
       z &= h (x),&\text{{\small（原状态与新状态的变换，将原状态与线性化后的新状态联系起来）}}\\

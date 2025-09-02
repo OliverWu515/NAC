@@ -164,7 +164,7 @@ $d(t) = \dot{x} + x\hat{\theta} = 5(1 + t)^{- \frac{1}{5}} - \frac{2}{5}(1 + t)^
     \dot{x} = A x + B \Lambda \left( u + \Theta^\mathrm{T} \Phi(x) \right) + d(t) \text{，}
 \end{equation}
 % 讲义上是 \Phi(t)
-其中 $x \in \mathbf{R}^n$，控制输入 $u \in \mathbf{R}^m$，$A \in \mathbf{R}^{n \times n}$ 和 $B \in \mathbf{R}^{n \times m}$ 已知，未知的常值矩阵 $\Lambda \in \mathbf{R}^{m \times m}$ 是对角正定阵，$\Phi(x) \in \mathbf{R}^n$ 是连续且已知的函数，未知常值参数 $\Theta \in \mathbf{R}^{n \times m}$，$d(t) \in \mathbf{R}^n$ 是有界且时变的扰动（$\| d(t) \| \leq d_{\mathrm{max}}$）。
+其中 $x \in \mathbb{R}^n$，控制输入 $u \in \mathbb{R}^m$，$A \in \mathbb{R}^{n \times n}$ 和 $B \in \mathbb{R}^{n \times m}$ 已知，未知的常值矩阵 $\Lambda \in \mathbb{R}^{m \times m}$ 是对角正定阵，$\Phi(x) \in \mathbb{R}^n$ 是连续且已知的函数，未知常值参数 $\Theta \in \mathbb{R}^{n \times m}$，$d(t) \in \mathbb{R}^n$ 是有界且时变的扰动（$\| d(t) \| \leq d_{\mathrm{max}}$）。
 
 下表 \ref{table:MIMO_robust_MRAC} 来自前言中参考文献5的表 11.1（略有修改），具体推导见附录 \ref{MIMO_robust}。
 

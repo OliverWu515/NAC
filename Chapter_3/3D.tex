@@ -48,12 +48,12 @@
 \end{proof}
 
 \begin{corollary}
-  假设存在连续可微且对称的 $P (t) \in \mathbf{R}^{n \times n}$，并存在 $0 < c_1 < c_2 < \infty$
+  假设存在连续可微且对称的 $P (t) \in \mathbb{R}^{n \times n}$，并存在 $0 < c_1 < c_2 < \infty$
   使得
   \begin{equation}\label{pbounded}
     c_1 I \leq P (t) \leq c_2 I, \forall t \geq 0
   \end{equation}
-  进一步，假设某个连续可微且对称的 $Q (t) \in \mathbf{R}^{n \times n}$满足对于任意$t>0$有
+  进一步，假设某个连续可微且对称的 $Q (t) \in \mathbb{R}^{n \times n}$满足对于任意$t>0$有
   \[ Q (t) \geq c_3 I > 0 \]
   \[ \dot{P} (t) + P (t) A (t) + A^\mathrm{T} (t) P (t) = - Q (t) \]
   那么 \eqref{Sys:LTVS} 的原点是全局一致渐近稳定（也是全局一致指数稳定）的。
@@ -77,7 +77,7 @@
   A^\mathrm{T} (t) A (t) \diff  t < \infty$，那么系统 \eqref{Sys:LTVS} 的平衡点$x=0$是全局一致渐近稳定的。
 \end{corollary}
 \begin{theorem}[利用线性化判别非自治系统的稳定性]
-    令 $x = 0$ 是系统 \eqref{freeofnonauto} 的平衡点，其中$f$是$C^1$的，$D=\{x\in \mathbf{R}^n:\|x\|<r\}$。
+    令 $x = 0$ 是系统 \eqref{freeofnonauto} 的平衡点，其中$f$是$C^1$的，$D=\{x\in \mathbb{R}^n:\|x\|<r\}$。
     雅可比矩阵$\frac{\partial f}{\partial x}$有界且在$D$上Lipschitz（对$t$一致）。令$A(t)=\left.\frac{\partial f}{\partial x}(t,x)\right|_{x=0}$。
     那么原点是指数稳定的，当且仅当其对于线性系统 \eqref{Sys:LTVS}（以上述$A(t)$为系统矩阵）是指数稳定的。
 \end{theorem}

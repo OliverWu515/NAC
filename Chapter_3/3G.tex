@@ -93,10 +93,10 @@
 \section*{级联系统}
 
 考虑级联系统
-\begin{eqnarray}
-    \dot{x}_1 & = & f_1 (t, x_1, x_2)  \label{cascade:state:1}\\
-    \dot{x}_2 & = & f_2 (t, x_2)  \label{cascade:state:2}
-\end{eqnarray}
+\begin{align*}
+    \dot{x}_1 & = f_1 (t, x_1, x_2)  \label{cascade:state:1}\\
+    \dot{x}_2 & = f_2 (t, x_2)  \label{cascade:state:2}
+\end{align*}
 其中子系统 $\dot{x}_1 = f_1 (t, x_1, 0)$ 的平衡点 $x_1 = 0$ 是全局一致渐近稳定的（GUAS），$\dot{x}_2 = f_2(t, x_2)$ 的平衡点 $x_2 = 0$ 也是全局一致渐近稳定的（GUAS）。那么在什么条件下，这个级联系统的原点 $x = (x_1, x_2) = 0$ 也是全局一致渐近稳定的（GUAS）？
 
 这里我们不加证明地给出一条引理。

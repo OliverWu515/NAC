@@ -86,7 +86,7 @@
   \[V (x) = \frac{1}{2} x^2_1 + \frac{1}{2\textcolor{structurecolor}{\gamma}} (x_2 - k_0)^2, \dot{V}  =  (a - k_0)  x^2_1\]
   取 $k_0 > a$，则 $\dot{V} \leq 0$。
 
-  接下来应用LaSalle定理。首先定义不变集$\Omega = \{ x \in \mathbf{R}^2 : V (x) \leq c \},c>0$。
+  接下来应用LaSalle定理。首先定义不变集$\Omega = \{ x \in \mathbb{R}^2 : V (x) \leq c \},c>0$。
   则集合$E =\{ x \in \Omega :\dot{V}= 0 \}= \{ x \in \Omega : x_1 = 0 \}$。进而由本例开头的分析知$M = E$。
   根据 \ref{lasalle}，解会收敛至$x_1=0$上，也即$\lim\limits_{t \rightarrow \infty} x_1 (t) = 0$。
   又知$V(x)$径向无界，所以由 \ref{lasallegas}，此结论全局成立。
@@ -131,7 +131,7 @@
     & =  - (x^2_1 + x^2_2 - \beta^2)^2 (x^2_1 + x^2_2)\leq 0
   \end{align*}
   构造集合$\Omega_c =
-  \{ x \in \mathbf{R}^2 : V (x) \leq c \},c > 0$。因为$\dot{V} \leq 0$，所以这是不变集。
+  \{ x \in \mathbb{R}^2 : V (x) \leq c \},c > 0$。因为$\dot{V} \leq 0$，所以这是不变集。
   接下来寻求$E = \{ x \in \Omega_c : \dot{V} (x) = 0 \}$。根据导函数形式可得$E = \{
   (0, 0) \} \cup \{ x : x^2_1 + x^2_2 = \beta^2 \}$。
   不过，要注意这只在$c \ge \frac{1}{4} \beta^4$时成立——因为$0 < c < \frac{1}{4} \beta^4$时，

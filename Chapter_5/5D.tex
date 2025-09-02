@@ -7,8 +7,8 @@
   \dot{\xi} & = u
 \end{aligned}\label{Sys:backstep:basic:original}
 \end{equation}
-其中 $[z^T, \xi^T]^T \in \mathbf{R}^{n + 1}$ 为状态，$u \in
-\mathbf{R}$ 为控制输入。函数$f, g$在包含$z = 0$的域$D$上光滑，且有 $f (0) = 0$。
+其中 $[z^T, \xi^T]^T \in \mathbb{R}^{n + 1}$ 为状态，$u \in
+\mathbb{R}$ 为控制输入。函数$f, g$在包含$z = 0$的域$D$上光滑，且有 $f (0) = 0$。
 
 我们的目标是设计状态反馈控制律以镇定原点。%将原系统看作两个系统之级联。
 
@@ -226,8 +226,8 @@ $z_2$的动力学写为
 这样，选取\[\dot{v}_2 = - \gamma_2 z_2 \frac{\partial \alpha_1}{\partial z_1}
 \varphi (z_1)\]以使后两项相消，即可得到$\dot{V}_c = - k_1 z^2_1 - k_2 z^2_2$，其为负半定。对该导数式两边积分可得
 \[ k_1 \int^t_0 z^2_1 \diff \tau + k_2 \int^t_0 z^2_2 \diff \tau = V_c (0) - V_c (t)  \leq V_c (0) \]
-则得 $z_1, z_2 \in \mathbf{L}_2 \cap \mathbf{L}_{\infty}$。又$\dot{z}_1,
-\dot{z}_2 \in \mathbf{L}_{\infty}$，
+则得 $z_1, z_2 \in \mathbb{L}_2 \cap \mathbb{L}_{\infty}$。又$\dot{z}_1,
+\dot{z}_2 \in \mathbb{L}_{\infty}$，
 根据 \ref{barbalat_cor_1}，$\lim\limits_{t \rightarrow \infty} z_1 = \lim\limits_{t \rightarrow
 \infty} z_2 = 0$。
 又注意到 $z_1 = x_1, x_2 = z_2 - \alpha_1 (x_1, v_1)$ 且 $\varphi (0) = 0$，于是可得出结论 $\lim\limits_{t \rightarrow \infty} x_1 = \lim\limits_{t \rightarrow \infty} x_2 = 0$。

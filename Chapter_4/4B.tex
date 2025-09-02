@@ -198,12 +198,12 @@ $b$就可提出，进而设计$\dot{\hat{k}}_1,\dot{\hat{k}}_2$消去的项就�
   \dot{x} = a  x +  b \hat{k}_1 (t) x + b \hat{k}_2 (t) u_c - b \varphi (x) (\hat{\theta} (t) - \theta)
   \label{Closed_form_scalar_nonlinear}
 \end{equation}
-类似上一小节对于理想情形的推导，可得与 \eqref{k1*k2*} 一样的$k^{\ast}_1, k^{\ast}_2$。仍定义$e=x-x_{\operatorname{ref}}$，结合 \eqref{Sys:MRAC:scalar:ref} 与 \eqref{Closed_form_scalar_nonlinear}，误差动力学可写为
+类似上一小节对于理想情形的推导，可得与 \eqref{k1*k2*} 一样的$k^{\ast}_1, k^{\ast}_2$。仍定义$e=x-x_{\refval}$，结合 \eqref{Sys:MRAC:scalar:ref} 与 \eqref{Closed_form_scalar_nonlinear}，误差动力学可写为
 \begin{align}
   \dot{e} & =  a  x +  b \hat{k}_1 (t) x + b \hat{k}_2 (t) u_c - b \varphi (x) (\hat{\theta} (t) - \theta)
   + a_{\refval} x_{\refval} - b_{\refval} u_c \nonumber                                                    \\
           & = (a_{\refval} + a) x +  b \hat{k}_1 (t) x + (b \hat{k}_2 (t) - b_{\refval}) u_c
-  - b \varphi (x) (\hat{\theta} (t) - \theta) - a_{\refval} (x-x_{\operatorname{ref}}) \nonumber           \\
+  - b \varphi (x) (\hat{\theta} (t) - \theta) - a_{\refval} (x-x_{\refval}) \nonumber           \\
           & =  b (\hat{k}_1 (t) - k^{\ast}_1) x + b (\hat{k}_2 (t) - k^{\ast}_2) u_c
   - b \varphi (x) (\hat{\theta} (t) - \theta) - a_{\refval} e \nonumber                                    \\
           & =  - a_{\refval} e + b \tilde{k}_1 x + b \tilde{k}_2 u_c - b \varphi \tilde{\theta}
@@ -297,9 +297,9 @@ $b$就可提出，进而设计$\dot{\hat{k}}_1,\dot{\hat{k}}_2$消去的项就�
   \dot{x}  = -\tilde{a}  x - \tilde{b}  u - a_{\refval} x +
   b_{\refval} u_c
 \end{equation*}
-仍定义$e=x-x_{\operatorname{ref}}$，于是误差动力学可写为
+仍定义$e=x-x_{\refval}$，于是误差动力学可写为
 \begin{equation}
-  \dot{e} =\dot{x}-\dot{x}_{\operatorname{ref}}= - a_{\refval} (x-x_{\operatorname{ref}})- \tilde{a}  x - \tilde{b}u= -a_{\refval} e - \tilde{a}  x - \tilde{b}u\label{error_dyn_indirect}
+  \dot{e} =\dot{x}-\dot{x}_{\refval}= - a_{\refval} (x-x_{\refval})- \tilde{a}  x - \tilde{b}u= -a_{\refval} e - \tilde{a}  x - \tilde{b}u\label{error_dyn_indirect}
 \end{equation}
 
 下面的目标是让各误差$e,\tilde{a},\tilde{b}$收敛至$0$，进而使$x$跟踪$x_\mathrm{ref}$。考虑下述候选 Lyapunov 函数
@@ -318,8 +318,8 @@ $b$就可提出，进而设计$\dot{\hat{k}}_1,\dot{\hat{k}}_2$消去的项就�
   \label{a-bar-b-bar:before:modification}
 \end{equation}
 我们可得 \[\dot{V} = - a_{\refval} e^2 \leq 0\]
-则$V(t)\le V(0)$，$V$有界。根据$V$的形式得$e, \tilde{a}, \tilde{b} \in \mathbf{L}_{\infty}$。由于
-$x_{\refval} \in \mathbf{L}_{\infty}$ 且 $a, b$ 为常数，我们可得$x, \hat{a}, \hat{b} \in \mathbf{L}_{\infty}$。对$V$再求一次导得
+则$V(t)\le V(0)$，$V$有界。根据$V$的形式得$e, \tilde{a}, \tilde{b} \in \mathbb{L}_{\infty}$。由于
+$x_{\refval} \in \mathbb{L}_{\infty}$ 且 $a, b$ 为常数，我们可得$x, \hat{a}, \hat{b} \in \mathbb{L}_{\infty}$。对$V$再求一次导得
 $ \ddot{V} = - 2 a_{\refval} e  \dot{e} $，则只要说明$\dot{e}$的有界性，即可用Barbalat引理。这其中只有$u$的有界性还无法保证。
 我们注意到，此时的$u$的形式不同于之前——在分母上出现了$\hat{b}$。
 为了说明$u$的有界性（这也保证自适应律能够物理实现），我们需要对自适应律作出适当修改，避免 $\hat{b} (t)$ 越过$0$。通过一些先验知识，这样的修改是可以完成的。
@@ -352,12 +352,12 @@ $\dot{\hat{b}} = 0$，于是上式左侧等于$ - \tilde{b} e  u = - (\hat{b} - 
   \dot{V} \leq - a_{\refval} e^2 \leq 0
   \label{V:under:modification}
 \end{equation}
-同前可得$e,\tilde{a},\tilde{b},x, \hat{a}, \hat{b} \in \mathbf{L}_{\infty}$；根据修正可得$ u, \dot{e}\in \mathbf{L}_{\infty}$。但此时不能简单利用Barbalat引理——因为$\dot{V},\ddot{V}$的形式变了。解决方法是，对 \eqref{V:under:modification} 两边积分，有
+同前可得$e,\tilde{a},\tilde{b},x, \hat{a}, \hat{b} \in \mathbb{L}_{\infty}$；根据修正可得$ u, \dot{e}\in \mathbb{L}_{\infty}$。但此时不能简单利用Barbalat引理——因为$\dot{V},\ddot{V}$的形式变了。解决方法是，对 \eqref{V:under:modification} 两边积分，有
 \[ V (t) - V (0) \leq -a_{\refval} \int^t_0 e^2 (\tau)   \diff  \tau \leq 0 \]
 \[ \Rightarrow \int^t_0 e^2 (\tau) \diff  \tau \leq
   \frac{1}{a_{\refval}} (V (0) - V (t)) \leq
   \frac{1}{a_{\refval}} V (0) \]
-则$e (t) \in \mathbf{L}_2$。根据推论 \ref{barbalat_cor_1}，则
+则$e (t) \in \mathbb{L}_2$。根据推论 \ref{barbalat_cor_1}，则
 $ \lim\limits_{t \rightarrow  \infty} e (t) = 0$。
 
 \begin{table}[htbp]
@@ -368,7 +368,7 @@ $ \lim\limits_{t \rightarrow  \infty} e (t) = 0$。
   \begin{tabular}{p{4.0cm}p{10.0cm}}
     \hline
     开环被控对象        & $\dot{x} =  a  x + b  u$，$\{ a, b \}$ 未知，但  $\sgn (b)$ 已知                                           \\
-    参考模型          & $\dot{x}_{\refval} = -  a_{\refval} x + b_{\refval} u_c, a_{\operatorname{ref}}>0$                  \\
+    参考模型          & $\dot{x}_{\refval} = -  a_{\refval} x + b_{\refval} u_c, a_{\refval}>0$                  \\
     跟踪误差          & $e = x - x_{\refval}$                                                                               \\
     控制输入          & $u = \frac{1}{\hat{b}} [(-\hat{a} - a_{\refval}) x +  b_{\refval} u_c]$                             \\
     非直接型 MRAC 控制律 & $\dot{\hat{a}}  =  \gamma_1 e  x$

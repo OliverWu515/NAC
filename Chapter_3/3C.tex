@@ -1,6 +1,6 @@
 \section{时变正定函数与非自治系统稳定性定理}\label{3Cref}
 \begin{definition}
-称$V(x,t): D \times [0, \infty) \rightarrow \mathbf{R}$是
+称$V(x,t): D \times [0, \infty) \rightarrow \mathbb{R}$是
     \begin{itemize}[leftmargin=1em]
       \item 正半定函数\index{正半定（positive semidefinite）}，若$V(t,x)\ge 0$，$V(t,0)=0$。
       \item 正定函数\index{正定（positive definite）}，若$V(t,x)\ge W_1(x)$，其中$W_1(x)$是正定函数。
@@ -28,7 +28,7 @@
 
 \begin{theorem}[非自治系统的Lyapunov稳定性定理]\label{lyapunov_nonauto}\index{Lyapunov稳定性定理!非自治系统的$\sim$}
   令 $x = 0$ 是系统 \eqref{freeofnonauto} 的平衡点，$D \subset
-  \mathbf{R}^n$ 是包含原点的域。令 $V: D \times [0, \infty) \rightarrow \mathbf{R}$
+  \mathbb{R}^n$ 是包含原点的域。令 $V: D \times [0, \infty) \rightarrow \mathbb{R}$
   是连续可微函数，如果其满足
   \begin{itemize}[leftmargin=1em]
     \item $V (x, t)$ 正定（即存在$W_1 (x) \leq V (x, t)$，其中$W_1$正定）与
@@ -43,7 +43,7 @@
        V}{\partial t} \leq - W_3 (x) \qquad (W_3 \ \text{是正定的}) \]
     那么 $x = 0$ 是一致渐近稳定的。
     
-    \item 再进一步，如果$D=\mathbf{R}^n$ 且 $W_1 (x)$ 是径向无界的，那么 $x = 0$ 是全局一致渐近稳定的。
+    \item 再进一步，如果$D=\mathbb{R}^n$ 且 $W_1 (x)$ 是径向无界的，那么 $x = 0$ 是全局一致渐近稳定的。
 
     \item 若前三点中的$W_i$都具有$k_i \| x \|^\alpha $的形式（各$k_i$及$\alpha> 0,i=1,2,3$），那么$x = 0$ 是一致指数稳定的。
   \end{itemize}

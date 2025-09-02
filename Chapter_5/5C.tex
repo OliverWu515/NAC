@@ -160,9 +160,9 @@
   \end{align*}
   设计 $\dot{\hat{k}} = \gamma | s |$，即得 $\dot{V} \leq - \eta | s |$。两边积分得到
   \[ V (t) - V (0) \leq - \eta \int^t_0 | s(\tau) | \diff \tau \]
-  因此 $s \in \mathbf{L}_1$。
-  则$s \in \mathbf{L}_1 \cap \mathbf{L}_{\infty}, \dot{s} \in
-  \mathbf{L}_{\infty}$，根据推论 \ref{barbalat_cor_1}，有 $\lim\limits_{t \rightarrow \infty} s = 0$。
+  因此 $s \in \mathbb{L}_1$。
+  则$s \in \mathbb{L}_1 \cap \mathbb{L}_{\infty}, \dot{s} \in
+  \mathbb{L}_{\infty}$，根据推论 \ref{barbalat_cor_1}，有 $\lim\limits_{t \rightarrow \infty} s = 0$。
 \begin{problem}\label{Pro:dis_with_unknown_upperbound}
     仍考虑系统 \eqref{Sys:dis_with_upperbound}。现设干扰$d(t)$满足
   \[ \| d (t) \| \leq d_{\max} (1 + \| x_1 \| + \| x_2 \|^2) \]
@@ -214,4 +214,4 @@
 \end{align*}
 对上式两边积分并移项得：
 \[V(t)+k\int_{0}^{t} x^2(\tau)\diff\tau\le V(0)+\int_{0}^{t} \mathrm{e}^{-\tau}\diff\tau=V(0)+(1-\mathrm{e}^{-t})\]
-可知$V\in\mathbf{L}_\infty,x\in\mathbf{L}_2$，进而$x,\tilde{\theta},\tilde{k},\hat{k},\hat{\theta}\in\mathbf{L}_\infty$，从而$\dot{x}\in\mathbf{L}_\infty$。进而由 \ref{barbalat_cor_1}，我们知道$\lim\limits_{t\to\infty}x(t)=0$。
+可知$V\in\mathbb{L}_\infty,x\in\mathbb{L}_2$，进而$x,\tilde{\theta},\tilde{k},\hat{k},\hat{\theta}\in\mathbb{L}_\infty$，从而$\dot{x}\in\mathbb{L}_\infty$。进而由 \ref{barbalat_cor_1}，我们知道$\lim\limits_{t\to\infty}x(t)=0$。

@@ -3,7 +3,7 @@
 \begin{equation}
   \dot{x} = A  x + B \Lambda u\label{Sys:MRAC:MIMO}
 \end{equation}
-其中 $x \in \mathbf{R}^n$是系统的状态， $u \in \mathbf{R}^m$ 是控制输入，$B \in \mathbf{R}^{n \times m}$ 是已知的控制矩阵，而 $A \in \mathbf{R}^{n \times n}, \Lambda \in \mathbf{R}^{m \times m}$ 是未知的常值矩阵。又假设  $\Lambda$ 是对角阵，且对角线上均为正数，且$(A, B \Lambda)$ 可控。$\Lambda$是不确定的，这是用于刻画控制失效或建模不准确，意即控制增益可能不确定，或是设计者估计的系统控制效果可能是不准确的。
+其中 $x \in \mathbb{R}^n$是系统的状态， $u \in \mathbb{R}^m$ 是控制输入，$B \in \mathbb{R}^{n \times m}$ 是已知的控制矩阵，而 $A \in \mathbb{R}^{n \times n}, \Lambda \in \mathbb{R}^{m \times m}$ 是未知的常值矩阵。又假设  $\Lambda$ 是对角阵，且对角线上均为正数，且$(A, B \Lambda)$ 可控。$\Lambda$是不确定的，这是用于刻画控制失效或建模不准确，意即控制增益可能不确定，或是设计者估计的系统控制效果可能是不准确的。
 
 {\bf 控制目标是：}设计$u$，使得闭环系统的所有信号都有界，且$x$能够跟踪下述参考模型的参考状态 $x_{\refval}$：
  \begin{equation}
@@ -11,11 +11,11 @@
     A_{\refval} x_{\refval} +
     B_{\refval} u_c\label{ideal_mimo}
   \end{equation}
-其中$A_{\refval} \in \mathbf{R}^{n \times n}$ 是Hurwitz的，$B_{\refval} \in \mathbf{R}^{n \times m}$， $u_c \in \mathbf{R}^m$ 是有界的（虚拟）输入指令。
+其中$A_{\refval} \in \mathbb{R}^{n \times n}$ 是Hurwitz的，$B_{\refval} \in \mathbb{R}^{n \times m}$， $u_c \in \mathbb{R}^m$ 是有界的（虚拟）输入指令。
 
-首先推导理想情形。若$A \in \mathbf{R}^{n \times n}$ 与 $\Lambda \in \mathbf{R}^{m\times m}$ 已知，我们可选用如下控制律
+首先推导理想情形。若$A \in \mathbb{R}^{n \times n}$ 与 $\Lambda \in \mathbb{R}^{m\times m}$ 已知，我们可选用如下控制律
 \[ u = K^{\ast}_1 x + K^{\ast}_2 u_c \]
-其中 $K^{\ast}_1 \in \mathbf{R}^{m \times n}, K^{\ast}_2 \in \mathbf{R}^{m
+其中 $K^{\ast}_1 \in \mathbb{R}^{m \times n}, K^{\ast}_2 \in \mathbb{R}^{m
 \times m}$，将上式代入 \eqref{Sys:MRAC:MIMO} 可得
 \[ \dot{x} = (A + B \Lambda K^{\ast}_1) x + B \Lambda K^{\ast}_2 u_c \]
 与理想情形对比可知
@@ -63,8 +63,8 @@ x_{\refval}$。根据 \eqref{ideal_mimo} 和 \eqref{mimo_dotx}，写出误差动
 省略的项待与后面的项合并。仅考察第一项，我们发现由于$A_{\refval}$未必负定，则第一项并不保证为负定。后续若要类似之前思路保留该项则不可行。考虑重新设计此项为\[e^\mathrm{T}\textcolor{second}{P}e\]
 其中$P$为正定阵。则此项导数是
 \[e^\mathrm{T}P\dot{e}+\dot{e}^\mathrm{T}Pe=e^\mathrm{T}(A_{\refval}^\mathrm{T} P + P A_{\refval}) e+\dots\]
-由于 $A_{\refval}$ 是 Hurwitz的，根据定理 \ref{linearlya}，我们可知对任意正定矩阵 $Q \in \mathbf{R}^{n \times
-n}$，都存在唯一正定阵 $P \in \mathbf{R}^{n \times n}$
+由于 $A_{\refval}$ 是 Hurwitz的，根据定理 \ref{linearlya}，我们可知对任意正定矩阵 $Q \in \mathbb{R}^{n \times
+n}$，都存在唯一正定阵 $P \in \mathbb{R}^{n \times n}$
 使得
 \[ A_{\refval}^\mathrm{T} P + P 
    A_{\refval} = - Q < 0 \]
@@ -73,7 +73,7 @@ n}$，都存在唯一正定阵 $P \in \mathbf{R}^{n \times n}$
 然后，将$\tilde{K}_1^2$换为\[\tr(\tilde{K}_1^\mathrm{T}\tilde{K}_1)\]
 由 \ref{pd_npd_div}，$\tilde{K}_1^\mathrm{T}\tilde{K}_1$ 是半正定的，进而由 \ref{pd_nd_thm}，其特征值全为非负，则其迹一定非负，则上式是半正定的。
 
-下面说明$\tr(\tilde{K}_1^\mathrm{T}\tilde{K}_1)=0\iff \tilde{K}_1=0$。仅证“$\implies$”情形。由于$\tilde{K}_1^\mathrm{T}\tilde{K}_1$特征值非负，所以迹为$0$就表明所有特征值均为$0$。则由 \ref{ortho_sim_diag}，存在正交矩阵$S$使得$S^{-1}\tilde{K}_1^\mathrm{T}\tilde{K}_1S=0$。则$\tilde{K}_1^\mathrm{T}\tilde{K}_1=0$。因此对于所有$x\in\mathbf{R}^{n}$均有$x^{\mathrm{T}}\tilde{K}_1^\mathrm{T}\tilde{K}_1x=0$，因此$\tilde{K}_1x=0$，则$\tilde{K}_1=0$。因此，$\tr(\tilde{K}_1^\mathrm{T}\tilde{K}_1)$正定。
+下面说明$\tr(\tilde{K}_1^\mathrm{T}\tilde{K}_1)=0\iff \tilde{K}_1=0$。仅证“$\implies$”情形。由于$\tilde{K}_1^\mathrm{T}\tilde{K}_1$特征值非负，所以迹为$0$就表明所有特征值均为$0$。则由 \ref{ortho_sim_diag}，存在正交矩阵$S$使得$S^{-1}\tilde{K}_1^\mathrm{T}\tilde{K}_1S=0$。则$\tilde{K}_1^\mathrm{T}\tilde{K}_1=0$。因此对于所有$x\in\mathbb{R}^{n}$均有$x^{\mathrm{T}}\tilde{K}_1^\mathrm{T}\tilde{K}_1x=0$，因此$\tilde{K}_1x=0$，则$\tilde{K}_1=0$。因此，$\tr(\tilde{K}_1^\mathrm{T}\tilde{K}_1)$正定。
 
 类似将$\tilde{K}_2^2$换为$\tr(\tilde{K}_2^\mathrm{T}\tilde{K}_2)$。
 于是考虑如下候选Lyapunov函数
@@ -83,20 +83,20 @@ V=e^\mathrm{T}Pe+\tr(\tilde{K}_1^\mathrm{T}\tilde{K}_1)+\tr(\tilde{K}_2^\mathrm{
 
 求其导数得（注意$\dot{\tilde{K}}_1=\dot{\hat{K}}_1$，$\dot{\tilde{K}}_2=\dot{\hat{K}}_2$）
 \begin{align*}
-  \dot{V} & =e^\mathrm{T}P\dot{e}+\dot{e}^\mathrm{T}Pe + 2\ensuremath{\operatorname{tr}} \{
-  \tilde{K}^\mathrm{T}_1 \dot{\hat{K}} _1 \} + 2\ensuremath{\operatorname{tr}}
+  \dot{V} & =e^\mathrm{T}P\dot{e}+\dot{e}^\mathrm{T}Pe + 2\tr \{
+  \tilde{K}^\mathrm{T}_1 \dot{\hat{K}} _1 \} + 2\tr
   \{ \tilde{K}^\mathrm{T}_2 \dot{\hat{K}} _2 \}\\
   & = e^\mathrm{T}P( A_{\refval} e + B \Lambda  \tilde{K}_1 x +
   B \Lambda  \tilde{K}_2 u_c)+(A_{\refval} e + B \Lambda  \tilde{K}_1 x +
   B \Lambda  \tilde{K}_2 u_c)^\mathrm{T}Pe\\
   &\quad+
-  2\ensuremath{\operatorname{tr}} \{ \tilde{K}^\mathrm{T}_1 \dot{\hat{K}} _1 \}
-  + 2\ensuremath{\operatorname{tr}} \{ \tilde{K}^\mathrm{T}_2 \dot{\hat{K}} _2 \}\\
+  2\tr \{ \tilde{K}^\mathrm{T}_1 \dot{\hat{K}} _1 \}
+  + 2\tr \{ \tilde{K}^\mathrm{T}_2 \dot{\hat{K}} _2 \}\\
   & = e^\mathrm{T}(A_{\refval}^\mathrm{T} P + P A_{\refval}) e+{e}^\mathrm{T}PB\Lambda\tilde{K}_1x+(B\Lambda \tilde{K}_1x)^\mathrm{T}Pe+{e}^\mathrm{T}PB\Lambda
   \tilde{K}_2u_c\\
   &\quad +(B\Lambda \tilde{K}_2u_c)^\mathrm{T}Pe+
-  2\ensuremath{\operatorname{tr}} \{ \tilde{K}^\mathrm{T}_1 \dot{\hat{K}} _1 \}
-  + 2\ensuremath{\operatorname{tr}} \{ \tilde{K}^\mathrm{T}_2 \dot{\hat{K}} _2 \}
+  2\tr \{ \tilde{K}^\mathrm{T}_1 \dot{\hat{K}} _1 \}
+  + 2\tr \{ \tilde{K}^\mathrm{T}_2 \dot{\hat{K}} _2 \}
 \end{align*}
 利用${e}^\mathrm{T}PB\Lambda\tilde{K}_1x$为标量且$P$为对称，有
 \[{e}^\mathrm{T}PB\Lambda\tilde{K}_1x=({e}^\mathrm{T}PB\Lambda\tilde{K}_1x)^\mathrm{T}=(B\Lambda\tilde{K}_1x)^\mathrm{T}P^\mathrm{T}(e^\mathrm{T})^\mathrm{T}=(B\Lambda\tilde{K}_1x)^\mathrm{T}Pe\]
@@ -104,14 +104,14 @@ V=e^\mathrm{T}Pe+\tr(\tilde{K}_1^\mathrm{T}\tilde{K}_1)+\tr(\tilde{K}_2^\mathrm{
 \begin{align}
  \dot{V} & = e^\mathrm{T}(A_{\refval}^\mathrm{T} P + P A_{\refval}) e+ 2 e^\mathrm{T}  P  B \Lambda 
   \tilde{K}_1 x + 2 e^\mathrm{T} P  B \Lambda  \tilde{K}_2 u_c +
-  2\ensuremath{\operatorname{tr}} \{ \tilde{K}^\mathrm{T}_1  \dot{\hat{K}} _1 \}
-  + 2\ensuremath{\operatorname{tr}} \{ \tilde{K}^\mathrm{T}_2  \dot{\hat{K}} _2
+  2\tr \{ \tilde{K}^\mathrm{T}_1  \dot{\hat{K}} _1 \}
+  + 2\tr \{ \tilde{K}^\mathrm{T}_2  \dot{\hat{K}} _2
   \}\nonumber\\
   & = -e^\mathrm{T}Q e +
-  2\ensuremath{\operatorname{tr}} \{ \tilde{K}^\mathrm{T}_1 \Lambda B^\mathrm{T}  P  e  x^\mathrm{T} \} +
-  2\ensuremath{\operatorname{tr}} \{ \tilde{K}^\mathrm{T}_2 \Lambda B^\mathrm{T}  P  e  u_c^\mathrm{T} \} +
-  2\ensuremath{\operatorname{tr}} \{ \tilde{K}^\mathrm{T}_1  \dot{\hat{K}} _1 \}
-  + 2\ensuremath{\operatorname{tr}} \{ \tilde{K}^\mathrm{T}_2  \dot{\hat{K}} _2
+  2\tr \{ \tilde{K}^\mathrm{T}_1 \Lambda B^\mathrm{T}  P  e  x^\mathrm{T} \} +
+  2\tr \{ \tilde{K}^\mathrm{T}_2 \Lambda B^\mathrm{T}  P  e  u_c^\mathrm{T} \} +
+  2\tr \{ \tilde{K}^\mathrm{T}_1  \dot{\hat{K}} _1 \}
+  + 2\tr \{ \tilde{K}^\mathrm{T}_2  \dot{\hat{K}} _2
   \}\label{dot_V_modify1}
 \end{align}
 其中第二行我们用到了
@@ -135,10 +135,10 @@ V=e^\mathrm{T}Pe+\tr(\tilde{K}_1^\mathrm{T}\tilde{K}_1)+\tr(\tilde{K}_2^\mathrm{
 此时 \eqref{dot_V_modify1} 变为
 \begin{align*}
   \dot{V} &= -e^\mathrm{T}Q e +
-  2\ensuremath{\operatorname{tr}} \{ \tilde{K}^\mathrm{T}_1 \Lambda B^\mathrm{T}  P  e  x^\mathrm{T} \} +
-  2\ensuremath{\operatorname{tr}} \{ \tilde{K}^\mathrm{T}_2 \Lambda B^\mathrm{T}  P  e  u_c^\mathrm{T} \} +
-  2\ensuremath{\operatorname{tr}} \{ \tilde{K}^\mathrm{T}_1 \textcolor{second}{\Lambda} \dot{\hat{K}} _1 \}
-  + 2\ensuremath{\operatorname{tr}} \{ \tilde{K}^\mathrm{T}_2 \textcolor{second}{\Lambda} \dot{\hat{K}} _2 \}
+  2\tr \{ \tilde{K}^\mathrm{T}_1 \Lambda B^\mathrm{T}  P  e  x^\mathrm{T} \} +
+  2\tr \{ \tilde{K}^\mathrm{T}_2 \Lambda B^\mathrm{T}  P  e  u_c^\mathrm{T} \} +
+  2\tr \{ \tilde{K}^\mathrm{T}_1 \textcolor{second}{\Lambda} \dot{\hat{K}} _1 \}
+  + 2\tr \{ \tilde{K}^\mathrm{T}_2 \textcolor{second}{\Lambda} \dot{\hat{K}} _2 \}
 \end{align*}
 
 于是我们可选取
@@ -146,10 +146,10 @@ V=e^\mathrm{T}Pe+\tr(\tilde{K}_1^\mathrm{T}\tilde{K}_1)+\tr(\tilde{K}_2^\mathrm{
 这样就有
 \[ \dot{V} = - e^\mathrm{T} Q  e \leq 0 \]
 于是$V (t) \leq V (0)$，$V$有界，由 \eqref{MODMIMOLYA:modify2} 的形式可知 $e, \tilde{K}_1, \tilde{K}_2 \in
-\mathbf{L}_{\infty}$。由于$u_c$ 有界且
+\mathbb{L}_{\infty}$。由于$u_c$ 有界且
 $A_{\refval}$ 是 Hurwitz的，所以
-$x_{\refval} \in \mathbf{L}_{\infty}$。又知 $x = e +x_{\refval}$，所以$x \in \mathbf{L}_{\infty}$。根据 \eqref{errsys:MRAC:GLS}，$\dot{e} \in \mathbf{L}_{\infty}$。对$V$再求一阶导数，有
-\[ \ddot{V} = - 2 e^\mathrm{T} Q  \dot{e} \in \mathbf{L}_{\infty} \]
+$x_{\refval} \in \mathbb{L}_{\infty}$。又知 $x = e +x_{\refval}$，所以$x \in \mathbb{L}_{\infty}$。根据 \eqref{errsys:MRAC:GLS}，$\dot{e} \in \mathbb{L}_{\infty}$。对$V$再求一阶导数，有
+\[ \ddot{V} = - 2 e^\mathrm{T} Q  \dot{e} \in \mathbb{L}_{\infty} \]
 用 Barbalat引理（\ref{barbalat}），有$\lim\limits_{t \rightarrow \infty} \dot{V} = 0$，也即$\lim\limits_{t \rightarrow \infty} e (t) = 0$。
 
 \begin{table}[htbp]
@@ -174,14 +174,14 @@ $x_{\refval} \in \mathbf{L}_{\infty}$。又知 $x = e +x_{\refval}$，所以$x \
     $\Lambda$ 对角线元素全为负？
 \end{problem}
 \begin{hint}
-\eqref{MODMIMOLYA:modify2} 第二项改为 $\ensuremath{\operatorname{tr}} \{ \tilde{K}^\mathrm{T}_1 (- \Lambda) \tilde{K} _1 \}$，第三项类似。
+\eqref{MODMIMOLYA:modify2} 第二项改为 $\tr \{ \tilde{K}^\mathrm{T}_1 (- \Lambda) \tilde{K} _1 \}$，第三项类似。
 \end{hint}
 \begin{problem}
     $\Lambda$ 对角线上的元素有些为正、有些为负？
 \end{problem}
 \begin{hint}
-    选取\[ V = e^\mathrm{T} P  e +\ensuremath{\operatorname{tr}} \{ \tilde{K}^\mathrm{T}_1 |
-       \Lambda | \tilde{K} _1 \} +\ensuremath{\operatorname{tr}} \{
+    选取\[ V = e^\mathrm{T} P  e +\tr \{ \tilde{K}^\mathrm{T}_1 |
+       \Lambda | \tilde{K} _1 \} +\tr \{
        \tilde{K}^\mathrm{T}_2 | \Lambda | \tilde{K} _2 \} \]
     则可得
     \[ \dot{\hat{K}} _1 = -\sgn (\Lambda) B^\mathrm{T}  P  e
@@ -198,7 +198,7 @@ $x_{\refval} \in \mathbf{L}_{\infty}$。又知 $x = e +x_{\refval}$，所以$x \
   \begin{equation}
       \dot{x} = A  x + B \Lambda (u + \Theta\Phi (x))\label{Sys:MRAC:MIMO_with_dis}
   \end{equation}
-  其中 $\Theta \in \mathbf{R}^{m \times n}, \Phi (x) \in \mathbf{R}^{n \times 1}$，$\Theta$ 未知，$\Phi$ 已知且有界。
+  其中 $\Theta \in \mathbb{R}^{m \times n}, \Phi (x) \in \mathbb{R}^{n \times 1}$，$\Theta$ 未知，$\Phi$ 已知且有界。
 \end{problem}
 \begin{hint}
     设计控制律\[ u = \hat{K}_1 (t) x + \hat{K}_2 (t) u_c - \hat{\Theta}\Phi (x)  \]
