@@ -26,7 +26,7 @@
     \dot{V} & = s^\mathrm{T} M \dot{s} + \frac{1}{2} s^\mathrm{T} \dot{M} s + \tilde{\Theta}^\mathrm{T} \Gamma^{-1} \dot{\tilde{\Theta}} \\
     & = - s^\mathrm{T} K  s + s^\mathrm{T} Y \tilde{\Theta} + \tilde{\Theta}^\mathrm{T} \Gamma^{- 1} \dot{\hat{\Theta}}\\
     & = - s^\mathrm{T} K  s + \tilde{\Theta}^\mathrm{T}   Y^\mathrm{T} s + \tilde{\Theta}^\mathrm{T} \Gamma^{- 1} \dot{\hat{\Theta}}\\
-    & = - s^\mathrm{T} K  s + \tilde{\Theta}^\mathrm{T} \Gamma^{- 1} \Gamma  Y^\mathrm{T} s + \tilde{\Theta}^T \Gamma^{- 1} \dot{\hat{\Theta}}\\
+    & = - s^\mathrm{T} K  s + \tilde{\Theta}^\mathrm{T} \Gamma^{- 1} \Gamma  Y^\mathrm{T} s + \tilde{\Theta}^\mathrm{T} \Gamma^{- 1} \dot{\hat{\Theta}}\\
     & = - s^\mathrm{T} K  s + \tilde{\Theta}^\mathrm{T} \Gamma^{- 1} (\Gamma  Y^\mathrm{T} s + \dot{\hat{\Theta}} ) \text{。}
 \end{align*}
 故设计自适应律为
@@ -37,9 +37,9 @@
 
 % TODO：补充推导细节
 % Integrating both sides of \eqref{EL:ADA:Vd},
-% \[ V (t) - V (0) = - \int^t_0 s^T K  s  d \]
+% \[ V (t) - V (0) = - \int^t_0 s^\mathrm{T} K  s  d \]
 % \[ \Rightarrow \]
-% \[ \int^t_0 s^T K  s  d = V (0) - V (t) \leq V (0) \in \mathbb{L}_{\infty} \]
+% \[ \int^t_0 s^\mathrm{T} K  s  d = V (0) - V (t) \leq V (0) \in \mathbb{L}_{\infty} \]
 % \[ \Rightarrow \]
 % \[ s \in \mathbb{L}_2 \]
 % From $\dot{\tilde{q}} = - \lambda \tilde{q} + s$ and the ISS stability,

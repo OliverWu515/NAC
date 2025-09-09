@@ -59,7 +59,6 @@ $d(t) = \dot{x} + x\hat{\theta} = 5(1 + t)^{- \frac{1}{5}} - \frac{2}{5}(1 + t)^
 \subsection{死区修正（Dead-Zone Modification）}
 
 为了提升鲁棒性，我们考虑下述死区修正自适应律
-
 \[\dot{\hat{\theta}} = \left\{\begin{matrix}
 \gamma x\varphi(x), & \text{若} \| x \| \geq e_{0} + \delta \\
 0, & \text{若} \| x \| < e_{0} + \delta \\

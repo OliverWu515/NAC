@@ -47,7 +47,7 @@
 
      考虑如下候选 Lyapunov 函数：
      \[
-        V = x^\mathrm{T} P x + \tr (\tilde{K}^\mathrm{T} \Lambda \Gamma_1^{-1}  \tilde{K}) + \tr (\tilde{\Theta}^T \Lambda\Gamma_2^{-1} \tilde{\Theta}), \quad \Gamma_1 = \Gamma_1^\mathrm{T} > 0, \Gamma_2 = \Gamma_2^\mathrm{T} > 0 \text{，}
+        V = x^\mathrm{T} P x + \tr (\tilde{K}^\mathrm{T} \Lambda \Gamma_1^{-1}  \tilde{K}) + \tr (\tilde{\Theta}^\mathrm{T} \Lambda\Gamma_2^{-1} \tilde{\Theta}), \quad \Gamma_1 = \Gamma_1^\mathrm{T} > 0, \Gamma_2 = \Gamma_2^\mathrm{T} > 0 \text{，}
      \]
      其中 $P = P^\mathrm{T} > 0$ 对于某个对称正定阵$Q$满足 Lyapunov 方程
      \[
@@ -56,62 +56,62 @@
 
      该候选 Lyapunov 函数沿闭环系统轨线的导数为：
      \begin{align*}
-         \dot{V}=&\dot{x}^\mathrm{T} P x+ x^\mathrm{T} P \dot{x}+ 2 \tr (  \tilde{K}^T\Lambda \Gamma_1^{-1}  \dot{\hat{K}})+2 \tr (  \tilde{\Theta}^\mathrm{T} \Lambda\Gamma_2^{-1}  \dot{\hat{\Theta}})\\
+         \dot{V}=&\dot{x}^\mathrm{T} P x+ x^\mathrm{T} P \dot{x}+ 2 \tr (  \tilde{K}^\mathrm{T}\Lambda \Gamma_1^{-1}  \dot{\hat{K}})+2 \tr (  \tilde{\Theta}^\mathrm{T} \Lambda\Gamma_2^{-1}  \dot{\hat{\Theta}})\\
         =&(A^*x+B\Lambda\tilde{K}x-B\Lambda \tilde \Theta(t)\Phi(x)+\xi(t))^\mathrm{T}Px\\
         &+x^\mathrm{T}P(A^*x+B\Lambda\tilde{K}x-B\Lambda \tilde \Theta(t)\Phi(x)+\xi(t))\\
         &+2 \tr (  \tilde{K}^\mathrm{T} \Lambda\Gamma_1^{-1}  \dot{\hat{K}})+2 \tr (  \tilde{\Theta}^\mathrm{T} \Lambda\Gamma_2^{-1}  \dot{\hat{\Theta}})\\
         =&x^\mathrm{T} {A^*}^\mathrm{T}Px+x^\mathrm{T}PA^*x
-        +x^\mathrm{T}\tilde{K}^T\Lambda^\mathrm{T}B^\mathrm{T}Px+x^\mathrm{T}PB\Lambda\tilde{K}x\\
+        +x^\mathrm{T}\tilde{K}^\mathrm{T}\Lambda^\mathrm{T}B^\mathrm{T}Px+x^\mathrm{T}PB\Lambda\tilde{K}x\\
         &-\Phi(x)^\mathrm{T}\tilde\Theta(t)^\mathrm{T}\Lambda^\mathrm{T}B^\mathrm{T}Px-x^\mathrm{T}PB\Lambda \tilde \Theta(t)\Phi(x)+\xi(t)^\mathrm{T}Px+x^\mathrm{T}P\xi(t)\\
         &+2 \tr (  \tilde{K}^\mathrm{T} \Lambda\Gamma_1^{-1}  \dot{\hat{K}})+2 \tr (  \tilde{\Theta}^\mathrm{T} \Lambda\Gamma_2^{-1}  \dot{\hat{\Theta}}) \text{。}
      \end{align*}
 
      我们有
      \begin{gather*}
-         x^T {A^*}^TPx+x^TPA^*x=-x^TQx \\
-         x^T\tilde{K}^T\Lambda^TB^TPx=x^TPB\Lambda\tilde{K}x = \tr (\tilde{K}^T\Lambda B^TPxx^T) \\
-         \Phi(x)^T\tilde\Theta(t)^T\Lambda^TB^TPx=x^TPB\Lambda \tilde \Theta(t)\Phi(x) =\tr (\tilde{\Theta}^T\Lambda B^TPx\Phi(x)^T)
+         x^\mathrm{T} {A^*}^\mathrm{T}Px+x^\mathrm{T}PA^*x=-x^\mathrm{T}Qx \\
+         x^\mathrm{T}\tilde{K}^\mathrm{T}\Lambda^\mathrm{T}B^\mathrm{T}Px=x^\mathrm{T}PB\Lambda\tilde{K}x = \tr (\tilde{K}^\mathrm{T}\Lambda B^\mathrm{T}Pxx^\mathrm{T}) \\
+         \Phi(x)^\mathrm{T}\tilde\Theta(t)^\mathrm{T}\Lambda^\mathrm{T}B^\mathrm{T}Px=x^\mathrm{T}PB\Lambda \tilde \Theta(t)\Phi(x) =\tr (\tilde{\Theta}^\mathrm{T}\Lambda B^\mathrm{T}Px\Phi(x)^\mathrm{T})
      \end{gather*}
 
      因此，
      \begin{align*}
-        \dot{V}=&-x^TQx+2\text{tr}(\tilde{K}^T\Lambda B^TPxx^T)-2\tr(\tilde{\Theta}^T\Lambda B^TPx\Phi(x)^T)
+        \dot{V}=&-x^\mathrm{T}Qx+2\text{tr}(\tilde{K}^\mathrm{T}\Lambda B^\mathrm{T}Pxx^\mathrm{T})-2\tr(\tilde{\Theta}^\mathrm{T}\Lambda B^\mathrm{T}Px\Phi(x)^\mathrm{T})
         \\
-        &+2\tr (  \tilde{K}^T \Lambda\Gamma_1^{-1}  \dot{\hat{K}})+2\tr (  \tilde{\Theta}^T \Lambda\Gamma_2^{-1}  \dot{\hat{\Theta}})+2x^TP\xi(t)\\
-        =&-x^TQx+2\tr(\tilde{K}^T\Lambda( B^TPxx^T+\Gamma_1^{-1}  \dot{\hat{K}}))\\&+2\tr(\tilde{\Theta}^T\Lambda(- B^TPx\Phi(x)^T+\Gamma_2^{-1}  \dot{\hat{\Theta}}))+2x^TP\xi(t)
+        &+2\tr (  \tilde{K}^\mathrm{T} \Lambda\Gamma_1^{-1}  \dot{\hat{K}})+2\tr (  \tilde{\Theta}^\mathrm{T} \Lambda\Gamma_2^{-1}  \dot{\hat{\Theta}})+2x^\mathrm{T}P\xi(t)\\
+        =&-x^\mathrm{T}Qx+2\tr(\tilde{K}^\mathrm{T}\Lambda( B^\mathrm{T}Pxx^\mathrm{T}+\Gamma_1^{-1}  \dot{\hat{K}}))\\&+2\tr(\tilde{\Theta}^\mathrm{T}\Lambda(- B^\mathrm{T}Px\Phi(x)^\mathrm{T}+\Gamma_2^{-1}  \dot{\hat{\Theta}}))+2x^\mathrm{T}P\xi(t)
     \end{align*}
 
     此处我们考虑 $\sigma$-修正控制律：
     \begin{align*}
-        \dot{\hat{K}}&=-\Gamma_1(B^TPxx^T+\Sigma_1\hat{K}), \\ \dot{\hat{\Theta}}&=\Gamma_2(B^TPx\Phi(x)^T-\Sigma_2\hat{\Theta})
+        \dot{\hat{K}}&=-\Gamma_1(B^\mathrm{T}Pxx^\mathrm{T}+\Sigma_1\hat{K}), \\ \dot{\hat{\Theta}}&=\Gamma_2(B^\mathrm{T}Px\Phi(x)^\mathrm{T}-\Sigma_2\hat{\Theta})
     \end{align*}
     其中 $\Sigma_1, \Sigma_2$ 是对角正定阵。
 
     于是我们有：
     \begin{align*}
-        \dot{V}=&-x^TQx-2\tr(\tilde{K}^T\Lambda\Sigma_1\hat{K})-2\tr(\tilde{\Theta}^T\Lambda\Sigma_2\hat{\Theta})+2x^TP\xi(t)\\
-        =&-x^TQx-2\tr(\tilde{K}^T\Lambda\Sigma_1\tilde{K})-2\tr(\tilde{K}^T\Lambda\Sigma_1 K)-2\tr(\tilde{\Theta}^T\Lambda\Sigma_2\tilde{\Theta})\\
-        &-2\tr(\tilde{\Theta}^T\Lambda\Sigma_2\Theta)+2x^TP\xi(t)
+        \dot{V}=&-x^\mathrm{T}Qx-2\tr(\tilde{K}^\mathrm{T}\Lambda\Sigma_1\hat{K})-2\tr(\tilde{\Theta}^\mathrm{T}\Lambda\Sigma_2\hat{\Theta})+2x^\mathrm{T}P\xi(t)\\
+        =&-x^\mathrm{T}Qx-2\tr(\tilde{K}^\mathrm{T}\Lambda\Sigma_1\tilde{K})-2\tr(\tilde{K}^\mathrm{T}\Lambda\Sigma_1 K)-2\tr(\tilde{\Theta}^\mathrm{T}\Lambda\Sigma_2\tilde{\Theta})\\
+        &-2\tr(\tilde{\Theta}^\mathrm{T}\Lambda\Sigma_2\Theta)+2x^\mathrm{T}P\xi(t)
     \end{align*}
     根据定义，有：
     \begin{align*}
-        \tr(\tilde{K}^T\Lambda\Sigma_1\tilde{K})&\geq \|\tilde{K}\|_F^2\Lambda_{\mathrm{min}}{\Sigma_1}_{\mathrm{min}} \\
-        \tr(\tilde{\Theta}^T\Lambda\Sigma_2\tilde{\Theta})&\geq \|\tilde{\Theta}\|_F^2\Lambda_{\mathrm{min}}{\Sigma_2}_{\mathrm{min}}
+        \tr(\tilde{K}^\mathrm{T}\Lambda\Sigma_1\tilde{K})&\geq \|\tilde{K}\|_F^2\Lambda_{\mathrm{min}}{\Sigma_1}_{\mathrm{min}} \\
+        \tr(\tilde{\Theta}^\mathrm{T}\Lambda\Sigma_2\tilde{\Theta})&\geq \|\tilde{\Theta}\|_F^2\Lambda_{\mathrm{min}}{\Sigma_2}_{\mathrm{min}}
     \end{align*}
     其中 $\Lambda_{\mathrm{min}}, {\Sigma_1}_{\mathrm{min}}, {\Sigma_2}_{\mathrm{min}}$ 分别为 $\Lambda, \Sigma_1, \Sigma_2$ 的最小对角元素。由 Schwartz 不等式，可得
     \begin{align*}
-        |\tr(\tilde{K}^T\Lambda\Sigma_1 K)| &\leq \dfrac{1}{2} \left( \tr(\tilde{K}^T \Lambda\Sigma_1 \tilde{K}) + \tr(K^T \Lambda\Sigma_1 K) \right) \\
-        |\tr(\tilde{\Theta}^T\Lambda\Sigma_2 \Theta)| &\leq \dfrac{1}{2} \left( \tr(\tilde{\Theta}^T \Lambda\Sigma_2 \tilde{\Theta}) + \tr(\Theta^T \Lambda\Sigma_2 \Theta) \right)
+        |\tr(\tilde{K}^\mathrm{T}\Lambda\Sigma_1 K)| &\leq \dfrac{1}{2} \left( \tr(\tilde{K}^\mathrm{T} \Lambda\Sigma_1 \tilde{K}) + \tr(K^\mathrm{T} \Lambda\Sigma_1 K) \right) \\
+        |\tr(\tilde{\Theta}^\mathrm{T}\Lambda\Sigma_2 \Theta)| &\leq \dfrac{1}{2} \left( \tr(\tilde{\Theta}^\mathrm{T} \Lambda\Sigma_2 \tilde{\Theta}) + \tr(\Theta^\mathrm{T} \Lambda\Sigma_2 \Theta) \right)
     \end{align*}
 
     从而，我们有
     \begin{align*}
         \dot{V} \leq & -\lambda_{\min}(Q)\|x\|^2
-        -\tr(\tilde{K}^T\Lambda\Sigma_1\tilde{K})
-        -\tr(\tilde{\Theta}^T\Lambda\Sigma_2\tilde{\Theta})\\
-        &+\tr(K^T \Lambda\Sigma_1 K)+\tr(\Theta^T \Lambda\Sigma_2 \Theta)+2\|x\|\lambda_{\max}(P)\xi_{\max}\\
+        -\tr(\tilde{K}^\mathrm{T}\Lambda\Sigma_1\tilde{K})
+        -\tr(\tilde{\Theta}^\mathrm{T}\Lambda\Sigma_2\tilde{\Theta})\\
+        &+\tr(K^\mathrm{T} \Lambda\Sigma_1 K)+\tr(\Theta^\mathrm{T} \Lambda\Sigma_2 \Theta)+2\|x\|\lambda_{\max}(P)\xi_{\max}\\
         \leq & -\lambda_{\min}(Q)\|x\|^2 - \|\tilde{K}\|_F^2\Lambda_{\mathrm{min}}{\Sigma_1}_{\mathrm{min}} - \|\tilde{\Theta}\|_F^2\Lambda_{\mathrm{min}}{\Sigma_2}_{\mathrm{min}} \\
-        &+\tr(K^T \Lambda\Sigma_1 K)+\tr(\Theta^T \Lambda\Sigma_2 \Theta)+2\|x\|\lambda_{\max}(P)\xi_{\max}
+        &+\tr(K^\mathrm{T} \Lambda\Sigma_1 K)+\tr(\Theta^\mathrm{T} \Lambda\Sigma_2 \Theta)+2\|x\|\lambda_{\max}(P)\xi_{\max}
     \end{align*}
 
     % 待详细补充 \dot{V} \leq -\beta V + c
