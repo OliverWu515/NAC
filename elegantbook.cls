@@ -106,7 +106,7 @@
 
 \RequirePackage{csquotes}
 \RequirePackage[nottoc,notindex]{tocbibind}
-\usepackage[splitindex]{imakeidx}
+\usepackage{imakeidx}
 \usepackage[totoc,itemlayout=relhang,unbalanced]{idxlayout}
 % \usepackage{makeidx}
 % \usepackage{splitidx}

@@ -142,7 +142,7 @@
   设$V:\R{}^n\to\R$为连续可微函数，且满足
     \begin{itemize}[leftmargin=1em]
       \item $V(0)=0,V(x)>0,\forall x\in \R{}^n\backslash\{0\}$（$V$为正定）
-      \item $\dot{V}(x)< 0,\forall x\in \R{}^n$（$\dot{V}$为负定）
+      \item $\dot{V}(x)< 0,\forall x\in \R{}^n\backslash\{0\}$（$\dot{V}$为负定）
       \item $\|x\|\to\infty\implies V(x)\to \infty$【$V$为径向无界（radially unbounded）\index{径向无界（radial unboundness）}，或称为无限大】
     \end{itemize}
   则系统 \eqref{freeofauto} 的平衡点$x=0$是全局渐近稳定的。
@@ -160,7 +160,7 @@
       \item 除零平衡点外，$\dot{V}=0$不包含系统任何整轨线
       \item $\|x\|\to\infty\implies V(x)\to \infty$（$V$为径向无界，或称为无限大）
     \end{itemize}
-  则系统 \eqref{freeofauto} 的平衡点$x=0$是全局稳定的。
+  则系统 \eqref{freeofauto} 的平衡点$x=0$是全局渐近稳定的。
 \end{theorem}
 具体证明过程略去，可参见前言中的参考文献3的2.3节。
 上述定理是对定理 \ref{lyapunov} 的推广，放宽了导数负定的要求。

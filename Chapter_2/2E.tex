@@ -41,15 +41,15 @@
   \end{equation*}
   其中
   \begin{equation}\label{jacobian}
-    A=\frac{\partial f(x)}{\partial x}|_{x=0}=\left.\begin{bmatrix}\frac{\partial f_{1}}{\partial x_{1}}&\cdots&\frac{\partial f_{n}}{\partial x_{1}}\\\vdots&&\vdots\\\frac{\partial f_{n}}{\partial x_{1}}&\cdots&\frac{\partial f_{n}}{\partial x_{n}}\end{bmatrix}\right|_{x=0}
+    A=\frac{\partial f(x)}{\partial x}|_{x=0}=\left.\begin{bmatrix}\frac{\partial f_{1}}{\partial x_{1}}&\cdots&\frac{\partial f_{1}}{\partial x_{n}}\\\vdots&&\vdots\\\frac{\partial f_{n}}{\partial x_{1}}&\cdots&\frac{\partial f_{n}}{\partial x_{n}}\end{bmatrix}\right|_{x=0}
   \end{equation}
   称为雅可比矩阵（Jacobian）\index{雅可比矩阵（Jacobian）}，且有（所用范数均为2-范数）
   \begin{equation}\label{gxto0}
     \|x\|\to0\ \text{时}\ \cfrac{\|g(x)\|}{\|x\|}\to0
   \end{equation}
-  考虑候选Lyapunov函数
+  假设$A$是Hurwitz的。先任取对称正定矩阵$Q$，再由定理 \ref{linearlya} 求得满足$PA+A^\mathrm{T}P=-Q$的唯一对称正定矩阵$P \in \mathbb{R}^{n \times n}$。考虑候选Lyapunov函数
   \[ V (x) = x^\mathrm{T} P  x \]
-  其中$P \in \mathbb{R}^{n \times n}$ 为正定。其导数等于
+  其导数等于
   \begin{equation*}
     \begin{aligned}
     \dot{V}&= x^\mathrm{T}P\dot{x}+\dot{x}^\mathrm{T}Px\\
@@ -61,8 +61,8 @@
   其中第四个等号，是由于$x^\mathrm{T}Pg(x)$为标量，所以转置与本身相等，
   而其转置刚好就是最后一项（利用$P$的对称性）。
   
-  因为$A$是Hurwitz的，根据 \ref{linearlya} 知$Q$正定；此外，由 \eqref{gxto0}，
-  对$\forall \gamma>0$，$\exists r>0$使得\[\frac{\|g(x)\|}{\|x\|}\le \gamma,\quad\forall\|x\|\le r\]
+  由上述选取可知$Q$正定；此外，由 \eqref{gxto0}，
+  对$\forall \gamma>0$，$\exists r>0$使得\[\frac{\|g(x)\|}{\|x\|}\le \gamma,\quad\forall\,0<\|x\|\le r\]
   因此$\|x\|\le r$时有\begin{align*}
     \dot{V}&\le -x^\mathrm{T}Qx+2\|x\|\|P\|\|g(x)\|\\
     &\le -x^\mathrm{T}Qx+2\gamma\|x\|^2\|P\|\\
@@ -78,8 +78,8 @@
     \begin{itemize}[leftmargin=1em]
     \item $\forall i, \ensuremath{\operatorname{Re}} [\lambda_i (A)] < 0$，则系统 \eqref{freeofauto} 的原点是渐近稳定的；
     \item $\exists i, \ensuremath{\operatorname{Re}} [\lambda_i (A)] > 0$，则系统 \eqref{freeofauto} 的原点是不稳定的；
-    \item $\forall i, \ensuremath{\operatorname{Re}} [\lambda_i (A)] \le 0$，且
-    $\exists j, \ensuremath{\operatorname{Re}} [\lambda_j (A)] = 0$，无法判断。
+    \item $\forall i, \ensuremath{\operatorname{Re}} [\lambda_i (A)] \le 0$，且存在
+    $j$使得 $\ensuremath{\operatorname{Re}} [\lambda_j (A)] = 0$，则无法判断。
     \end{itemize}
   \end{theorem}
   \begin{note}

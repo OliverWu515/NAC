@@ -32,7 +32,7 @@ git clone https://github.com/OliverWu515/NAC
 
 ```bash
 xelatex -synctex=1 -interaction=nonstopmode --shell-escape -file-line-error NAC
-zhmakeindex -s zh.ist NAC-NAC.idx
+zhmakeindex -s zh.ist NAC.idx
 xelatex -synctex=1 -interaction=nonstopmode --shell-escape -file-line-error NAC
 xelatex -synctex=1 -interaction=nonstopmode --shell-escape -file-line-error NAC
 ```

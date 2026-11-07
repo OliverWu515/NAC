@@ -5,7 +5,7 @@
 \end{equation}
 其中$f:D\to\R{}^n$是从$D$至$\R{}^n$的局部Lipschitz映射，$D\subset\R{}^n$为包含$x=0$的域，这保证了上式的解存在且唯一。假定$f(0)=0$，意即$x=0$为一平衡点。根据上章末尾的讨论，不妨设初始时刻$t_0=0$。
 \begin{note}
-  假定$x=0$为平衡点并不失去一般性。因为若考虑一非零平衡点$x^\ast$，意即其满足$f(x^\ast)=0$，那么作变换$z=x-x^\ast$，即有\[\dot{z}=\dot{x}=f(x)=f(z+x^\ast)\]令$g(z)=f(z+x^\ast)$，则\[g(z)=0\implies f(z+x^\ast)=0\implies z=0\]因此$x^\ast$的稳定性问题同样可归于讨论$z=0$的稳定性问题。（对于非自治系统也可类似分析）
+  假定$x=0$为平衡点并不失去一般性。因为若考虑一非零平衡点$x^\ast$，意即其满足$f(x^\ast)=0$，那么作变换$z=x-x^\ast$，即有\[\dot{z}=\dot{x}=f(x)=f(z+x^\ast)\]令$g(z)=f(z+x^\ast)$，则\[g(0)=f(x^\ast)=0\]因此$x^\ast$的稳定性问题同样可归于讨论$z=0$的稳定性问题。（对于非自治系统也可类似分析）
 \end{note}
 \begin{definition}[自治系统的稳定性]
   式 \eqref{freeofauto} 的平衡点$x=0$是
@@ -14,7 +14,7 @@
     \[\|x(0)\|<\delta\implies \|x(t)\|<\varepsilon,\forall t\ge 0\]
     \item {\bf 不稳定的（unstable）}\index{不稳定的（unstable）}，若其不是稳定的；意即，对于某个$\varepsilon>0$，不存在$\delta>0$使得第一点中的式子成立。
     \item {\bf 渐近稳定的（asymptotically stable）}\index{稳定的（stable）!渐近$\sim$（asymptotically）}，若其稳定且存在$c>0$使得\[\|x(0)\|<c\implies \lim_{t\to\infty}x(t)=0\]
-    \item {\bf 指数稳定的（exponentially stable）}\index{稳定的（stable）!指数$\sim$（exponentially）}，若存在两个实数$\alpha,\lambda>0$使得\[\|x(0)\|<\delta\implies \|x(t)\|<\alpha\|x(0)\|\mathrm{e}^{-\lambda t},\forall t\ge 0\]
+    \item {\bf 指数稳定的（exponentially stable）}\index{稳定的（stable）!指数$\sim$（exponentially）}，若存在常数$\alpha\ge1,\lambda>0,\delta>0$使得\[\|x(0)\|<\delta\implies \|x(t)\|\le\alpha\|x(0)\|\mathrm{e}^{-\lambda t},\forall t\ge 0\]
     \item {\bf 临界稳定的（marginally stable）}\index{稳定的（stable）!临界$\sim$（marginally）}，若$x=0$是稳定的，但不是渐近稳定的。
     \item {\bf 全局渐近稳定/指数稳定的（globally asymptotically/exponentially stable）}，若上述渐近稳定或指数稳定对于任意初始状态都成立。
   \end{itemize}
@@ -35,7 +35,7 @@
     \item 考虑如下范德坡（Van der Pol）方程\[\begin{cases}
       \dot{x}_{1}=x_{2}\\\dot{x}_{2}=- x_{1}+(1-x_1^2)x_{2}
     \end{cases}\]
-    原点是其平衡点。绘出其相轨迹，发现自任意非零状态出发的状态均会趋于一{\bf 极限环（limit cycle）}。\index{极限环（limit cycle）}因此，在极限环内任取一球域，则可见自任意接近原点（也即起始状态的球域半径任意小）的状态出发的轨线最终均会超出该球域而到达极限环，则原点不稳定。此例说明，对于非线性系统，不稳定的形式有多种，未必是线性系统中更常见的“发散至无穷远处”。
+    原点是其平衡点。绘出其相轨迹，发现自任意非零状态出发的状态均会趋于一{\bf 极限环（limit cycle）}。\index{极限环（limit cycle）}因此，在极限环内任取一球域，则可见自任意接近原点（也即起始状态的球域半径任意小）的状态出发的轨线最终均会超出该球域而到达极限环，则原点不稳定。这说明，对于非线性系统，不稳定的形式有多种，未必是线性系统中更常见的“发散至无穷远处”。
     \begin{center}
       \includegraphics[width=0.34\linewidth]{figure/nonlinear/vanderpol.png}
       \captionof{figure}{范德坡方程的相轨迹}
@@ -74,7 +74,7 @@
     \item 考虑方程$$\dot{x}=-(1+\sin^2x)x$$
 其解为$x(t)=x(0)\mathrm{e}^{-\int_{0}^{t}(1+\sin^{2}x(\tau))\diff\tau}\Rightarrow\|x(t)\|\leq\|x(0)\|\mathrm{e}^{-t}.$
 因此，状态$x$指数收敛至$x=0$（其中$\lambda=1$）。
-\item 考虑方程$$\dot{x}=-x^2,x(0)=1$$
-其解为 $x(t)=\frac1{t+1}$，则$x=0$为渐近稳定的，但不是指数稳定的。
+\item 考虑方程$$\dot{x}=-x^3,x(0)=x_0$$
+其解为 $x(t)=\frac{x_0}{\sqrt{1+2x_0^2t}}$，则$x=0$为渐近稳定的，但不是指数稳定的。\footnote{课上 $\dot{x}=-x^2,x(0)=1$ 的例子有误，因为原点对正初值收敛，但对任意小的负初值，解都会远离原点，因此原点不稳定。}
   \end{itemize}
 \end{example}

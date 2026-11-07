@@ -1,5 +1,5 @@
 \section{不变集原理}\label{2Dref}
-我们总更希望一个系统是渐近稳定而不仅仅是稳定的。然而，如例 \ref{suff_lyapunov} 所示，我们构造的Lyapunov函数之导数常常只能是负半定而非负定的，从而无法得出渐近稳定的结论。下面将给出Lyapunov稳定性定理的一个推广，它有助于解决此问题。首先介绍相关概念。
+稳定性保证小的初始偏差不会使状态远离平衡点，但不保证偏差随时间消失。在镇定问题中，我们通常还希望状态最终回到平衡点，因此需要进一步讨论渐近稳定性。然而，如例 \ref{suff_lyapunov} 所示，我们构造的Lyapunov函数之导数常常只能是负半定而非负定的，从而无法得出渐近稳定的结论。下面将给出Lyapunov稳定性定理的一个推广，它有助于解决此问题。首先介绍相关概念。
 \begin{definition}[不变集（invariant set）]\index{不变集（invariant set）}
 	称集合$M$是关于式 \eqref{freeofauto} 的{\bf 正不变集（positively invariant set）}，
 	若\[x(0)\in M\implies x(t)\in M,\forall t\ge0\]
@@ -48,12 +48,12 @@
 \end{note}
 \begin{example}[利用LaSalle定理判别单摆系统稳定性]
 	考虑例 \ref{suff_lyapunov}。首先考虑无阻尼的情形 \eqref{nodamp}，Lyapunov函数\[V(x)=\frac{1}{2}x_2^2+a(1-\cos x_1)\]
-	可构造不变集$\Omega$类似例 \ref{invset} 第三点（不过需注意定义域）：\[\Omega=\{x:V(x)\le c\},c>0\]
+	在$D=(-\pi,\pi)\times\R{}$内，类似例 \ref{invset} 第三点，取\[\Omega=\{x\in D:V(x)\le c\},\quad 0<c<2a\]由于$x_1=\pm\pi$时$V\ge2a$，此时$\Omega$紧且正不变。
 	例 \ref{suff_lyapunov} 已经计算过$\dot{V}=0$，因此$E=\Omega$。
 	$E$中最大的不变集$M$，显然就是$\Omega$本身。于是利用 \ref{lasalle}，$\Omega$中出发的轨线都将趋于$\Omega$。
 
-	再考虑有阻尼的情形 \eqref{damped}。仍然选择$\Omega$如上。由于$\dot{V}=0\iff x_2=0$，因此\[E=\{x:x_2=0,x\in\Omega\}\]
-	再找$E$中最大的不变集。由于自$x_1\ne 0,x_2=0$起始的状态轨线，一经出发，必然使得$x_2\ne 0$（从物理意义上考虑：在非最低点从静止释放单摆，
+	再考虑有阻尼的情形 \eqref{damped}（$b>0$）。仍然选择$\Omega$如上。由于$\dot{V}=0\iff x_2=0$，因此\[E=\{x:x_2=0,x\in\Omega\}\]
+	再找$E$中最大的不变集。在上述区域内，由于自$x_1\ne 0,x_2=0$起始的状态轨线，一经出发，必然使得$x_2\ne 0$（从物理意义上考虑：在非最低点从静止释放单摆，
 	单摆必定马上具有非零速度）。因此$M=\{(0,0)\}$。此时利用 \ref{lasalle}，可得每个自$\Omega$中出发的轨线都将趋于原点。我们发现，这样也说明了原点的渐近稳定性。
 \end{example}
 \begin{example}[利用LaSalle定理判别自适应控制的收敛性]
@@ -86,10 +86,10 @@
   \[V (x) = \frac{1}{2} x^2_1 + \frac{1}{2\textcolor{structurecolor}{\gamma}} (x_2 - k_0)^2, \dot{V}  =  (a - k_0)  x^2_1\]
   取 $k_0 > a$，则 $\dot{V} \leq 0$。
 
-  接下来应用LaSalle定理。首先定义不变集$\Omega = \{ x \in \mathbb{R}^2 : V (x) \leq c \},c>0$。
+  接下来应用LaSalle定理。首先定义不变集$\Omega = \{ x \in \mathbb{R}^2 : V (x) \leq c \},c>0$。由$V$径向无界，知$\Omega$是紧集。
   则集合$E =\{ x \in \Omega :\dot{V}= 0 \}= \{ x \in \Omega : x_1 = 0 \}$。进而由本例开头的分析知$M = E$。
   根据 \ref{lasalle}，解会收敛至$x_1=0$上，也即$\lim\limits_{t \rightarrow \infty} x_1 (t) = 0$。
-  又知$V(x)$径向无界，所以由 \ref{lasallegas}，此结论全局成立。
+  对任意初值$x(0)$，均可取$c>V(x(0))$使其落在上述紧的正不变集内，因此再由 \ref{lasalle} 知，$x_1(t)\to0$对任意初值成立。
 \end{example}
 定理 \ref{lasalle} 除了可用于判别趋于原点的情形，还可推广用于判别收敛至极限环等。
 \begin{example}[收敛至极限环]
