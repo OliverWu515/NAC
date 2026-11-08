@@ -19,13 +19,13 @@
     \alpha (0) = 0, \lim\limits_{r \rightarrow \infty} \alpha (r) = \frac{\pi}{2}$，
     所以$\alpha (r)$ 属于 $\mathcal{K}$类函数，但不属于 $\mathcal{K}_{\infty}$类函数。
     
-    \item $\alpha (r) = r^c$。由$ \alpha' (r) = c r^{c-1} \geq 0, \alpha (0) = 0, \lim\limits_{r
+    \item $\alpha (r) = r^c$，其中$c>0$。由$\alpha' (r) = c r^{c-1}>0$（$r>0$），以及$\alpha (0) = 0, \lim\limits_{r
     \rightarrow \infty} \alpha (r) = \infty$，所以 $\alpha (r)$ 属于 $\mathcal{K}_{\infty}$类函数。
     
     \item $\alpha (r) = \min \{ r, r^2 \}$ 属于 $\mathcal{K}_{\infty}$类函数。
     
     \item $\beta (r, t) = r^2 \mathrm{e}^{- t}$ 属于    $\mathcal{K}\mathcal{L}$类函数。
-    \item $\beta (r, t) = \frac{r}{rt+1}=\frac{1}{t+\frac1r}$ 属于 $\mathcal{K}\mathcal{L}$类函数。
+    \item $\beta (r, t) = \frac{r}{rt+1}$ 属于 $\mathcal{K}\mathcal{L}$类函数。
   \end{itemize}
 \end{example}
 
@@ -33,12 +33,13 @@
   设定义在$[0,a)$上的函数$\alpha_{1},\alpha_{2}\in\mathcal{K}$，$\alpha_{3},\alpha_{4}\in\mathcal{K}_{\infty}$，且有
   $\beta\in\mathcal{KL}$。令$\alpha_{i}^{-1}$表示$\alpha_{i}$的反函数。则
   \begin{itemize}[leftmargin=1em]
-    \item $\alpha_{1}^{-1}$定义在$[0,\alpha_{1}(a))$上，属于$\mathcal{K}$类函数；
+    \item $\alpha_{1}^{-1}$定义在$[0,b)$上，属于$\mathcal{K}$类函数，其中$b$为$\alpha_1$值域的右端点（可为$\infty$）；
     \item $\alpha_{3}^{-1}$定义在$[0,\infty)$上，属于$\mathcal{K}_\infty$类函数；
     \item $\alpha_{1} \circ\alpha_{2}$属于$\mathcal{K}$类函数；
     \item $\alpha_{3} \circ\alpha_{4}$属于$\mathcal{K}_\infty$类函数；
     \item $\sigma(r,t)=\alpha_{1}(\beta(\alpha_{2}(r),t)) $属于$\mathcal{K}\mathcal{L}$类函数。
   \end{itemize}
+  上述复合函数必要时缩小$r$的定义区间，使各层复合对所有$t\ge0$均有定义。
 \end{lemma}
 
 通过下面的引理，我们将$\mathcal{K}$和$\mathcal{K}_\infty$类函数引入Lyapunov分析中。
@@ -48,8 +49,7 @@
   令$B_r\subset D$（$r>0$）。那么存在定义在$[0,r]$上的
   $\mathcal{K}$ 类函数$\alpha_1,\alpha_2$使得
   \[ \alpha_1 (\| x \|) \leq V (x) \leq \alpha_2 (\| x \|), \forall x \in B_r \]
-  若$D =\mathbb{R}^n$，那么$\alpha_1,\alpha_2$定义在$[0,\infty)$上。
-  进一步，若$V(x)$是径向无界的，那么 $\alpha_1$与 $\alpha_2$可选为 $\mathcal{K}_{\infty}$类函数。
+  若$D=\mathbb{R}^n$且$V(x)$径向无界，则可取定义在$[0,\infty)$上的$\alpha_1,\alpha_2\in\mathcal{K}_\infty$，使上述不等式对所有$x\in\mathbb{R}^n$成立。
 \end{lemma}
 
 \begin{example}

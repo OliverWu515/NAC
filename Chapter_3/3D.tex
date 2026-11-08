@@ -1,8 +1,9 @@
 \section{线性时变系统}\label{3Dref}
-在进一步研究非自治系统稳定性之前，我们先简短讨论如下线性时变系统。同样地，其可看成非自治的非线性系统的一个特例。
+在进一步研究非自治系统稳定性之前，我们先简短讨论如下线性时变系统
 \begin{equation}
   \dot{x}(t) = A (t) x(t) \label{Sys:LTVS}
 \end{equation}
+同样地，其可看成非自治的非线性系统的一个特例。
 方程 \eqref{Sys:LTVS} 的解具有形式
 \[ x (t) = \Phi (t, t_0) x (t_0) \]
 其中$\Phi (t, t_0)$是状态转移矩阵。
@@ -69,15 +70,35 @@
     & =  - x^\mathrm{T} Q (t) x\\
     & \leq  - c_3 x^\mathrm{T} x
   \end{align*}
-  定义$W_3 (x)\triangleq x^\mathrm{T} x $，利用 \ref{lyapunov_nonauto} 第四、五条即可。
+  定义$W_3 (x)\triangleq c_3 x^\mathrm{T} x $，利用 \ref{lyapunov_nonauto} 第四、五条即可。
 \end{proof}
 
-\begin{corollary}
-  假设对于任意时刻 $t \geq 0$， $A (t)$ 的所有特征值都具有负实部，并且$A (t)$有界且 $\int^{\infty}_0
-  A^\mathrm{T} (t) A (t) \diff  t < \infty$，那么系统 \eqref{Sys:LTVS} 的平衡点$x=0$是全局一致渐近稳定的。
-\end{corollary}
+% \begin{corollary}
+%   假设对于任意时刻 $t \geq 0$， $A (t)$ 的所有特征值都具有负实部，并且$A (t)$有界且 $\int^{\infty}_0
+%   A^\mathrm{T} (t) A (t) \diff  t < \infty$，那么系统 \eqref{Sys:LTVS} 的平衡点$x=0$是全局一致渐近稳定的。
+% \end{corollary}
+\begin{example}[平方可积条件不足以保证渐近稳定]
+  考虑一维线性时变系统
+  \[
+    \dot{x}=-\frac{x}{(1+t)^2}.
+  \]
+  其系数$A(t)=-(1+t)^{-2}$始终为负且有界，并满足
+  \[
+    \int_0^\infty A^2(t)\diff t=\frac13<\infty.
+  \]
+  但其解为
+  \[
+    x(t)=x(0)\mathrm{e}^{-\frac{t}{1+t}}
+    \longrightarrow \frac{x(0)}{\mathrm{e}}.
+  \]
+  因此，即使系统矩阵有界、各时刻的特征值均具有负实部，
+  且满足上述积分条件，原点仍未必渐近稳定。
+\end{example}
 \begin{theorem}[利用线性化判别非自治系统的稳定性]
     令 $x = 0$ 是系统 \eqref{freeofnonauto} 的平衡点，其中$f$是$C^1$的，$D=\{x\in \mathbb{R}^n:\|x\|<r\}$。
     雅可比矩阵$\frac{\partial f}{\partial x}$有界且在$D$上Lipschitz（对$t$一致）。令$A(t)=\left.\frac{\partial f}{\partial x}(t,x)\right|_{x=0}$。
     那么原点是指数稳定的，当且仅当其对于线性系统 \eqref{Sys:LTVS}（以上述$A(t)$为系统矩阵）是指数稳定的。
 \end{theorem}
+\begin{note}
+  此定理允许先在平衡点处线性化，再用本节的线性时变系统判据分析原非线性系统的指数稳定性。这里的指数稳定均指一致指数稳定，且对非线性系统而言是局部结论，即只保证初始状态足够接近原点时，非线性系统的状态会指数收敛到原点。
+\end{note}

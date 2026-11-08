@@ -36,7 +36,7 @@
 	不变集可视为平衡点的推广。注意，\ref{lasalle} 中的$V$并不需要是正定函数。
 \end{note}
 \begin{corollary}
-	令$x=0$为 \eqref{freeofauto} 的平衡点。$D\in\R{}^n$是包含原点的域。令$V:D\to\R{}$是$C^1$正定函数，且$\dot{V}\le 0$在$D$上总成立。
+	令$x=0$为 \eqref{freeofauto} 的平衡点。$D\subset\R{}^n$是包含原点的域。令$V:D\to\R{}$是$C^1$正定函数，且$\dot{V}\le 0$在$D$上总成立。
 	令$E=\{x\in D:\dot{V}=0\}$，并设除了平凡解$x(t)=0$外，没有解能一直处于$E$中。那么$x=0$是渐近稳定的。
 \end{corollary}
 \begin{corollary}\label{lasallegas}
@@ -93,7 +93,7 @@
 \end{example}
 定理 \ref{lasalle} 除了可用于判别趋于原点的情形，还可推广用于判别收敛至极限环等。
 \begin{example}[收敛至极限环]
-	考虑下述非线性系统\begin{align*}
+	考虑下述非线性系统，其中$\beta>0$：\begin{align*}
 		\dot{x}_1&=x_2+x_1(\beta^2-x_1^2-x_2^2)\\
 		\dot{x}_2&=-x_1+x_2(\beta^2-x_1^2-x_2^2)
 	\end{align*}
@@ -118,7 +118,7 @@
     x_1\dot{x}_2-x_2\dot{x}_1 & = -(x_1^2+x_2^2)=- r^2
   \end{align*}
   则 \ $\left\{\begin{array}{l}
-    r < \beta, \dot{r} > 0 \Rightarrow r \rightarrow \beta\\
+    0 < r < \beta, \dot{r} > 0 \Rightarrow r \rightarrow \beta\\
     r > \beta, \dot{r} < 0 \Rightarrow r \rightarrow \beta
   \end{array}\right. \Rightarrow$ 极限环稳定。
 \end{note}

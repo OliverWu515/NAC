@@ -4,11 +4,11 @@
 
 在正式给出各种有界性的定义前，我们先分析一个具体例子。考虑这样一个标量非自治系统：
 \[
-    \dot{x} = x + \delta \sin{t}, \quad x(t_0) = a, \quad a > \delta > 0 \text{。}
+    \dot{x} = -x + \delta \sin{t}, \quad x(t_0) = a, \quad a > \delta > 0 \text{。}
 \]
 该系统没有平衡点。它的解是
 \[
-    x (t) = \mathrm{e}^{- (t - t_0)} x (t_0) + \delta \int^t_{t_0} \mathrm{e}^{- (t - \tau)} \diff  \tau \text{。}
+    x (t) = \mathrm{e}^{- (t - t_0)} x (t_0) + \delta \int^t_{t_0} \mathrm{e}^{- (t - \tau)} \sin\tau\,\diff  \tau \text{。}
 \]
 这个解满足下式：
 \begin{align*}
@@ -28,9 +28,9 @@
   & \leq  - x^2 + \delta | x  |\\
   & =  - | x | (| x | - \delta) \text{。}
 \end{align*}
-$\dot{V}$ 在原点附近并不是负定的，但在集合 $\{ | x | < \delta \}$ 外是负定的。
+$\dot{V}$ 在原点附近并不是负定的，但在 $|x|>\delta$ 时严格为负。
 
-取 $c > \frac{1}{2} \delta^2$，其中 $| x | > \delta$。对于集合 $\{ V \leq c \}$，由于在边界 $V = c$ 上 $\dot{V}$ 是负的，从该集合出发的解都会一直留在其中。（换言之，这是正不变集。）从而解是一致有界的。
+取 $c > \frac{1}{2} \delta^2$，则在边界 $V=c$ 上有 $|x|>\delta$。对于集合 $\{ V \leq c \}$，由于在边界 $V = c$ 上 $\dot{V}$ 是负的，从该集合出发的解都会一直留在其中。（换言之，这是正不变集。）从而解是一致有界的。
 
 取任意 $\varepsilon$ 使得 $\frac{\delta^2}{2} < \varepsilon < c$，则在集合 $\{ \varepsilon \leq V \leq c \}$ 内有  $\dot{V} < 0$。这就表明，$V$ 会在这个集合内单调递减直到进入集合 $\{ V (x) \leq \varepsilon \}$。此后，解就不再离开集合 $\{ V (x) \leq \varepsilon \}$ 了，因为在边界 $V = \varepsilon$ 上 $\dot{V} < 0$。于是我们可以得到结论：该解是一致最终有界的且最终界为 $| x | \leq \sqrt{2 \varepsilon}$。
 
@@ -52,12 +52,12 @@ $\dot{V}$ 在原点附近并不是负定的，但在集合 $\{ | x | < \delta \}
 \end{itemize}
 \end{definition}
 
-\begin{example}% TODO：此处证明待完善
-    对于方程 \eqref{freeofnonauto}，考虑一个连续的正定函数 $V(x)$，若其沿着系统轨线的导数满足
+\begin{example}
+    对于方程 \eqref{freeofnonauto}，设$D=\mathbb{R}^n$，考虑一个径向无界的$C^1$正定函数 $V(x)$，若其沿着系统轨线的导数对所有$t\ge0$和$x\in\mathbb{R}^n$满足
     \begin{align*}
         \dot{V} &\leq -\beta V + c, \quad \beta, c > 0 \text{，}
     \end{align*}
-    那么我们可以证明这个方程的解是一致最终有界的。具体证明过程如下。
+    那么我们可以证明这个方程的解是全局一致最终有界的。具体证明过程如下。
     \begin{align*}
         \dot{V} &\leq -\beta V + c \\
         \dot{V} + \beta V &\leq c \\
@@ -66,23 +66,20 @@ $\dot{V}$ 在原点附近并不是负定的，但在集合 $\{ | x | < \delta \}
         \mathrm{e}^{\beta t} V(x(t)) - \mathrm{e}^{\beta t_0} V(x(t_0)) &\leq c \int_{t_0}^t \mathrm{e}^{\beta \tau} \diff \tau = \dfrac{c}{\beta} \left( \mathrm{e}^{\beta t} - \mathrm{e}^{\beta t_0} \right) \\
         V(t) &\leq \mathrm{e}^{-\beta (t - t_0)} V(x(t_0)) + \dfrac{c}{\beta} \left(1 - \mathrm{e}^{-\beta (t - t_0)}\right) \text{。}
     \end{align*}
-    记 $V(x(t_0)) \leq A$。若 $A \leq \frac{c}{\beta}$，则立得 $V(t) \leq \frac{c}{\beta}$。若 $A > \frac{c}{\beta}$，则取任意 $B$ 满足 $\frac{c}{\beta} < B < A$，可得
+    由此有$V(x(t))\leq\max\{V(x(t_0)),c/\beta\}$。由$V$径向无界及解的延拓条件，解对所有$t\geq t_0$存在。
+    由引理 \ref{lyapunov_comp}，可得$\mathcal{K}_\infty$类函数$\alpha_1,\alpha_2$使得
     \[
-        V(t) \leq B, \quad \forall t \geq t_0 + \frac{1}{\beta} \ln{\dfrac{A - \frac{c}{\beta}}{B - \frac{c}{\beta}}} \triangleq t_0 + T \text{。}
+        \alpha_1(\|x\|)\leq V(x)\leq\alpha_2(\|x\|),\quad\forall x\in\mathbb{R}^n\text{。}
     \]
-    其中，$A > 0, B > 0, T = T(A, B) > 0$ 均与 $t_0$ 无关。
-    由引理 \ref{lyapunov_comp}，可得 $\mathcal{K}$ 类函数 $\alpha_1, \alpha_2$ 使得
+    固定$B>c/\beta$，记$b=\alpha_1^{-1}(B)$。对任意初始半径$a>0$，令$A=\alpha_2(a)$，则$\|x(t_0)\|\leq a$蕴涵$V(x(t_0))\leq A$。
+    若$A\leq B$，则对所有$t\geq t_0$均有$V(x(t))\leq B$，可取任意$T>0$。若$A>B$，则由上式取
     \[
-        \alpha_1 (\| x \|) \leq V(x) \leq \alpha_2 (\| x \|), \quad \forall x \in \left\{x | 0 < \mu < \| x \| < r\right\} \text{，}
+        T=\frac{1}{\beta}\ln\frac{A-c/\beta}{B-c/\beta}>0\text{，}
     \]
-    其中 $r$ 充分大以使得 $\alpha_1(r) \geq A$，$\mu$ 充分小以使得 $\alpha_2(\mu) \leq B$。（可以证明这是做得到的。）从而，对于 $t \geq t_0 + T_0$，有：
+    即有$V(x(t))\leq B$，$\forall t\geq t_0+T$。因此，
     \[
-        \| x(t_0) \| \leq \alpha_2^{-1}(B) \implies V(x(t_0)) \leq B \leq A \implies V(x(t)) \leq A \implies \| x(t) \| \leq \alpha_1^{-1} (A) \text{。}
+        \|x(t_0)\|\leq a\implies V(x(t_0))\leq A\implies V(x(t))\leq B\implies\|x(t)\|\leq b,\quad\forall t\geq t_0+T\text{。}
     \]
-    记 $a = \alpha_2^{-1}(B)$ 和 $b = \alpha_1^{-1} (A)$，整理上述结果则有：
-    \[
-        \| x(t_0) \| \leq a \implies \| x(t) \| \leq b, \quad \forall t \geq t_0 + T \text{，}
-    \]
-    其中 $a > 0, b > 0, T = T(a, b) > 0$ 均与 $t_0$ 无关，故在本例条件下方程 \eqref{freeofnonauto} 的解是一致最终有界的。
+    其中$b>0$固定，$a>0$任意，$T=T(a,b)>0$与$t_0$无关，故方程 \eqref{freeofnonauto} 的解是全局一致最终有界的。
 \end{example}
 

@@ -152,8 +152,8 @@ better intuition and understanding}）。}
 
 上面的例子和陈述说明解的存在性和唯一性是十分重要的。下面基于方程 \eqref{free} ，不加证明地介绍这方面的一些基本知识。
 分为局部解情况和全局解情况来说明。
-\begin{theorem}{局部唯一解条件}
-如果 \eqref{free} 中的$f$对于$t$和$x$是连续的，则解是存在的；进一步地，若存在有界常数$T,r,h,k$，满足
+\begin{theorem}[局部唯一解条件]
+如果 \eqref{free} 中的$f$对于$t$和$x$是连续的，则解是存在的；进一步地，若存在有限常数$T,r>0$和$h,k\ge0$，满足
 \index{Lipschitz条件!局部$\sim$}
 \begin{equation}\label{locallipschitz}
   \|f(t,x)-f(t,y)\|\le k\|x-y\|,\forall x,y\in B,\forall t\in [0,T]\text{（变化率有限性）}
@@ -178,7 +178,7 @@ better intuition and understanding}）。}
 \end{example}
 
 \begin{theorem}[全局唯一解条件]
-  如果在$T\in[0,\infty)$区间中均存在有界常数$k_T$和$h_T$，使得
+  如果$f$对$(t,x)\in[0,\infty)\times\R{}^n$连续，且对任意有限的$T>0$，均存在有限常数$k_T,h_T\ge0$，使得
   \index{Lipschitz条件!全局$\sim$}
   \begin{equation}\label{globallipschitz}
     \|f(t,x)-f(t,y)\|\le k_T\|x-y\|,\forall x,y\in \R{}^n,\forall t\in [0,T]\text{（变化率有限性）}
@@ -200,7 +200,7 @@ better intuition and understanding}）。}
   考虑自由运动表达式 \eqref{free} 。
   \begin{itemize}[leftmargin=1em]
     \item 称一状态$x^\ast$是{\bf 平衡点（equilibrium point）}，\index{平衡点（equilibrium point）}当且仅当其满足$f(t,x^\ast)\equiv 0,\forall t\ge t_0$。
-    \item 进一步地，称一平衡点是{\bf 孤立的（isolated）}，如果存在某个$\delta>0$，使得在球域$B(x_0,\delta)=\{x:\|x-x^\ast\|\le\delta\}$里，不存在其他平衡点。\index{平衡点（equilibrium point）!孤立$\sim$（isolated）}
+    \item 进一步地，称一平衡点是{\bf 孤立的（isolated）}，如果存在某个$\delta>0$，使得在球域$B(x^\ast,\delta)=\{x:\|x-x^\ast\|\le\delta\}$里，不存在其他平衡点。\index{平衡点（equilibrium point）!孤立$\sim$（isolated）}
   \end{itemize}
 \end{definition}
 换言之，$x=x^\ast$为平衡点，那么当系统的状态自$x^\ast$起始时，其将一直保持该状态。
@@ -228,7 +228,7 @@ better intuition and understanding}）。}
   令$y(t)=x(t-t_0)$，我们有$y(t_0)=x(0)=x_0$，然而\begin{equation}\label{nonautonomous_eg2}
     \dot{y}=\frac{\diff x(t-t_0)}{\diff t}=f(t-t_0,x(t-t_0))=f(t-t_0,y)
   \end{equation}
-  可见 \eqref{nonautonomous_eg} 和 \eqref{nonautonomous_eg2} 具有不同的形式，则两者的解$x(t)$和$y(t)$也不同。
+  可见 \eqref{nonautonomous_eg} 和 \eqref{nonautonomous_eg2} 一般具有不同的形式，因此非自治系统一般不具有上述时移不变性。
   也就是说，系统的初始时刻是很重要的，时移不变性不再成立。这也就是我们在讨论非自治系统稳定性（第 \ref{cp3} 章）时需要引入{\bf 一致性（uniformity）}
   概念的原因。
 \end{itemize}

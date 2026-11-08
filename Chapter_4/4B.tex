@@ -368,7 +368,7 @@ $ \lim\limits_{t \rightarrow  \infty} e (t) = 0$。
   \begin{tabular}{p{4.0cm}p{10.0cm}}
     \hline
     开环被控对象        & $\dot{x} =  a  x + b  u$，$\{ a, b \}$ 未知，但  $\sgn (b)$ 已知                                           \\
-    参考模型          & $\dot{x}_{\refval} = -  a_{\refval} x + b_{\refval} u_c, a_{\refval}>0$                  \\
+    参考模型          & $\dot{x}_{\refval} = -  a_{\refval} x_{\refval} + b_{\refval} u_c, a_{\refval}>0$                  \\
     跟踪误差          & $e = x - x_{\refval}$                                                                               \\
     控制输入          & $u = \frac{1}{\hat{b}} [(-\hat{a} - a_{\refval}) x +  b_{\refval} u_c]$                             \\
     非直接型 MRAC 控制律 & $\dot{\hat{a}}  =  \gamma_1 e  x$

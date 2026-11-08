@@ -22,11 +22,11 @@
     \begin{equation}
       \forall \| x (t_0) \| < c, \lim_{t \rightarrow \infty} x (t) = 0 \label{Nonauto:astable:def} .
     \end{equation}
-    \item {\bf 一致渐近稳定的（uniformly asymptotically stable，UAS）}，\index{稳定的（stable）!一致渐近$\sim$（uniformly asymptotically）}若其为一致稳定的，且存在一正常数 $c$（与$t_0$无关）使得 \eqref{Nonauto:astable:def} 成立；换言之，对任意$\eta>0$，都存在$T=T(\eta)>0$使得
-    \[\|x(t)\|<\eta,\forall t\ge t_0+T(\eta),\forall\|x(t_0)\|<c\]
+    \item {\bf 一致渐近稳定的（uniformly asymptotically stable，UAS）}，\index{稳定的（stable）!一致渐近$\sim$（uniformly asymptotically）}若其为一致稳定的，且存在正常数$c$，使得对任意$\eta>0$，都存在$T=T(\eta)>0$（$c,T$均与$t_0$无关），满足
+    \[\|x(t)\|<\eta,\forall t\ge t_0+T(\eta),\forall\|x(t_0)\|<c,\forall t_0\ge0\]
     
-    \item {\bf 全局一致渐近稳定的（globally uniformly asymptotically stable，GUAS）}\index{稳定的（stable）!全局一致渐近$\sim$（globally uniformly asymptotically）}，若其是一致稳定的，\eqref{Nonauto:stable:def} 中的$\delta(\varepsilon)$满足$\lim\limits_{\varepsilon\to\infty}\delta(\varepsilon)=\infty$，且对于任意正数$\eta$和$c$，都存在$T=T(\eta,c)>0$使得
-    \[\|x(t)\|<\eta,\forall t\ge t_0+T(\eta,c),\forall\|x(t_0)\|<c\]
+    \item {\bf 全局一致渐近稳定的（globally uniformly asymptotically stable，GUAS）}\index{稳定的（stable）!全局一致渐近$\sim$（globally uniformly asymptotically）}，若其是一致稳定的，\eqref{Nonauto:stable:def} 中的$\delta(\varepsilon)$满足$\lim\limits_{\varepsilon\to\infty}\delta(\varepsilon)=\infty$，且对于任意正数$\eta$和$c$，都存在与$t_0$无关的$T=T(\eta,c)>0$使得
+    \[\|x(t)\|<\eta,\forall t\ge t_0+T(\eta,c),\forall\|x(t_0)\|<c,\forall t_0\ge0\]
   \end{itemize}
 \end{definition}
 \begin{note}
@@ -62,8 +62,8 @@
   \begin{align*}
     x (t_0 + \pi) & =  x (t_0) \exp \{ 6 \sin [(2 k + 1) \pi] - 6 (2 k + 1)
     \pi \cos [(2 k + 1) \pi] - [(2 k + 1) \pi]^2 \\
-    &  \quad - 6 \sin (2 k \pi) + 6 (2 k \pi) \cos (2 k \pi) - (2 k \pi)^2 \} \\
-    & =  x (t_0) \exp \{ 6 (2 k + 1) \pi - [(2 k + 1) \pi]^2  + 12 k \pi -
+    &  \quad - 6 \sin (2 k \pi) + 6 (2 k \pi) \cos (2 k \pi) + (2 k \pi)^2 \} \\
+    & =  x (t_0) \exp \{ 6 (2 k + 1) \pi - [(2 k + 1) \pi]^2  + 12 k \pi +
     (2 k \pi)^2 \} \\
     & =  x (t_0) \mathrm{e}^{\left( \text{} 4 k + 1 \right) (6 - \pi) \pi}
   \end{align*}
@@ -73,7 +73,6 @@
   因此，$t_0$离$0$越远，其解的变化就越剧烈，
   则对于任意 $\varepsilon > 0$，不存在与$t_0$ 无关的$\delta (\varepsilon)$，也就不满足一致稳定的定义。
 \end{example}
-\newpage
 下面的引理利用比较函数，给出了一致稳定和一致渐近稳定的更为简洁明了的定义。
 \begin{lemma}\label{comp_uniform}
   系统 \eqref{freeofnonauto} 的平衡点 $x = 0$是

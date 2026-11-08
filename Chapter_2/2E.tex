@@ -35,7 +35,7 @@
   
   下面利用线性化，将这个结论推广至非线性系统。
 
-  以分析原点的稳定性为例。将系统 \eqref{freeofauto} 在原点附近线性化得
+  以分析原点的稳定性为例。设$f$在原点附近连续可微，将系统 \eqref{freeofauto} 线性化得
   \begin{equation*}
     \dot{x}=Ax+g(x)
   \end{equation*}
@@ -74,7 +74,7 @@
 
   将上述方法归纳为下面定理。
   \begin{theorem}[通过线性化判别非线性系统稳定性]
-    对于系统 \eqref{freeofauto}，如果对于式 \eqref{jacobian} 所示雅可比矩阵$A$\index{雅可比矩阵（Jacobian）}，有
+    对于系统 \eqref{freeofauto}，设$f$在原点附近连续可微。如果对于式 \eqref{jacobian} 所示雅可比矩阵$A$\index{雅可比矩阵（Jacobian）}，有
     \begin{itemize}[leftmargin=1em]
     \item $\forall i, \ensuremath{\operatorname{Re}} [\lambda_i (A)] < 0$，则系统 \eqref{freeofauto} 的原点是渐近稳定的；
     \item $\exists i, \ensuremath{\operatorname{Re}} [\lambda_i (A)] > 0$，则系统 \eqref{freeofauto} 的原点是不稳定的；
@@ -114,7 +114,7 @@
     \begin{note}
       对于一元二次方程 $a  x^2 + b  x + c = 0$，其解$x_{1},x_{2}$满足韦达定理
       \[ x_1 + x_2 = \frac{- b}{a}, \quad x_1  x_2 = \frac{c}{a} \]
-      对于$a = 1$情形，若$c > 0$则两根同号；若还有$b>0$，那么两根均具有负实部。
+      对于$a = 1$情形，若$c > 0$且两根为实数，则两根同号；若$c>0$且$b>0$，那么两根均具有负实部。
       同样对于$a = 1$情形，若$c < 0$则两根异号。
     \end{note}
   \end{example}

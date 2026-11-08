@@ -54,7 +54,7 @@
   但是$\lim\limits_{t\to\infty}f(t)$并不存在。
 
   \begin{center}
-      \includegraphics[scale=0.8]{figure/nonlinear/not_uniform_continuous.png}
+      \includegraphics[width=0.75\linewidth]{figure/nonlinear/not_uniform_continuous.pdf}
       \captionsetup{hypcap=false}
       \captionof{figure}{积分具有有限极限，但原函数极限不存在}
   \end{center}
@@ -87,12 +87,12 @@
   因此由 \ref{barbalat} 或 \ref{Lyapunov-like}，我们可得 $\lim\limits_{t \rightarrow\infty} \dot{V} (t) = 0$，也就说明了 $\lim\limits_{t \rightarrow \infty} e (t) = 0$。
 
   \begin{note}
-    要特别注意，因为无法判断随时间推移$\tilde{\theta}$是否收敛，所以不能得出系统稳定的结论。
+    要特别注意，上述正定函数$V$及$\dot{V}\le0$已经保证联合误差原点$(e,\tilde{\theta})=(0,0)$一致稳定；但由于尚不能保证$\tilde{\theta}\to0$，不能得出联合误差原点渐近稳定的结论。
   \end{note}
 \end{example}
 \begin{theorem}[LaSalle-Yoshizawa定理]\index{LaSalle-Yoshizawa定理}\label{LaSalle-Yoshizawa}
     令$x=0$是 \eqref{freeofnonauto} 的平衡点，并设$f$对$t$是分段连续，且对$x$是局部Lipschitz的（对于$t$是一致的）。令$V$是连续可微函数，满足$\forall t\ge 0,x\in\R{}^n$，\[\gamma_1(\|x\|)\le V(x,t)\le \gamma_2(\|x\|)\]
-    \[\begin{aligned}\dot{V}=\frac{\partial V}{\partial t}+\frac{\partial V}{\partial x}f(x,t)\leq-W(x)\leq0\end{aligned}\]
+    \[\begin{aligned}\dot{V}=\frac{\partial V}{\partial t}+\frac{\partial V}{\partial x}f(t,x)\leq-W(x)\leq0\end{aligned}\]
     其中$\gamma_1$和$\gamma_2$是$\mathcal{K}_\infty$类函数且$W$为连续函数。那么  \eqref{freeofnonauto} 的所有解均满足$\lim\limits_{t\to\infty}W(x(t))=0$。
     
     进一步地，若$W(x)$是正定的，那么$x=0$是全局一致渐近稳定的。
@@ -125,19 +125,18 @@
   
   由于 $f$ 是局部Lipschitz的，所以对于$\forall t_2 > t_1 \geq 0$，有
   \begin{align*}
-    \| x (t_2) - x (t_1) \| & =  \left\| \int^{t_2}_{t_1} f (x (\tau), \tau) \diff
+    \| x (t_2) - x (t_1) \| & =  \left\| \int^{t_2}_{t_1} f (\tau, x (\tau)) \diff
     \tau \right\|\\
     & \leq  L \left| \int^{t_2}_{t_1} \| x (\tau) \| \diff \tau \right|\\
     & \leq  L  r | t_2 - t_1 |
   \end{align*}
-  其中$r$为$\|x\|$的最大值（范数是连续函数，紧集上的范数必取得最值）。
+  其中$r>0$为轨线所在紧集上$\|x\|$的一个上界。
   
-  对任意使得$\|x(t_2)-x(t_1)\|\le\varepsilon$的$\varepsilon>0$，取$|t_2-t_1|\le\frac{\varepsilon}{Lr}\triangleq\delta>0$即可。
+  对任意$\varepsilon>0$，取$\delta=\frac{\varepsilon}{1+Lr}>0$，则$|t_2-t_1|\le\delta$时有$\|x(t_2)-x(t_1)\|\le\varepsilon$。
   因此 $x (t)$ 对 $t$是一致连续的，进而$W (x)$对 $t$是一致连续的。
   
   综上，由Barbalat引理可知 $\lim\limits_{t \rightarrow \infty} W (x (t)) =  0$。
 \end{proof}
-\newpage
 \begin{definition}
 设$x(t)$是关于时间的函数。
 \begin{itemize}[leftmargin=1em]
@@ -162,9 +161,9 @@
   \[\begin{matrix}
     \text{Barbalat引理}&f\ \text{具有有限极限} & \dot{f}\ \text{一致连续} & \implies & \dot{f}\to 0\\
     &\Updownarrow & \Updownarrow & &\\
-    \text{待证结论}&\int^t_0  x^p (\tau) \diff \tau\ \text{具有有限极限} & x^p\ \text{对}\ t\ \text{一致连续} & \implies & x^p\to 0 \implies x\to 0\\
+    \text{待证结论}&\int^t_0  |x(\tau)|^p \diff \tau\ \text{具有有限极限} & |x|^p\ \text{对}\ t\ \text{一致连续} & \implies & |x|^p\to 0 \implies x\to 0\\
     &\Uparrow &\Uparrow && \\
-    & x\in\mathbb{L}_p\ \text{的定义}& \frac{\diff x^p}{\diff t}\ \text{有界}&\Leftarrow&x,\dot{x}\in \mathbb{L}_\infty
+    & x\in\mathbb{L}_p\ \text{的定义}& x\ \text{有界且对}\ t\ \text{一致连续}&\Leftarrow&x,\dot{x}\in \mathbb{L}_\infty
   \end{matrix}\]
 \end{note}
 % \begin{corollary}\label{barbalat_cor_2}

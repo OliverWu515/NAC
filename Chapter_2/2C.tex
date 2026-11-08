@@ -25,7 +25,7 @@
   对于$\varepsilon>0$，选取$r\in (0,\varepsilon]$使得\[B_r=\{x\in\R{}^n:\|x\|\le r\}\subset D\]
   令$\alpha=\min\limits_{\|x\|=r}V(x)$\footnote{有界闭集（紧集）上的连续函数必取得最值。}，则由 \eqref{VPD} 得$\alpha>0$。取$\beta\in(0,\alpha)$并令\[\Omega_\beta=\{x\in B_r:V(x)\le \beta\}\]
   那么$\Omega_\beta$一定在$B_r$的内部（见图 \ref{lyapunov_proof}）\footnote{可用反证法说明。假若$\Omega_\beta$不在$B_r$的内部，则必存在一点$p\in\Omega_\beta$处于$B_r$的边界上。此点处，$V(p)\ge\alpha>\beta$，然而根据$\Omega_\beta$的构成可知对于任意$x\in\Omega_\beta$均有$V(x)\le\beta$，这就产生了矛盾。}。
-  若一状态轨线于$t=0$从$\Omega_\beta$中出发，则该轨线一定在所有时刻$t\ge 0$都留在$\Omega_\beta$内部，这是因为由式 \eqref{VdotNSD} 可得
+  若一状态轨线于$t=0$从$\Omega_\beta$中出发，则该轨线一定在所有时刻$t\ge 0$都留在$\Omega_\beta$中，这是因为由式 \eqref{VdotNSD} 可得
   \[\dot{V}(x(t))\le 0\implies V(x(t))\le V(x(0))\le \beta,\forall t\ge 0\]
   由于$\Omega_\beta$是紧的（这是因为其封闭并以$B_r$为界），那么由定理 \ref{uniqsol}，\eqref{freeofauto} 对于所有$t\ge 0$与所有初始状态$x(0)\in\Omega_\beta$均存在唯一解。由于$V(x)$是连续的，且$V(0)=0$，因此存在$\delta>0$使得\[\|x\|\le\delta\implies V(x)<\beta\]
   那么\[B_\delta\subset\Omega_\beta\subset B_r\]且\[x(0)\in B_\delta\implies x(0)\in\Omega_\beta\implies x(t)\in\Omega_\beta\implies x(t)\in B_r\]

@@ -4,7 +4,7 @@
 \begin{equation} \label{sys:I:ss}
   \dot{x} = f (t, x, u) \text{，}
 \end{equation}
-其中 $f : (0, \infty) \times \mathbb{R}^n \times \mathbb{R}^n \to \mathbb{R}^n$ 是关于 $t$ 分段连续且关于 $x$ 和 $u$ 局部 Lipschitz 的函数。输入 $u$ 是 $t$ 的有界连续函数。假设无外力系统
+其中 $f : [0, \infty) \times \mathbb{R}^n \times \mathbb{R}^n \to \mathbb{R}^n$ 是关于 $t$ 分段连续且关于 $x$ 和 $u$ 局部 Lipschitz 的函数。输入 $u$ 是 $t$ 的有界连续函数。假设无外力系统
 \begin{equation}
     \dot{x} = f (t, x, 0)
 \end{equation}
@@ -19,7 +19,7 @@
     \[
         x (t) = \mathrm{e}^{A (t - t_0)} x (t_0) + \int^t_{t_0} e^{A (t - \tau)} B  u (\tau) \diff \tau \text{。}
     \]
-    利用 $\| \mathrm{e}^{A (t - t_0)} \| \leq k  \mathrm{e}^{- \lambda (t - t_0)}$（其中 $k, \lambda \geq 0$），可以对这个解做如下近似：
+    利用 $\| \mathrm{e}^{A (t - t_0)} \| \leq k  \mathrm{e}^{- \lambda (t - t_0)}$（其中 $k\geq1,\lambda>0$），可以对这个解做如下估计：
     \begin{eqnarray*}
         \| x (t) \| & \leq & k  \mathrm{e}^{- \lambda (t - t_0)} \| x (t_0) \| + k
         \int^t_{t_0} \mathrm{e}^{- \lambda (t - \tau)} \| B \| \|  u (\tau) \| \diff \tau\\
@@ -42,8 +42,8 @@
 \begin{note}
     输入-状态稳定的系统，有如下性质。
     \begin{enumerate}
-        \item 对于任意 $u (t)$，$x (t)$ 都会是有界的。
-        \item 随着 $t$ 增加，$x (t)$ 是最终有界的，其界是以 $\sup_{t_0 \leq \tau \leq t} \|  u (\tau) \|$ 为自变量的 $\mathcal{K}$ 类函数。
+        \item 对于任意有界输入 $u (t)$，$x (t)$ 都会是有界的。
+        \item 对于有界输入，$\limsup_{t\to\infty}\|x(t)\|\leq\gamma(\|u\|_\infty)$。因此，对任意$\varepsilon>0$，$\gamma(\|u\|_\infty)+\varepsilon$可作为最终界。
         \item 若 $u (t) \equiv 0$, 则 $x = 0$ 全局一致渐近稳定。
         \item 若 $u (t)$ 随 $t \rightarrow \infty$ 趋于零，则 $x(t)$ 也随 $t \to \infty$ 趋于零。
     \end{enumerate}
@@ -60,7 +60,7 @@
     \[
         x(t) = \dfrac{3 - \mathrm{e}^t}{3 - 2 \mathrm{e}^t} \text{。}
     \]
-    而这个解是无界的，甚至有有限逃逸时间（$t = \frac{1}{2} \ln{3}$）。
+    而这个解是无界的，甚至有有限逃逸时间（$t = \ln\frac{3}{2}$）。
 \end{example}
 
 下面给出输入-状态稳定性的充分条件。
@@ -69,9 +69,9 @@
     令 $V : [ 0, \infty ) \times \mathbb{R}^n \to \mathbb{R}$ 是 $C^1$ 函数，且满足
     \begin{gather*}
         \alpha_1 (\| x \|) \leq V(t, x) \leq \alpha_2 (\| x \|) \\
-        \dfrac{\partial V}{\partial t} + \dfrac{\partial V}{\partial x} f(t, x, u) \leq -W_3(x), \quad \forall \| x \| \geq \rho (u) > 0,
+        \dfrac{\partial V}{\partial t} + \dfrac{\partial V}{\partial x} f(t, x, u) \leq -W_3(x), \quad \forall \| x \| \geq \rho (\|u\|),
     \end{gather*}
-    $\forall (t, x, u) \in [ 0, \infty ) \times \mathbb{R}^n \times \mathbb{R}^n,\, \alpha_1, \alpha_2 \in \mathcal{K}_\infty,\, \rho \in \mathcal{K},\, 0 < W_3(x) \in C^0$。则系统 $\dot{x} = f(t, x, u)$ 是 ISS 的，其中定义 \ref{def_iss} 中的 $\gamma = \alpha_1^{-1} \circ \alpha \circ \rho$。
+    $\forall (t, x, u) \in [ 0, \infty ) \times \mathbb{R}^n \times \mathbb{R}^n,\, \alpha_1, \alpha_2 \in \mathcal{K}_\infty,\, \rho \in \mathcal{K}$，且$W_3$是连续正定函数。则系统 $\dot{x} = f(t, x, u)$ 是 ISS 的，其中定义 \ref{def_iss} 中的 $\gamma = \alpha_1^{-1} \circ \alpha_2 \circ \rho$。
 \end{theorem}
 
 \begin{proof}
@@ -81,7 +81,7 @@
 下一条引理将全局指数稳定性和输入-状态稳定性联系了起来。
 
 \begin{lemma}\label{ISS_lemma}
-    假设 $f(t, x, u)$ 对 $(x, u)$ 连续可微并且是全局 Lipschitz 的（对 $t$ 一致）。若无外力系统 $\dot{x} = f (t, x, 0)$ 具有全局指数平衡点 $x = 0$，则系统 $\dot{x} = f (t, x, u)$ 是 ISS 的。
+    假设 $f(t, x, u)$ 对 $(x, u)$ 连续可微并且是全局 Lipschitz 的（对 $t$ 一致）。若无外力系统 $\dot{x} = f (t, x, 0)$ 具有全局一致指数稳定的平衡点 $x = 0$，则系统 $\dot{x} = f (t, x, u)$ 是 ISS 的。
 \end{lemma}
 
 \begin{proof}
