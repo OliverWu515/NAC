@@ -38,12 +38,12 @@
 因此，原点 $s = 0$ 是全局一致指数稳定的，$\lim\limits_{t \to \infty} s (t) = 0$。
 回顾一下，系统 $\dot{\tilde{q}} = - \lambda \tilde{q} + s \ (\lambda > 0)$ 是输入-状态稳定的（将 $s$ 视为输入）。在系统状态趋于滑模面 $s = 0$ 时，系统状态也趋于 $0$。因此，$\lim\limits_{t \to \infty} \tilde{q} (t) = \lim\limits_{t \to \infty} \dot{\tilde{q}} (t) = 0$。系统稳定，位置误差与速度误差随 $t \to \infty$ 趋于 $0$，跟踪控制得以实现。
 
-\begin{problem}
+\begin{problem}\label{Pro:robot_disturbance_known}
     若系统中存在扰动，例如，系统为
     \[
         M (q) \ddot{q} + C (q, \dot{q}) \dot{q} + g(q) = \tau + d (t) \text{，}
     \]
-    其中 $\| d(t) \| \leq d_{\mathrm{max}}$，那么我们应该如何设计控制输入？
+    其中 $\| d(t) \| \leq d_{\mathrm{max}}$，$d_{\mathrm{max}}$ 是已知的非负常数，那么我们应该如何设计控制输入？
 \end{problem}
 \begin{hint}
     根据之前滑模控制的讨论，我们可以改用这样的控制输入：
@@ -52,13 +52,20 @@
     \]
 \end{hint}
 
-\begin{problem}
-    进一步地，如果上一个问题中的 $d_{\mathrm{max}}$ 未知，或者扰动项 $d(t)$ 满足的是
+\begin{problem}\label{Pro:robot_disturbance_unknown}
+    如果问题 \ref{Pro:robot_disturbance_known} 中的常数上界 $d_{\mathrm{max}}$ 未知，应该如何设计控制输入及自适应律？
+\end{problem}
+\begin{hint}
+    估计未知常数 $d_{\mathrm{max}}$，采用自适应滑模控制，也可使用平滑补偿。
+\end{hint}
+
+\begin{problem}\label{Pro:robot_disturbance_state}
+    如果扰动项 $d(t)$ 满足
     \[
         \| d(t) \| \leq d_{\mathrm{max}} (1 + {\| q \|}^2 + {\| \dot{q} \|}) \text{，}
     \]
-    那么应该采用怎样的控制输入？
+    其中 $d_{\mathrm{max}}$ 是未知的非负常数，那么应该如何设计控制输入及自适应律？
 \end{problem}
 \begin{hint}
-    将 $K$ 改为 $\hat{K}(t)$，采用自适应控制。
+    将已知函数 $1+\|q\|^2+\|\dot{q}\|$ 乘入扰动补偿项及自适应律。
 \end{hint}

@@ -138,10 +138,28 @@
     \]
     由$V$有界，知$x,\tilde K,\tilde\Theta$均有界，因而解对所有$t\ge t_0$存在。对任意固定的$C>c/\beta$，存在与$t_0$无关的暂态时间，使此后$V\le C$，从而$\|z\|\le\sqrt{C/\underline v}$。由 \ref{3Fref} 节的结论，$x,\tilde K,\tilde\Theta$全局一致最终有界，估计参数也有界。
 
-    正文中的跟踪设计增加$\hat K_2u_c$项，并要求$B\Lambda K_2^*=B_{\refval}$。对于表 \ref{table:MIMO_robust_MRAC} 中的$\sigma$-修正，取
+    对于跟踪问题，在表 \ref{table:MIMO_robust_MRAC} 的自适应补偿项之外加入状态反馈和参考输入项，取
+    \[
+        u=\hat K_1x+\hat K_2u_c-\hat\Theta^{\mathrm{T}}\Phi(x).
+    \]
+    设已知参考模型$\dot x_{\refval}=A_{\refval}x_{\refval}+B_{\refval}u_c$中的$A_{\refval}$为 Hurwitz 矩阵，$u_c\in\mathbb{R}^r$分段连续且有界。假设还有以下匹配条件，其中$K_1^*\in\mathbb{R}^{m\times n}$、$K_2^*\in\mathbb{R}^{m\times r}$为常值矩阵：
+    \[
+        A+B\Lambda K_1^*=A_{\refval},\qquad B\Lambda K_2^*=B_{\refval}.
+    \]
+    记$e=x-x_{\refval}$、$\tilde K_i=\hat K_i-K_i^*$（$i=1,2$），则
+    \[
+        \dot e=A_{\refval}e+B\Lambda\bigl(\tilde K_1x+\tilde K_2u_c-\tilde\Theta^{\mathrm{T}}\Phi(x)\bigr)+d(t).
+    \]
+    对$\sigma$-修正，采用
+    \begin{align*}
+        \dot{\hat K}_1&=-\Gamma_1\bigl(B^{\mathrm{T}}Pex^{\mathrm{T}}+\sigma\hat K_1\bigr),\\
+        \dot{\hat K}_2&=-\Gamma_2\bigl(B^{\mathrm{T}}Peu_c^{\mathrm{T}}+\sigma\hat K_2\bigr),\\
+        \dot{\hat\Theta}&=\Gamma_\Theta\bigl(\Phi(x)e^{\mathrm{T}}PB-\sigma\hat\Theta\bigr),
+    \end{align*}
+    其中$\Gamma_1,\Gamma_2\in\mathbb{R}^{m\times m}$为对角正定阵，$\Gamma_\Theta\in\mathbb{R}^{n\times n}$为对称正定阵，$\sigma>0$，$P$由上述 Lyapunov 方程求得。取
     \[
         V_e=e^{\mathrm{T}}Pe+\sum_{i=1}^2\tr(\tilde K_i^{\mathrm{T}}\Lambda\Gamma_i^{-1}\tilde K_i)
-        +\tr(\tilde\Theta\Lambda\Gamma_\Theta^{-1}\tilde\Theta^{\mathrm{T}}).
+        +\tr(\tilde\Theta^{\mathrm{T}}\Gamma_\Theta^{-1}\tilde\Theta\Lambda).
     \]
     将三组更新律代入，可同样消去梯度交叉项，得到
     \[

@@ -177,7 +177,7 @@ $x_{\refval} \in \mathbb{L}_{\infty}$。又知 $x = e +x_{\refval}$，所以$x \
 \eqref{MODMIMOLYA:modify2} 第二项改为 $\tr \{ \tilde{K}^\mathrm{T}_1 (- \Lambda) \tilde{K} _1 \}$，第三项类似。
 \end{hint}
 \begin{problem}
-    $\Lambda$ 对角线上的元素有些为正、有些为负？
+    $\Lambda$ 对角线上的元素有些为正、有些为负，且各元素的符号已知？
 \end{problem}
 \begin{hint}
     选取\[ V = e^\mathrm{T} P  e +\tr \{ \tilde{K}^\mathrm{T}_1 |
@@ -206,7 +206,7 @@ $x_{\refval} \in \mathbb{L}_{\infty}$。又知 $x = e +x_{\refval}$，所以$x \
 \begin{problem}
 系统方程变为
   \begin{align*}
-      \dot{x}_p &= A_p  x + B_p \Lambda (u + \Theta^\mathrm{T}\Phi (x_p))\\
+      \dot{x}_p &= A_p  x_p + B_p \Lambda (u + \Theta^\mathrm{T}\Phi (x_p))\\
       y&=C_px_p
   \end{align*}
   新增的$C_p$是已知的。目标是使$y$跟踪时变的$y_{\mathrm{cmd}}(t)$。

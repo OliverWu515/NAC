@@ -95,7 +95,7 @@ $k^{\ast}_1, k^{\ast}_2$应满足
   \dot{e} = - a_{\refval} e + b \tilde{k}_1 x + b \tilde{k}_2 u_c  \label{err:MRAC:scalar}
 \end{equation}
 
-下面的目标是让误差$e,\tilde{k}_1,\tilde{k}_2$收敛至$0$，进而使$x$跟踪$x_\mathrm{ref}$。
+下面的目标是使跟踪误差$e$收敛至$0$，并保证参数估计有界，进而使$x$跟踪$x_\mathrm{ref}$。
 考虑候选Lyapunov函数
 \begin{equation}
   V = \frac{1}{2} e^2 + \frac{1}{2} \tilde{k}^2_1 + \frac{1}{2} \tilde{k}^2_2\label{not_implement_candidate}
@@ -302,7 +302,7 @@ $b$就可提出，进而设计$\dot{\hat{k}}_1,\dot{\hat{k}}_2$消去的项就�
   \dot{e} =\dot{x}-\dot{x}_{\refval}= - a_{\refval} (x-x_{\refval})- \tilde{a}  x - \tilde{b}u= -a_{\refval} e - \tilde{a}  x - \tilde{b}u\label{error_dyn_indirect}
 \end{equation}
 
-下面的目标是让各误差$e,\tilde{a},\tilde{b}$收敛至$0$，进而使$x$跟踪$x_\mathrm{ref}$。考虑下述候选 Lyapunov 函数
+下面的目标是使跟踪误差$e$收敛至$0$，并保证参数估计有界，进而使$x$跟踪$x_\mathrm{ref}$。考虑下述候选 Lyapunov 函数
 \begin{equation*}
   V = \frac{1}{2} e^2 + \frac{1}{2 \gamma_1} \tilde{a}^2  + \frac{1}{2 \gamma_2} \tilde{b}^2
 \end{equation*}
@@ -324,7 +324,7 @@ $ \ddot{V} = - 2 a_{\refval} e  \dot{e} $，则只要说明$\dot{e}$的有界性
 我们注意到，此时的$u$的形式不同于之前——在分母上出现了$\hat{b}$。
 为了说明$u$的有界性（这也保证自适应律能够物理实现），我们需要对自适应律作出适当修改，避免 $\hat{b} (t)$ 越过$0$。通过一些先验知识，这样的修改是可以完成的。
 
-{\bf 先验假设}：$\sgn (b)$ 和 $| b |$ 的容许下界 $b_{\min} > 0$ 已知。
+{\bf 先验假设}：$\sgn (b)$ 和 $| b |$ 的容许下界 $b_{\min} > 0$ 已知，并选取初值满足$\hat b(0)\sgn(b)\geq b_{\min}$。
 
 据此，我们将 \eqref{a-bar-b-bar:before:modification} 的第二式修改为
 \begin{equation}\dot{\hat{b}}(t)=\begin{cases}

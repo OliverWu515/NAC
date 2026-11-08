@@ -1,4 +1,5 @@
 \section{鲁棒自适应控制（Robust adaptive control）}\label{4Eref}
+\index{自适应控制（adaptive control）!鲁棒$\sim$（robust）}
 \subsection{引入：参数漂移}
 考虑下述标量系统
 \begin{equation}
@@ -9,7 +10,7 @@
 我们的控制目标是，设计$u$，使得闭环系统的所有信号都有界，且$x$趋近于原点或原点的一小邻域。
 
 当$d(t)\equiv 0$时，应用 \ref{4Bref} 节的设计方法，采用下述自适应律
-\[ u=-\varphi(x)\hat{\theta}(t)-kx\]
+\[ u=-\varphi(x)\hat{\theta}(t)-kx,\quad k>0\]
 于是闭环系统动力学
 \[\dot{x}=-kx-\varphi(x)\tilde{\theta}\]
 其中$\tilde{\theta} \triangleq \hat{\theta}-\theta$。
@@ -58,7 +59,7 @@ $d(t) = \dot{x} + x\hat{\theta} = 5(1 + t)^{- \frac{1}{5}} - \frac{2}{5}(1 + t)^
 
 \subsection{死区修正（Dead-Zone Modification）}
 
-为了提升鲁棒性，我们考虑下述死区修正自适应律
+为了提升鲁棒性，取$\delta>0$，考虑下述死区修正自适应律
 \[\dot{\hat{\theta}} = \left\{\begin{matrix}
 \gamma x\varphi(x), & \text{若} \| x \| \geq e_{0} + \delta \\
 0, & \text{若} \| x \| < e_{0} + \delta \\
@@ -73,14 +74,14 @@ $d(t) = \dot{x} + x\hat{\theta} = 5(1 + t)^{- \frac{1}{5}} - \frac{2}{5}(1 + t)^
 
 \[V(t_{2}) = \frac{1}{2}(e_{0} + \delta)^{2} + \frac{1}{2\gamma}{\tilde{\theta}}^{2}(t_{2}) < V(t_{1})\]
 
-我们可推断出，\(\| \tilde{\theta}(t) \|\)在每个到达边界的时刻\(t_{1},t_{2},\ldots\)总是单调递减的，因此\(\| \tilde{\theta}(t) \|\)是有界的，并且随时间增长一定有\(\| x \| \leq e_{0} + \delta\)。
+我们可推断出，\(\| \tilde{\theta}(t) \|\)在各次到达边界的时刻不增，因此\(\| \tilde{\theta}(t) \|\)有界，结合区间内$V$的变化可知$x$也有界。对各次离开死区的区间求和，由端点处参数误差二次项的下降及死区外$\dot V\leq-c<0$，可得死区外的总时间有限；再由$\dot x$有界可得$\limsup_{t\to\infty}\|x(t)\|\leq e_0+\delta$。
 
-从上面的内容中，不难看出，死区修正简单且有效，保证了参数的收敛。但是，死区修正还存在两个问题。一是，需要假设扰动的上界是先验已知的。二是，在无扰动的情形下并不能得到跟踪误差的渐近稳定性；换言之，鲁棒性的实现是以破坏自适应律的一些理想特性为代价的。关于后者，具体来说就是，我们只能确保跟踪误差进入死区（$\| x \| \leq e_0 + \delta$），即使在无扰动的情形下也是如此，而不能像在无扰动且无死区（不存在形如 \eqref{dead-zone} 的集合，并能采用控制律 \eqref{adaptive_nodisturbance}）的情形下那样得到渐近稳定性。
+从上面的内容中，不难看出，死区修正简单且有效，保证了参数估计的有界性。但是，死区修正还存在两个问题。一是，需要假设扰动的上界是先验已知的。二是，在无扰动的情形下也不能保证跟踪误差渐近趋于零；换言之，鲁棒性的实现是以破坏自适应律的一些理想特性为代价的。具体来说，上述设计保证$\limsup_{t\to\infty}\|x(t)\|\leq e_0+\delta$，即使在无扰动的情形下，也不能像采用未修正的更新律 \eqref{adaptive_nodisturbance} 时那样保证误差趋于零。
 
 \subsection{\texorpdfstring{$\sigma$-修正（$\sigma$-Modification）}{σ-修正（σ-Modification）}}
 由Ioannou和Kokotovic提出的$\sigma$-修正无需扰动上界的先验信息。其形式如下
 \begin{equation} \label{sigma_modification}
-    \dot{\hat{\theta}} = \gamma(x\varphi(x) - \sigma\hat{\theta})
+    \dot{\hat{\theta}} = \gamma(x\varphi(x) - \sigma\hat{\theta}),\quad \sigma>0
 \end{equation}
 
 本质上，这种修正是向理想的自适应律上增加了一个阻尼项。动机就是阻碍参数漂移带来的影响。
@@ -129,7 +130,7 @@ $d(t) = \dot{x} + x\hat{\theta} = 5(1 + t)^{- \frac{1}{5}} - \frac{2}{5}(1 + t)^
 
 \subsection{\texorpdfstring{$e$-修正（$e$-Modification）}{e-修正（e-Modification）}}
 
-应用 $\sigma$-修正会带来性能上的一些缺陷。当跟踪误差变得比较小时，自适应律的动力学 \eqref{sigma_modification} 近似为 $\dot{\hat{\theta}} = -\gamma \sigma\hat{\theta})$。因此，对于较小的跟踪误差，自适应参数 $\hat{\theta}$ 有返回到原点的趋势，也就是说，参数会将原来用以减小跟踪误差的增益值“清除”掉。
+应用 $\sigma$-修正会带来性能上的一些缺陷。当跟踪误差变得比较小时，自适应律的动力学 \eqref{sigma_modification} 近似为 $\dot{\hat{\theta}} = -\gamma \sigma\hat{\theta}$。因此，对于较小的跟踪误差，自适应参数 $\hat{\theta}$ 有返回到原点的趋势，也就是说，参数会将原来用以减小跟踪误差的增益值“清除”掉。
 \newpage
 为了克服这些不符合期望的影响，Narendra 和 Annaswamy 提出了 $e$-修正。其主要思路是，将 \eqref{sigma_modification} 中恒定的阻尼增益 $\sigma$ 修正为与跟踪误差成比例。具体来说，对于系统 \eqref{Sys:with_disturbance}，可将 \eqref{sigma_modification} 改为
 \[
@@ -152,9 +153,9 @@ $d(t) = \dot{x} + x\hat{\theta} = 5(1 + t)^{- \frac{1}{5}} - \frac{2}{5}(1 + t)^
 \end{cases}
 \]
 
-讲义上无具体推导，待补充。
+该形式可减弱参数估计回到原点的趋势，但在一般有界扰动下仍可能发生参数漂移，其鲁棒性需要另行分析。
 
-\subsection{推广至多输入多输出（MIMO）系统与时变参数情形}
+\subsection{推广至多输入多输出（MIMO）系统}
 
 关于各种鲁棒自适应控制方法，我们前面只讨论了标量系统（以系统 \eqref{Sys:with_disturbance} 为例）。上述方法也可用于满足匹配条件的 MIMO 系统。相应的 Lyapunov 分析需要使用二次型及矩阵乘积的迹。
 
@@ -165,22 +166,7 @@ $d(t) = \dot{x} + x\hat{\theta} = 5(1 + t)^{- \frac{1}{5}} - \frac{2}{5}(1 + t)^
 % 讲义上是 \Phi(t)
 其中 $x \in \mathbb{R}^n$，控制输入 $u \in \mathbb{R}^m$，$A \in \mathbb{R}^{n \times n}$ 和 $B \in \mathbb{R}^{n \times m}$ 已知，未知的常值矩阵 $\Lambda \in \mathbb{R}^{m \times m}$ 是对角正定阵，$\Phi(x) \in \mathbb{R}^n$ 是局部 Lipschitz 且已知的函数，未知常值参数 $\Theta \in \mathbb{R}^{n \times m}$，$d(t) \in \mathbb{R}^n$ 是分段连续、有界且时变的扰动（$\| d(t) \| \leq d_{\mathrm{max}}$）。
 
-取已知的 Hurwitz 矩阵$A_{\refval}\in\mathbb{R}^{n\times n}$及已知矩阵$B_{\refval}\in\mathbb{R}^{n\times r}$，设参考输入$u_c\in\mathbb{R}^r$分段连续且有界。假设还有以下匹配条件（$K_1^*\in\mathbb{R}^{m\times n}$、$K_2^*\in\mathbb{R}^{m\times r}$为常值矩阵）：
-\[
-    A+B\Lambda K_1^*=A_{\refval},\qquad B\Lambda K_2^*=B_{\refval}.
-\]
-任选已知的对称正定矩阵$Q$，由表中的 Lyapunov 方程求得唯一的对称正定矩阵$P$。
-
-为简化下表，记三组梯度更新项为
-\[
-\begin{aligned}
-    G_1&=-\Gamma_1B^{\mathrm{T}}Pex^{\mathrm{T}},\\
-    G_2&=-\Gamma_2B^{\mathrm{T}}Peu_c^{\mathrm{T}},\\
-    G_\Theta&=\Phi(x)e^{\mathrm{T}}PB\Gamma_\Theta,
-\end{aligned}
-\]
-其中$\Gamma_1,\Gamma_2,\Gamma_\Theta\in\mathbb{R}^{m\times m}$为对角正定阵，并记$h=\|e^{\mathrm{T}}PB\|$。
-下表 \ref{table:MIMO_robust_MRAC} 参考前言中参考文献5的表 11.1，补齐了反馈及参考输入项。附录 \ref{MIMO_robust} 给出零参考输入下的镇定推导及其向跟踪情形的扩展；其中 UUB 证明针对$\sigma$-修正。
+下表 \ref{table:MIMO_robust_MRAC} 来自前言中参考文献5的表 11.1（略有修改），其中仅列出自适应补偿项；完整控制输入及推导见附录 \ref{MIMO_robust}。
 
 \begin{table}[htbp]
   \centering
@@ -196,36 +182,23 @@ $d(t) = \dot{x} + x\hat{\theta} = 5(1 + t)^{- \frac{1}{5}} - \frac{2}{5}(1 + t)^
     B_{\refval} u_c$，其中$A_{\refval}$ 是 Hurwitz 的。\\
     跟踪误差 & $e = x - x_{\refval}$\\
     Lyapunov 方程 & $P A_{\refval} + A_{\refval}^{\mathrm{T}} P = -Q < 0$\\
-    控制输入 & $u = \hat K_1x+\hat K_2u_c-{\hat{\Theta}}^{\mathrm{T}} \Phi(x)$\\
-    死区修正 & $\begin{aligned}
-        \dot{\hat K}_i&=\mu(\|e\|)G_i,\quad i=1,2,\\
-        \dot{\hat\Theta}&=\mu(\|e\|)G_\Theta
-    \end{aligned}$\\
-    $\sigma$-修正 & $\begin{aligned}
-        \dot{\hat K}_i&=G_i-\sigma\Gamma_i\hat K_i,\quad i=1,2,\\
-        \dot{\hat\Theta}&=G_\Theta-\sigma\hat\Theta\Gamma_\Theta
-    \end{aligned}$\\
-    $e$-修正 & $\begin{aligned}
-        \dot{\hat K}_i&=G_i-\sigma h\Gamma_i\hat K_i,\quad i=1,2,\\
-        \dot{\hat\Theta}&=G_\Theta-\sigma h\hat\Theta\Gamma_\Theta
-    \end{aligned}$\\
+    自适应补偿项 & $-{\hat{\Theta}}^{\mathrm{T}} \Phi(x)$\\
+    死区修正 & $
+        \dot{\hat\Theta}=\Gamma_\Theta\Phi(x)\mu(\|e\|)e^{\mathrm{T}}PB,
+        \mu(\|e\|)=\max\left(0,\min\left(1,\frac{\|e\|-\delta e_0}{(1-\delta)e_0}\right)\right)$\\
+    & 或 $\displaystyle\dot{\hat\Theta}=\begin{cases}
+        \Gamma_\Theta\Phi(x)e^{\mathrm{T}}PB,&\|e\|\geq e_0+\delta,\\
+        0,&\|e\|<e_0+\delta.
+    \end{cases}$\\
+    $\sigma$-修正 & $\dot{\hat\Theta}=\Gamma_\Theta\bigl(\Phi(x)e^{\mathrm{T}}PB-\sigma\hat\Theta\bigr)$\\
+    $e$-修正 & $\dot{\hat\Theta}=\Gamma_\Theta\bigl(\Phi(x)e^{\mathrm{T}}PB-\sigma\|e^{\mathrm{T}}PB\|\hat\Theta\bigr)$\\
     \hline
   \end{tabular}
 \end{table}
 
-表中$\sigma>0$。死区修正可取
-\[
-    \mu(s)=\begin{cases}
-        1,&s\ge e_0+\delta,\\
-        0,&s<e_0+\delta,
-    \end{cases}\qquad
-    e_0=\frac{2\|P\|d_{\max}}{\lambda_{\min}(Q)},\quad\delta>0.
-\]
-这里$e_0$由扰动上界及误差二次型的估计选取；本表采用硬死区形式。记$\tilde K_i=\hat K_i-K_i^*$、$\tilde\Theta=\hat\Theta-\Theta$，代入控制律及匹配条件可得
-\[
-    \dot e=A_{\refval}e+B\Lambda\bigl(\tilde K_1x+\tilde K_2u_c-\tilde\Theta^{\mathrm{T}}\Phi(x)\bigr)+d(t).
-\]
-因此，三组梯度更新项共同用于误差交叉项的消去。
+表中$\Gamma_\Theta\in\mathbb{R}^{n\times n}$为对称正定阵，$\sigma>0$。连续死区形式中$e_0>0$、$0<\delta<1$，硬死区形式中$e_0>0$、$\delta>0$。死区阈值应根据扰动上界选取，使停止更新的区域覆盖扰动可能引起参数漂移的范围。
+
+\subsection{时变参数情形}
 
 至此，我们只讨论了常值参数自适应控制。下面我们简单讨论一下时变参数自适应控制。为简化讨论，我们仍以标量系统为例。考虑如下系统：
 \begin{equation}

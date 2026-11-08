@@ -245,3 +245,188 @@ $z_3$的动力学写为
     \dot{\tilde{q}} - \textcolor{second}{\dot{\tilde{q}}^\mathrm{T}D\dot{\tilde{q}}}
 \end{align*}
 从而，$V$ 是正定的，$\dot{V}$是负半定的。接下来类似 \ref{6Bref} 节利用 LaSalle 不变集原理（\ref{lasalle}），即可说明原点是渐近稳定的，即 $\lim\limits_{t \to \infty} q (t) = q_d$ 且 $\lim\limits_{t \to \infty} \dot{q}(t) = 0$。
+
+\noindent\textbf{问题} \ref{Pro:robot_disturbance_known} \textbf{解：}
+
+沿用 \ref{6Cref}、\ref{6Dref} 节的记号，$q_d,\dot{q}_d,\ddot{q}_d$ 均有界，且
+\[
+    s=\dot{\tilde{q}}+\lambda\tilde{q},\quad
+    \dot{q}_r=\dot{q}_d-\lambda\tilde{q},\quad \lambda>0 \text{。}
+\]
+下面分别采用普通滑模方法与平滑方法，均沿用 \ref{5C_disturbance} 节中的设计。令
+\[
+    \tau_0=g(q)+M\ddot{q}_r+C\dot{q}_r,\quad
+    \tau=\tau_0-Ks-v,\quad K=K^\mathrm{T}>0 \text{，}
+\]
+其中 $v$ 是待设计的扰动补偿项。闭环系统为
+\[
+    M\dot{s}+Cs=-Ks-v+d(t) \text{。}
+\]
+记 $V_s=\frac12s^\mathrm{T}Ms$。由 $\dot{M}-2C$ 的反对称性，有
+\[
+    \dot{V}_s=-s^\mathrm{T}Ks-s^\mathrm{T}v+s^\mathrm{T}d(t) \text{。}
+\]
+以下符号函数按分量作用，且 $s^\mathrm{T}\sgn(s)=\sum_{i=1}^p|s_i|\triangleq\|s\|_1\geq\|s\|$；在零点处采用理想滑模约定，开关值允许在 $[-1,1]$ 内取值。平滑方法中均取 $\varepsilon(t)=\mathrm{e}^{-t}$。
+
+\noindent\textbf{（1）普通滑模方法。}取
+\[
+    v=k\sgn(s),\qquad k>d_{\mathrm{max}} \text{。}
+\]
+由 $s^\mathrm{T}d(t)\leq d_{\mathrm{max}}\|s\|\leq d_{\mathrm{max}}\|s\|_1$，可得
+\begin{align*}
+    \dot{V}_s
+    &\leq -s^\mathrm{T}Ks-(k-d_{\mathrm{max}})\|s\|_1\\
+    &\leq -\lambda_{\min}(K)\|s\|^2
+    \leq -\frac{2\lambda_{\min}(K)}{k_{\overline{m}}}V_s \text{。}
+\end{align*}
+故 $V_s$ 指数衰减，$s(t)\to0$。
+
+\noindent\textbf{（2）平滑方法。}取
+\[
+    v=\frac{k^2}{k\|s\|+\varepsilon(t)}s,\qquad k>0,\quad k\geq d_{\mathrm{max}} \text{。}
+\]
+此时
+\begin{align*}
+    \dot{V}_s
+    &= -s^\mathrm{T}Ks-\frac{k^2\|s\|^2}{k\|s\|+\varepsilon(t)}+s^\mathrm{T}d(t)\\
+    &\leq -s^\mathrm{T}Ks-\frac{k^2\|s\|^2}{k\|s\|+\varepsilon(t)}+k\|s\|\\
+    &= -s^\mathrm{T}Ks+\frac{\varepsilon(t)k\|s\|}{k\|s\|+\varepsilon(t)}\\
+    &\leq -\lambda_{\min}(K)\|s\|^2+\mathrm{e}^{-t} \text{。}
+\end{align*}
+两边积分得到
+\[
+    V_s(t)+\lambda_{\min}(K)\int_0^t\|s(\xi)\|^2\diff\xi
+    \leq V_s(0)+1 \text{，}
+\]
+故 $s\in\mathbb{L}_2\cap\mathbb{L}_\infty$。
+
+两种方法中，均有 $s\in\mathbb{L}_2\cap\mathbb{L}_\infty$。由 $\dot{\tilde{q}}=-\lambda\tilde{q}+s$ 的输入-状态稳定性，$\tilde{q},\dot{\tilde{q}},q,\dot{q}$ 均有界。普通方法中的符号函数有界，平滑方法中的补偿项满足
+\[
+    \left\|\frac{k^2s}{k\|s\|+\varepsilon(t)}\right\|\leq k \text{，}
+\]
+因此 $v$ 有界。结合 $M^{-1}$ 的有界性及 $\|Cs\|\leq k_c\|\dot{q}\|\|s\|$，由闭环方程可得 $\dot{s}$ 有界。控制输入也有界，解对所有 $t\geq0$ 存在。由于 $\|s\|^2$ 一致连续且其积分有界，由 Barbalat 引理可得 $s(t)\to0$。再由输入-状态稳定性，$\tilde{q}(t)\to0$，并由 $\dot{\tilde{q}}=-\lambda\tilde{q}+s$ 得 $\dot{\tilde{q}}(t)\to0$，故两种设计均实现跟踪控制。
+
+\noindent\textbf{问题} \ref{Pro:robot_disturbance_unknown} \textbf{解：}
+
+沿用问题 \ref{Pro:robot_disturbance_known} 解中的记号，仍有 $\|d(t)\|\leq d_{\mathrm{max}}$，但常数 $d_{\mathrm{max}}$ 未知。
+将未知常数 $d_{\mathrm{max}}$ 的估计记为 $\hat{k}$，定义 $\tilde{k}=\hat{k}-d_{\mathrm{max}}$。取 $\gamma>0$、$\hat{k}(0)\geq0$，考虑
+\[
+    V=V_s+\frac{1}{2\gamma}\tilde{k}^2 \text{。}
+\]
+
+\noindent\textbf{（1）普通自适应滑模方法。}设计
+\[
+    v=\hat{k}\sgn(s),\qquad \dot{\hat{k}}=\gamma\|s\|_1 \text{。}
+\]
+于是
+\begin{align*}
+    \dot{V}
+    &=-s^\mathrm{T}Ks-\hat{k}\|s\|_1+s^\mathrm{T}d(t)
+    +\frac{1}{\gamma}\tilde{k}\dot{\hat{k}}\\
+    &\leq -s^\mathrm{T}Ks-\tilde{k}\|s\|_1
+    +\frac{1}{\gamma}\tilde{k}\dot{\hat{k}}\\
+    &=-s^\mathrm{T}Ks \text{。}
+\end{align*}
+两边积分可得
+\[
+    V(t)+\lambda_{\min}(K)\int_0^t\|s(\xi)\|^2\diff\xi\leq V(0) \text{，}
+\]
+故 $s\in\mathbb{L}_2\cap\mathbb{L}_\infty$，且 $\tilde{k},\hat{k}$ 有界。
+
+\noindent\textbf{（2）平滑自适应方法。}设计
+\[
+    v=\frac{\hat{k}^2}{\hat{k}\|s\|+\varepsilon(t)}s,\qquad
+    \dot{\hat{k}}=\gamma\|s\| \text{。}
+\]
+因 $\dot{\hat{k}}\geq0$，始终有 $\hat{k}\geq0$。由扰动界及自适应律，得到
+\begin{align*}
+    \dot{V}
+    &\leq -s^\mathrm{T}Ks-\frac{\hat{k}^2\|s\|^2}{\hat{k}\|s\|+\varepsilon(t)}
+    +d_{\mathrm{max}}\|s\|+\tilde{k}\|s\|\\
+    &=-s^\mathrm{T}Ks+\frac{\varepsilon(t)\hat{k}\|s\|}{\hat{k}\|s\|+\varepsilon(t)}\\
+    &\leq -\lambda_{\min}(K)\|s\|^2+\mathrm{e}^{-t} \text{。}
+\end{align*}
+两边积分可得
+\[
+    V(t)+\lambda_{\min}(K)\int_0^t\|s(\xi)\|^2\diff\xi\leq V(0)+1 \text{，}
+\]
+故同样有 $s\in\mathbb{L}_2\cap\mathbb{L}_\infty$，且 $\tilde{k},\hat{k}$ 有界。
+
+
+上述两种设计中，$s$ 均有界。由 $\dot{\tilde{q}}=-\lambda\tilde{q}+s$ 的输入-状态稳定性，$\tilde{q},\dot{\tilde{q}},q,\dot{q}$ 均有界。普通方法中的符号函数有界，平滑方法中的补偿项则满足
+\[
+    \|\hat{k}\sgn(s)\|\leq\sqrt{p}\hat{k},\qquad
+    \left\|\frac{\hat{k}^2s}{\hat{k}\|s\|+\varepsilon(t)}\right\|\leq\hat{k} \text{，}
+\]
+因此 $v$ 有界。结合 $M^{-1}$ 的有界性及 $\|Cs\|\leq k_c\|\dot{q}\|\|s\|$，由闭环方程可得 $\dot{s}$ 有界。控制输入及自适应律中的 $\dot{\hat{k}}$ 也有界，解对所有 $t\geq0$ 存在。由于 $\|s\|^2$ 一致连续且其积分有界，由 Barbalat 引理可得 $s(t)\to0$。再由输入-状态稳定性，$\tilde{q}(t)\to0$，并由 $\dot{\tilde{q}}=-\lambda\tilde{q}+s$ 得 $\dot{\tilde{q}}(t)\to0$，故两种设计均实现跟踪控制。
+
+\noindent\textbf{问题} \ref{Pro:robot_disturbance_state} \textbf{解：}
+
+常数扰动界未知时的两种方法已在上一题给出。对于状态相关的扰动界，记
+\[
+    \Phi(q,\dot{q})=1+\|q\|^2+\|\dot{q}\|,\qquad
+    \|d(t)\|\leq d_{\mathrm{max}}\Phi(q,\dot{q}) \text{。}
+\]
+其中 $d_{\mathrm{max}}$ 是未知的非负常数，$\Phi$ 是已知函数。沿用上一题的记号和参考轨迹条件，取 $K=K^\mathrm{T}>0$、$\gamma>0$、$\hat{k}(0)\geq0$。定义 $\tilde{k}=\hat{k}-d_{\mathrm{max}}$，两种方法均考虑候选 Lyapunov 函数
+\[
+    V=\frac12s^\mathrm{T}Ms+\frac{1}{2\gamma}\tilde{k}^2 \text{。}
+\]
+
+\noindent\textbf{（1）普通自适应滑模方法。}设计
+\begin{align*}
+    \tau &= g(q)+M\ddot{q}_r+C\dot{q}_r-Ks-\hat{k}\Phi\sgn(s),\\
+    \dot{\hat{k}} &= \gamma\Phi\|s\|_1 \text{。}
+\end{align*}
+符号函数的约定与上一题相同。闭环系统为
+\[
+    M\dot{s}+Cs=-Ks-\hat{k}\Phi\sgn(s)+d(t) \text{。}
+\]
+利用 $\dot{M}-2C$ 的反对称性及扰动界，有
+\begin{align*}
+    \dot{V}
+    &=-s^\mathrm{T}Ks-\hat{k}\Phi\|s\|_1+s^\mathrm{T}d(t)
+    +\frac{1}{\gamma}\tilde{k}\dot{\hat{k}}\\
+    &\leq -s^\mathrm{T}Ks-\tilde{k}\Phi\|s\|_1
+    +\frac{1}{\gamma}\tilde{k}\dot{\hat{k}}\\
+    &=-s^\mathrm{T}Ks \text{，}
+\end{align*}
+其中用到了 $s^\mathrm{T}d(t)\leq d_{\mathrm{max}}\Phi\|s\|\leq d_{\mathrm{max}}\Phi\|s\|_1$。两边积分可得
+\[
+    V(t)+\lambda_{\min}(K)\int_0^t\|s(\xi)\|^2\diff\xi\leq V(0) \text{。}
+\]
+
+\noindent\textbf{（2）平滑自适应方法。}取 $\varepsilon(t)=\mathrm{e}^{-t}$，设计
+\begin{align*}
+    \tau &= g(q)+M\ddot{q}_r+C\dot{q}_r-Ks
+    -\frac{\hat{k}^2\Phi^2}{\hat{k}\Phi\|s\|+\varepsilon(t)}s,\\
+    \dot{\hat{k}} &= \gamma\Phi\|s\| \text{。}
+\end{align*}
+因 $\dot{\hat{k}}\geq0$，始终有 $\hat{k}\geq0$。利用 $\dot{M}-2C$ 的反对称性及扰动界，得到
+\begin{align*}
+    \dot{V}
+    &= -s^\mathrm{T}Ks-\frac{\hat{k}^2\Phi^2\|s\|^2}{\hat{k}\Phi\|s\|+\varepsilon(t)}
+    +s^\mathrm{T}d(t)+\frac{1}{\gamma}\tilde{k}\dot{\hat{k}}\\
+    &\leq -s^\mathrm{T}Ks-\frac{\hat{k}^2\Phi^2\|s\|^2}{\hat{k}\Phi\|s\|+\varepsilon(t)}
+    +d_{\mathrm{max}}\Phi\|s\|+\tilde{k}\Phi\|s\|\\
+    &= -s^\mathrm{T}Ks+\frac{\varepsilon(t)\hat{k}\Phi\|s\|}{\hat{k}\Phi\|s\|+\varepsilon(t)}\\
+    &\leq -\lambda_{\min}(K)\|s\|^2+\mathrm{e}^{-t} \text{。}
+\end{align*}
+与上一题一样，两边积分可得
+\[
+    V(t)+\lambda_{\min}(K)\int_0^t\|s(\xi)\|^2\diff\xi\leq V(0)+1 \text{，}
+\]
+两种方法中，均有 $s\in\mathbb{L}_2\cap\mathbb{L}_\infty$，且 $\tilde{k},\hat{k}$ 有界。由 $\dot{\tilde{q}}=-\lambda\tilde{q}+s$ 可得 $\tilde{q},\dot{\tilde{q}},q,\dot{q}$ 有界，因而 $\Phi$ 和 $d(t)$ 均有界。两种补偿项分别满足
+\[
+    \|\hat{k}\Phi\sgn(s)\|\leq\sqrt{p}\hat{k}\Phi,\qquad
+    \left\|\frac{\hat{k}^2\Phi^2s}{\hat{k}\Phi\|s\|+\varepsilon(t)}\right\|
+    \leq\hat{k}\Phi \text{，}
+\]
+故补偿项均有界。将相应的补偿项记为 $v$，由闭环方程
+\[
+    M\dot{s}+Cs=-Ks-v+d(t)
+\]
+可得 $\dot{s}$ 有界。控制输入及 $\dot{\hat{k}}$ 也有界，解对所有 $t\geq0$ 存在。由于 $\|s\|^2$ 一致连续且其积分有界，由 Barbalat 引理及输入-状态稳定性，两种方法均可得到
+\[
+    \lim_{t\to\infty}s(t)=0,\qquad
+    \lim_{t\to\infty}\tilde{q}(t)=\lim_{t\to\infty}\dot{\tilde{q}}(t)=0 \text{。}
+\]

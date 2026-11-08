@@ -4,7 +4,7 @@
 \begin{equation*}
     \dot{x} = u + \varphi(x)\theta
 \end{equation*}
-其中$x$为状态，$u$为控制输入，$\varphi$是已知的连续函数，$\theta$为未知常数。
+其中$x$为状态，$u$为控制输入，$\varphi$是已知的连续函数，$\theta$为未知常数。设期望轨迹$x_d(t)$连续可微，且$x_d(t),\dot x_d(t)$均有界。
 
 我们的{\bf 控制目标}是：
 \begin{itemize}[leftmargin=1em]
@@ -30,20 +30,20 @@
        \captionof{figure}{上述性能函数的图形（$\lambda=1,\rho_0=2,\rho_{\infty}=0.1$）}
    \end{center}
 \end{example}
-我们欲使$|e(t)|<\rho(t)$，那么通过指定合适的$\rho(t)$，即可限制误差的稳态和瞬态特性。
+我们欲使$|e(t)|<\rho(t)$，那么通过指定合适的$\rho(t)$，即可限制误差的稳态和瞬态特性。选取$\rho(0)>|e(0)|$，并要求$\dot\rho(t)$有界。
 
 为了应用之前手段（分析信号的有界性）来分析上述问题，我们引入以下{\bf 误差转换（error transformation）}，将上述有约束的跟踪误差变为等价的无约束问题。
 
 具体而言，我们定义\[e(t)=\rho(t)T(\zeta)\]
 其中$\zeta$是变换后的无约束误差，$T(\zeta)$是光滑的函数，并具有如下性质：
 \begin{itemize}[leftmargin=1em]
-    \item $T(\zeta)$严格单调递增；
+    \item $T'(\zeta)>0$，且$T(0)=0$；
     \item $\lim\limits_{\zeta\to-\infty}T(\zeta)=-1$，$\lim\limits_{\zeta\to\infty}T(\zeta)=1$。
 \end{itemize}
 则有
 \[\zeta = T^{-1}\left(\frac{e(t)}{\rho(t)}\right)\]
 $\frac{e(t)}{\rho(t)}\to -1$时，$\zeta\to-\infty$；$\frac{e(t)}{\rho(t)}\to 1$时，$\zeta\to\infty$。
-我们发现，如果$\zeta$有界，那么$-1<\frac{e(t)}{\rho(t)}<1$，这样，分析$\zeta$的有界性就等价于分析误差满足的约束。
+我们发现，如果$\zeta$有界，那么$-1<\frac{e(t)}{\rho(t)}<1$，因此可以通过证明$\zeta$有界来保证误差满足约束。
 
 \begin{example}
     以下两个$T^{-1}$都是可行的：
@@ -55,7 +55,7 @@ $\frac{e(t)}{\rho(t)}\to -1$时，$\zeta\to-\infty$；$\frac{e(t)}{\rho(t)}\to 1
     \dot{\zeta} &= \frac{\partial T^{-1}}{\partial \left(\frac{e(t)}{\rho(t)}\right)}
     \frac{\diff}{\diff t}\left(\frac{e(t)}{\rho(t)}\right)
 \end{align*}
-易知第一个因子为正定（因$T^{-1}$随$\left(\frac{e(t)}{\rho(t)}\right)$单调递增），记其为$R$。
+由$T'(\zeta)>0$，知第一个因子为正，记其为$R$。
 则上式等于
 \begin{align*}
     \dot{\zeta} &= R
@@ -76,13 +76,13 @@ $\frac{e(t)}{\rho(t)}\to -1$时，$\zeta\to-\infty$；$\frac{e(t)}{\rho(t)}\to 1
     &=-k\zeta^2+\frac{1}{\gamma}\tilde{\theta}\left(\dot{\hat{\theta}}-\gamma \frac{R}{\rho(t)}\varphi(x)\zeta\right)
 \end{align*}
 设计\[\dot{\hat{\theta}}=\gamma \frac{R}{\rho(t)}\varphi(x)\zeta\]
-则$\dot{V}=-k\zeta^2\le 0$，类似 \ref{4Bref} 节各例可分析$\zeta$有界性。进而$|e(t)|<\rho(t)$，达成了我们的目标。
+则$\dot{V}=-k\zeta^2\le 0$，从而$\zeta,\tilde\theta$有界，$e(t)/\rho(t)$始终处于$(-1,1)$内部并与边界保持正的距离。因此$x,R,1/R,u$及$\dot{\hat\theta}$均有界，解对所有$t\geq0$存在，且$|e(t)|<\rho(t)$。又由$\int_0^t\zeta^2(\tau)\diff\tau\leq V(0)/k$及$\dot\zeta$有界，应用推论 \ref{barbalat_cor_1} 可得$\zeta(t)\to0$。由于$T(0)=0$，有$e(t)\to0$，达成了我们的目标。
 
 进一步地，如果我们超调量有要求，即要求$e(t)$穿过横轴时的下冲/上冲（具体由$e(0)$的正负而定，即$e(0)$为正时限制下冲，$e(0)$为负时限制上冲）要小，如何考虑该问题？
-我们发现，如指定超调小于$\delta\rho(0)$（$0\le\delta\le 1$。此为常值，故假定是可行的），则要求$-\delta\rho(t)<e(t)<\rho(t)$（若$e(0)>0$）或$-\rho(t)<e(t)<\delta\rho(t)$（若$e(0)<0$）即可。
+我们发现，如指定超调小于$\delta\rho(0)$（$0<\delta\le 1$），则要求$-\delta\rho(t)<e(t)<\rho(t)$（若$e(0)>0$）或$-\rho(t)<e(t)<\delta\rho(t)$（若$e(0)<0$）即可。若$e(0)=0$，可沿用前面的对称约束。
 
 类似本节前述思路进行误差转换。定义\[e(t)=\rho(t)T(\zeta)\]
-其中$\zeta$是变换后的无约束误差，$T(\zeta)$仍为光滑且单调递增的函数，并且：
+其中$\zeta$是变换后的无约束误差，$T(\zeta)$光滑且满足$T'(\zeta)>0$，并且：
 \begin{itemize}[leftmargin=1em]
     \item 若$e(0)>0$，则$\lim\limits_{\zeta\to-\infty}T(\zeta)=-\delta$，$\lim\limits_{\zeta\to\infty}T(\zeta)=1$；
     \item 若$e(0)<0$，则$\lim\limits_{\zeta\to-\infty}T(\zeta)=-1$，$\lim\limits_{\zeta\to\infty}T(\zeta)=\delta$。
@@ -94,19 +94,28 @@ $\frac{e(t)}{\rho(t)}\to -1$时，$\zeta\to-\infty$；$\frac{e(t)}{\rho(t)}\to 1
         \frac{\delta\mathrm{e}^\zeta- \mathrm{e}^{-\zeta}}{\mathrm{e}^\zeta+ \mathrm{e}^{-\zeta}}&e(0)<0
     \end{cases}\]
 \end{example}
-之后类似本节前述思路进行控制器设计，使$\zeta$有界即可。
+此时$T(0)$一般不为零，应将变换误差的目标值取为$T^{-1}(0)$。保持前述控制输入的形式，改取
+\[
+    u_0=-k\bigl(\zeta-T^{-1}(0)\bigr),\qquad
+    \dot{\hat\theta}=\gamma\frac{R}{\rho(t)}\varphi(x)\bigl(\zeta-T^{-1}(0)\bigr).
+\]
+由于$\delta>0$，$T^{-1}(0)$是有限常数。取
+\[
+    V=\frac12\bigl(\zeta-T^{-1}(0)\bigr)^2+\frac{1}{2\gamma}\tilde\theta^2,
+\]
+可得$\dot V=-k\bigl(\zeta-T^{-1}(0)\bigr)^2$。由同样的分析，误差满足非对称性能约束，且$e(t)\to0$。
 
 更一般地，我们可以将上下界取为不同的函数，即
-\[\rho_1(t)<e(t)<\rho_2(t)\]
-其中$\rho_1(t),\rho_2(t)$都是定义如 \ref{performance_func} 的性能函数。
+\[-\rho_1(t)<e(t)<\rho_2(t)\]
+其中$\rho_1(t),\rho_2(t)$都是定义如 \ref{performance_func} 的性能函数，导数有界，并选取$-\rho_1(0)<e(0)<\rho_2(0)$。
 
 进行误差转换。定义\[e(t)=T(\zeta,\rho_1(t),\rho_2(t))\]
 其中$\zeta$是变换后的无约束误差。
 则\[\zeta = T^{-1}(e(t),\rho_1(t),\rho_2(t))\]
-因此，我们要求\[\lim\limits_{\zeta\to-\infty}T(\zeta,\rho_1(t),\rho_2(t))=\rho_1(t),\lim\limits_{\zeta\to\infty}T(\zeta,\rho_1(t),\rho_2(t))=\rho_2(t)\]
+因此，我们要求$T$光滑且对$\zeta$的偏导数为正，并满足\[\lim\limits_{\zeta\to-\infty}T(\zeta,\rho_1(t),\rho_2(t))=-\rho_1(t),\lim\limits_{\zeta\to\infty}T(\zeta,\rho_1(t),\rho_2(t))=\rho_2(t)\]
 \begin{example}
     以下$T^{-1}$是可行的：
-    \[\zeta = \tan\left(\frac{\pi}{2}\frac{2e(t)-\rho_1(t)-\rho_2(t)}{\rho_2(t)-\rho_1(t)}\right)\]
+    \[\zeta = \tan\left(\frac{\pi}{2}\frac{2e(t)+\rho_1(t)-\rho_2(t)}{\rho_1(t)+\rho_2(t)}\right)\]
 \end{example}
 
-之后类似本节前述思路进行控制器设计，使$\zeta$有界即可。
+使$\zeta$有界即可保证上述误差约束。若还要求$e(t)\to0$，则应使$\zeta-T^{-1}(0,\rho_1(t),\rho_2(t))\to0$，并在设计中计入该时变目标的导数。

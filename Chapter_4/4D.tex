@@ -25,7 +25,7 @@
 其中 $\tilde{k} (t) = \widehat{k} (t) - k^{\ast}$。
 考虑候选 Lyapunov 函数
 \[
-    V = \frac{1}{2} x^2 + \frac{| b |}{2 \gamma} \tilde{k}^2 \text{。}
+    V = \frac{1}{2} x^2 + \frac{| b |}{2 \gamma} \tilde{k}^2,\quad \gamma>0 \text{。}
 \]
 求其沿系统轨线的导数得
 \begin{align*}
@@ -59,7 +59,7 @@
   \dot{x} & = (a + b\mathcal{N} (k)) x \nonumber \\
   & = (a + b  k ^2 \cos  k) x \label{Nussbaum:dx} \text{。}
 \end{align}
-从而我们可以得到
+若$x(t_0)=0$，则$x(t)\equiv0$，结论成立。以下设$x(t_0)\neq0$，由 \eqref{Nussbaum:dx} 知$x$在解存在的有限时刻不会变为零，从而可以得到
 \begin{align}
   \frac{\diff (x^2)}{\diff k} & = \frac{\diff (x^2)}{\diff t} \frac{\diff t}{\diff k}
   \nonumber\\
