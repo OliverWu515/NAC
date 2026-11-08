@@ -100,20 +100,20 @@
   \end{align*}
   可见，$\|x(t)\|\le\|x(t_0)\|$，在 \ref{comp_uniform} 第一条中取$\alpha(r)=r$，即可说明原点是一致稳定的。
 
-  \begin{wrapfigure}{R}{0.36\textwidth}
-    \vspace{-1em}
-  	\includegraphics[width=0.95\linewidth]{./figure/nonlinear/not_uniform.png}
-    \captionof{figure}{随$t_0$增长，收敛越来越慢}
-  \end{wrapfigure}
+  % \begin{wrapfigure}{R}{0.36\textwidth}
+  %   \vspace{-1em}
+  % 	\includegraphics[width=0.95\linewidth]{./figure/nonlinear/not_uniform.png}
+  %   \captionof{figure}{随$t_0$增长，收敛越来越慢}
+  % \end{wrapfigure}
 
-  \vspace{1em}
-  原点也是渐近稳定的（随时间增长$x(t)\to0$），但并非一致渐近稳定，因为考虑下式（绘出示意图如右）
+  % \vspace{1em}
+  原点也是渐近稳定的（随时间增长$x(t)\to0$），但并非一致渐近稳定，因为考虑下式
   \[x(t)=x(t_0)\frac{1+t_0}{1+t_0+(t-t_0)}=\frac{x(t_0)}{1+\frac{t-t_0}{1+t_0}}\]
   即可发现收敛的速率与$t_0$有关。
-  % \begin{center}
-  %   \includegraphics[scale=0.3]{figure/nonlinear/not_uniform.png}
-  %   \captionof{figure}{随$t_0$增长，收敛越来越慢}
-  % \end{center}
+  \begin{center}
+    \includegraphics[scale=0.4]{figure/nonlinear/not_uniform.png}
+    \captionof{figure}{随$t_0$增长，收敛越来越慢}
+  \end{center}
 \end{example}
 
 

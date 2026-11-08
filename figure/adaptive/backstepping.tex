@@ -1,0 +1,88 @@
+% Standalone vector source for Figure 5.2.
+% Lecture notation: state z, virtual input Phi(z), error y = xi - Phi(z).
+\documentclass[12pt]{article}
+\usepackage[paperwidth=150mm,paperheight=174mm,margin=3mm]{geometry}
+\usepackage{amsmath,tikz}
+\usetikzlibrary{arrows.meta}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\begin{document}
+\begin{tikzpicture}[
+    x=1mm,y=1mm,
+    line width=0.6pt,
+    >={Stealth[length=1.7mm,width=1.2mm]},
+    block/.style={draw,minimum width=18mm,minimum height=14mm,inner sep=1mm},
+    integ/.style={block,minimum width=14mm},
+    sum/.style={draw,circle,minimum size=5mm,inner sep=0pt},
+    frame/.style={draw=black!65,dashed,line width=0.45pt},
+    signal/.style={above,inner sep=1mm}
+]
+\useasboundingbox (-2,-1) rectangle (142,164);
+
+% (a) Original cascade: zdot = f(z) + g(z) xi, xidot = u.
+\begin{scope}[yshift=148mm]
+  \node[integ] (ia) at (20,0) {$\displaystyle\int$};
+  \node[block] (ga) at (55,0) {$g(z)$};
+  \node[sum] (sa) at (80,0) {$+$};
+  \node[integ] (za) at (105,0) {$\displaystyle\int$};
+  \node[block,minimum width=28mm,minimum height=10mm] (fa) at (105,-24) {$f(z)$};
+  \draw[->] (1,0) node[signal] {$u$} -- (ia.west);
+  \draw[->] (ia.east) -- node[signal] {$\xi$} (ga.west);
+  \draw[->] (ga.east) -- (sa.west);
+  \draw[->] (sa.east) -- (za.west);
+  \draw[->] (za.east) -- (140,0) node[signal] {$z$};
+  \fill (125,0) circle[radius=0.65pt];
+  \draw[->] (125,0) |- (fa.east);
+  \draw[->] (fa.west) -| (sa.south);
+  \draw[frame] (40,-34) rectangle (134,14);
+  \node at (20,-22) {(a)};
+\end{scope}
+
+% (b) Add and subtract g(z) Phi(z), exposing y = xi - Phi(z).
+\begin{scope}[yshift=92mm]
+  \node[integ] (ib) at (20,0) {$\displaystyle\int$};
+  \node[sum] (sb0) at (40,0) {$+$};
+  \node[block] (gb) at (60,0) {$g(z)$};
+  \node[sum] (sb) at (80,0) {$+$};
+  \node[integ] (zb) at (105,0) {$\displaystyle\int$};
+  \node[block,minimum width=50mm,minimum height=11mm] (fb) at (108,-27)
+    {$f(z)+g(z)\Phi(z)$};
+  \draw[->] (1,0) node[signal] {$u$} -- (ib.west);
+  \draw[->] (ib.east) -- node[signal] {$\xi$} (sb0.west);
+  \draw[->] (sb0.east) -- node[signal] {$y$} (gb.west);
+  \draw[->] (gb.east) -- (sb.west);
+  \draw[->] (sb.east) -- (zb.west);
+  \draw[->] (zb.east) -- (140,0) node[signal] {$z$};
+  \draw[->] (40,-18) -- (sb0.south);
+  \node at (40,-23) {$-\Phi(z)$};
+  \fill (136,0) circle[radius=0.65pt];
+  \draw[->] (136,0) |- (fb.east);
+  \draw[->] (fb.west) -| (sb.south);
+  \node at (20,-22) {(b)};
+\end{scope}
+
+% (c) Move the subtraction before the integrator: ydot = u - Phidot(z).
+\begin{scope}[yshift=36mm]
+  \node[sum] (sc0) at (9,0) {$+$};
+  \node[integ] (ic) at (28,0) {$\displaystyle\int$};
+  \node[block] (gc) at (59,0) {$g(z)$};
+  \node[sum] (sc) at (80,0) {$+$};
+  \node[integ] (zc) at (105,0) {$\displaystyle\int$};
+  \node[block,minimum width=50mm,minimum height=11mm] (fc) at (108,-27)
+    {$f(z)+g(z)\Phi(z)$};
+  \draw[->] (1,0) node[signal] {$u$} -- (sc0.west);
+  \draw[->] (sc0.east) -- (ic.west);
+  \draw[->] (ic.east) -- node[signal] {$y$} (gc.west);
+  \draw[->] (gc.east) -- (sc.west);
+  \draw[->] (sc.east) -- (zc.west);
+  \draw[->] (zc.east) -- (140,0) node[signal] {$z$};
+  \draw[->] (9,-18) -- (sc0.south);
+  \node at (9,-23) {$-\dot\Phi(z)$};
+  \fill (136,0) circle[radius=0.65pt];
+  \draw[->] (136,0) |- (fc.east);
+  \draw[->] (fc.west) -| (sc.south);
+  \draw[frame] (43,-37) rectangle (139,14);
+  \node at (28,-22) {(c)};
+\end{scope}
+\end{tikzpicture}
+\end{document}

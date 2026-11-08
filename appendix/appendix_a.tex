@@ -54,59 +54,59 @@
 
 \noindent\textbf{问题} \ref{Pro:uncertainty} \textbf{解：}
 
-假设满足 \eqref{matching:condition:GLS} 的$K^{\ast}_1, K^{\ast}_2$存在。设计控制律\[ u = \hat{K}_1 (t) x + \hat{K}_2 (t) u_c - \hat{\Theta}\Phi (x)  \]
+假设满足 \eqref{matching:condition:GLS} 的$K^{\ast}_1, K^{\ast}_2$存在。设计控制律\[ u = \hat{K}_1 (t) x + \hat{K}_2 (t) u_c - \hat{\Theta}^\mathrm{T}\Phi (x)  \]
 代入 \eqref{Sys:MRAC:MIMO_with_dis} 可得
 \begin{align}
-    \dot{x}&=A  x + B \Lambda (\hat{K}_1 (t) x + \hat{K}_2 (t) u_c-\textcolor{second}{\hat{\Theta}\Phi})+\textcolor{second}{B\Lambda\Theta\Phi}+
+    \dot{x}&=A  x + B \Lambda (\hat{K}_1 (t) x + \hat{K}_2 (t) u_c-\textcolor{second}{\hat{\Theta}^\mathrm{T}\Phi})+\textcolor{second}{B\Lambda\Theta^\mathrm{T}\Phi}+
     A_{\refval} x +
     B_{\refval} u_c-A_{\refval} x -
     B_{\refval} u_c\nonumber\\
     &=A_{\refval} x +
-    B_{\refval} u_c+(A + B \Lambda \hat{K}_1 (t)-A_{\refval}) x+(B\Lambda\hat{K}_2 (t)-B_{\refval}) u_c-\textcolor{second}{(B\Lambda\hat{\Theta}\Phi-B\Lambda\Theta\Phi)}\nonumber\\
+    B_{\refval} u_c+(A + B \Lambda \hat{K}_1 (t)-A_{\refval}) x+(B\Lambda\hat{K}_2 (t)-B_{\refval}) u_c-\textcolor{second}{(B\Lambda\hat{\Theta}^\mathrm{T}\Phi-B\Lambda\Theta^\mathrm{T}\Phi)}\nonumber\\
     &=A_{\refval}  x +
    B_{\refval} u_c + B \Lambda  \tilde{K}_1 x + B
-   \Lambda  \tilde{K}_2 u_c -\textcolor{second}{B\Lambda\tilde{\Theta}\Phi}\label{mimo_with_dis_dotx}
+   \Lambda  \tilde{K}_2 u_c -\textcolor{second}{B\Lambda\tilde{\Theta}^\mathrm{T}\Phi}\label{mimo_with_dis_dotx}
 \end{align}
 其中的参数估计误差 $\tilde{K}_1 \triangleq \hat{K}_1 {- K_1^{\ast}} , \tilde{K}_2 \triangleq \hat{K}_2 {- K_2^{\ast}} ,\tilde{\Theta}\triangleq\hat{\Theta}-\Theta$。
 
 定义跟踪误差 $e \triangleq x - x_{\refval}$。根据 \eqref{ideal_mimo} 和 \eqref{mimo_with_dis_dotx}，写出误差动力学
 \begin{equation}
   \dot{e} = A_{\refval} e + B \Lambda  \tilde{K}_1 x +
-  B \Lambda  \tilde{K}_2 u_c-\textcolor{second}{B\Lambda \tilde{\Theta}\Phi} \label{errsys_with_dis:MRAC:GLS}
+  B \Lambda  \tilde{K}_2 u_c-\textcolor{second}{B\Lambda \tilde{\Theta}^\mathrm{T}\Phi} \label{errsys_with_dis:MRAC:GLS}
 \end{equation}
 
 考虑如下候选Lyapunov函数
 \begin{equation}
-  V=e^\mathrm{T}Pe+\tr(\tilde{K}_1^\mathrm{T}{\Lambda}\tilde{K}_1)+\tr(\tilde{K}_2^\mathrm{T}{\Lambda}\tilde{K}_2)+\textcolor{second}{\tr (\tilde{\Theta}^\mathrm{T}{\Lambda}\tilde{\Theta})}
+  V=e^\mathrm{T}Pe+\tr(\tilde{K}_1^\mathrm{T}{\Lambda}\tilde{K}_1)+\tr(\tilde{K}_2^\mathrm{T}{\Lambda}\tilde{K}_2)+\textcolor{second}{\tr (\tilde{\Theta}{\Lambda}\tilde{\Theta}^\mathrm{T})}
 \end{equation}
 
 求其导数得
 \begin{align}
   \dot{V} & =e^\mathrm{T}P\dot{e}+\dot{e}^\mathrm{T}Pe + 2\tr \{
-  \tilde{K}^\mathrm{T}_1 \dot{\hat{K}} _1 \} + 2\tr
-  \{ \tilde{K}^\mathrm{T}_2 \dot{\hat{K}} _2 \}+\textcolor{second}{2\tr \{ \tilde{\Theta}^\mathrm{T} \Lambda\dot{\hat{\Theta}} \}}\nonumber\\
+  \tilde{K}^\mathrm{T}_1 \Lambda\dot{\hat{K}} _1 \} + 2\tr
+  \{ \tilde{K}^\mathrm{T}_2 \Lambda\dot{\hat{K}} _2 \}+\textcolor{second}{2\tr \{ \tilde{\Theta} \Lambda\dot{\hat{\Theta}}^\mathrm{T} \}}\nonumber\\
   & = e^\mathrm{T}P( A_{\refval} e + B \Lambda  \tilde{K}_1 x +
-  B \Lambda  \tilde{K}_2 u_c-\textcolor{second}{B\Lambda \tilde{\Theta}\Phi})+(A_{\refval} e + B \Lambda  \tilde{K}_1 x +
-  B \Lambda  \tilde{K}_2 u_c-\textcolor{second}{B\Lambda \tilde{\Theta}\Phi})^\mathrm{T}Pe\nonumber\\
+  B \Lambda  \tilde{K}_2 u_c-\textcolor{second}{B\Lambda \tilde{\Theta}^\mathrm{T}\Phi})+(A_{\refval} e + B \Lambda  \tilde{K}_1 x +
+  B \Lambda  \tilde{K}_2 u_c-\textcolor{second}{B\Lambda \tilde{\Theta}^\mathrm{T}\Phi})^\mathrm{T}Pe\nonumber\\
   &\quad+
   2\tr \{ \tilde{K}^\mathrm{T}_1 \Lambda\dot{\hat{K}} _1 \}
-  + 2\tr \{ \tilde{K}^\mathrm{T}_2 \Lambda\dot{\hat{K}} _2 \}+\textcolor{second}{2\tr \{ \tilde{\Theta}^\mathrm{T} \Lambda\dot{\hat{\Theta}} \}}\nonumber\\
+  + 2\tr \{ \tilde{K}^\mathrm{T}_2 \Lambda\dot{\hat{K}} _2 \}+\textcolor{second}{2\tr \{ \tilde{\Theta} \Lambda\dot{\hat{\Theta}}^\mathrm{T} \}}\nonumber\\
   &= e^\mathrm{T}(A_{\refval}^\mathrm{T} P + P A_{\refval}) e+ 2 e^\mathrm{T}  P  B \Lambda 
-  \tilde{K}_1 x + 2 e^\mathrm{T} P  B \Lambda  \tilde{K}_2 u_c -\textcolor{second}{2 e^\mathrm{T}PB\Lambda \tilde{\Theta}\Phi}\nonumber\\
-  &\quad +  2\tr \{ \tilde{K}^\mathrm{T}_1  \dot{\hat{K}} _1 \}
-  + 2\tr \{ \tilde{K}^\mathrm{T}_2  \dot{\hat{K}} _2
-  \}+\textcolor{second}{2\tr \{ \tilde{\Theta}^\mathrm{T} \Lambda\dot{\hat{\Theta}} \}}\nonumber\\
+  \tilde{K}_1 x + 2 e^\mathrm{T} P  B \Lambda  \tilde{K}_2 u_c -\textcolor{second}{2 e^\mathrm{T}PB\Lambda \tilde{\Theta}^\mathrm{T}\Phi}\nonumber\\
+  &\quad +  2\tr \{ \tilde{K}^\mathrm{T}_1  \Lambda\dot{\hat{K}} _1 \}
+  + 2\tr \{ \tilde{K}^\mathrm{T}_2  \Lambda\dot{\hat{K}} _2
+  \}+\textcolor{second}{2\tr \{ \tilde{\Theta} \Lambda\dot{\hat{\Theta}}^\mathrm{T} \}}\nonumber\\
   & = -e^\mathrm{T}Q e +
   2\tr \{ \tilde{K}^\mathrm{T}_1 \Lambda B^\mathrm{T}  P  e  x^\mathrm{T} \} +
-  2\tr \{ \tilde{K}^\mathrm{T}_2 \Lambda B^\mathrm{T}  P  e  u_c^\mathrm{T} \} - \textcolor{second}{2\tr \{ \tilde{\Theta}^\mathrm{T} \Lambda B^\mathrm{T}Pe\Phi^\mathrm{T}
+  2\tr \{ \tilde{K}^\mathrm{T}_2 \Lambda B^\mathrm{T}  P  e  u_c^\mathrm{T} \} - \textcolor{second}{2\tr \{ \tilde{\Theta} \Lambda B^\mathrm{T}Pe\Phi^\mathrm{T}
   \}}\nonumber\\
   &\quad + 2\tr \{ \tilde{K}^\mathrm{T}_1  \Lambda\dot{\hat{K}} _1 \}
-  + 2\tr \{ \tilde{K}^\mathrm{T}_2  \Lambda \dot{\hat{K}} _2\}+\textcolor{second}{2\tr \{ \tilde{\Theta}^\mathrm{T} \Lambda\dot{\hat{\Theta}} \}}\label{pro_dot_V_modify}
+  + 2\tr \{ \tilde{K}^\mathrm{T}_2  \Lambda \dot{\hat{K}} _2\}+\textcolor{second}{2\tr \{ \tilde{\Theta} \Lambda\dot{\hat{\Theta}}^\mathrm{T} \}}\label{pro_dot_V_modify}
 \end{align}
 其中最后一行的转化参看 \eqref{trace_transform}。
 
 选取
-\[\dot{\hat{K}} _1 = -  B^\mathrm{T}  P  e  x^\mathrm{T}, \dot{\hat{K}} _2 = -  B^\mathrm{T}  P  e  u^\mathrm{T}_c,\dot{\hat{\Theta}}=B^\mathrm{T}Pe\Phi^\mathrm{T}\]
+\[\dot{\hat{K}} _1 = -  B^\mathrm{T}  P  e  x^\mathrm{T}, \dot{\hat{K}} _2 = -  B^\mathrm{T}  P  e  u^\mathrm{T}_c,\dot{\hat{\Theta}}=\Phi e^\mathrm{T}PB\]
 即可消去 \eqref{pro_dot_V_modify} 最后六项。这样就有
 \[ \dot{V} = - e^\mathrm{T} Q  e \leq 0 \]
 后续分析同 \ref{4Cref} 节。
@@ -130,7 +130,7 @@
     & = -|s|\Phi(x)\tilde{k}+\frac{1}{\gamma} \tilde{k} \dot{\hat{k}}-\eta|s|\\
     &= \frac{1}{\gamma}\tilde{k} (\dot{\hat{k}}-\gamma |s|\Phi(x))-\eta|s|
   \end{align*}
-则取$\dot{\hat{k}}=\gamma |s|\Phi(x)$，就有$\dot{V}=-\eta|s|$，之后的分析同 \ref{5C_disturbance} 节其他各例。
+则取$\dot{\hat{k}}=\gamma |s|\Phi(x)$，就有$\dot{V}\leq-\eta|s|$，之后的分析同 \ref{5C_disturbance} 节其他各例。
 
 \noindent\textbf{问题} \ref{Pro:backstep-complex} \textbf{解：}
 
@@ -235,9 +235,9 @@ $z_3$的动力学写为
 其沿系统轨线的导数
 \begin{align*}
     \dot{V} & = \dot{\tilde{q}}^\mathrm{T} M \ddot{\tilde{q}} + \frac{1}{2}
-    \dot{\tilde{q}}^\mathrm{T} \dot{M} \dot{\tilde{q}} + \dot{\tilde{q}}^\mathrm{T} K_p \dot{\tilde{q}}\\
+    \dot{\tilde{q}}^\mathrm{T} \dot{M} \dot{\tilde{q}} + \dot{\tilde{q}}^\mathrm{T} K_p \tilde{q}\\
     & = \dot{\tilde{q}}^\mathrm{T} (- K_p \tilde{q} - K_d \dot{\tilde{q}} - C
-    \dot{\tilde{q}}-\textcolor{second}{D\dot{\tilde{q}}}) + \frac{1}{2} \dot{\tilde{q}}^\mathrm{T} \dot{M} \dot{\tilde{q}}+ \dot{\tilde{q}}^\mathrm{T} K_p \dot{\tilde{q}}\\
+    \dot{\tilde{q}}-\textcolor{second}{D\dot{\tilde{q}}}) + \frac{1}{2} \dot{\tilde{q}}^\mathrm{T} \dot{M} \dot{\tilde{q}}+ \dot{\tilde{q}}^\mathrm{T} K_p \tilde{q}\\
     & =  - \dot{\tilde{q}}^\mathrm{T} K_d
     \dot{\tilde{q}} + \frac{1}{2} \dot{\tilde{q}}^\mathrm{T} (\dot{M} - 2 C)
     \dot{\tilde{q}}- \textcolor{second}{\dot{\tilde{q}}^\mathrm{T}D\dot{\tilde{q}}}\\

@@ -51,7 +51,7 @@
   因此，当$t \geq \frac{\sqrt{2 V (0)}}{k}$时，$V (t) \equiv 0$，即在有限时间内，$s (t) \equiv 0$。
 
   \begin{note}
-    若将上述的$-k\sgn(s)$换成$-ks$，则$\dot{V} = - ks^2=  - 2k V$，类似上面方法可得同样的结论。注意，在 \ref{5C3ref} 小节中此替换不再成立（可考虑：接近原点时$s$很小，不能克服干扰，但$\sgn(s)$能保持原值）。
+    若将上述的$-k\sgn(s)$换成$-ks$，则$\dot{V} = - ks^2=  - 2k V$，此时$s(t)=s(0)\mathrm{e}^{-kt}$，只能保证渐近收敛，不能保证从非零初值在有限时间内到达滑模面。注意，在 \ref{5C3ref} 小节中此替换也不能用（可考虑：接近原点时$s$很小，不能克服干扰，但$\sgn(s)$能保持原值）。
   \end{note}
 
   进而，将$s = x_2 + \lambda x_1 = \dot{x}_1 + \lambda x_1$写成
@@ -115,9 +115,9 @@
 \[ k \geq \frac{\hat{g} (x)}{g (x)} [F (x) + \eta] + \left| 1 - \frac{\hat{g}
    (x)}{g (x)} \right| \cdot | - \hat{f} (x) + \ddot{x}_d (t) - \lambda
    \tilde{x}_2 | \]
-注意到 $\frac{1}{\beta} \leq \frac{\hat{g} (x)}{g (x)} \leq \beta, \beta >1$，
-可知$ \frac1\beta -1\le \frac{\hat{g}(x)}{g (x)}-1 \le\beta-1 $。注意$\frac1\beta -1<0$，则\[\left|  \frac{\hat{g}
-   (x)}{g (x)}-1 \right|=\max\left\{\beta-1,1-\frac{1}{\beta}\right\}=\max\left\{\beta-1,\frac{\beta-1}{\beta}\right\}=\beta-1\]
+注意到 $\frac{1}{\beta} \leq \frac{\hat{g} (x)}{g (x)} \leq \beta, \beta \geq1$，
+可知$ \frac1\beta -1\le \frac{\hat{g}(x)}{g (x)}-1 \le\beta-1 $。注意$\frac1\beta -1\leq0$，则\[\left|  \frac{\hat{g}
+   (x)}{g (x)}-1 \right|\leq\max\left\{\beta-1,1-\frac{1}{\beta}\right\}=\max\left\{\beta-1,\frac{\beta-1}{\beta}\right\}=\beta-1\]
 则取 $k = \beta [F (x) + \eta] + (\beta - 1) \cdot | - \hat{f} (x) +\ddot{x}_d (t) - \lambda \tilde{x}_2 |$，就有 $\dot{V} \leq - \eta | s|$。后续分析同前两小节。
 \subsection{有外部干扰的系统设计}\label{5C_disturbance}
 \noindent\textbf{一、干扰上界已知的情形}
@@ -188,7 +188,7 @@
     &\leq -kx^2-\varphi\tilde{\theta}x-\hat{k}|x|+d_{\max}|x|+\eta|x|-\eta|x|+\frac{1}{\gamma_1}\tilde{\theta}\dot{\hat{\theta}}+\frac{1}{\gamma_2}\tilde{k}\dot{\hat{k}}\\
     &=-kx^2+\frac{1}{\gamma_1}\tilde{\theta}(\dot{\hat{\theta}}-\gamma_1\varphi x)+\frac{1}{\gamma_2}\tilde{k}(\dot{\hat{k}}-\gamma_2|x|)-\eta|x|
 \end{align*}
-于是，只需设计$\dot{\hat{\theta}}=\gamma_1\varphi x$和$\dot{\hat{k}}=\gamma_2|x|$，可以使系统状态在有限时间内趋近于$0$。
+于是，只需设计$\dot{\hat{\theta}}=\gamma_1\varphi x$和$\dot{\hat{k}}=\gamma_2|x|$，可以使系统状态随$t\to\infty$渐近收敛至$0$。
 
 上述设计固然可行，但是其在$x=0$附近会存在较明显的振荡。
 为了避免$\sgn(x)$的弊端，有学者提出了如下控制律
@@ -209,7 +209,7 @@
 \end{align*}
 仍选取$\dot{\hat{k}}=\gamma_2 |x|$，则
 \begin{align*}
-   \dot{V} &=-kx^2+{\hat{k}}|x|-\frac{\hat{k}^2}{|x|\hat{k}+\mathrm{e}^{-t}}|x|^2\\
+   \dot{V} &\leq-kx^2+{\hat{k}}|x|-\frac{\hat{k}^2}{|x|\hat{k}+\mathrm{e}^{-t}}|x|^2\\
     &=-kx^2+\frac{\hat{k}^2|x|^2+\mathrm{e}^{-t}\hat{k}|x|-\hat{k}^2|x|^2}{|x|\hat{k}+\mathrm{e}^{-t}}\\
     &=-kx^2+\frac{\mathrm{e}^{-t}\hat{k}|x|}{|x|\hat{k}+\mathrm{e}^{-t}}\\
     &\leq -kx^2+\mathrm{e}^{-t}

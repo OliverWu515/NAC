@@ -43,8 +43,8 @@
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.5\linewidth]{figure/adaptive/backstepping.png}
-    \caption{反步法示意图。图中的$\eta$为此处的$z$，$z$为此处的$y$。(a) 原系统 \eqref{Sys:backstep:basic:original}；(b) 引入控制$\Phi(z)$，即 \eqref{Sys:backstep:basic:control}；(c) 将$\Phi(z)$“反挪”（back-steps）到积分之前，即 \eqref{Sys:backstep:basic:backstep}。}
+    \includegraphics[width=0.7\linewidth]{figure/adaptive/backstepping.pdf}
+    \caption{反步法示意图。(a) 原系统 \eqref{Sys:backstep:basic:original}；(b) 加减$g(z)\Phi(z)$，得到 \eqref{Sys:backstep:basic:control}；(c) 引入$y=\xi-\Phi(z)$，得到 \eqref{Sys:backstep:basic:backstep}。}
     \label{fig:backstepping}
 \end{figure}
 
@@ -63,13 +63,13 @@
 \[ V_c (z, y) = V (z) + \frac{1}{2} y^2 \]
 求其导数得
 \begin{align*}
-  \dot{V}_c (z, y) & = V (z) + y \cdot \dot{y}\\
+  \dot{V}_c (z, y) & = \dot{V} (z) + y \cdot \dot{y}\\
   & = \frac{\partial V}{\partial z} [f (z) + g (z) \Phi (z) + g (z) y] + y 
   v\\
   & \leq - \omega (z) + \frac{\partial V}{\partial z} g (z) y + y  v
 \end{align*}
 则取 \[v = - \frac{\partial V}{\partial z} g (z) - k  y, k > 0\]
-即可得到\[\dot{V} (z, y) \leq - \omega (z) - k  y^2\]
+即可得到\[\dot{V}_c (z, y) \leq - \omega (z) - k  y^2\]
 它是负定的，
 这也就表明上述系统的原点 $(z = 0, y = 0)$ 是渐近稳定的。因为
 $\Phi (0) = 0$，所以$z = 0, y = 0\implies \xi =0$，即原系统的原点$(z = 0, \xi = 0)$ 是渐近稳定的。整理得到反馈控制律为
@@ -114,7 +114,7 @@ $\Phi (0) = 0$，所以$z = 0, y = 0\implies \xi =0$，即原系统的原点$(z 
 \end{example}
 
 \begin{problem}\label{Pro:backstep-complex}
-如果系统不是由二个系统级联
+如果系统不是由二个而是由多个系统级联
     \begin{align*}
     \dot{x}_1 & = x^2_1 - x^3_1 + x_2\\
     \dot{x}_2 & = - x^2_1 + x_1 x_2 + \cdots \\
@@ -230,7 +230,7 @@ $z_2$的动力学写为
 \dot{z}_2 \in \mathbb{L}_{\infty}$，
 根据 \ref{barbalat_cor_1}，$\lim\limits_{t \rightarrow \infty} z_1 = \lim\limits_{t \rightarrow
 \infty} z_2 = 0$。
-又注意到 $z_1 = x_1, x_2 = z_2 - \alpha_1 (x_1, v_1)$ 且 $\varphi (0) = 0$，于是可得出结论 $\lim\limits_{t \rightarrow \infty} x_1 = \lim\limits_{t \rightarrow \infty} x_2 = 0$。
+又注意到 $z_1 = x_1, x_2 = z_2 + \alpha_1 (x_1, v_1)$ 且 $\varphi (0) = 0$，于是可得出结论 $\lim\limits_{t \rightarrow \infty} x_1 = \lim\limits_{t \rightarrow \infty} x_2 = 0$。
 \begin{note}
     施加自适应律的闭环系统方程是
 \begin{align*}
@@ -454,7 +454,7 @@ $z_3$的动力学是
     &=u-\frac{\partial\alpha_2}{\partial x_1}(x_2+\varphi(x_1)\theta)-\frac{\partial\alpha_2}{\partial x_2}x_3 - \frac{\partial\alpha_2}{\partial \hat{\theta}}\dot{\hat{\theta}}
 \end{align*}
 考虑下述候选合并Lyapunov函数
-\[ V_3 = V_2 + \frac{1}{2} z^3_2 \]
+\[ V_3 = V_2 + \frac{1}{2} z^2_3 \]
 其导数为
 \begin{align*}
     \dot{V}_3&=\dot{V}_2+z_3\dot{z}_3\\
@@ -473,20 +473,20 @@ $z_3$的动力学是
   \alpha_1}{\partial \hat{\theta} }(\dot{\hat{\theta}}-\gamma\tau_2) +z_3\left(u_1- \frac{\partial\alpha_2}{\partial \hat{\theta}}\dot{\hat{\theta}}\right)
 \end{align*}
 
-类似上一步，定义调节函数\[\tau_3=\tau_2-z_3\frac{\partial \alpha_2}{\partial z_1}\varphi(z_1)\]
+类似上一步，定义调节函数\[\tau_3=\tau_2-z_3\frac{\partial \alpha_2}{\partial x_1}\varphi(z_1)\]
 上述导数便可整理为
 \begin{align*}
     \dot{V}_3 &=-k_1z_1^2-k_2z_2^2-k_3z_3^2+\frac{1}{\gamma}\tilde{\theta}(\dot{\hat{\theta}}-\gamma \tau_3)\\
     &\quad -z_2\frac{\partial
-  \alpha_1}{\partial \hat{\theta} }\left(\dot{\hat{\theta}}-\gamma\tau_2+\gamma z_3 \frac{\partial \alpha_2}{\partial z_1}\varphi(z_1)-\gamma z_3\frac{\partial \alpha_2}{\partial z_1}\varphi(z_1)\right) +z_3\left(u_1- \frac{\partial\alpha_2}{\partial \hat{\theta}}\dot{\hat{\theta}}\right)\\
+  \alpha_1}{\partial \hat{\theta} }\left(\dot{\hat{\theta}}-\gamma\tau_2+\gamma z_3 \frac{\partial \alpha_2}{\partial x_1}\varphi(z_1)-\gamma z_3\frac{\partial \alpha_2}{\partial x_1}\varphi(z_1)\right) +z_3\left(u_1- \frac{\partial\alpha_2}{\partial \hat{\theta}}\dot{\hat{\theta}}\right)\\
 &=-k_1z_1^2-k_2z_2^2-k_3z_3^2+\frac{1}{\gamma}\tilde{\theta}(\dot{\hat{\theta}}-\gamma \tau_3)\\
     &\quad -z_2\frac{\partial
   \alpha_1}{\partial \hat{\theta} }(\dot{\hat{\theta}}-\gamma\tau_3)+\gamma z_2z_3\frac{\partial
-  \alpha_1}{\partial \hat{\theta} }\frac{\partial \alpha_2}{\partial z_1}\varphi(z_1) +z_3\left(u_1- \frac{\partial\alpha_2}{\partial \hat{\theta}}\dot{\hat{\theta}}\right)
+  \alpha_1}{\partial \hat{\theta} }\frac{\partial \alpha_2}{\partial x_1}\varphi(z_1) +z_3\left(u_1- \frac{\partial\alpha_2}{\partial \hat{\theta}}\dot{\hat{\theta}}\right)
 \end{align*}
 于是，设计
-\[\dot{\theta}=\gamma\tau_3\]
+\[\dot{\hat{\theta}}=\gamma\tau_3\]
 \[u_1=\frac{\partial\alpha_2}{\partial \hat{\theta}}\dot{\hat{\theta}}-\gamma z_2\frac{\partial
-  \alpha_1}{\partial \hat{\theta} }\frac{\partial \alpha_2}{\partial z_1}\varphi(z_1)\]
+  \alpha_1}{\partial \hat{\theta} }\frac{\partial \alpha_2}{\partial x_1}\varphi(z_1)\]
 即得\[\dot{V}_3 =-k_1z_1^2-k_2z_2^2-k_3z_3^2\]
 类似之前的分析，可得原系统原点渐近稳定。

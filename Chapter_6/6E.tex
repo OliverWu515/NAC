@@ -6,7 +6,7 @@
 \]
 这条性质告诉我们，可以用参数 $\Theta$ 来刻画系统动力学。从而根据 \eqref{EL:SMC:sys}，系统的动力学可写作
 \begin{equation} \label{EL:ADA:model}
-    M(q) \dot{s} + C(q, \dot{q}) s +g(q)= \tau - Y (q, \dot{q}, \ddot{q}_r, \dot{q}_r) \Theta
+    M(q) \dot{s} + C(q, \dot{q}) s = \tau - Y (q, \dot{q}, \ddot{q}_r, \dot{q}_r) \Theta
 \end{equation}
 如果我们能够知道 $\Theta$ 的确切值，也就能确定系统的动力学，从而实现如 \eqref{EL:SMC:u} 这样的控制律。而如果我们不知道 $\Theta$，那么我们可以对其进行估计，利用自适应控制实现跟踪控制。这里我们设计如下控制输入：
 \begin{equation} \label{EL:ADA:u}

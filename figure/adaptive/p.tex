@@ -1,0 +1,51 @@
+% Rebuild with xelatex p.tex, twice to resolve the absolute page position.
+% Performance bounds: rho(t) = 1.9 exp(-t) + 0.1, 0 <= t <= 5.
+\documentclass[12pt]{article}
+\usepackage[paperwidth=348bp,paperheight=295bp,margin=0pt]{geometry}
+\usepackage{tikz,newtxmath}
+\pagestyle{empty}
+\ifdefined\pdfcompresslevel
+  \pdfcompresslevel=9
+  \pdfobjcompresslevel=3
+\else
+  \special{dvipdfmx:config z 9}
+\fi
+\begin{document}
+\null
+\begin{tikzpicture}[remember picture,overlay,shift={(current page.south west)},
+    x=1bp,y=1bp,font=\fontsize{12}{14}\selectfont]
+  % Match the original 348 bp by 295 bp canvas and plot footprint.
+  \useasboundingbox (0,0) rectangle (348,295);
+  \definecolor{boundblue}{RGB}{0,114,189}
+  \definecolor{boundorange}{RGB}{217,83,25}
+  \draw[line width=0.4bp] (20,42) rectangle (345,289);
+  \foreach \t in {0,1,2,3,4,5} {
+    \pgfmathsetmacro{\xtick}{20+65*\t}
+    \draw[line width=0.4bp] (\xtick,42) -- ++(0,3.5);
+    \draw[line width=0.4bp] (\xtick,289) -- ++(0,-3.5);
+    \node[anchor=north,inner sep=0pt] at (\xtick,35) {$\t$};
+  }
+  \foreach \v in {-2,-1,0,1,2} {
+    \pgfmathsetmacro{\ytick}{165.5+61.75*\v}
+    \draw[line width=0.4bp] (20,\ytick) -- ++(3.5,0);
+    \draw[line width=0.4bp] (345,\ytick) -- ++(-3.5,0);
+    \node[anchor=east,inner sep=0pt] at (14,\ytick) {$\v$};
+  }
+  \node[inner sep=0pt] at (182.5,10) {$t/\mathrm{sec}$};
+  \begin{scope}
+    \clip (20,42) rectangle (345,289);
+    \draw[boundblue,line width=0.6bp]
+      plot[domain=0:5,samples=81] ({20+65*\x},{165.5+61.75*(1.9*exp(-\x)+0.1)});
+    \draw[boundorange,line width=0.6bp]
+      plot[domain=0:5,samples=81] ({20+65*\x},{165.5-61.75*(1.9*exp(-\x)+0.1)});
+    \draw[boundblue,line width=0.5bp,dash pattern=on 6bp off 4bp]
+      (20,171.675) -- (345,171.675);
+    \draw[boundblue,line width=0.5bp,dash pattern=on 6bp off 4bp]
+      (20,159.325) -- (345,159.325);
+  \end{scope}
+  \node[anchor=west,inner sep=0pt] at (149,195) {$\leftarrow\rho(t)$};
+  \node[anchor=west,inner sep=0pt] at (149,131) {$\leftarrow-\rho(t)$};
+  \node[anchor=west,inner sep=0pt] at (52,187) {$\rho_\infty$};
+  \node[anchor=west,inner sep=0pt] at (52,150) {$-\rho_\infty$};
+\end{tikzpicture}
+\end{document}

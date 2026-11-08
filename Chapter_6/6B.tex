@@ -116,10 +116,10 @@
 则 $V_3$ 沿系统轨线的导数为
 \begin{align*}
     \dot{V}_3 & = \dot{\tilde{q}}^\mathrm{T} M \ddot{\tilde{q}} + \frac{1}{2}
-    \dot{\tilde{q}}^\mathrm{T} \dot{M} \dot{\tilde{q}} + \dot{P}(q)\\
+    \dot{\tilde{q}}^\mathrm{T} \dot{M} \dot{\tilde{q}} + \dot{\tilde{q}}^\mathrm{T} K_p \tilde{q} + \dot{P}(q)\\
     & = \dot{\tilde{q}}^\mathrm{T} (- K_p \tilde{q} - K_d \dot{\tilde{q}} - C
-    \dot{\tilde{q}} - g(q)) + \frac{1}{2} \dot{\tilde{q}}^\mathrm{T} \dot{M} \dot{\tilde{q}} + \dot{P}(q)\\
-    & = - \dot{\tilde{q}}^\mathrm{T} K_p \tilde{q} - \dot{\tilde{q}}^\mathrm{T} K_d
+    \dot{\tilde{q}} - g(q)) + \frac{1}{2} \dot{\tilde{q}}^\mathrm{T} \dot{M} \dot{\tilde{q}} + \dot{\tilde{q}}^\mathrm{T} K_p \tilde{q} + \dot{P}(q)\\
+    & = - \dot{\tilde{q}}^\mathrm{T} K_d
     \dot{\tilde{q}} + \frac{1}{2} \dot{\tilde{q}}^\mathrm{T} (\dot{M} - 2 C)
     \dot{\tilde{q}} \textcolor{second}{ - \dot{\tilde{q}}^\mathrm{T} g(q) + \dot{P}(q)} \\
     & = - \dot{\tilde{q}}^\mathrm{T} K_d \dot{\tilde{q}} \textcolor{second}{ - \dot{\tilde{q}}^\mathrm{T} g(q) + \dot{P}(q)} \text{。}

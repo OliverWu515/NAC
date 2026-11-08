@@ -196,17 +196,17 @@ $x_{\refval} \in \mathbb{L}_{\infty}$。又知 $x = e +x_{\refval}$，所以$x \
 \begin{problem}\label{Pro:uncertainty}
 系统方程变为
   \begin{equation}
-      \dot{x} = A  x + B \Lambda (u + \Theta\Phi (x))\label{Sys:MRAC:MIMO_with_dis}
+      \dot{x} = A  x + B \Lambda (u + \Theta^\mathrm{T}\Phi (x))\label{Sys:MRAC:MIMO_with_dis}
   \end{equation}
-  其中 $\Theta \in \mathbb{R}^{m \times n}, \Phi (x) \in \mathbb{R}^{n \times 1}$，$\Theta$ 未知，$\Phi$ 已知且有界。
+  其中 $\Theta \in \mathbb{R}^{n \times m}, \Phi (x) \in \mathbb{R}^{n \times 1}$，$\Theta$ 未知，$\Phi$ 已知且有界。
 \end{problem}
 \begin{hint}
-    设计控制律\[ u = \hat{K}_1 (t) x + \hat{K}_2 (t) u_c - \hat{\Theta}\Phi (x)  \]
+    设计控制律\[ u = \hat{K}_1 (t) x + \hat{K}_2 (t) u_c - \hat{\Theta}^\mathrm{T}\Phi (x)  \]
 \end{hint}
 \begin{problem}
 系统方程变为
   \begin{align*}
-      \dot{x}_p &= A_p  x + B_p \Lambda (u + \Theta\Phi (x_p))\\
+      \dot{x}_p &= A_p  x + B_p \Lambda (u + \Theta^\mathrm{T}\Phi (x_p))\\
       y&=C_px_p
   \end{align*}
   新增的$C_p$是已知的。目标是使$y$跟踪时变的$y_{\mathrm{cmd}}(t)$。

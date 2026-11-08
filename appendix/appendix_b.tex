@@ -4,35 +4,39 @@
 
 考虑系统
 \begin{equation} \label{MIMO_sys_disturbance}
-    \dot{x} = A x + B \Lambda (u + \Theta \Phi(x)) + \xi(t) \text{，}
+    \dot{x} = A x + B \Lambda (u + \Theta^\mathrm{T} \Phi(x)) + \xi(t) \text{，}
 \end{equation}
-其中状态 $x \in \mathbb{R}^n$，控制输入 $u \in \mathbb{R}^m$，矩阵 $B \in \mathbb{R}^{n \times m}$ 已知，矩阵 $A \in \mathbb{R}^{n \times n}$ 和 $\Lambda \in \mathbb{R}^{m \times m}$ 未知，$\Lambda$ 是对角正定阵，矩阵对 $(A, B \Lambda)$ 能控，$\Phi(x) \in \mathbb{R}^n$ 是连续且已知的函数，未知常值参数矩阵 $\Theta \in \mathbb{R}^{n \times m}$，$\xi(t) \in \mathbb{R}^n$ 是时变而一致有界的扰动（$\| \xi(t) \| \leq d_{\mathrm{max}}$）。% theta 转置
-可采用如下自适应控制律：
+其中状态 $x \in \mathbb{R}^n$，控制输入 $u \in \mathbb{R}^m$，矩阵 $B \in \mathbb{R}^{n \times m}$ 已知，矩阵 $A \in \mathbb{R}^{n \times n}$ 和 $\Lambda \in \mathbb{R}^{m \times m}$ 未知，$\Lambda$ 是对角正定阵，矩阵对 $(A, B \Lambda)$ 能控，$\Phi(x) \in \mathbb{R}^n$ 是局部 Lipschitz 且已知的函数，未知常值参数矩阵 $\Theta \in \mathbb{R}^{n \times m}$，$\xi(t) \in \mathbb{R}^n$ 是分段连续且一致有界的时变扰动（$\| \xi(t) \| \leq d_{\mathrm{max}}$）。
+本附录先讨论正文 MIMO 跟踪设计在零参考输入下的镇定情形。取已知的 Hurwitz 矩阵$A_{\refval}$。假设还有以下匹配条件（$K^*\in\mathbb{R}^{m\times n}$为常值矩阵）：
+\[
+    A+B\Lambda K^*=A_{\refval}.
+\]
+任选已知的对称正定矩阵$Q$，求解
+\[
+    PA_{\refval}+A_{\refval}^{\mathrm{T}}P=-Q
+\]
+得到唯一的对称正定矩阵$P$。可采用如下自适应控制律：
 \begin{align*}
-    u &= \hat{K}(t)x - \hat{\Theta}\Phi(x), \\
+    u &= \hat{K}(t)x - \hat{\Theta}^\mathrm{T}\Phi(x), \\
     \dot{\hat{K}} &= - \Gamma_1 (B^\mathrm{T} P x x^\mathrm{T} + \Sigma_1\hat{K}), \\
-    \dot{\hat{\Theta}} &= \Gamma_2(B^\mathrm{T} P x \Phi(x)^\mathrm{T} - \Sigma_2 \hat{\Theta}) \text{，}
+    \dot{\hat{\Theta}} &= (\Phi(x)x^\mathrm{T} P B - \hat{\Theta}\Sigma_2)\Gamma_2 \text{，}
 \end{align*}
-其中，$\Gamma_1, \Gamma_2, \Sigma_1, \Sigma_2$ 均为对角正定阵。
+其中，$\Gamma_1, \Gamma_2, \Sigma_1, \Sigma_2\in\mathbb{R}^{m\times m}$ 均为对角正定阵。
 
 \begin{proof}
     考虑理想系统——即 \eqref{MIMO_sys_disturbance} 中各参数均已知且 $\xi(t) \equiv 0$，则可设计理想控制律
     \[
-        u = K^*x - \Theta \Phi(x) \text{，}
+        u = K^*x - \Theta^\mathrm{T} \Phi(x) \text{，}
     \]
     其中 $K^* \in \mathbb{R}^{m \times n }$。从而，闭环系统可写为
     \[
         \dot{x} = (A  + B \Lambda K^*) x \text{。}
     \]
-    记
-    \[
-        A  + B \Lambda K^* \triangleq A^* \text{，}
-    \]
-    系统稳定条件为 $A^*$ 是 Hurwitz 的。由于 $(A,B\Lambda)$ 能控，我们总可以选取到合适的 $K^*$ 实现系统的稳定。
+    由匹配条件，闭环系统为$\dot x=A_{\refval}x$，因而原点指数稳定。
 
     对于非理想系统 \eqref{MIMO_sys_disturbance}，我们设计控制律
     \[
-        u = \hat{K}(t) x - \hat{\Theta}(t) \Phi(x) \text{，}
+        u = \hat{K}(t) x - \hat{\Theta}(t)^\mathrm{T} \Phi(x) \text{，}
     \]
     其中 $\hat{K}$ 和 $\hat{\Theta}$ 是对参数 $K^*$ 和 $\Theta$ 的估计。记
     \[
@@ -40,82 +44,123 @@
     \]
     则闭环系统可写作
     \begin{align*}
-         \dot{x}=&Ax+B\Lambda (\hat K(t)x-\hat \Theta(t)\Phi(x)+\Theta\Phi(x))+\xi(t)\\
-         =&(A+B\Lambda\hat K(t))x-B\Lambda \tilde \Theta(t)\Phi(x)+\xi(t)\\
-         =&A^*x+B\Lambda\tilde{K}(t)x-B\Lambda \tilde \Theta(t)\Phi(x)+\xi(t)
+         \dot{x}=&Ax+B\Lambda (\hat K(t)x-\hat{\Theta}(t)^\mathrm{T}\Phi(x)+\Theta^\mathrm{T}\Phi(x))+\xi(t)\\
+         =&(A+B\Lambda\hat K(t))x-B\Lambda \tilde{\Theta}(t)^\mathrm{T}\Phi(x)+\xi(t)\\
+         =&A_{\refval}x+B\Lambda\tilde{K}(t)x-B\Lambda \tilde{\Theta}(t)^\mathrm{T}\Phi(x)+\xi(t)
      \end{align*}
 
      考虑如下候选 Lyapunov 函数：
      \[
-        V = x^\mathrm{T} P x + \tr (\tilde{K}^\mathrm{T} \Lambda \Gamma_1^{-1}  \tilde{K}) + \tr (\tilde{\Theta}^\mathrm{T} \Lambda\Gamma_2^{-1} \tilde{\Theta}), \quad \Gamma_1 = \Gamma_1^\mathrm{T} > 0, \Gamma_2 = \Gamma_2^\mathrm{T} > 0 \text{，}
+        V = x^\mathrm{T} P x + \tr (\tilde{K}^\mathrm{T} \Lambda \Gamma_1^{-1}  \tilde{K}) + \tr (\tilde{\Theta} \Lambda\Gamma_2^{-1} \tilde{\Theta}^\mathrm{T}), \quad \Gamma_1 = \Gamma_1^\mathrm{T} > 0, \Gamma_2 = \Gamma_2^\mathrm{T} > 0 \text{，}
      \]
      其中 $P = P^\mathrm{T} > 0$ 对于某个对称正定阵$Q$满足 Lyapunov 方程
      \[
-        P A^* + {A^*}^\mathrm{T} P = -Q \text{。}
+        P A_{\refval} + {A_{\refval}}^\mathrm{T} P = -Q \text{。}
      \]
 
      该候选 Lyapunov 函数沿闭环系统轨线的导数为：
      \begin{align*}
-         \dot{V}=&\dot{x}^\mathrm{T} P x+ x^\mathrm{T} P \dot{x}+ 2 \tr (  \tilde{K}^\mathrm{T}\Lambda \Gamma_1^{-1}  \dot{\hat{K}})+2 \tr (  \tilde{\Theta}^\mathrm{T} \Lambda\Gamma_2^{-1}  \dot{\hat{\Theta}})\\
-        =&(A^*x+B\Lambda\tilde{K}x-B\Lambda \tilde \Theta(t)\Phi(x)+\xi(t))^\mathrm{T}Px\\
-        &+x^\mathrm{T}P(A^*x+B\Lambda\tilde{K}x-B\Lambda \tilde \Theta(t)\Phi(x)+\xi(t))\\
-        &+2 \tr (  \tilde{K}^\mathrm{T} \Lambda\Gamma_1^{-1}  \dot{\hat{K}})+2 \tr (  \tilde{\Theta}^\mathrm{T} \Lambda\Gamma_2^{-1}  \dot{\hat{\Theta}})\\
-        =&x^\mathrm{T} {A^*}^\mathrm{T}Px+x^\mathrm{T}PA^*x
+         \dot{V}=&\dot{x}^\mathrm{T} P x+ x^\mathrm{T} P \dot{x}+ 2 \tr (  \tilde{K}^\mathrm{T}\Lambda \Gamma_1^{-1}  \dot{\hat{K}})+2 \tr (  \tilde{\Theta} \Lambda\Gamma_2^{-1}  \dot{\hat{\Theta}}^\mathrm{T})\\
+        =&(A_{\refval}x+B\Lambda\tilde{K}x-B\Lambda \tilde{\Theta}(t)^\mathrm{T}\Phi(x)+\xi(t))^\mathrm{T}Px\\
+        &+x^\mathrm{T}P(A_{\refval}x+B\Lambda\tilde{K}x-B\Lambda \tilde{\Theta}(t)^\mathrm{T}\Phi(x)+\xi(t))\\
+        &+2 \tr (  \tilde{K}^\mathrm{T} \Lambda\Gamma_1^{-1}  \dot{\hat{K}})+2 \tr (  \tilde{\Theta} \Lambda\Gamma_2^{-1}  \dot{\hat{\Theta}}^\mathrm{T})\\
+        =&x^\mathrm{T} {A_{\refval}}^\mathrm{T}Px+x^\mathrm{T}PA_{\refval}x
         +x^\mathrm{T}\tilde{K}^\mathrm{T}\Lambda^\mathrm{T}B^\mathrm{T}Px+x^\mathrm{T}PB\Lambda\tilde{K}x\\
-        &-\Phi(x)^\mathrm{T}\tilde\Theta(t)^\mathrm{T}\Lambda^\mathrm{T}B^\mathrm{T}Px-x^\mathrm{T}PB\Lambda \tilde \Theta(t)\Phi(x)+\xi(t)^\mathrm{T}Px+x^\mathrm{T}P\xi(t)\\
-        &+2 \tr (  \tilde{K}^\mathrm{T} \Lambda\Gamma_1^{-1}  \dot{\hat{K}})+2 \tr (  \tilde{\Theta}^\mathrm{T} \Lambda\Gamma_2^{-1}  \dot{\hat{\Theta}}) \text{。}
+        &-\Phi(x)^\mathrm{T}\tilde\Theta(t)\Lambda^\mathrm{T}B^\mathrm{T}Px-x^\mathrm{T}PB\Lambda \tilde{\Theta}(t)^\mathrm{T}\Phi(x)+\xi(t)^\mathrm{T}Px+x^\mathrm{T}P\xi(t)\\
+        &+2 \tr (  \tilde{K}^\mathrm{T} \Lambda\Gamma_1^{-1}  \dot{\hat{K}})+2 \tr (  \tilde{\Theta} \Lambda\Gamma_2^{-1}  \dot{\hat{\Theta}}^\mathrm{T}) \text{。}
      \end{align*}
 
      我们有
      \begin{gather*}
-         x^\mathrm{T} {A^*}^\mathrm{T}Px+x^\mathrm{T}PA^*x=-x^\mathrm{T}Qx \\
+         x^\mathrm{T} {A_{\refval}}^\mathrm{T}Px+x^\mathrm{T}PA_{\refval}x=-x^\mathrm{T}Qx \\
          x^\mathrm{T}\tilde{K}^\mathrm{T}\Lambda^\mathrm{T}B^\mathrm{T}Px=x^\mathrm{T}PB\Lambda\tilde{K}x = \tr (\tilde{K}^\mathrm{T}\Lambda B^\mathrm{T}Pxx^\mathrm{T}) \\
-         \Phi(x)^\mathrm{T}\tilde\Theta(t)^\mathrm{T}\Lambda^\mathrm{T}B^\mathrm{T}Px=x^\mathrm{T}PB\Lambda \tilde \Theta(t)\Phi(x) =\tr (\tilde{\Theta}^\mathrm{T}\Lambda B^\mathrm{T}Px\Phi(x)^\mathrm{T})
+         \Phi(x)^\mathrm{T}\tilde\Theta(t)\Lambda^\mathrm{T}B^\mathrm{T}Px=x^\mathrm{T}PB\Lambda \tilde{\Theta}(t)^\mathrm{T}\Phi(x) =\tr (\tilde{\Theta}\Lambda B^\mathrm{T}Px\Phi(x)^\mathrm{T})
      \end{gather*}
 
      因此，
      \begin{align*}
-        \dot{V}=&-x^\mathrm{T}Qx+2\text{tr}(\tilde{K}^\mathrm{T}\Lambda B^\mathrm{T}Pxx^\mathrm{T})-2\tr(\tilde{\Theta}^\mathrm{T}\Lambda B^\mathrm{T}Px\Phi(x)^\mathrm{T})
+        \dot{V}=&-x^\mathrm{T}Qx+2\text{tr}(\tilde{K}^\mathrm{T}\Lambda B^\mathrm{T}Pxx^\mathrm{T})-2\tr(\tilde{\Theta}\Lambda B^\mathrm{T}Px\Phi(x)^\mathrm{T})
         \\
-        &+2\tr (  \tilde{K}^\mathrm{T} \Lambda\Gamma_1^{-1}  \dot{\hat{K}})+2\tr (  \tilde{\Theta}^\mathrm{T} \Lambda\Gamma_2^{-1}  \dot{\hat{\Theta}})+2x^\mathrm{T}P\xi(t)\\
-        =&-x^\mathrm{T}Qx+2\tr(\tilde{K}^\mathrm{T}\Lambda( B^\mathrm{T}Pxx^\mathrm{T}+\Gamma_1^{-1}  \dot{\hat{K}}))\\&+2\tr(\tilde{\Theta}^\mathrm{T}\Lambda(- B^\mathrm{T}Px\Phi(x)^\mathrm{T}+\Gamma_2^{-1}  \dot{\hat{\Theta}}))+2x^\mathrm{T}P\xi(t)
+        &+2\tr (  \tilde{K}^\mathrm{T} \Lambda\Gamma_1^{-1}  \dot{\hat{K}})+2\tr (  \tilde{\Theta} \Lambda\Gamma_2^{-1}  \dot{\hat{\Theta}}^\mathrm{T})+2x^\mathrm{T}P\xi(t)\\
+        =&-x^\mathrm{T}Qx+2\tr(\tilde{K}^\mathrm{T}\Lambda( B^\mathrm{T}Pxx^\mathrm{T}+\Gamma_1^{-1}  \dot{\hat{K}}))\\&+2\tr(\tilde{\Theta}\Lambda(- B^\mathrm{T}Px\Phi(x)^\mathrm{T}+\Gamma_2^{-1}  \dot{\hat{\Theta}}^\mathrm{T}))+2x^\mathrm{T}P\xi(t)
     \end{align*}
 
     此处我们考虑 $\sigma$-修正控制律：
     \begin{align*}
-        \dot{\hat{K}}&=-\Gamma_1(B^\mathrm{T}Pxx^\mathrm{T}+\Sigma_1\hat{K}), \\ \dot{\hat{\Theta}}&=\Gamma_2(B^\mathrm{T}Px\Phi(x)^\mathrm{T}-\Sigma_2\hat{\Theta})
+        \dot{\hat{K}}&=-\Gamma_1(B^\mathrm{T}Pxx^\mathrm{T}+\Sigma_1\hat{K}), \\ \dot{\hat{\Theta}}&=(\Phi(x)x^\mathrm{T}PB-\hat{\Theta}\Sigma_2)\Gamma_2
     \end{align*}
     其中 $\Sigma_1, \Sigma_2$ 是对角正定阵。
 
     于是我们有：
     \begin{align*}
-        \dot{V}=&-x^\mathrm{T}Qx-2\tr(\tilde{K}^\mathrm{T}\Lambda\Sigma_1\hat{K})-2\tr(\tilde{\Theta}^\mathrm{T}\Lambda\Sigma_2\hat{\Theta})+2x^\mathrm{T}P\xi(t)\\
-        =&-x^\mathrm{T}Qx-2\tr(\tilde{K}^\mathrm{T}\Lambda\Sigma_1\tilde{K})-2\tr(\tilde{K}^\mathrm{T}\Lambda\Sigma_1 K)-2\tr(\tilde{\Theta}^\mathrm{T}\Lambda\Sigma_2\tilde{\Theta})\\
-        &-2\tr(\tilde{\Theta}^\mathrm{T}\Lambda\Sigma_2\Theta)+2x^\mathrm{T}P\xi(t)
+        \dot{V}=&-x^\mathrm{T}Qx-2\tr(\tilde{K}^\mathrm{T}\Lambda\Sigma_1\hat{K})-2\tr(\tilde{\Theta}\Lambda\Sigma_2\hat{\Theta}^\mathrm{T})+2x^\mathrm{T}P\xi(t)\\
+        =&-x^\mathrm{T}Qx-2\tr(\tilde{K}^\mathrm{T}\Lambda\Sigma_1\tilde{K})-2\tr(\tilde{K}^\mathrm{T}\Lambda\Sigma_1 K^*)-2\tr(\tilde{\Theta}\Lambda\Sigma_2\tilde{\Theta}^\mathrm{T})\\
+        &-2\tr(\tilde{\Theta}\Lambda\Sigma_2\Theta^\mathrm{T})+2x^\mathrm{T}P\xi(t)
     \end{align*}
     根据定义，有：
     \begin{align*}
         \tr(\tilde{K}^\mathrm{T}\Lambda\Sigma_1\tilde{K})&\geq \|\tilde{K}\|_F^2\Lambda_{\mathrm{min}}{\Sigma_1}_{\mathrm{min}} \\
-        \tr(\tilde{\Theta}^\mathrm{T}\Lambda\Sigma_2\tilde{\Theta})&\geq \|\tilde{\Theta}\|_F^2\Lambda_{\mathrm{min}}{\Sigma_2}_{\mathrm{min}}
+        \tr(\tilde{\Theta}\Lambda\Sigma_2\tilde{\Theta}^\mathrm{T})&\geq \|\tilde{\Theta}\|_F^2\Lambda_{\mathrm{min}}{\Sigma_2}_{\mathrm{min}}
     \end{align*}
     其中 $\Lambda_{\mathrm{min}}, {\Sigma_1}_{\mathrm{min}}, {\Sigma_2}_{\mathrm{min}}$ 分别为 $\Lambda, \Sigma_1, \Sigma_2$ 的最小对角元素。由 Schwartz 不等式，可得
     \begin{align*}
-        |\tr(\tilde{K}^\mathrm{T}\Lambda\Sigma_1 K)| &\leq \dfrac{1}{2} \left( \tr(\tilde{K}^\mathrm{T} \Lambda\Sigma_1 \tilde{K}) + \tr(K^\mathrm{T} \Lambda\Sigma_1 K) \right) \\
-        |\tr(\tilde{\Theta}^\mathrm{T}\Lambda\Sigma_2 \Theta)| &\leq \dfrac{1}{2} \left( \tr(\tilde{\Theta}^\mathrm{T} \Lambda\Sigma_2 \tilde{\Theta}) + \tr(\Theta^\mathrm{T} \Lambda\Sigma_2 \Theta) \right)
+        |\tr(\tilde{K}^\mathrm{T}\Lambda\Sigma_1 K^*)| &\leq \dfrac{1}{2} \left( \tr(\tilde{K}^\mathrm{T} \Lambda\Sigma_1 \tilde{K}) + \tr({K^*}^\mathrm{T} \Lambda\Sigma_1 K^*) \right) \\
+        |\tr(\tilde{\Theta}\Lambda\Sigma_2 \Theta^\mathrm{T})| &\leq \dfrac{1}{2} \left( \tr(\tilde{\Theta} \Lambda\Sigma_2 \tilde{\Theta}^\mathrm{T}) + \tr(\Theta \Lambda\Sigma_2 \Theta^\mathrm{T}) \right)
     \end{align*}
 
     从而，我们有
     \begin{align*}
         \dot{V} \leq & -\lambda_{\min}(Q)\|x\|^2
         -\tr(\tilde{K}^\mathrm{T}\Lambda\Sigma_1\tilde{K})
-        -\tr(\tilde{\Theta}^\mathrm{T}\Lambda\Sigma_2\tilde{\Theta})\\
-        &+\tr(K^\mathrm{T} \Lambda\Sigma_1 K)+\tr(\Theta^\mathrm{T} \Lambda\Sigma_2 \Theta)+2\|x\|\lambda_{\max}(P)\xi_{\max}\\
+        -\tr(\tilde{\Theta}\Lambda\Sigma_2\tilde{\Theta}^\mathrm{T})\\
+        &+\tr({K^*}^\mathrm{T} \Lambda\Sigma_1 K^*)+\tr(\Theta \Lambda\Sigma_2 \Theta^\mathrm{T})+2\|x\|\lambda_{\max}(P)d_{\mathrm{max}}\\
         \leq & -\lambda_{\min}(Q)\|x\|^2 - \|\tilde{K}\|_F^2\Lambda_{\mathrm{min}}{\Sigma_1}_{\mathrm{min}} - \|\tilde{\Theta}\|_F^2\Lambda_{\mathrm{min}}{\Sigma_2}_{\mathrm{min}} \\
-        &+\tr(K^\mathrm{T} \Lambda\Sigma_1 K)+\tr(\Theta^\mathrm{T} \Lambda\Sigma_2 \Theta)+2\|x\|\lambda_{\max}(P)\xi_{\max}
+        &+\tr({K^*}^\mathrm{T} \Lambda\Sigma_1 K^*)+\tr(\Theta \Lambda\Sigma_2 \Theta^\mathrm{T})+2\|x\|\lambda_{\max}(P)d_{\mathrm{max}}
     \end{align*}
 
-    % 待详细补充 \dot{V} \leq -\beta V + c
-    不难看出，$\dot{V}$ 的上界是以 $\| x \|$ 为自变量且具有极大值的二次函数。于是，总存在 $c$ 使得当 $\| x \| > c$ 时 $\dot{V} < 0$。从而该系统是一致最终有界的（UUB）。
+    记$q=\lambda_{\min}(Q)$、$p=\lambda_{\max}(P)$、$a_i=\Lambda_{\mathrm{min}}{\Sigma_i}_{\mathrm{min}}>0$（$i=1,2$），以及
+    \[
+        C_0=\tr({K^*}^{\mathrm{T}}\Lambda\Sigma_1K^*)+\tr(\Theta\Lambda\Sigma_2\Theta^{\mathrm{T}}).
+    \]
+    利用$2pd_{\max}\|x\|\le(q/2)\|x\|^2+2p^2d_{\max}^2/q$，得到
+    \[
+        \dot V\le-\frac q2\|x\|^2-a_1\|\tilde K\|_F^2-a_2\|\tilde\Theta\|_F^2+c,\qquad
+        c=C_0+\frac{2p^2d_{\max}^2}{q}.
+    \]
+    令增广误差向量$z=(x^{\mathrm{T}},\operatorname{vec}(\tilde K)^{\mathrm{T}},\operatorname{vec}(\tilde\Theta)^{\mathrm{T}})^{\mathrm{T}}$，其中$\operatorname{vec}$表示将矩阵各列依次排成向量。由于$V$是关于$z$的正定二次型，存在常数$0<\underline v\le\overline v$，使得
+    \[
+        \underline v\|z\|^2\le V\le\overline v\|z\|^2.
+    \]
+    因此，取$\beta=\min\{q/2,a_1,a_2\}/\overline v>0$，即有
+    \[
+        \dot V\le-\beta V+c,\qquad
+        V(t)\le\mathrm{e}^{-\beta(t-t_0)}V(t_0)+\frac c\beta\bigl(1-\mathrm{e}^{-\beta(t-t_0)}\bigr).
+    \]
+    由$V$有界，知$x,\tilde K,\tilde\Theta$均有界，因而解对所有$t\ge t_0$存在。对任意固定的$C>c/\beta$，存在与$t_0$无关的暂态时间，使此后$V\le C$，从而$\|z\|\le\sqrt{C/\underline v}$。由 \ref{3Fref} 节的结论，$x,\tilde K,\tilde\Theta$全局一致最终有界，估计参数也有界。
+
+    正文中的跟踪设计增加$\hat K_2u_c$项，并要求$B\Lambda K_2^*=B_{\refval}$。对于表 \ref{table:MIMO_robust_MRAC} 中的$\sigma$-修正，取
+    \[
+        V_e=e^{\mathrm{T}}Pe+\sum_{i=1}^2\tr(\tilde K_i^{\mathrm{T}}\Lambda\Gamma_i^{-1}\tilde K_i)
+        +\tr(\tilde\Theta\Lambda\Gamma_\Theta^{-1}\tilde\Theta^{\mathrm{T}}).
+    \]
+    将三组更新律代入，可同样消去梯度交叉项，得到
+    \[
+    \begin{aligned}
+        \dot V_e={}&-e^{\mathrm{T}}Qe-2\sigma\sum_{i=1}^2\tr(\tilde K_i^{\mathrm{T}}\Lambda\hat K_i)\\
+        &-2\sigma\tr(\tilde\Theta\Lambda\hat\Theta^{\mathrm{T}})+2e^{\mathrm{T}}Pd(t).
+    \end{aligned}
+    \]
+    对每个参数交叉项及扰动项使用上述不等式，即得
+    \[
+        \dot V_e\le-\frac q2\|e\|^2
+        -\sigma\Lambda_{\mathrm{min}}\left(\sum_{i=1}^2\|\tilde K_i\|_F^2+\|\tilde\Theta\|_F^2\right)+c_e,
+    \]
+    其中常数
+    \[
+        c_e=\sigma\sum_{i=1}^2\tr({K_i^*}^{\mathrm{T}}\Lambda K_i^*)
+        +\sigma\tr(\Theta\Lambda\Theta^{\mathrm{T}})+\frac{2p^2d_{\max}^2}{q}.
+    \]
+    再由$V_e$的正定二次型上下界，同样得到$\dot V_e\le-\beta_eV_e+c_e$（$\beta_e>0$），故跟踪误差与三组参数估计误差共同全局一致最终有界。由于参考模型稳定且$u_c$有界，$x_{\refval}$有界，从而$x$及控制输入$u$也有界。
 \end{proof}
 
 

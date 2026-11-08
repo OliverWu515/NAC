@@ -58,6 +58,7 @@ $\dot{V}$ 在原点附近并不是负定的，但在 $|x|>\delta$ 时严格为�
         \dot{V} &\leq -\beta V + c, \quad \beta, c > 0 \text{，}
     \end{align*}
     那么我们可以证明这个方程的解是全局一致最终有界的。具体证明过程如下。
+    
     \begin{align*}
         \dot{V} &\leq -\beta V + c \\
         \dot{V} + \beta V &\leq c \\
@@ -66,7 +67,7 @@ $\dot{V}$ 在原点附近并不是负定的，但在 $|x|>\delta$ 时严格为�
         \mathrm{e}^{\beta t} V(x(t)) - \mathrm{e}^{\beta t_0} V(x(t_0)) &\leq c \int_{t_0}^t \mathrm{e}^{\beta \tau} \diff \tau = \dfrac{c}{\beta} \left( \mathrm{e}^{\beta t} - \mathrm{e}^{\beta t_0} \right) \\
         V(t) &\leq \mathrm{e}^{-\beta (t - t_0)} V(x(t_0)) + \dfrac{c}{\beta} \left(1 - \mathrm{e}^{-\beta (t - t_0)}\right) \text{。}
     \end{align*}
-    由此有$V(x(t))\leq\max\{V(x(t_0)),c/\beta\}$。由$V$径向无界及解的延拓条件，解对所有$t\geq t_0$存在。
+    由此有$V(x(t))\leq M\triangleq\max\{V(x(t_0)),c/\beta\}$。由于$V$连续且径向无界，集合$\{x:V(x)\le M\}$是有界闭集，状态轨线始终留在其中。由定理 \ref{uniqsol}，解对所有$t\geq t_0$存在。
     由引理 \ref{lyapunov_comp}，可得$\mathcal{K}_\infty$类函数$\alpha_1,\alpha_2$使得
     \[
         \alpha_1(\|x\|)\leq V(x)\leq\alpha_2(\|x\|),\quad\forall x\in\mathbb{R}^n\text{。}

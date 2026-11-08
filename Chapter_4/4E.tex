@@ -156,16 +156,31 @@ $d(t) = \dot{x} + x\hat{\theta} = 5(1 + t)^{- \frac{1}{5}} - \frac{2}{5}(1 + t)^
 
 \subsection{推广至多输入多输出（MIMO）系统与时变参数情形}
 
-关于各种鲁棒自适应控制方法，我们前面只讨论了标量系统（以系统 \eqref{Sys:with_disturbance} 为例）。实际上，上述内容可以轻松推广至 MIMO 系统。只是在相应的 Lyapunov 分析中，需要将原来的标量相乘视情况改写为二次型或者改写为矩阵乘积的迹。
+关于各种鲁棒自适应控制方法，我们前面只讨论了标量系统（以系统 \eqref{Sys:with_disturbance} 为例）。上述方法也可用于满足匹配条件的 MIMO 系统。相应的 Lyapunov 分析需要使用二次型及矩阵乘积的迹。
 
 具体而言，我们可以考虑下述系统
 \begin{equation}
     \dot{x} = A x + B \Lambda \left( u + \Theta^\mathrm{T} \Phi(x) \right) + d(t) \text{，}
 \end{equation}
 % 讲义上是 \Phi(t)
-其中 $x \in \mathbb{R}^n$，控制输入 $u \in \mathbb{R}^m$，$A \in \mathbb{R}^{n \times n}$ 和 $B \in \mathbb{R}^{n \times m}$ 已知，未知的常值矩阵 $\Lambda \in \mathbb{R}^{m \times m}$ 是对角正定阵，$\Phi(x) \in \mathbb{R}^n$ 是连续且已知的函数，未知常值参数 $\Theta \in \mathbb{R}^{n \times m}$，$d(t) \in \mathbb{R}^n$ 是有界且时变的扰动（$\| d(t) \| \leq d_{\mathrm{max}}$）。
+其中 $x \in \mathbb{R}^n$，控制输入 $u \in \mathbb{R}^m$，$A \in \mathbb{R}^{n \times n}$ 和 $B \in \mathbb{R}^{n \times m}$ 已知，未知的常值矩阵 $\Lambda \in \mathbb{R}^{m \times m}$ 是对角正定阵，$\Phi(x) \in \mathbb{R}^n$ 是局部 Lipschitz 且已知的函数，未知常值参数 $\Theta \in \mathbb{R}^{n \times m}$，$d(t) \in \mathbb{R}^n$ 是分段连续、有界且时变的扰动（$\| d(t) \| \leq d_{\mathrm{max}}$）。
 
-下表 \ref{table:MIMO_robust_MRAC} 来自前言中参考文献5的表 11.1（略有修改），具体推导见附录 \ref{MIMO_robust}。
+取已知的 Hurwitz 矩阵$A_{\refval}\in\mathbb{R}^{n\times n}$及已知矩阵$B_{\refval}\in\mathbb{R}^{n\times r}$，设参考输入$u_c\in\mathbb{R}^r$分段连续且有界。假设还有以下匹配条件（$K_1^*\in\mathbb{R}^{m\times n}$、$K_2^*\in\mathbb{R}^{m\times r}$为常值矩阵）：
+\[
+    A+B\Lambda K_1^*=A_{\refval},\qquad B\Lambda K_2^*=B_{\refval}.
+\]
+任选已知的对称正定矩阵$Q$，由表中的 Lyapunov 方程求得唯一的对称正定矩阵$P$。
+
+为简化下表，记三组梯度更新项为
+\[
+\begin{aligned}
+    G_1&=-\Gamma_1B^{\mathrm{T}}Pex^{\mathrm{T}},\\
+    G_2&=-\Gamma_2B^{\mathrm{T}}Peu_c^{\mathrm{T}},\\
+    G_\Theta&=\Phi(x)e^{\mathrm{T}}PB\Gamma_\Theta,
+\end{aligned}
+\]
+其中$\Gamma_1,\Gamma_2,\Gamma_\Theta\in\mathbb{R}^{m\times m}$为对角正定阵，并记$h=\|e^{\mathrm{T}}PB\|$。
+下表 \ref{table:MIMO_robust_MRAC} 参考前言中参考文献5的表 11.1，补齐了反馈及参考输入项。附录 \ref{MIMO_robust} 给出零参考输入下的镇定推导及其向跟踪情形的扩展；其中 UUB 证明针对$\sigma$-修正。
 
 \begin{table}[htbp]
   \centering
@@ -177,26 +192,46 @@ $d(t) = \dot{x} + x\hat{\theta} = 5(1 + t)^{- \frac{1}{5}} - \frac{2}{5}(1 + t)^
   \hline
    开环被控对象 & $\dot{x} =  A x + B \Lambda \left( u + \Theta^\mathrm{T} \Phi(x) \right) + d(t)$\\
     参考模型 & $\dot{x}_{\refval} = 
-    A_{\refval} x +
+    A_{\refval} x_{\refval} +
     B_{\refval} u_c$，其中$A_{\refval}$ 是 Hurwitz 的。\\
     跟踪误差 & $e = x - x_{\refval}$\\
     Lyapunov 方程 & $P A_{\refval} + A_{\refval}^{\mathrm{T}} P = -Q < 0$\\
-    控制输入 & $u = -{\hat{\Theta}}^{\mathrm{T}} \Phi(x)$\\
-    死区修正 & $\dot{\hat{\Theta}} = \Gamma_\Theta \Phi(x) \mu\left( \| e \| \right) e^{\mathrm{T}} P B,\mu\left( \| e \| \right)=\max\left(0,\min\left(1,\frac{\|e\|-\delta e_0}{(1-\delta)e_0}\right)\right)$或$\dot{\hat{\Theta}} = \left\{\begin{matrix}
-\Gamma_\Theta \Phi(x) e^{\mathrm{T}} P B, & \text{若} \| e \| \geq e_{0} + \delta \\
-0, & \text{若} \| e \| < e_{0} + \delta \\
-\end{matrix}\right.$\\
-    $\sigma$-修正 & $\dot{\hat{\Theta}} = \Gamma_\Theta \Phi(x) \left( e^{\mathrm{T}} P B -\sigma \hat{\Theta} \right)$\\
-    $e$-修正 & $\dot{\hat{\Theta}} = \Gamma_\Theta \Phi(x) \left( e^{\mathrm{T}} P B -\sigma \| e^{\mathrm{T}} P B \| \hat{\Theta} \right)$\\
+    控制输入 & $u = \hat K_1x+\hat K_2u_c-{\hat{\Theta}}^{\mathrm{T}} \Phi(x)$\\
+    死区修正 & $\begin{aligned}
+        \dot{\hat K}_i&=\mu(\|e\|)G_i,\quad i=1,2,\\
+        \dot{\hat\Theta}&=\mu(\|e\|)G_\Theta
+    \end{aligned}$\\
+    $\sigma$-修正 & $\begin{aligned}
+        \dot{\hat K}_i&=G_i-\sigma\Gamma_i\hat K_i,\quad i=1,2,\\
+        \dot{\hat\Theta}&=G_\Theta-\sigma\hat\Theta\Gamma_\Theta
+    \end{aligned}$\\
+    $e$-修正 & $\begin{aligned}
+        \dot{\hat K}_i&=G_i-\sigma h\Gamma_i\hat K_i,\quad i=1,2,\\
+        \dot{\hat\Theta}&=G_\Theta-\sigma h\hat\Theta\Gamma_\Theta
+    \end{aligned}$\\
     \hline
   \end{tabular}
 \end{table}
+
+表中$\sigma>0$。死区修正可取
+\[
+    \mu(s)=\begin{cases}
+        1,&s\ge e_0+\delta,\\
+        0,&s<e_0+\delta,
+    \end{cases}\qquad
+    e_0=\frac{2\|P\|d_{\max}}{\lambda_{\min}(Q)},\quad\delta>0.
+\]
+这里$e_0$由扰动上界及误差二次型的估计选取；本表采用硬死区形式。记$\tilde K_i=\hat K_i-K_i^*$、$\tilde\Theta=\hat\Theta-\Theta$，代入控制律及匹配条件可得
+\[
+    \dot e=A_{\refval}e+B\Lambda\bigl(\tilde K_1x+\tilde K_2u_c-\tilde\Theta^{\mathrm{T}}\Phi(x)\bigr)+d(t).
+\]
+因此，三组梯度更新项共同用于误差交叉项的消去。
 
 至此，我们只讨论了常值参数自适应控制。下面我们简单讨论一下时变参数自适应控制。为简化讨论，我们仍以标量系统为例。考虑如下系统：
 \begin{equation}
     \dot{x} = u + \varphi(x) \theta(t) \text{，}
 \end{equation}
-其中 $x$ 为状态，$u$ 为控制输入，$\phi$ 是已知的连续函数，$\theta(t)$ 为时变未知参数。我们采用控制输入
+其中 $x$ 为状态，$u$ 为控制输入，$\varphi$ 是已知的连续函数，$\theta(t)$ 为时变未知参数。我们采用控制输入
 \[
     u = -k x - \varphi(x) \hat{\theta} \text{，}
 \]
@@ -222,14 +257,19 @@ $\hat{\theta}$ 的动力学方程采用 $\sigma$-修正，即式 \eqref{sigma_mo
 其中右侧的
 \begin{gather*}
     -\sigma \tilde{\theta} \hat{\theta} \leq -\dfrac{\sigma}{2} {\tilde{\theta}}^2 + \dfrac{\sigma}{2} {\theta}^2, \\
-    -\dfrac{1}{\gamma} \tilde{\theta} \dot{\theta} \leq \dfrac{m}{\gamma} \tilde{\theta} \leq \dfrac{\sigma}{4} \tilde{\theta}^2 + \dfrac{1}{\sigma} \dfrac{m^2}{\gamma^2} \text{，}
+    -\dfrac{1}{\gamma} \tilde{\theta} \dot{\theta} \leq \dfrac{m}{\gamma} |\tilde{\theta}| \leq \dfrac{\sigma}{4} \tilde{\theta}^2 + \dfrac{1}{\sigma} \dfrac{m^2}{\gamma^2} \text{，}
 \end{gather*}
-这里我们假设了 $\| \dot{\theta} \| \leq m$（即参数变化不会太快）。
+这里假设$\theta(t)$连续可微，且对所有$t\ge0$均有$|\theta(t)|\le\bar\theta$、$|\dot\theta(t)|\le m$，其中$\bar\theta,m>0$为常数，即参数本身有界且变化不会太快。
 从而，有
 \[
     \dot{V} \leq -k x^2 - \dfrac{\sigma}{4} {\tilde{\theta}}^2 + \dfrac{\sigma}{2} \theta^2 + \dfrac{m^2}{\sigma \gamma^2} \text{。}
 \]
-类似地，我们可以得到形如 $\dot{V} + \beta{V} \leq c$（其中 $\beta$ 和 $c$ 为正的常值）的结果。
+因此可得$\dot V+\beta V\le c$，其中
+\[
+    \beta=\min\left\{2k,\frac{\sigma\gamma}{2}\right\}>0,\qquad
+    c=\frac{\sigma}{2}\bar\theta^2+\frac{m^2}{\sigma\gamma^2}.
+\]
+由此可知$x$与$\tilde\theta$一致最终有界；再由$\theta(t)$有界，知$\hat\theta$也有界。
 
 上面的推导中，我们假设了“参数变化不会太快”。而在参数变化较快的情况下，如果我们对于参数的范围能够有较好的估计，同样可以进行自适应控制的设计。假设参数 $\theta(t)$ 满足下式
 \[
@@ -253,6 +293,6 @@ $\hat{\theta}$ 的动力学方程采用 $\sigma$-修正，即式 \eqref{sigma_mo
     \dot{V} &= -k x^2 - x \varphi(x) \left( \hat{\theta} - \theta(t) \right) + \dfrac{1}{\gamma} \left( \hat{\theta} - \theta_\delta \right) \cdot \dot{\hat{\theta}} \\
     &= -k x^2 - x \varphi(x) \left( \hat{\theta} - \theta(t) \right) +  \left( \hat{\theta} - \theta_\delta \right) \cdot x \varphi(x) \\
     &= -k x^2 + x \varphi(x) \left( \theta(t) - \theta_\delta \right) \\
-    &\leq -k x^2 + \delta x \varphi(x) \text{。}
+    &\leq -k x^2 + \delta |x \varphi(x)| \text{。}
 \end{align*}
 % 讲义上到此为止，后续或有补充。
