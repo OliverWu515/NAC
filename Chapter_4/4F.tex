@@ -10,7 +10,7 @@
 \begin{itemize}[leftmargin=1em]
     \item 闭环系统的所有信号都是有界的；
     \item 状态$x$能跟踪期望状态轨线$x_d(t)$；
-    \item 误差$e(t)=x(t)-x_d(t)$达成指定的瞬态和稳态性能指标
+    \item 误差$e(t)=x(t)-x_d(t)$达成指定的瞬态和稳态性能指标。
 \end{itemize}
 
 前两点目标是我们一直探讨的话题。特殊的是第三点目标。我们采取下面这样一类函数来描述这个目标。
@@ -32,7 +32,7 @@
 \end{example}
 我们欲使$|e(t)|<\rho(t)$，那么通过指定合适的$\rho(t)$，即可限制误差的稳态和瞬态特性。选取$\rho(0)>|e(0)|$，并要求$\dot\rho(t)$有界。
 
-为了应用之前手段（分析信号的有界性）来分析上述问题，我们引入以下{\bf 误差转换（error transformation）}，将上述有约束的跟踪误差变为等价的无约束问题。
+为了应用之前手段（分析信号的有界性）来分析上述问题，我们引入以下{\bf 误差变换（error transformation）}，将上述有约束的跟踪误差变为等价的无约束问题。
 
 具体而言，我们定义\[e(t)=\rho(t)T(\zeta)\]
 其中$\zeta$是变换后的无约束误差，$T(\zeta)$是光滑的函数，并具有如下性质：
@@ -81,7 +81,7 @@ $\frac{e(t)}{\rho(t)}\to -1$时，$\zeta\to-\infty$；$\frac{e(t)}{\rho(t)}\to 1
 进一步地，如果我们超调量有要求，即要求$e(t)$穿过横轴时的下冲/上冲（具体由$e(0)$的正负而定，即$e(0)$为正时限制下冲，$e(0)$为负时限制上冲）要小，如何考虑该问题？
 我们发现，如指定超调小于$\delta\rho(0)$（$0<\delta\le 1$），则要求$-\delta\rho(t)<e(t)<\rho(t)$（若$e(0)>0$）或$-\rho(t)<e(t)<\delta\rho(t)$（若$e(0)<0$）即可。若$e(0)=0$，可沿用前面的对称约束。
 
-类似本节前述思路进行误差转换。定义\[e(t)=\rho(t)T(\zeta)\]
+类似本节前述思路进行误差变换。定义\[e(t)=\rho(t)T(\zeta)\]
 其中$\zeta$是变换后的无约束误差，$T(\zeta)$光滑且满足$T'(\zeta)>0$，并且：
 \begin{itemize}[leftmargin=1em]
     \item 若$e(0)>0$，则$\lim\limits_{\zeta\to-\infty}T(\zeta)=-\delta$，$\lim\limits_{\zeta\to\infty}T(\zeta)=1$；
@@ -109,7 +109,7 @@ $\frac{e(t)}{\rho(t)}\to -1$时，$\zeta\to-\infty$；$\frac{e(t)}{\rho(t)}\to 1
 \[-\rho_1(t)<e(t)<\rho_2(t)\]
 其中$\rho_1(t),\rho_2(t)$都是定义如 \ref{performance_func} 的性能函数，导数有界，并选取$-\rho_1(0)<e(0)<\rho_2(0)$。
 
-进行误差转换。定义\[e(t)=T(\zeta,\rho_1(t),\rho_2(t))\]
+进行误差变换。定义\[e(t)=T(\zeta,\rho_1(t),\rho_2(t))\]
 其中$\zeta$是变换后的无约束误差。
 则\[\zeta = T^{-1}(e(t),\rho_1(t),\rho_2(t))\]
 因此，我们要求$T$光滑且对$\zeta$的偏导数为正，并满足\[\lim\limits_{\zeta\to-\infty}T(\zeta,\rho_1(t),\rho_2(t))=-\rho_1(t),\lim\limits_{\zeta\to\infty}T(\zeta,\rho_1(t),\rho_2(t))=\rho_2(t)\]

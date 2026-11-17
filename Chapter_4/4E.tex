@@ -71,7 +71,6 @@ $d(t) = \dot{x} + x\hat{\theta} = 5(1 + t)^{- \frac{1}{5}} - \frac{2}{5}(1 + t)^
 然后考虑，若轨迹起始时刻\(t_{0} \in \Omega_{1}\)，并且轨迹在\(t_{1}\)时刻到达边界\(e_{0} + \delta\)，且在\((t_{1},t_{2}) \in \Omega_{2}\)处于\(e_{0} + \delta\)之右侧（越过边界），则有（注意，$(t_0,t_1)$这段时间内$\tilde{\theta}$不变；$(t_1,t_2)$这段时间内$V$衰减）
 
 \[V(t_{1}) = \frac{1}{2}(e_{0} + \delta)^{2} + \frac{1}{2\gamma}{\tilde{\theta}}^{2}(t_{0})\]
-
 \[V(t_{2}) = \frac{1}{2}(e_{0} + \delta)^{2} + \frac{1}{2\gamma}{\tilde{\theta}}^{2}(t_{2}) < V(t_{1})\]
 
 我们可推断出，\(\| \tilde{\theta}(t) \|\)在各次到达边界的时刻不增，因此\(\| \tilde{\theta}(t) \|\)有界，结合区间内$V$的变化可知$x$也有界。对各次离开死区的区间求和，由端点处参数误差二次项的下降及死区外$\dot V\leq-c<0$，可得死区外的总时间有限；再由$\dot x$有界可得$\limsup_{t\to\infty}\|x(t)\|\leq e_0+\delta$。
@@ -164,7 +163,7 @@ $d(t) = \dot{x} + x\hat{\theta} = 5(1 + t)^{- \frac{1}{5}} - \frac{2}{5}(1 + t)^
     \dot{x} = A x + B \Lambda \left( u + \Theta^\mathrm{T} \Phi(x) \right) + d(t) \text{，}
 \end{equation}
 % 讲义上是 \Phi(t)
-其中 $x \in \mathbb{R}^n$，控制输入 $u \in \mathbb{R}^m$，$A \in \mathbb{R}^{n \times n}$ 和 $B \in \mathbb{R}^{n \times m}$ 已知，未知的常值矩阵 $\Lambda \in \mathbb{R}^{m \times m}$ 是对角正定阵，$\Phi(x) \in \mathbb{R}^n$ 是局部 Lipschitz 且已知的函数，未知常值参数 $\Theta \in \mathbb{R}^{n \times m}$，$d(t) \in \mathbb{R}^n$ 是分段连续、有界且时变的扰动（$\| d(t) \| \leq d_{\mathrm{max}}$）。
+其中 $x \in \mathbb{R}^n$，控制输入 $u \in \mathbb{R}^m$，$A \in \mathbb{R}^{n \times n}$ 和 $B \in \mathbb{R}^{n \times m}$ 已知，未知的常值矩阵 $\Lambda \in \mathbb{R}^{m \times m}$ 是对角正定阵，$\Phi(x) \in \mathbb{R}^N$ 是局部 Lipschitz 且已知的函数，未知常值参数 $\Theta \in \mathbb{R}^{N \times m}$，$d(t) \in \mathbb{R}^n$ 是分段连续、有界且时变的扰动（$\| d(t) \| \leq d_{\mathrm{max}}$）。
 
 下表 \ref{table:MIMO_robust_MRAC} 来自前言中参考文献5的表 11.1（略有修改），其中仅列出自适应补偿项；完整控制输入及推导见附录 \ref{MIMO_robust}。
 
@@ -196,7 +195,7 @@ $d(t) = \dot{x} + x\hat{\theta} = 5(1 + t)^{- \frac{1}{5}} - \frac{2}{5}(1 + t)^
   \end{tabular}
 \end{table}
 
-表中$\Gamma_\Theta\in\mathbb{R}^{n\times n}$为对称正定阵，$\sigma>0$。连续死区形式中$e_0>0$、$0<\delta<1$，硬死区形式中$e_0>0$、$\delta>0$。死区阈值应根据扰动上界选取，使停止更新的区域覆盖扰动可能引起参数漂移的范围。
+表中$\Gamma_\Theta\in\mathbb{R}^{N\times N}$为对称正定阵，$\sigma>0$。连续死区形式中$e_0>0$、$0<\delta<1$，硬死区形式中$e_0>0$、$\delta>0$。死区阈值应根据扰动上界选取，使停止更新的区域覆盖扰动可能引起参数漂移的范围。
 
 \subsection{时变参数情形}
 
@@ -244,11 +243,11 @@ $\hat{\theta}$ 的动力学方程采用 $\sigma$-修正，即式 \eqref{sigma_mo
 \]
 由此可知$x$与$\tilde\theta$一致最终有界；再由$\theta(t)$有界，知$\hat\theta$也有界。
 
-上面的推导中，我们假设了“参数变化不会太快”。而在参数变化较快的情况下，如果我们对于参数的范围能够有较好的估计，同样可以进行自适应控制的设计。假设参数 $\theta(t)$ 满足下式
+上面的分析需要对参数的变化速率作出限制。下面说明，当参数始终处于某个已知范围内，且 $\varphi(x)$ 满足一定的增长条件时，也可以在不限制参数变化速率的情况下设计自适应控制律。假设参数 $\theta(t)$ 满足下式
 \[
     \| \theta_\delta - \theta(t) \| \leq \delta \text{，}
 \]
-其中 $\theta_\delta$ 是常值，是对 $\theta$ 的估计。可采用如下自适应控制律
+其中 $\theta_\delta$ 是常值，是对 $\theta$ 的估计。进一步假设存在已知常数 $L>0$，使得对所有 $x\in\mathbb{R}$ 均有 $|\varphi(x)|\le L|x|$。例如，若 $\varphi(0)=0$，且 $\varphi$ 全局 Lipschitz，常数为 $L$，则 $|\varphi(x)|=|\varphi(x)-\varphi(0)|\le L|x|$。选取 $k>\delta L$，采用如下自适应控制律
 \begin{align*}
     u &= -k x - \varphi(x) \hat{\theta}, \\
     \dot{\hat{\theta}} &= \gamma x \varphi(x), \quad \gamma > 0 \text{。}
@@ -268,4 +267,12 @@ $\hat{\theta}$ 的动力学方程采用 $\sigma$-修正，即式 \eqref{sigma_mo
     &= -k x^2 + x \varphi(x) \left( \theta(t) - \theta_\delta \right) \\
     &\leq -k x^2 + \delta |x \varphi(x)| \text{。}
 \end{align*}
-% 讲义上到此为止，后续或有补充。
+于是有
+\[
+    \dot V\le-(k-\delta L)x^2\le0.
+\]
+因此，$x$ 和 $\hat\theta$ 有界，且
+\[
+    \int_0^\infty x^2(t)\,\mathrm{d}t\le\frac{V(0)}{k-\delta L}<\infty.
+\]
+由参数范围条件知 $\theta(t)$ 有界，再由闭环方程知 $\dot x$ 有界，故由 Barbalat 引理可得 $x(t)\to0$。这一结论只要求参数始终处于给定范围内，无须限制其变化速率。

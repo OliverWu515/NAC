@@ -6,7 +6,7 @@
 \begin{equation} \label{MIMO_sys_disturbance}
     \dot{x} = A x + B \Lambda (u + \Theta^\mathrm{T} \Phi(x)) + \xi(t) \text{，}
 \end{equation}
-其中状态 $x \in \mathbb{R}^n$，控制输入 $u \in \mathbb{R}^m$，矩阵 $B \in \mathbb{R}^{n \times m}$ 已知，矩阵 $A \in \mathbb{R}^{n \times n}$ 和 $\Lambda \in \mathbb{R}^{m \times m}$ 未知，$\Lambda$ 是对角正定阵，矩阵对 $(A, B \Lambda)$ 能控，$\Phi(x) \in \mathbb{R}^n$ 是局部 Lipschitz 且已知的函数，未知常值参数矩阵 $\Theta \in \mathbb{R}^{n \times m}$，$\xi(t) \in \mathbb{R}^n$ 是分段连续且一致有界的时变扰动（$\| \xi(t) \| \leq d_{\mathrm{max}}$）。
+其中状态 $x \in \mathbb{R}^n$，控制输入 $u \in \mathbb{R}^m$，矩阵 $B \in \mathbb{R}^{n \times m}$ 已知，矩阵 $A \in \mathbb{R}^{n \times n}$ 和 $\Lambda \in \mathbb{R}^{m \times m}$ 未知，$\Lambda$ 是对角正定阵，矩阵对 $(A, B \Lambda)$ 能控，$\Phi(x) \in \mathbb{R}^N$ 是局部 Lipschitz 且已知的函数，未知常值参数矩阵 $\Theta \in \mathbb{R}^{N \times m}$，$\xi(t) \in \mathbb{R}^n$ 是分段连续且一致有界的时变扰动（$\| \xi(t) \| \leq d_{\mathrm{max}}$）。
 本附录先讨论正文 MIMO 跟踪设计在零参考输入下的镇定情形。取已知的 Hurwitz 矩阵$A_{\refval}$。假设还有以下匹配条件（$K^*\in\mathbb{R}^{m\times n}$为常值矩阵）：
 \[
     A+B\Lambda K^*=A_{\refval}.
@@ -156,7 +156,7 @@
         \dot{\hat K}_2&=-\Gamma_2\bigl(B^{\mathrm{T}}Peu_c^{\mathrm{T}}+\sigma\hat K_2\bigr),\\
         \dot{\hat\Theta}&=\Gamma_\Theta\bigl(\Phi(x)e^{\mathrm{T}}PB-\sigma\hat\Theta\bigr),
     \end{align*}
-    其中$\Gamma_1,\Gamma_2\in\mathbb{R}^{m\times m}$为对角正定阵，$\Gamma_\Theta\in\mathbb{R}^{n\times n}$为对称正定阵，$\sigma>0$，$P$由上述 Lyapunov 方程求得。取
+    其中$\Gamma_1,\Gamma_2\in\mathbb{R}^{m\times m}$为对角正定阵，$\Gamma_\Theta\in\mathbb{R}^{N\times N}$为对称正定阵，$\sigma>0$，$P$由上述 Lyapunov 方程求得。取
     \[
         V_e=e^{\mathrm{T}}Pe+\sum_{i=1}^2\tr(\tilde K_i^{\mathrm{T}}\Lambda\Gamma_i^{-1}\tilde K_i)
         +\tr(\tilde\Theta^{\mathrm{T}}\Gamma_\Theta^{-1}\tilde\Theta\Lambda).
